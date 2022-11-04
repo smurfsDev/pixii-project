@@ -1,4 +1,4 @@
-import { findAll, create, update, remove, findOne } from '../controllers/claims.controller';
+import { findAll, create, update, remove, findOne, setStatus } from '../controllers/claims.controller';
 module.exports = (app: any) => {
 
 
@@ -16,5 +16,8 @@ module.exports = (app: any) => {
 
   // Delete a claim with claimId
   app.delete("/claims/:id", remove);
+
+  // Set status of claim with claimId
+  app.put("/claims/:id/:status", setStatus);
 
 }

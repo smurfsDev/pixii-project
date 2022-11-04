@@ -35,7 +35,8 @@ export const create = (req: Request, res: Response) => {
 //delete
 export const remove = (req: Request, res: Response) => {
 	Comments.findById(req.params.id, (err: any, comment: any) => {
-		if (err || !comment) return res.status(500).send(err);
+		if (err) return res.status(500).send(err);
+		else if (!comment) return res.status(404).send("Comment not found");
 		else {
 			comment.remove((err: any) => {
 				if (err) return res.status(500).send(err);
@@ -49,7 +50,8 @@ export const remove = (req: Request, res: Response) => {
 // update
 export const update = (req: Request, res: Response) => {
 	Comments.findByIdAndUpdate(req.params.id, req.body, (err: any, comment: any) => {
-		if (err||!comment) return res.status(500).send(err);
+		if (err) return res.status(500).send(err);
+		else if (!comment) return res.status(404).send("Comment not found");
 		else
 			Comments.findById(req.params.id, (err: any, comment: any) => {
 				return res.status(200).send(comment);
@@ -61,6 +63,7 @@ export const update = (req: Request, res: Response) => {
 export const findOne = (req: Request, res: Response) => {
 	Comments.findById(req.params.id, (err: Error, comment: any) => {
 		if (err) return res.status(500).send(err);
+		else if (!comment) return res.status(404).send("Comment not found");
 		else return res.status(200).send(comment);
 	})
 };
