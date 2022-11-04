@@ -1,4 +1,3 @@
-import Book from './models/book.model';
 import app from './configs/app.config';
 import {connect} from './configs/db.config';
 import router from './routes/index';
