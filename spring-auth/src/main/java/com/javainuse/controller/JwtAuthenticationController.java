@@ -36,10 +36,15 @@ public class JwtAuthenticationController {
 
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
+        System.out.println("essmm : " + authenticationRequest.getUsername());
+        System.out.println("password : " + authenticationRequest.getPassword());
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
 
+        System.out.println("userDetails : " + userDetails);
+
         final String token = jwtTokenUtil.generateToken(userDetails);
+        System.out.println("tokeeeeeeen : " + token);
 
         return ResponseEntity.ok(new JwtResponse(token));
     }

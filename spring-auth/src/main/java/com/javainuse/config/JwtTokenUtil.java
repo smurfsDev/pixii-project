@@ -1,6 +1,8 @@
 package com.javainuse.config;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +24,7 @@ public class JwtTokenUtil implements Serializable {
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
     @Value("${jwt.secret}")
-    private String secret;
+    private static String secret;
 
     // retrieve username from jwt token
     public String getUsernameFromToken(String token) {
@@ -52,7 +54,9 @@ public class JwtTokenUtil implements Serializable {
 
     // generate token for user
     public String generateToken(UserDetails userDetails) {
+        System.out.println("secret");
         Map<String, Object> claims = new HashMap<>();
+        System.out.println("Tokeeen : " + doGenerateToken(claims, userDetails.getUsername()));
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
@@ -64,9 +68,18 @@ public class JwtTokenUtil implements Serializable {
     // compaction of the JWT to a URL-safe string
     private String doGenerateToken(Map<String, Object> claims, String subject) {
 
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-                .signWith(SignatureAlgorithm.HS512, secret).compact();
+        System.out.println("Claims: " + claims);
+        System.out.println("Subject: " + subject);
+        System.out.println("base64" + Base64.getEncoder().encodeToString((subject).getBytes()));
+        // return Jwts.builder()
+        // .setClaims(claims)
+        // .setSubject(subject)
+        // .setIssuedAt(new Date(System.currentTimeMillis()))
+        // .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY *
+        // 1000))
+        // .signWith(SignatureAlgorithm.HS512, secret).compact();
+
+        return Base64.getEncoder().encodeToString((subject).getBytes());
     }
 
     // validate token
