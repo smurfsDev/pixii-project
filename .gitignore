@@ -4,3 +4,4 @@ node/dist/*
 Angular/node_modules/*
 Angular/dist/*
 Angular/.env
+/.metadata/
