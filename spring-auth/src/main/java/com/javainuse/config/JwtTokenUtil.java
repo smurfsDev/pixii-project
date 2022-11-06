@@ -1,8 +1,9 @@
 package com.javainuse.config;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.Base64;
+// import java.time.ZonedDateTime;
+// import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+// import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
@@ -28,6 +30,7 @@ public class JwtTokenUtil implements Serializable {
 
     // retrieve username from jwt token
     public String getUsernameFromToken(String token) {
+
         return getClaimFromToken(token, Claims::getSubject);
     }
 
@@ -43,7 +46,7 @@ public class JwtTokenUtil implements Serializable {
 
     // for retrieveing any information from token we will need the secret key
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
     }
 
     // check if the token has expired
@@ -54,9 +57,7 @@ public class JwtTokenUtil implements Serializable {
 
     // generate token for user
     public String generateToken(UserDetails userDetails) {
-        System.out.println("secret");
         Map<String, Object> claims = new HashMap<>();
-        System.out.println("Tokeeen : " + doGenerateToken(claims, userDetails.getUsername()));
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
@@ -68,9 +69,8 @@ public class JwtTokenUtil implements Serializable {
     // compaction of the JWT to a URL-safe string
     private String doGenerateToken(Map<String, Object> claims, String subject) {
 
-        System.out.println("Claims: " + claims);
-        System.out.println("Subject: " + subject);
-        System.out.println("base64" + Base64.getEncoder().encodeToString((subject).getBytes()));
+        // System.out.println("base64" +
+        // Base64.getEncoder().encodeToString((subject).getBytes()));
         // return Jwts.builder()
         // .setClaims(claims)
         // .setSubject(subject)
@@ -78,8 +78,17 @@ public class JwtTokenUtil implements Serializable {
         // .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY *
         // 1000))
         // .signWith(SignatureAlgorithm.HS512, secret).compact();
+        JwtTokenUtil.secret = "javainuse";
+        String encodedString = Base64.getEncoder().encodeToString(JwtTokenUtil.secret.getBytes());
 
-        return Base64.getEncoder().encodeToString((subject).getBytes());
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 5000))
+                .signWith(SignatureAlgorithm.HS512, encodedString).compact();
+
+        // return Base64.getEncoder().encodeToString((subject).getBytes());
     }
 
     // validate token
