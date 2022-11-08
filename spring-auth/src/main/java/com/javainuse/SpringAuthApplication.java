@@ -20,7 +20,8 @@ public class SpringAuthApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		userRepository.save(new User("sabrine-kamkoum", "password"));
+		userRepository
+				.save(new User("sabrine-kamkoum", "$2y$10$15weT0pr4JZFgw/K1Xg.5uYprLAYNmURKvetpugUSqkZ3RRprBh4q"));
 	}
 
 }
