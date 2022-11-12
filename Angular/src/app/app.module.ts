@@ -10,16 +10,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './layout/navbar/navbar.component';
+import { AppRoutes } from './app.routes';
+import { HomeComponent } from './pages/home/home.component';
 @NgModule({
 	imports: [BrowserModule, FormsModule, DragDropModule, HttpClientModule,
-		RouterModule.forRoot([
-			{ path: 'claims', component: ClaimsComponent },
-		]),
+		RouterModule.forRoot(AppRoutes),
   BrowserAnimationsModule,
   MaterialModule,
   
 	],
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
