@@ -1,0 +1,143 @@
+@import '../../app.component.scss';
+
+.header{
+	.search-icon{
+		margin: 10px;
+	}
+	background-color: $secondary-component-color;
+	color: $main-text-color;
+	padding: 10px;
+	margin-bottom: 10px;
+	border-radius: 9px;
+	display: flex;
+	.cont{
+		display: flex;
+		justify-content: space-evenly;
+
+		align-items: baseline;
+		width: 100%;
+		
+	}
+
+	.actions{
+		display: flex;
+		justify-content: end;
+		align-items: center;
+		width: 300px;
+		margin-right: 10px;
+		.avatar{
+			width: 50px;
+			height: 50px;
+			margin-right: 10px;
+			border-radius: 50%;
+		}
+		.hello{
+			font-size: 1.5em;
+			font-weight: 500;
+		}
+
+	}
+}
+
+.root {
+	margin: 15px 15px 0 25px;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+  }
+  .board {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	min-width: 0;
+	min-height: 0;
+  }
+  .title {
+	font-size: 24px;
+	font-weight: 500;
+	margin: 1rem 4rem 0 1.5rem ;
+}
+
+  
+  .board-wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-grow: 1;
+	overflow-x: auto;
+	background-color: $main-component-color;
+	border-radius: 9px;
+  }
+
+
+  .board-columns {
+	display: flex;
+	flex-grow: 1;
+	
+
+  }
+  .board-column:is(:first-child) {
+	margin-left: 1.5rem;
+  }
+  .board-column {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	flex-basis: 0;
+  
+	max-width: 300px;
+	margin: 2rem;
+	padding: 25px 15px;
+	background-color: $main-bg-color;
+
+	border-radius: 22px;
+  }
+  
+  .board-column:not(:first-child) {
+	margin-left: 0;
+  }
+  
+  .column-title {
+	font-size: 20px;
+	font-weight: 500;
+	text-transform: uppercase;
+	margin-bottom: 20px;
+  }
+  
+  
+  .tasks-container {
+	flex-grow: 1;
+	overflow-y: auto;
+  }
+  
+  .task {
+	display: flex;
+	padding: 15px 12px;
+	background: white;
+	border-bottom: solid 1px #ddd;
+	border-radius: 4px;
+	margin-bottom: 15px;
+	box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.05),
+	  0 3px 14px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .cdk-drag-preview {
+	box-sizing: border-box;
+	border-radius: 4px;
+	box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+	  0 8px 10px 1px rgba(0, 0, 0, 0.14),
+	  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+  
+  .cdk-drag-placeholder {
+	opacity: 0;
+  }
+  
+  .cdk-drag-animating {
+	transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .tasks-container.cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
+	transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
