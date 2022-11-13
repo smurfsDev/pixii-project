@@ -24,9 +24,9 @@
 						<div class="column-title" cdkDragHandle>
 							{{ column.name }}
 						</div>
-						<div class="tasks-container" id="{{column.id}}" [cdkDropListConnectedTo]="['1','2','3','4']"
-							cdkDropList [cdkDropListData]="column.tasks" (cdkDropListDropped)="drop($event)">
-							<mat-card class="my-2" *ngFor="let item of column.tasks" cdkDrag>
+						<div class="tasks-container" id="{{column.id}}" [cdkDropListConnectedTo]="ids"
+							cdkDropList [cdkDropListData]="column.claims" (cdkDropListDropped)="drop($event)">
+							<mat-card class="my-2" *ngFor="let item of column.claims" cdkDrag>
 								{{ item.subject }}
 								{{ item.message }}
 							</mat-card>

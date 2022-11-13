@@ -3,7 +3,8 @@ import { Component, OnInit, VERSION } from '@angular/core';
 import { Board } from 'src/app/models/board.model';
 import { Claim } from 'src/app/models/claim.model';
 import { Column } from 'src/app/models/column.model';
-import { ClaimsService } from 'src/app/service/claims.service';
+import { ClaimsService } from 'src/app/service/claims/claims.service';
+import { StatusService } from 'src/app/service/claims/status.service';
 
 @Component({
 	selector: 'app-claims',
@@ -12,12 +13,13 @@ import { ClaimsService } from 'src/app/service/claims.service';
 })
 export class ClaimsComponent implements OnInit {
 
-	newData: any;
+	claimsData: any;
 
-	constructor(private _apiService: ClaimsService) { }
+	constructor(private claimsService: ClaimsService, private statusService: StatusService) { }
 	name = 'Angular Material ' + VERSION.major + ' Kanban board';
 	public board: Board = new Board("", []);
 	current = '/home';
+	ids: string[] = [];
 
 	toggleActive(event: any) {
 		console.log(event);
@@ -27,33 +29,40 @@ export class ClaimsComponent implements OnInit {
 		this.fetchClaims();
 	}
 
-	fetchClaims(): void {
-		this._apiService.getClaims().subscribe(data => {
-			console.log(data);
-			this.newData = data;
-			const claimList = this.newData.docs.map((claim: any) => {
-				return new Claim(claim._id, claim.message, claim.subject, claim.created, claim.status);
+	async fetchClaims(): Promise<void> {
+		this.board = new Board("", []);
+		await this.statusService.getStatus().forEach((status: any) => {
+			status.forEach((element: any) => {
+				this.ids.push(element._id);
+				this.board.columns.push(new Column(element.name, element._id, []));
 			});
-			const todoClaims = claimList.filter((claim: Claim) => claim.status == 1);
-			const inProgressClaims = claimList.filter((claim: Claim) => claim.status == 2);
-			const stuckClaims = claimList.filter((claim: Claim) => claim.status == 3);
-			const doneClaims = claimList.filter((claim: Claim) => claim.status == 4);
-			this.board = new Board('Test Board', [
-				new Column('Todo', '1',
-					todoClaims
-				),
-				new Column('InProgress', '2',
-					inProgressClaims
-				),
-				new Column('Stuck', '3',
-					stuckClaims
-				),
-				new Column('Done', '4',
-					doneClaims
-				),
-			]);
+		});
+
+		this.claimsService.getClaims().forEach((claim: any) => {
+			claim.docs.forEach((element: any) => {
+				this.board.columns.forEach((column: any) => {
+					if (column.id === element.status._id) {
+						column.claims.push(new Claim(element._id, element.subject, element.description, element.created, element.status._id));
+					}
+				});
+			});
 		});
 	}
+
+	async fetchOnlyClaims(): Promise<void> {
+		this.board.columns.forEach((column: any) => {
+			column.claims = [];
+		});
+		this.claimsService.getClaims().forEach((claim: any) => {
+			claim.docs.forEach((element: any) => {
+				this.board.columns.forEach((column: any) => {
+					if (column.id === element.status._id) {
+						column.claims.push(new Claim(element._id, element.subject, element.description, element.created, element.status._id));
+					}
+				});
+			});
+		});
+	};
 
 
 	public dropGrid(event: CdkDragDrop<Claim[]>): void {
@@ -69,10 +78,10 @@ export class ClaimsComponent implements OnInit {
 				event.previousIndex,
 				event.currentIndex);
 			var claim = event.container.data[event.currentIndex];
-			claim.status = parseInt(event.container.id);
-			this._apiService.putClaims(claim).subscribe(data => {
+			claim.status = event.container.id;
+			this.claimsService.putClaims(claim).subscribe(data => {
 				console.log(data);
-				this.fetchClaims();
+				// this.fetchOnlyClaims();
 			});
 		}
 	}
