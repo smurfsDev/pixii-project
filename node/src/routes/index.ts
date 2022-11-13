@@ -6,6 +6,7 @@ const router = express.Router();
 // example
 require('./claims.routes')(router);
 require('./comments.routes')(router);
+require('./status.routes')(router);
 
 export default router;
 
