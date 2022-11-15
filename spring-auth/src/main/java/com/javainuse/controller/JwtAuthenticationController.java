@@ -19,8 +19,11 @@ import com.javainuse.service.JwtUserDetailsService;
 import net.minidev.json.JSONObject;
 
 import com.javainuse.config.JwtTokenUtil;
+import com.javainuse.config.WebSecurityConfig;
+import com.javainuse.entities.User;
 import com.javainuse.model.JwtRequest;
 import com.javainuse.model.JwtResponse;
+import com.javainuse.repository.UserRepository;
 
 @RestController
 @CrossOrigin
@@ -34,6 +37,9 @@ public class JwtAuthenticationController {
 
     @Autowired
     private JwtUserDetailsService userDetailsService;
+
+    @Autowired
+    UserRepository userRepository;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public JSONObject createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
@@ -69,4 +75,28 @@ public class JwtAuthenticationController {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
     }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+
+    public User saveUser(@RequestBody User newUser) {
+        User appUser = new User();
+        if (userRepository.findUserWithName(newUser.getUsername()).isPresent() == true)
+            throw new RuntimeException("User already exists");
+
+        // if (!newUser.getPassword().equals(confirmedPassword))
+        // throw new RuntimeException("Please confirm your password");
+        appUser.setUsername(newUser.getUsername());
+
+        appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(newUser.getPassword()));
+        userRepository.save(appUser);
+        return appUser;
+    }
+
+    // @RequestMapping(value = "/register", method = RequestMethod.POST)
+    // public User register(@RequestBody User newUser)
+    // throws Exception {
+
+    // return userRepository.save(newUser);
+
+    // }
 }
