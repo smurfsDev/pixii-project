@@ -17,28 +17,40 @@ public class User {
     private Integer id;
     // private @Id @GeneratedValue Integer id;
     private String username;
+
+    private String email;
     private String password;
+    private String confirmPassword;
 
-    // @CreationTimestamp
-    // private Timestamp created_at;
+    public User(String username, String email, String password, String confirmPassword) {
 
-    // @UpdateTimestamp
-    // private Timestamp updated_at;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+    }
 
     public User() {
     }
 
-    public User(Integer id, String username, String password) {
+    public void setId(Integer id) {
         this.id = id;
-        this.username = username;
-        this.password = password;
-        // this.created_at = created_at;
-        // this.updated_at = updated_at;
     }
 
-    public User(String username, String password) {
+    public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public Integer getId() {
@@ -49,36 +61,16 @@ public class User {
         return username;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public String getPassword() {
         return password;
     }
 
-    // public Timestamp getCreated_at() {
-    // return created_at;
-    // }
-
-    // public Timestamp getUpdated_at() {
-    // return updated_at;
-    // }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    // public void setCreated_at(Timestamp created_at) {
-    // this.created_at = created_at;
-    // }
-
-    // public void setUpdated_at(Timestamp updated_at) {
-    // this.updated_at = updated_at;
-    // }
 
 }
