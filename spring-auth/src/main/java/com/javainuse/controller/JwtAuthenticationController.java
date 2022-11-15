@@ -1,6 +1,8 @@
 package com.javainuse.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.javainuse.service.JwtUserDetailsService;
+
+import net.minidev.json.JSONObject;
 
 import com.javainuse.config.JwtTokenUtil;
 import com.javainuse.model.JwtRequest;
@@ -32,7 +36,8 @@ public class JwtAuthenticationController {
     private JwtUserDetailsService userDetailsService;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+    public JSONObject createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
+            throws Exception {
 
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
@@ -41,7 +46,18 @@ public class JwtAuthenticationController {
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        HttpHeaders responseHeaders = new HttpHeaders();
+        // responseHeaders.setLocation(location);
+        responseHeaders.set("MyResponseHeader", "MyValue");
+        JwtResponse tkn = new JwtResponse(token);
+
+        ResponseEntity<String> returned_token = new ResponseEntity<String>(tkn.getToken(), responseHeaders,
+                HttpStatus.OK);
+        JSONObject item = new JSONObject();
+        item.put("token", returned_token);
+        item.put("username", authenticationRequest.getUsername());
+        return item;
+
     }
 
     private void authenticate(String username, String password) throws Exception {

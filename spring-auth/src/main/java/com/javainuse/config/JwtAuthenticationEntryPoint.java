@@ -20,5 +20,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
             AuthenticationException authException) throws IOException {
 
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+        // response.setHeader("message", "Veuillez verifier vos identifiant!");
+
     }
 }
