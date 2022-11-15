@@ -3,16 +3,19 @@ import { Request, Response } from 'express';
 import status from "../models/status.model";
 
 export const findAll = async (req: Request, res: Response) => {
-	const search = req.query.search || '';
-	const page: number = parseInt(req.query.page?.toString() || '1');
-	const size: number = parseInt(req.query.size?.toString() || '5');
+	// const search = req.query.search || '';
+	// const page: number = parseInt(req.query.page?.toString() || '1');
+	// const size: number = parseInt(req.query.size?.toString() || '5');
 
-	// paginate search and populate comments
-	Claim.paginate({ subject: { $regex: search, $options: 'i' } }, { page, limit: size, populate: ['comments', 'status'] })
-		.then((claims) => {
-			res.send(claims);
-		}
-		);
+	// // paginate search and populate comments
+	// Claim.paginate({ subject: { $regex: search, $options: 'i' } }, { page, limit: size, populate: ['comments', 'status'] })
+	// 	.then((claims) => {
+	// 		res.send(claims);
+	// 	}
+	// 	);
+	Claim.find().populate('status','name').then((claims) => {
+		res.send(claims);
+	});
 };
 // create
 export const create = (req: Request, res: Response) => {
@@ -75,11 +78,12 @@ export const update = (req: Request, res: Response) => {
 
 // find by id
 export const findOne = (req: Request, res: Response) => {
+	
 	Claim.findById(req.params.id, (err: Error, claim: any) => {
 		if (err) return res.status(500).send(err);
 		else if (!claim) return res.status(404).send("Claim not found");
 		else return res.status(200).send(claim);
-	})
+	}).populate('comments').populate('status', 'name');
 };
 
 export const setStatus = (req: Request, res: Response) => {
