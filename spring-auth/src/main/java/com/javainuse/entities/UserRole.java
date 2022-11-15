@@ -1,5 +1,6 @@
 package com.javainuse.entities;
 
+import javax.persistence.EmbeddedId;
 // import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -13,8 +14,8 @@ import org.hibernate.annotations.ColumnDefault;
 @Entity
 @Table(name = "users_roles")
 public class UserRole {
-    // @EmbeddedId
-    // UserRoleKey id;
+    @EmbeddedId
+    UserRoleKey id;
 
     @ManyToOne
     @MapsId("userId")
