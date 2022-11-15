@@ -4,6 +4,7 @@ export class Claim {
 		public message:String,
 		public subject:String,
 		public created:Date,
+		public updated:Date,
 		public status: String
 	){}
 }

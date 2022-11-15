@@ -77,7 +77,14 @@ export class ClaimsComponent implements OnInit {
 				console.log(element);
 				this.board.columns.forEach((column: any) => {
 					if (column.id === element.status._id) {
-						column.claims.push(new Claim(element._id, element.subject, element.description, element.created, element.status._id));
+						column.claims.push(new Claim(
+							element._id, 
+							element.subject, 
+							element.description, 
+							element.created, 
+							element.updated,
+							element.status._id
+						));
 					}
 				});
 			});
@@ -92,7 +99,7 @@ export class ClaimsComponent implements OnInit {
 			claim.docs.forEach((element: any) => {
 				this.board.columns.forEach((column: any) => {
 					if (column.id === element.status._id) {
-						column.claims.push(new Claim(element._id, element.subject, element.description, element.created, element.status._id));
+						column.claims.push(new Claim(element._id, element.subject, element.description, element.created, element.status._id, element.updated));
 					}
 				});
 			});

@@ -14,11 +14,40 @@ let claimsSchema = new mongoose.Schema({
 	status: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "status",
-	}
+	},
+	_status: [
+		{
+			old_status: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "status",
+			},
+			new_status: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "status",
+			},
+		}
+	],
+	updated: { type: Date, default: Date.now }
 });
 
 
 claimsSchema.plugin(mongoosePaginate);
+
+claimsSchema.pre("findOneAndUpdate", async function (next) {
+	// @ts-ignore
+	const newStatus = this.getUpdate()?.status;
+	const item = await this.model.findOne(this.getQuery());
+	const currentStatus = item.status;
+	item.updated = Date.now();
+	item.save();
+	if (newStatus && currentStatus) {
+		if (newStatus != currentStatus) {
+			item._status.push({ old_status: currentStatus, new_status: newStatus });
+		}
+	}
+	next();
+});
+
 
 claimsSchema.pre("remove", function (next) {
 	this.comments.forEach((comment: any) => {

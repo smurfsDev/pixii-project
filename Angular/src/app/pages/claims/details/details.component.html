@@ -20,11 +20,11 @@
 				</div>
 				<div class="detail">
 					<div class="label">Created</div>
-					<div class="value">{{claim.created | date:'longDate' }}</div>
+					<div class="value">{{claim.created | date:'short' }}</div>
 				</div>
 				<div class="detail">
 					<div class="label">Updated</div>
-					<div class="value">2019-01-01</div>
+					<div class="value">{{ claim.updated | date:'short'}}</div>
 				</div>
 				<div class="detail mt-3">
 					<div class="label">Description</div>
