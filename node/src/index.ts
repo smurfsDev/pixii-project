@@ -3,9 +3,12 @@ import app from './configs/app.config';
 import { connect } from './configs/db.config';
 import status from './models/status.model';
 import router from './routes/index';
+import { seed } from './seeder';
 
 connect();
 
+
+seed();
 
 app.use('', router);
 
