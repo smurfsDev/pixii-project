@@ -81,24 +81,30 @@ public class JwtAuthenticationController {
     public ResponseEntity<JSONObject> saveUser(@RequestBody User newUser) {
 
         User appUser = new User();
-
-        if (userRepository.findUserWithName(newUser.getUsername()).isPresent() == false) {
-            appUser.setUsername(newUser.getUsername());
-
-            appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(newUser.getPassword()));
-            userRepository.save(appUser);
+        if (userRepository.findUserWithName(newUser.getUsername()).isPresent() == true) {
             JSONObject item = new JSONObject();
-            item.put("message", "Account");
-            item.put("username", appUser.getUsername());
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(item);
-
-        } else {
-            JSONObject item = new JSONObject();
-            item.put("messgae", "User already exists");
+            item.put("message", "User already exists");
             item.put("status", HttpStatus.BAD_REQUEST.value());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
         }
+        if (!newUser.getPassword().equals(newUser.getConfirmPassword())) {
+            JSONObject item = new JSONObject();
+            item.put("message", "Please confirm Password");
+            item.put("status", HttpStatus.BAD_REQUEST.value());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+        }
+
+        appUser.setUsername(newUser.getUsername());
+        appUser.setEmail(newUser.getEmail());
+
+        appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(newUser.getPassword()));
+        userRepository.save(appUser);
+        JSONObject item = new JSONObject();
+        item.put("message", "Account");
+        item.put("username", appUser.getUsername());
+        item.put("email", appUser.getEmail());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(item);
 
     }
 }
