@@ -21,9 +21,12 @@ import net.minidev.json.JSONObject;
 import com.javainuse.config.JwtTokenUtil;
 import com.javainuse.config.WebSecurityConfig;
 import com.javainuse.entities.User;
+import com.javainuse.entities.UserRole;
 import com.javainuse.model.JwtRequest;
 import com.javainuse.model.JwtResponse;
+import com.javainuse.repository.RoleRepository;
 import com.javainuse.repository.UserRepository;
+import com.javainuse.repository.UserRoleRepository;
 
 @RestController
 @CrossOrigin
@@ -40,6 +43,12 @@ public class JwtAuthenticationController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
+    UserRoleRepository userRoleRepository;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public JSONObject createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
@@ -78,7 +87,7 @@ public class JwtAuthenticationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
 
-    public ResponseEntity<JSONObject> saveUser(@RequestBody User newUser) {
+    public ResponseEntity<JSONObject> saveUser(@RequestBody User newUser, @RequestBody Long idRole) {
 
         User appUser = new User();
         if (userRepository.findUserWithName(newUser.getUsername()).isPresent() == true) {
@@ -96,13 +105,23 @@ public class JwtAuthenticationController {
 
         appUser.setUsername(newUser.getUsername());
         appUser.setEmail(newUser.getEmail());
+        if (roleRepository.getById(idRole) != null) {
+
+            appUser.getRoles().add(roleRepository.getById(idRole));
+        }
 
         appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(newUser.getPassword()));
-        userRepository.save(appUser);
+        User user = userRepository.save(appUser);
+
+        UserRole userRole = new UserRole();
+
+        userRole.setUser(user);
+        userRoleRepository.save(userRole);
         JSONObject item = new JSONObject();
         item.put("message", "Account");
         item.put("username", appUser.getUsername());
         item.put("email", appUser.getEmail());
+        item.put("role", appUser.getRoles());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(item);
 
