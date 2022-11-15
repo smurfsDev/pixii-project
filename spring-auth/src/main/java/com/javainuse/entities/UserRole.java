@@ -32,4 +32,52 @@ public class UserRole {
     @ColumnDefault("0")
     private Integer status;
 
+    public UserRole(UserRoleKey id, User user, Role role, @NotNull Integer status) {
+        this.id = id;
+        this.user = user;
+        this.role = role;
+        this.status = status;
+    }
+
+    public UserRole() {
+    }
+
+    public UserRole(User user, Role role, @NotNull Integer status) {
+        this.user = user;
+        this.role = role;
+        this.status = status;
+    }
+
+    public UserRoleKey getId() {
+        return id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setId(UserRoleKey id) {
+        this.id = id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
 }
