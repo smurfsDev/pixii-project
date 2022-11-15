@@ -20,14 +20,14 @@
     display: flex;
     justify-content: space-between;
   }
-
-
   .container{
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin: 5em auto;
     height: 100vh;
+    .title{
+      margin-top: 5em;
+    }
     .card-body {
       /* center */
       display: flex;
