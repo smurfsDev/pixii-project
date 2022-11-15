@@ -1,40 +1,45 @@
-<div class="root">
-	<div class="header">
-		<mat-icon class="search-icon">search</mat-icon>
-		<div class="cont">
-			<h1 class="item">Tickets</h1>
-			<h1 class="item">Home</h1>
-			<h1 class="item">Desktop</h1>
-		</div>
+<app-details [opened]="opened" [claim]="claim">
+	<div class="root">
+		<div class="header">
+			<mat-icon class="search-icon">search</mat-icon>
+			<div class="cont">
+				<h1 class="item">Tickets</h1>
+				<h1 class="item">Home</h1>
+				<h1 class="item">Desktop</h1>
+			</div>
 
-		<div class="actions">
-			<img class="avatar" src="https://resize.elle.fr/article/var/plain_site/storage/images/loisirs/cinema/news/avatar-2-une-premiere-bande-annonce-en-mai-4010741/96462268-1-fre-FR/Avatar-2-une-premiere-bande-annonce-en-mai.jpg" />
-			<div class="hello">Hello, <span class="name">Foulen</span></div>
-			<mat-icon class="more-icon">arrow_drop_down</mat-icon>
-		</div>
-		
-	</div>
-	<div class="board">
-		<div class="board-wrapper">
-			<h1 class="title">Tickets</h1>
-			<div class="board-columns">
-				<div cdkDropList cdkDropListOrientation="horizontal" class="board-columns"
-					(cdkDropListDropped)="dropGrid($event)">
-					<div cdkDragLockAxis="x" class="board-column" *ngFor="let column of board.columns" cdkDrag>
-						<div class="column-title" cdkDragHandle>
-							{{ column.name }}
-						</div>
-						<div class="tasks-container" id="{{column.id}}" [cdkDropListConnectedTo]="ids"
-							cdkDropList [cdkDropListData]="column.claims" (cdkDropListDropped)="drop($event)">
-							<mat-card class="my-2" *ngFor="let item of column.claims" cdkDrag>
-								{{ item.subject }}
-								{{ item.message }}
-							</mat-card>
-						</div>
+			<div class="actions">
+				<img class="avatar"
+					src="https://resize.elle.fr/article/var/plain_site/storage/images/loisirs/cinema/news/avatar-2-une-premiere-bande-annonce-en-mai-4010741/96462268-1-fre-FR/Avatar-2-une-premiere-bande-annonce-en-mai.jpg" />
+				<div class="hello">Hello, <span class="name">Foulen</span></div>
+				<mat-icon class="more-icon">arrow_drop_down</mat-icon>
+			</div>
 
+		</div>
+		<div class="board">
+			<div class="board-wrapper">
+				<h1 class="title">Tickets</h1>
+				<div class="board-columns">
+					<div cdkDropList cdkDropListOrientation="horizontal" class="board-columns"
+						(cdkDropListDropped)="dropGrid($event)">
+						<div cdkDragLockAxis="x" class="board-column" *ngFor="let column of board.columns" cdkDrag>
+							<div class="column-title" cdkDragHandle>
+								{{ column.name }}
+							</div>
+							<div class="tasks-container" id="{{column.id}}" [cdkDropListConnectedTo]="ids" cdkDropList
+								[cdkDropListData]="column.claims" (cdkDropListDropped)="drop($event)">
+								<mat-card class="my-2" *ngFor="let item of column.claims" cdkDrag
+								(click)="openDetails(item._id)"
+								>
+									{{ item.subject }}
+									{{ item.message }}
+								</mat-card>
+							</div>
+
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</app-details>

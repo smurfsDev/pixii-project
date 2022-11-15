@@ -5,6 +5,7 @@ import { Claim } from 'src/app/models/claim.model';
 import { Column } from 'src/app/models/column.model';
 import { ClaimsService } from 'src/app/service/claims/claims.service';
 import { StatusService } from 'src/app/service/claims/status.service';
+import { DetailsComponent } from './details/details.component';
 
 @Component({
 	selector: 'app-claims',
@@ -14,7 +15,40 @@ import { StatusService } from 'src/app/service/claims/status.service';
 export class ClaimsComponent implements OnInit {
 
 	claimsData: any;
-
+	claim = {
+		subject: "Claim subject",
+		status: "Done",
+		message: `Lorem ipsum dolor sit amet consectetur adipisicing elit. In quae ex, tempore consequuntur labore
+					autem deleniti laboriosam sint ad voluptatem accusantium ducimus sed minus earum officia illo ipsam
+					quis. Deleniti.`,
+		created: "2022-01-01",
+		comments: [
+			{
+				name: "John Doe",
+				avatar: "https://randomuser.me/api/portraits/men/1.jpg",
+				message: `Lorem ipsum dolor sit amet consectetur adipisicing elit. In quae ex, tempore consequuntur labore`,
+				created: "2022-01-01"
+			},
+			{
+				name: "John Doe",
+				avatar: "https://randomuser.me/api/portraits/men/2.jpg",
+				message: `Lorem ipsum dolor sit amet consectetur adipisicing elit. In quae ex, tempore consequuntur labore`,
+				created: "2022-01-01"
+			},
+		]
+	};
+	opened = false;
+	openDetails(id: any) {
+		console.log(id);
+		this.opened = false;
+		setTimeout(() => {
+			this.opened = true;
+		}, 100);
+		this.claimsService.getClaim(id).subscribe((data: any) => {
+			this.claim = data;
+			this.claim.status = data.status.name;
+		});
+	}
 	constructor(private claimsService: ClaimsService, private statusService: StatusService) { }
 	name = 'Angular Material ' + VERSION.major + ' Kanban board';
 	public board: Board = new Board("", []);
@@ -39,7 +73,8 @@ export class ClaimsComponent implements OnInit {
 		});
 
 		this.claimsService.getClaims().forEach((claim: any) => {
-			claim.docs.forEach((element: any) => {
+			claim.forEach((element: any) => {
+				console.log(element);
 				this.board.columns.forEach((column: any) => {
 					if (column.id === element.status._id) {
 						column.claims.push(new Claim(element._id, element.subject, element.description, element.created, element.status._id));

@@ -1,5 +1,6 @@
 @import '../../app.component.scss';
 
+
 .header{
 	.search-icon{
 		margin: 10px;
@@ -21,7 +22,7 @@
 
 	.actions{
 		display: flex;
-		justify-content: end;
+		justify-content: flex-end;
 		align-items: center;
 		width: 300px;
 		margin-right: 10px;
@@ -53,6 +54,7 @@
 	min-height: 0;
   }
   .title {
+	color: $main-text-color;
 	font-size: 24px;
 	font-weight: 500;
 	margin: 1rem 4rem 0 1.5rem ;
@@ -98,6 +100,7 @@
   }
   
   .column-title {
+	color: $main-text-color;
 	font-size: 20px;
 	font-weight: 500;
 	text-transform: uppercase;

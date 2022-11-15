@@ -12,6 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { AppRoutes } from './app.routes';
 import { HomeComponent } from './pages/home/home.component';
+import { DetailsComponent } from './pages/claims/details/details.component';
 @NgModule({
 	imports: [BrowserModule, FormsModule, DragDropModule, HttpClientModule,
 		RouterModule.forRoot(AppRoutes),
@@ -19,7 +20,7 @@ import { HomeComponent } from './pages/home/home.component';
   MaterialModule,
   
 	],
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
