@@ -1,0 +1,78 @@
+<mat-drawer-container dir="rtl" class="details-container" autosize>
+	<mat-drawer #drawer class="details-sidenav" mode="over" [opened]="opened">
+		<div class="header" dir="ltr">
+			<div class="title">Ticket</div>
+			<div class="close" (click)="drawer.close()">
+				<mat-icon>close</mat-icon>
+			</div>
+		</div>
+		<div class="content" dir="ltr">
+			<h1 class="title">{{claim.subject}}</h1>
+			<mat-divider style="border-top-color: white;"></mat-divider>
+			<div class="details">
+				<div class="detail">
+					<div class="label">Status</div>
+					<div class="value">{{claim.status}}</div>
+				</div>
+				<div class="detail">
+					<div class="label">Priority</div>
+					<div class="value">High</div>
+				</div>
+				<div class="detail">
+					<div class="label">Created</div>
+					<div class="value">{{claim.created | date:'short' }}</div>
+				</div>
+				<div class="detail">
+					<div class="label">Updated</div>
+					<div class="value">{{ claim.updated | date:'short'}}</div>
+				</div>
+				<div class="detail mt-3">
+					<div class="label">Description</div>
+				</div>
+				<div class="description">
+					{{claim.message}}
+				</div>
+			</div>
+			<mat-card class="comments" style="border-radius:9px">
+				<h1 class="title">
+					Comments
+				</h1>
+				<!-- <div #scrollMe [scrollTop]="scrollMe.scrollHeight" class="comments-content"> -->
+				<div #scrollMe class="comments-content">
+					<div #messages class="comment" *ngFor="let comment of claim.comments">
+						<div class="label">
+							<div class="name">
+								<div class="avatar">
+									<img [src]="comment.avatar??'https://randomuser.me/api/portraits/men/1.jpg'"
+										[alt]="comment.name">
+								</div>
+								{{comment.name??'John Doe'}}
+							</div>
+							<div class="date">{{comment.created | date:'longDate' }}</div>
+						</div>
+						<div class="value">
+							{{comment.message}}
+						</div>
+					</div>
+				</div>
+				<div class="comment-input">
+					<div class="form">
+						<div class="avatar">
+							<img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
+						</div>
+						<input type="text" placeholder="Add a comment" class="form-control" placeholder="Add a comment"
+							(keyup.enter)="sendComment()" [(ngModel)]="comment">
+						<button mat-button (click)="sendComment()" color="primary">
+							<mat-icon>send</mat-icon>
+						</button>
+					</div>
+				</div>
+			</mat-card>
+		</div>
+	</mat-drawer>
+
+	<div class="details-sidenav-content" dir="ltr">
+		<ng-content></ng-content>
+	</div>
+
+</mat-drawer-container>
