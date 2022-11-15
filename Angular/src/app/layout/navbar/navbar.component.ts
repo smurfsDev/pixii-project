@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,22 +6,24 @@ import { Router } from '@angular/router';
 	templateUrl: './navbar.component.html',
 	styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
 	isExpanded = false;
 
-	current = '/dashboard';
+	current = this.router.url;
 	
+	constructor(private router: Router) { 
+		setInterval(() => {
+			this.current = this.router.url;
+		}, 125);
+	}
 	
-	constructor(private router: Router) { }
-	
-	toggleActive(event: string) {
-		this.router.navigate([event]);
+	async toggleActive(event: string) {
+		const navigated = await this.router.navigate([event])
+		console.log(this.router.url);
 		this.current = event;
+		console.log(this.current);
 	}
 
-	ngOnInit(): void {
-		this.current = this.router.url;
-	}
 
 }

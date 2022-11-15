@@ -25,6 +25,7 @@ let claimsSchema = new mongoose.Schema({
 				type: mongoose.Schema.Types.ObjectId,
 				ref: "status",
 			},
+			date: { type: Date, default: Date.now },
 		}
 	],
 	updated: { type: Date, default: Date.now }
@@ -37,15 +38,21 @@ claimsSchema.pre("findOneAndUpdate", async function (next) {
 	// @ts-ignore
 	const newStatus = this.getUpdate()?.status;
 	const item = await this.model.findOne(this.getQuery());
-	const currentStatus = item.status;
 	item.updated = Date.now();
 	item.save();
+	const currentStatus = item.status;
 	if (newStatus && currentStatus) {
 		if (newStatus != currentStatus) {
-			item._status.push({ old_status: currentStatus, new_status: newStatus });
+			item._status.push({ old_status: currentStatus, new_status: newStatus, date: Date.now() });
 		}
 	}
 	next();
+});
+
+claimsSchema.post("findOneAndUpdate", async function () {
+	const item = await this.model.findOne(this.getQuery());
+	item.updated = Date.now();
+	item.save();
 });
 
 
