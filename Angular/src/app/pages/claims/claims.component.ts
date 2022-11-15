@@ -4,6 +4,7 @@ import { Board } from 'src/app/models/board.model';
 import { Claim } from 'src/app/models/claim.model';
 import { Column } from 'src/app/models/column.model';
 import { ClaimsService } from 'src/app/service/claims/claims.service';
+import { CommentService } from 'src/app/service/claims/comment.service';
 import { StatusService } from 'src/app/service/claims/status.service';
 import { DetailsComponent } from './details/details.component';
 
@@ -16,6 +17,7 @@ export class ClaimsComponent implements OnInit {
 
 	claimsData: any;
 	claim = {
+		_id: "",
 		subject: "Claim subject",
 		status: "Done",
 		message: `Lorem ipsum dolor sit amet consectetur adipisicing elit. In quae ex, tempore consequuntur labore
@@ -44,12 +46,17 @@ export class ClaimsComponent implements OnInit {
 		setTimeout(() => {
 			this.opened = true;
 		}, 100);
+		this.fetchClaimDetails(id)
+	}
+
+	fetchClaimDetails(id: any) {
 		this.claimsService.getClaim(id).subscribe((data: any) => {
 			this.claim = data;
 			this.claim.status = data.status.name;
 		});
 	}
-	constructor(private claimsService: ClaimsService, private statusService: StatusService) { }
+
+	constructor(private claimsService: ClaimsService, private statusService: StatusService, private commentsService: CommentService) { }
 	name = 'Angular Material ' + VERSION.major + ' Kanban board';
 	public board: Board = new Board("", []);
 	current = '/home';
@@ -78,10 +85,10 @@ export class ClaimsComponent implements OnInit {
 				this.board.columns.forEach((column: any) => {
 					if (column.id === element.status._id) {
 						column.claims.push(new Claim(
-							element._id, 
-							element.subject, 
-							element.description, 
-							element.created, 
+							element._id,
+							element.subject,
+							element.description,
+							element.created,
 							element.updated,
 							element.status._id
 						));
@@ -126,6 +133,18 @@ export class ClaimsComponent implements OnInit {
 				// this.fetchOnlyClaims();
 			});
 		}
+	}
+
+	commented(event: any) {
+		const comment = {
+			claim: this.claim._id,
+			message: event
+		};
+
+		this.commentsService.comment(comment).subscribe(data => {
+			this.fetchClaimDetails(this.claim._id);
+		}
+		)
 	}
 
 }

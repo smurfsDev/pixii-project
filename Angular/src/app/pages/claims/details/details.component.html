@@ -37,18 +37,22 @@
 				<h1 class="title">
 					Comments
 				</h1>
-				<div class="comment" *ngFor="let comment of claim.comments">
-					<div class="label">
-						<div class="name">
-							<div class="avatar">
-								<img [src]="comment.avatar??'https://randomuser.me/api/portraits/men/1.jpg'" [alt]="comment.name">
+				<!-- <div #scrollMe [scrollTop]="scrollMe.scrollHeight" class="comments-content"> -->
+				<div #scrollMe class="comments-content">
+					<div #messages class="comment" *ngFor="let comment of claim.comments">
+						<div class="label">
+							<div class="name">
+								<div class="avatar">
+									<img [src]="comment.avatar??'https://randomuser.me/api/portraits/men/1.jpg'"
+										[alt]="comment.name">
+								</div>
+								{{comment.name??'John Doe'}}
 							</div>
-							{{comment.name??'John Doe'}}
+							<div class="date">{{comment.created | date:'longDate' }}</div>
 						</div>
-						<div class="date">{{comment.created | date:'longDate' }}</div>
-					</div>
-					<div class="value">
-						{{comment.message}}
+						<div class="value">
+							{{comment.message}}
+						</div>
 					</div>
 				</div>
 				<div class="comment-input">
@@ -56,8 +60,9 @@
 						<div class="avatar">
 							<img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
 						</div>
-						<input type="text" placeholder="Add a comment" class="form-control" placeholder="Add a comment">
-						<button mat-button color="primary">
+						<input type="text" placeholder="Add a comment" class="form-control" placeholder="Add a comment"
+							(keyup.enter)="sendComment()" [(ngModel)]="comment">
+						<button mat-button (click)="sendComment()" color="primary">
 							<mat-icon>send</mat-icon>
 						</button>
 					</div>

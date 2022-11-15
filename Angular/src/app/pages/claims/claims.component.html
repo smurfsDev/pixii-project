@@ -1,4 +1,4 @@
-<app-details [opened]="opened" [claim]="claim">
+<app-details (commented)="commented($event)" [opened]="opened" [claim]="claim">
 	<div class="root">
 		<div class="header">
 			<mat-icon class="search-icon">search</mat-icon>
