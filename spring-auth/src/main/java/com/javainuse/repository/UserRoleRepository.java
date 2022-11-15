@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.javainuse.entities.User;
 import com.javainuse.entities.UserRole;
 
 @EnableJpaRepositories
