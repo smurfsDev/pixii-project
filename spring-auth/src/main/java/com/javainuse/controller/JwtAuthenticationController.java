@@ -78,25 +78,27 @@ public class JwtAuthenticationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
 
-    public User saveUser(@RequestBody User newUser) {
+    public ResponseEntity<JSONObject> saveUser(@RequestBody User newUser) {
+
         User appUser = new User();
-        if (userRepository.findUserWithName(newUser.getUsername()).isPresent() == true)
-            throw new RuntimeException("User already exists");
 
-        // if (!newUser.getPassword().equals(confirmedPassword))
-        // throw new RuntimeException("Please confirm your password");
-        appUser.setUsername(newUser.getUsername());
+        if (userRepository.findUserWithName(newUser.getUsername()).isPresent() == false) {
+            appUser.setUsername(newUser.getUsername());
 
-        appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(newUser.getPassword()));
-        userRepository.save(appUser);
-        return appUser;
+            appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(newUser.getPassword()));
+            userRepository.save(appUser);
+            JSONObject item = new JSONObject();
+            item.put("message", "Account");
+            item.put("username", appUser.getUsername());
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(item);
+
+        } else {
+            JSONObject item = new JSONObject();
+            item.put("messgae", "User already exists");
+            item.put("status", HttpStatus.BAD_REQUEST.value());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+        }
+
     }
-
-    // @RequestMapping(value = "/register", method = RequestMethod.POST)
-    // public User register(@RequestBody User newUser)
-    // throws Exception {
-
-    // return userRepository.save(newUser);
-
-    // }
 }
