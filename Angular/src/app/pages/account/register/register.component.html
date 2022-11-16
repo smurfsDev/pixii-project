@@ -9,12 +9,15 @@
           <h1 class="text-center">Sign up</h1>
         </div>
         <div class="card-body">
-            <form>
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="form-outline mb-4">
               <label class="form-label">Email</label>
               <div class="input-container">
                 <mat-icon class="icon col-4">email</mat-icon>
-                <input input matInput placeholder="Enter your email address" [formControl]="email" required>
+                <input  matInput
+                        placeholder="Enter your email address"
+                        [formControl]="email"
+                        required>
               </div>
               <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
             </div>
@@ -22,7 +25,10 @@
               <label class="form-label">UserName</label>
               <div class="input-container">
                 <mat-icon class="icon col-4">person</mat-icon>
-                <input input matInput placeholder="Enter your userName" [formControl]="userName" required>
+                <input matInput
+                        placeholder="Enter your userName"
+                        [formControl]="userName"
+                        required>
               </div>
               <mat-error *ngIf="userName.invalid">{{getUserNameErrorMessage()}}</mat-error>
             </div>
@@ -30,8 +36,18 @@
               <label class="form-label">Password</label>
               <div class="input-container">
                 <mat-icon class="icon col-4">lock</mat-icon>
-                <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter your password" [formControl]="password">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <input
+                      matInput
+                      [type]="hide ? 'password' : 'text'"
+                      placeholder="Enter your password"
+                      formControlName="password"
+                      [formControl]="password"
+                      required>
+                <button mat-icon-button
+                        matSuffix
+                        (click)="hide = !hide"
+                        [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
                   <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
               </div>
@@ -41,8 +57,18 @@
               <label class="form-label">Confirm Password</label>
               <div class="input-container">
                 <mat-icon class="icon col-4">lock</mat-icon>
-                <input matInput [type]="hideConfirm ? 'password' : 'text'" placeholder="Confirm your password" [formControl]="ConfirmPassword">
-                <button mat-icon-button matSuffix (click)="hideConfirm = !hideConfirm" [attr.aria-label]="'hideConfirm password'" [attr.aria-pressed]="hideConfirm">
+                <input
+                      matInput
+                      [type]="hideConfirm ? 'password' : 'text'"
+                      formControlName="ConfirmPassword"
+                      placeholder="Confirm your password"
+                      [formControl]="ConfirmPassword"
+                      required>
+                <button mat-icon-button
+                        matSuffix
+                        (click)="hideConfirm = !hideConfirm"
+                        [attr.aria-label]="'hideConfirm password'"
+                        [attr.aria-pressed]="hideConfirm">
                   <mat-icon>{{hideConfirm ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
               </div>
@@ -57,7 +83,7 @@
                 <a class="text-muted" href="#!">Forgot password?</a>
               </div>
             </div>
-            <button class="btn btn-primary" style="width:100% ;border-radius: 15px;" type="button">Log in</button>
+            <button class="btn btn-primary" style="width:100% ;border-radius: 15px;" type="submit">Log in</button>
             <div class="text-center">
               <!-- p or continue with -->
               <p class="small pt-3">or continue with</p>
