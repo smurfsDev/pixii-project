@@ -22,7 +22,7 @@ import com.javainuse.config.JwtTokenUtil;
 import com.javainuse.config.WebSecurityConfig;
 import com.javainuse.entities.Role;
 import com.javainuse.entities.User;
-import com.javainuse.entities.UserRole;
+
 import com.javainuse.model.JwtRequest;
 import com.javainuse.model.JwtResponse;
 import com.javainuse.repository.RoleRepository;
