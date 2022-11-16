@@ -80,17 +80,71 @@ public class SpringAuthApplication implements CommandLineRunner {
 		UserRole ur1 = userRoleRepository.findFirstByUserId(super_admin.getId()).get();
 		ur1.setStatus(1);
 
+		userRoleRepository.save(ur1);
+
 		UserRole ur2 = userRoleRepository.findFirstByUserId(admin.getId()).get();
 		ur2.setStatus(1);
+
+		userRoleRepository.save(ur2);
 
 		UserRole ur3 = userRoleRepository.findFirstByUserId(savManger.getId()).get();
 		ur3.setStatus(1);
 
+		userRoleRepository.save(ur3);
+
 		UserRole ur4 = userRoleRepository.findFirstByUserId(savTechnician.getId()).get();
-		ur4.setStatus(1);
+		ur1.setStatus(1);
+
+		userRoleRepository.save(ur4);
 
 		UserRole ur5 = userRoleRepository.findFirstByUserId(scooterOwner.getId()).get();
 		ur5.setStatus(1);
+
+		userRoleRepository.save(ur5);
+
+		// UserRole ur1 = userRoleRepository.findFirstByUser(super_admin.getId()).get();
+		// ur1.setRole(superAdminRole);
+		// ur1.setStatus(1);
+		// userRoleRepository.save(ur1);
+
+		// UserRole ur2 = userRoleRepository.findFirstByUser(super_admin.getId()).get();
+		// ur2.setRole(superAdminRole);
+		// ur2.setStatus(1);
+		// userRoleRepository.save(ur2);
+
+		// UserRole ur3 = userRoleRepository.findFirstByUser(super_admin.getId()).get();
+		// ur3.setRole(superAdminRole);
+		// ur3.setStatus(1);
+		// userRoleRepository.save(ur3);
+
+		// UserRole ur4 = userRoleRepository.findFirstByUser(super_admin.getId()).get();
+		// ur4.setRole(superAdminRole);
+		// ur4.setStatus(1);
+		// userRoleRepository.save(ur4);
+
+		// UserRole ur5 = userRoleRepository.findFirstByUser(super_admin.getId()).get();
+		// ur5.setRole(superAdminRole);
+		// ur5.setStatus(1);
+		// userRoleRepository.save(ur5);
+		// UserRole ur2 = userRoleRepository.findFirstByUser(admin.getId()).get();
+		// ur2.setStatus(1);
+
+		// UserRole ur3 = userRoleRepository.findFirstByUser(savManger.getId()).get();
+		// ur3.setStatus(1);
+
+		// UserRole ur4 =
+		// userRoleRepository.findFirstByUser(savTechnician.getId()).get();
+		// ur4.setStatus(1);
+
+		// UserRole ur5 =
+		// userRoleRepository.findFirstByUser(scooterOwner.getId()).get();
+		// ur5.setStatus(1);
+
+		// userRoleRepository.save(ur1);
+		// userRoleRepository.save(ur2);
+		// userRoleRepository.save(ur3);
+		// userRoleRepository.save(ur4);
+		// userRoleRepository.save(ur5);
 
 	}
 

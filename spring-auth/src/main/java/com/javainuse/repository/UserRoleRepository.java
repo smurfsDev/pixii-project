@@ -10,6 +10,6 @@ import com.javainuse.entities.UserRole;
 @EnableJpaRepositories
 public interface UserRoleRepository extends JpaRepository<UserRole, Integer> {
 
-    Optional<UserRole> findFirstByUserId(Integer integer);
+    Optional<UserRole> findFirstByUserId(int userId);
 
 }

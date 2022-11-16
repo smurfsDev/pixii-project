@@ -20,6 +20,7 @@ import net.minidev.json.JSONObject;
 
 import com.javainuse.config.JwtTokenUtil;
 import com.javainuse.config.WebSecurityConfig;
+import com.javainuse.entities.Role;
 import com.javainuse.entities.User;
 import com.javainuse.entities.UserRole;
 import com.javainuse.model.JwtRequest;
@@ -87,43 +88,92 @@ public class JwtAuthenticationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
 
-    public ResponseEntity<JSONObject> saveUser(@RequestBody User newUser, @RequestBody Long idRole) {
+    public ResponseEntity<JSONObject> saveUser(@RequestBody JSONObject user) {
 
         User appUser = new User();
-        if (userRepository.findUserWithName(newUser.getUsername()).isPresent() == true) {
+        user.get("username");
+        if (userRepository.findUserWithName(user.get("username").toString()).isPresent() == true) {
             JSONObject item = new JSONObject();
             item.put("message", "User already exists");
             item.put("status", HttpStatus.BAD_REQUEST.value());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
         }
-        if (!newUser.getPassword().equals(newUser.getConfirmPassword())) {
+        if (!user.get("password").toString().equals(user.get("confirmPassword").toString())) {
             JSONObject item = new JSONObject();
             item.put("message", "Please confirm Password");
             item.put("status", HttpStatus.BAD_REQUEST.value());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
         }
 
-        appUser.setUsername(newUser.getUsername());
-        appUser.setEmail(newUser.getEmail());
-        if (roleRepository.getById(idRole) != null) {
+        appUser.setUsername(user.get("username").toString());
+        appUser.setEmail(user.get("email").toString());
+        // if (roleRepository.getById(idRole) != null) {
 
-            appUser.getRoles().add(roleRepository.getById(idRole));
-        }
+        appUser.getRoles().add(roleRepository.findRoleWithName(user.get("role").toString()));
+        // }
 
-        appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(newUser.getPassword()));
-        User user = userRepository.save(appUser);
+        appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(user.get("password").toString()));
+        appUser.setConfirmPassword(WebSecurityConfig.passwordEncoder().encode(user.get("confirmPassword").toString()));
+        User newUser = userRepository.save(appUser);
 
+        Role newRole = roleRepository.findRoleWithName(user.get("role").toString());
         UserRole userRole = new UserRole();
 
-        userRole.setUser(user);
+        userRole.setUser(newUser);
+        userRole.setRole(newRole);
         userRoleRepository.save(userRole);
         JSONObject item = new JSONObject();
         item.put("message", "Account");
-        item.put("username", appUser.getUsername());
-        item.put("email", appUser.getEmail());
-        item.put("role", appUser.getRoles());
+        item.put("username", newUser.getUsername());
+        item.put("email", newUser.getEmail());
+        item.put("role", newUser.getRoles());
+        // item.put("role", appUser.getRoles());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(item);
 
     }
+
+    // @RequestMapping(value = "/register", method = RequestMethod.POST)
+
+    // public ResponseEntity<JSONObject> saveUser(@RequestBody User newUser,
+    // @RequestBody Long idRole) {
+
+    // User appUser = new User();
+    // if (userRepository.findUserWithName(newUser.getUsername()).isPresent() ==
+    // true) {
+    // JSONObject item = new JSONObject();
+    // item.put("message", "User already exists");
+    // item.put("status", HttpStatus.BAD_REQUEST.value());
+    // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+    // }
+    // if (!newUser.getPassword().equals(newUser.getConfirmPassword())) {
+    // JSONObject item = new JSONObject();
+    // item.put("message", "Please confirm Password");
+    // item.put("status", HttpStatus.BAD_REQUEST.value());
+    // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+    // }
+
+    // appUser.setUsername(newUser.getUsername());
+    // appUser.setEmail(newUser.getEmail());
+    // if (roleRepository.getById(idRole) != null) {
+
+    // appUser.getRoles().add(roleRepository.getById(idRole));
+    // }
+
+    // appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(newUser.getPassword()));
+    // User user = userRepository.save(appUser);
+
+    // UserRole userRole = new UserRole();
+
+    // userRole.setUser(user);
+    // userRoleRepository.save(userRole);
+    // JSONObject item = new JSONObject();
+    // item.put("message", "Account");
+    // item.put("username", appUser.getUsername());
+    // item.put("email", appUser.getEmail());
+    // item.put("role", appUser.getRoles());
+
+    // return ResponseEntity.status(HttpStatus.CREATED).body(item);
+
+    // }
 }
