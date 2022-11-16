@@ -1,13 +1,7 @@
+@import '../../../app.component.scss';
 .gradient-custom-2 {
-  /* fallback for old browsers */
-  background: #29375B;
-
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-linear-gradient(to right, #29375B, #21272D);
-
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: linear-gradient(to right, #29375B, #21272D);
-  color: #fff;
+  background: $gradient;
+  color: $main-text-color;
   /* font Poppins */
   font-family: 'Poppins', sans-serif;
   }
@@ -24,6 +18,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     height: 100vh;
     .title{
       margin-top: 5em;
@@ -32,8 +27,7 @@
       /* center */
       display: flex;
       justify-content: center;
-      // align-items: center;
-      margin: 0 auto;
+      width: 50%;
       .input-container {
         display: flex;
         align-items: center;
@@ -41,6 +35,7 @@
         margin-bottom: 15px;
         border-bottom: 2px solid #d9d9d9;
           input {
+            margin-left: 15px;
             padding: 10px;
             width: 100%;
             background: transparent;
