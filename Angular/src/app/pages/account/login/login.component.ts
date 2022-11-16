@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,6 +8,7 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   hide = true;
+  loginForm : FormGroup;
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]+)$')]);
   getEmailErrorMessage() {
@@ -25,9 +26,19 @@ export class LoginComponent implements OnInit {
     }
       return 'Password must contain at least one uppercase letter, one lowercase letter and one number';
   }
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) {
+    this.loginForm = this.formBuilder.group({
+      email: this.email,
+      password: this.password
+    });
+  }
 
   ngOnInit(): void {
+    // error messages of the form hide
+
+  }
+  onSubmit() {
+    console.log(this.loginForm.value);
   }
 
 }

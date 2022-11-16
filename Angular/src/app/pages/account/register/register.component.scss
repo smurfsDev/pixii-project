@@ -20,12 +20,16 @@
     display: flex;
     justify-content: space-between;
   }
-
+  .page{
+    background-color: #686868;
+  }
   .container{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100vh;
+
     .title{
       margin-top: 5em;
     }
