@@ -114,14 +114,15 @@ public class JwtAuthenticationController {
 
         appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(user.get("password").toString()));
         appUser.setConfirmPassword(WebSecurityConfig.passwordEncoder().encode(user.get("confirmPassword").toString()));
+        Role newRole = roleRepository.findRoleWithName(user.get("role").toString());
+        appUser.getRoles().add(newRole);
         User newUser = userRepository.save(appUser);
 
-        Role newRole = roleRepository.findRoleWithName(user.get("role").toString());
-        UserRole userRole = new UserRole();
+        // UserRole userRole = new UserRole();
 
-        userRole.setUser(newUser);
-        userRole.setRole(newRole);
-        userRoleRepository.save(userRole);
+        // userRole.setUser(newUser);
+        // userRole.setRole(newRole);
+        // userRoleRepository.save(userRole);
         JSONObject item = new JSONObject();
         item.put("message", "Account");
         item.put("username", newUser.getUsername());
