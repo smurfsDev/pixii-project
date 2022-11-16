@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { checkPassword } from '../form-validators';
 
 @Component({
   selector: 'app-register',
@@ -7,30 +9,15 @@ import {AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators}
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  registerForm: FormGroup;
   hide = true;
   hideConfirm = true;
   email = new FormControl('', [Validators.required, Validators.email]);
   userName = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]);
-  password = new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]+)$'), this.checkPassword('ConfirmPassword', false)]);
-  ConfirmPassword = new FormControl('', [Validators.required, this.checkPassword('password')]);
-  checkPassword(matchTo: string,reverse?: boolean): ValidatorFn {
-    return (control: AbstractControl):
-    ValidationErrors | null => {
-      if (control.parent && reverse) {
-        const c = (control.parent?.controls as any)[matchTo] as AbstractControl;
-        if (c) {
-          c.updateValueAndValidity();
-        }
-        return null;
-      }
-      return !!control.parent &&
-        !!control.parent.value &&
-        control.value ===
-        (control.parent?.controls as any)[matchTo].value
-        ? null
-        : { matching: true };
-    };
-  }
+  password = new FormControl('', [Validators.required, Validators.minLength(8),
+                                  Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]+)$')
+                                  ,checkPassword('ConfirmPassword', true)]);
+  ConfirmPassword = new FormControl('', [Validators.required,checkPassword('password')]);
   getEmailErrorMessage() {
     if (this.email.hasError('required')) {
       return 'You must enter a value';
@@ -74,9 +61,20 @@ export class RegisterComponent implements OnInit {
     return 'Password must contain at least one uppercase letter, one lowercase letter and one number';
   }
 
-  constructor() { }
+  constructor( private formBuilder: FormBuilder) {
+    this.registerForm = this.formBuilder.group({
+      email: this.email,
+      userName: this.userName,
+      password: this.password,
+      ConfirmPassword: this.ConfirmPassword
+    }, {validator: checkPassword('password')});
+
+  }
 
   ngOnInit(): void {
+  }
+  onSubmit() {
+    console.log(this.registerForm.value);
   }
 
 }
