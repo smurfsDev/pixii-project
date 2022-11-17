@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:mobile/service/auth.dart';
+import 'package:mobile/ui/components/alert.dart';
 import 'package:mobile/ui/components/input.dart';
 import 'package:mobile/utils/validators/email.dart';
 import 'package:mobile/utils/validators/password.dart';
-
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -16,12 +18,13 @@ class Login extends StatefulWidget {
 
 class _LoginPageState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
-  String email = "";
-  String password = "";
+  String email = "admin@email.com";
+  String password = "Password123";
   bool rememberMe = false;
-
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -167,9 +170,17 @@ class _LoginPageState extends State<Login> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    sendForm();
+                                    setState(() {
+                                      loading = true;
+                                    });
+                                    sendForm(authService);
                                   },
-                                  child: Text(
+                                  child: 
+                                  loading?
+                                  CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ):
+                                  Text(
                                     'Login',
                                     style: TextStyle(
                                         fontSize: 25.0, color: Colors.white),
@@ -212,13 +223,17 @@ class _LoginPageState extends State<Login> {
     );
   }
 
-  void sendForm() {
+  void sendForm(AuthService auth) async {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Username : $email , Password : $password"),
-        ),
-      );
+      final loginOK = await auth.login(email, password);
+      setState(() {
+        loading = false;
+      });
+      if (loginOK) {
+        showAlert(context, 'Login Success', auth.user!.name);
+      } else {
+        showAlert(context, 'Login Failed', auth.error);
+      }
     }
   }
 }
