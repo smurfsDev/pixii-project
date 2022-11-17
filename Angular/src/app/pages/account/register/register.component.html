@@ -14,7 +14,8 @@
               <label class="form-label">Email</label>
               <div class="input-container">
                 <mat-icon class="icon col-4">email</mat-icon>
-                <input  matInput
+                <input  class="input"
+                        matInput
                         placeholder="Enter your email address"
                         [formControl]="email"
                         required>
@@ -25,7 +26,8 @@
               <label class="form-label">UserName</label>
               <div class="input-container">
                 <mat-icon class="icon col-4">person</mat-icon>
-                <input matInput
+                <input  class="input"
+                        matInput
                         placeholder="Enter your userName"
                         [formControl]="userName"
                         required>
@@ -33,16 +35,31 @@
               <mat-error *ngIf="userName.invalid">{{getUserNameErrorMessage()}}</mat-error>
             </div>
             <div class="form-outline mb-4">
+              <label class="form-label">Role</label>
+              <div class="input-container">
+                <mat-icon class="icon col-4">person</mat-icon>
+                <mat-select class="input"
+                            matInput
+                            placeholder="Select your role"
+                            [formControl]="role"
+                            required>
+                  <mat-option value="admin">Admin</mat-option>
+                  <mat-option value="user">User</mat-option>
+                </mat-select>
+              </div>
+              <mat-error *ngIf="role.invalid">{{getRoleErrorMessage()}}</mat-error>
+            </div>
+            <div class="form-outline mb-4">
               <label class="form-label">Password</label>
               <div class="input-container">
                 <mat-icon class="icon col-4">lock</mat-icon>
-                <input
-                      matInput
-                      [type]="hide ? 'password' : 'text'"
-                      placeholder="Enter your password"
-                      formControlName="password"
-                      [formControl]="password"
-                      required>
+                <input  class="input"
+                        matInput
+                        [type]="hide ? 'password' : 'text'"
+                        placeholder="Enter your password"
+                        formControlName="password"
+                        [formControl]="password"
+                        required>
                 <button mat-icon-button
                         matSuffix
                         (click)="hide = !hide"
@@ -57,13 +74,13 @@
               <label class="form-label">Confirm Password</label>
               <div class="input-container">
                 <mat-icon class="icon col-4">lock</mat-icon>
-                <input
-                      matInput
-                      [type]="hideConfirm ? 'password' : 'text'"
-                      formControlName="ConfirmPassword"
-                      placeholder="Confirm your password"
-                      [formControl]="ConfirmPassword"
-                      required>
+                <input  class="input"
+                        matInput
+                        [type]="hideConfirm ? 'password' : 'text'"
+                        formControlName="ConfirmPassword"
+                        placeholder="Confirm your password"
+                        [formControl]="ConfirmPassword"
+                        required>
                 <button mat-icon-button
                         matSuffix
                         (click)="hideConfirm = !hideConfirm"
