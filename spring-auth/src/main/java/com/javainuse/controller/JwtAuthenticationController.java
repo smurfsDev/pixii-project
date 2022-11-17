@@ -72,6 +72,9 @@ public class JwtAuthenticationController {
         JSONObject item = new JSONObject();
         item.put("token", returned_token);
         item.put("username", authenticationRequest.getUsername());
+        item.put("name", userRepository.findUserWithName(authenticationRequest.getUsername()).get().getName());
+        item.put("id", userRepository.findUserWithName(authenticationRequest.getUsername()).get().getId());
+        item.put("role", userRepository.findUserWithName(authenticationRequest.getUsername()).get().getRoles());
         return item;
 
     }
@@ -135,6 +138,12 @@ public class JwtAuthenticationController {
 
     }
 
+    @RequestMapping(value = "/roles", method = RequestMethod.GET)
+    public ResponseEntity<JSONObject> getRoles() {
+        JSONObject item = new JSONObject();
+        item.put("roles", roleRepository.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(item);
+    }
     // @RequestMapping(value = "/register", method = RequestMethod.POST)
 
     // public ResponseEntity<JSONObject> saveUser(@RequestBody User newUser,
