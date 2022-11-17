@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-
+import { LoginService } from 'src/app/service/account/login.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     }
     return '';
     }
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder , private LoginService: LoginService) {
     this.loginForm = this.formBuilder.group({
       email: this.email,
       password: this.password
@@ -48,7 +48,12 @@ export class LoginComponent implements OnInit {
   }
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
+      this.LoginService.login(this.loginForm.value).subscribe((data: any) => {
+        console.log(data);
+      }, (error: any) => {
+        console.log(error);
+      }
+      );
     }
     else {
       console.log('invalid');
