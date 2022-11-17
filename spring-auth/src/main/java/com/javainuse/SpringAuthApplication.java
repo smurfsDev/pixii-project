@@ -37,27 +37,22 @@ public class SpringAuthApplication implements CommandLineRunner {
 		Role role4 = new Role("SAV Technician");
 		Role role5 = new Role("Scooter Owner");
 
-		User user1 = new User("Super Admin", "superadmin@email.com",
-				"$2y$10$15weT0pr4JZFgw/K1Xg.5uYprLAYNmURKvetpugUSqkZ3RRprBh4q",
-				"$2y$10$15weT0pr4JZFgw/K1Xg.5uYprLAYNmURKvetpugUSqkZ3RRprBh4q");
+		User user1 = new User("superadmin@email.com", "Super Admin",
+				"$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS");
 
 		User user2 = userRepository
-				.save(new User("Admin", "admin@email.com",
-						"$2y$10$15weT0pr4JZFgw/K1Xg.5uYprLAYNmURKvetpugUSqkZ3RRprBh4q",
-						"$2y$10$15weT0pr4JZFgw/K1Xg.5uYprLAYNmURKvetpugUSqkZ3RRprBh4q"));
+				.save(new User("admin@email.com", "Admin",
+						"$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS"));
 
 		User user3 = userRepository
-				.save(new User("SAV manager", "savmanager@email.com",
-						"$2y$10$15weT0pr4JZFgw/K1Xg.5uYprLAYNmURKvetpugUSqkZ3RRprBh4q",
-						"$2y$10$15weT0pr4JZFgw/K1Xg.5uYprLAYNmURKvetpugUSqkZ3RRprBh4q"));
+				.save(new User("savmanager@email.com", "SAV Manager",
+						"$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS"));
 		User user4 = userRepository
-				.save(new User("SAV Technician", "savtechnician@email.com",
-						"$2y$10$15weT0pr4JZFgw/K1Xg.5uYprLAYNmURKvetpugUSqkZ3RRprBh4q",
-						"$2y$10$15weT0pr4JZFgw/K1Xg.5uYprLAYNmURKvetpugUSqkZ3RRprBh4q"));
+				.save(new User("savtechnician@email.com", "SAV Technician",
+						"$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS"));
 		User user5 = userRepository
-				.save(new User("scooter owner", "scooterowner@email.com",
-						"$2y$10$15weT0pr4JZFgw/K1Xg.5uYprLAYNmURKvetpugUSqkZ3RRprBh4q",
-						"$2y$10$15weT0pr4JZFgw/K1Xg.5uYprLAYNmURKvetpugUSqkZ3RRprBh4q"));
+				.save(new User("scooterowner@email.com", "Scooter Owner",
+						"$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS"));// password = Password123
 
 		Role superAdminRole = roleRepository.save(role1);
 		Role adminRole = roleRepository.save(role2);

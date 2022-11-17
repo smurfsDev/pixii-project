@@ -91,8 +91,8 @@ public class JwtAuthenticationController {
     public ResponseEntity<JSONObject> saveUser(@RequestBody JSONObject user) {
 
         User appUser = new User();
-        user.get("username");
-        if (userRepository.findUserWithName(user.get("username").toString()).isPresent() == true) {
+        user.get("email");
+        if (userRepository.findUserWithName(user.get("email").toString()).isPresent() == true) {
             JSONObject item = new JSONObject();
             item.put("message", "User already exists");
             item.put("status", HttpStatus.BAD_REQUEST.value());
@@ -105,15 +105,16 @@ public class JwtAuthenticationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
         }
 
-        appUser.setUsername(user.get("username").toString());
-        appUser.setEmail(user.get("email").toString());
+        appUser.setUsername(user.get("email").toString());
+        appUser.setName(user.get("name").toString());
+        // appUser.setEmail(user.get("email").toString());
         // if (roleRepository.getById(idRole) != null) {
 
         appUser.getRoles().add(roleRepository.findRoleWithName(user.get("role").toString()));
         // }
 
         appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(user.get("password").toString()));
-        appUser.setConfirmPassword(WebSecurityConfig.passwordEncoder().encode(user.get("confirmPassword").toString()));
+        // appUser.setConfirmPassword(WebSecurityConfig.passwordEncoder().encode(user.get("confirmPassword").toString()));
         Role newRole = roleRepository.findRoleWithName(user.get("role").toString());
         appUser.getRoles().add(newRole);
         User newUser = userRepository.save(appUser);
@@ -126,7 +127,7 @@ public class JwtAuthenticationController {
         JSONObject item = new JSONObject();
         item.put("message", "Account");
         item.put("username", newUser.getUsername());
-        item.put("email", newUser.getEmail());
+        // item.put("email", newUser.getEmail());
         item.put("role", newUser.getRoles());
         // item.put("role", appUser.getRoles());
 

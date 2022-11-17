@@ -28,7 +28,7 @@ public class User {
     // private @Id @GeneratedValue Integer id;
     private String username;
 
-    private String email;
+    private String name;
     private String password;
     private String confirmPassword;
 
@@ -37,20 +37,22 @@ public class User {
 
     private Set<Role> roles = new HashSet<>();
 
-    public User(String username, String email, String password, String confirmPassword, Set<Role> roles) {
+    public User(String username, String password, String name, String confirmPassword, Set<Role> roles) {
         this.username = username;
-        this.email = email;
+        this.name = name;
+        // this.email = email;
         this.password = password;
         this.confirmPassword = confirmPassword;
         this.roles = roles;
     }
 
-    public User(String username, String email, String password, String confirmPassword) {
+    public User(String username, String name, String password) {
 
         this.username = username;
-        this.email = email;
+        this.name = name;
+        // this.email = email;
         this.password = password;
-        this.confirmPassword = confirmPassword;
+        // this.confirmPassword = confirmPassword;
     }
 
     public User() {
@@ -64,8 +66,8 @@ public class User {
         this.username = username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPassword(String password) {
@@ -84,8 +86,8 @@ public class User {
         return username;
     }
 
-    public String getEmail() {
-        return email;
+    public String getName() {
+        return name;
     }
 
     public String getPassword() {
