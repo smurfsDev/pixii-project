@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { checkPassword } from '../form-validators';
+import { RegisterService } from 'src/app/service/account/register.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -12,13 +14,15 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   hide = true;
   hideConfirm = true;
+  roles: any = [];
+
   email = new FormControl('', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,10}$')]);
   userName = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]);
   password = new FormControl('', [Validators.required, Validators.minLength(8),
                                   Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]+)$')
                                   ,checkPassword('ConfirmPassword', true)]);
   ConfirmPassword = new FormControl('', [Validators.required,checkPassword('password')]);
-  role = new FormControl('', [Validators.required]);
+  roleInput = new FormControl('');
   getEmailErrorMessage() {
     if (this.email.touched) {
       if (this.email.hasError('required')) {
@@ -74,31 +78,35 @@ export class RegisterComponent implements OnInit {
     return '';
   }
   getRoleErrorMessage() {
-    if (this.role.touched) {
-      if (this.role.hasError('required')) {
+    if (this.roleInput.touched) {
+      if (this.roleInput.hasError('required')) {
         return 'You must enter a value';
       }
       return 'Not a valid role';
     }
     return '';
   }
-  constructor( private formBuilder: FormBuilder) {
+  constructor( private formBuilder: FormBuilder, private RegisterService: RegisterService , private router: Router) {
     this.registerForm = this.formBuilder.group({
       email: this.email,
-      userName: this.userName,
+      name: this.userName,
       password: this.password,
-      ConfirmPassword: this.ConfirmPassword
-    }, {validator: checkPassword('password')});
-
+      role: this.roleInput,
+      confirmPassword: this.ConfirmPassword
+    });
 
   }
 
   ngOnInit(): void {
+    this.fetchRoles();
   }
   onSubmit() {
-    //submit the form if it is valid
     if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
+      this.RegisterService.register(this.registerForm.value).subscribe((data: any) => {
+        console.log(data);
+        this.router.navigate(['/login']);
+      });
+      this.ConfirmPassword.reset();
     }
     else {
       console.log('Form is invalid');
@@ -106,7 +114,15 @@ export class RegisterComponent implements OnInit {
       this.userName.markAsTouched();
       this.password.markAsTouched();
       this.ConfirmPassword.markAsTouched();
+      this.roleInput.markAsTouched();
     }
+  }
+  fetchRoles() {
+    this.RegisterService.fetchRoles().subscribe((data: any) => {
+      this.roles = data.roles;
+      console.log(this.roles);
+    }
+    );
   }
 
 }

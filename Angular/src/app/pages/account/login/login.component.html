@@ -13,11 +13,11 @@
                 <mat-icon class="icon col-4">email</mat-icon>
                 <input matInput
                         placeholder="Enter your email address"
-                        [formControl]="email"
-                        formControlName="email"
+                        [formControl]="username"
+                        formControlName="username"
                         required>
               </div>
-              <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+              <mat-error *ngIf="username.invalid">{{getEmailErrorMessage()}}</mat-error>
             </div>
 
             <div class="form-outline mb-4">

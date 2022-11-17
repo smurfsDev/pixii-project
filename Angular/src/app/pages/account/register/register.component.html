@@ -41,13 +41,12 @@
                 <mat-select class="input"
                             matInput
                             placeholder="Select your role"
-                            [formControl]="role"
+                            [formControl]="roleInput"
                             required>
-                  <mat-option value="admin">Admin</mat-option>
-                  <mat-option value="user">User</mat-option>
+                  <mat-option *ngFor="let role of roles" [value]="role.name">{{role.name}}</mat-option>
                 </mat-select>
               </div>
-              <mat-error *ngIf="role.invalid">{{getRoleErrorMessage()}}</mat-error>
+              <mat-error *ngIf="roleInput.invalid">{{getRoleErrorMessage()}}</mat-error>
             </div>
             <div class="form-outline mb-4">
               <label class="form-label">Password</label>
