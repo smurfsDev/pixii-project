@@ -1,12 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/material.dart';
-import 'package:mobile/service/auth.dart';
-import 'package:mobile/ui/components/alert.dart';
-import 'package:mobile/ui/components/input.dart';
-import 'package:mobile/utils/validators/email.dart';
-import 'package:mobile/utils/validators/password.dart';
-import 'package:provider/provider.dart';
+
+import 'package:mobile/imports.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -60,7 +55,7 @@ class _LoginPageState extends State<Login> {
                           width: 60,
                         ),
                         SizedBox(
-                          height: 80.0,
+                          height: MediaQuery.of(context).size.height * 0.1,
                         ),
                         Padding(
                           padding: EdgeInsets.only(
@@ -170,21 +165,18 @@ class _LoginPageState extends State<Login> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    setState(() {
-                                      loading = true;
-                                    });
                                     sendForm(authService);
                                   },
-                                  child: 
-                                  loading?
-                                  CircularProgressIndicator(
-                                    color: Colors.white,
-                                  ):
-                                  Text(
-                                    'Login',
-                                    style: TextStyle(
-                                        fontSize: 25.0, color: Colors.white),
-                                  ),
+                                  child: loading
+                                      ? CircularProgressIndicator(
+                                          color: Colors.white,
+                                        )
+                                      : Text(
+                                          'Login',
+                                          style: TextStyle(
+                                              fontSize: 25.0,
+                                              color: Colors.white),
+                                        ),
                                 ),
                               ),
                               SizedBox(height: 20.0),
@@ -225,6 +217,9 @@ class _LoginPageState extends State<Login> {
 
   void sendForm(AuthService auth) async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        loading = true;
+      });
       final loginOK = await auth.login(email, password);
       setState(() {
         loading = false;
