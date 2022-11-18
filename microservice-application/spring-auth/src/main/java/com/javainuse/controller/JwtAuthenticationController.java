@@ -71,7 +71,8 @@ public class JwtAuthenticationController {
                 HttpStatus.OK);
         JSONObject item = new JSONObject();
         item.put("token", returned_token);
-        item.put("username", authenticationRequest.getUsername());
+        item.put("user", userRepository.findUserWithName(authenticationRequest.getUsername()).get());
+        // item.put("username", authenticationRequest.getUsername());
         return item;
 
     }
