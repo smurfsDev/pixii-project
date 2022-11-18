@@ -1,6 +1,7 @@
 import claim from "./models/claim.model";
 import comment from "./models/comments.model";
 import status from "./models/status.model";
+import User from "./models/user.model";
 
 export const seed = async () => {
 	console.log('Seeding...');
@@ -39,7 +40,7 @@ export const seed = async () => {
 		await claim1.save();
 		await claim2.save();
 		await claim3.save();
-		
+
 	}
 
 	console.log('Seeding done');
