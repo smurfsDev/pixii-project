@@ -2,17 +2,30 @@ import "package:mobile/imports.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initialization(null);
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-Future initialization(BuildContext? context) async {
-  //  Load Resources
-  await Future.delayed(Duration(seconds: 3));
-}
-
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Widget main = const Loading();
+  @override
+  initState() {
+    super.initState();
+    Future.delayed(
+      const Duration(seconds: 3),
+      () => setState(
+        () {
+          main = const Login();
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +34,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthService()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: white,
         ),
-        home: const Login(),
+        home: MainLayout(child: main),
       ),
     );
   }
