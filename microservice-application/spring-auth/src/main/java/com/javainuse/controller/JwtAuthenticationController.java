@@ -127,9 +127,8 @@ public class JwtAuthenticationController {
         // userRoleRepository.save(userRole);
         JSONObject item = new JSONObject();
         item.put("message", "Account");
-        item.put("username", newUser.getUsername());
-        // item.put("email", newUser.getEmail());
-        item.put("role", newUser.getRoles());
+        item.put("user", userRepository.findUserWithName(newUser.getUsername()).get());
+
         // item.put("role", appUser.getRoles());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(item);
