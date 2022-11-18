@@ -2,3 +2,14 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.mat-tab-label-active{
+	background-color: rgb(174, 189, 221);
+	color: rgb(53,77,120)!important;
+	border-radius: 9px 9px 0 0;
+}
+
+.mat-tab-label {
+	color: white;
+}
