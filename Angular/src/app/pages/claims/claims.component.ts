@@ -37,6 +37,23 @@ export class ClaimsComponent implements OnInit {
 				message: `Lorem ipsum dolor sit amet consectetur adipisicing elit. In quae ex, tempore consequuntur labore`,
 				created: "2022-01-01"
 			},
+		],
+		_status : [
+			{
+				"old_status": "Done",
+				"new_status": "In Progress",
+				"date": "2022-11-16T19:10:56.107Z"
+			},
+			{
+				"old_status": "In Progress",
+				"new_status": "Stuck",
+				"date": "2022-11-16T19:10:56.107Z"
+			},
+			{
+				"old_status": "Stuck",
+				"new_status": "In Progress",
+				"date": "2022-11-16T19:10:56.107Z"
+			},
 		]
 	};
 	opened = false;
@@ -53,6 +70,21 @@ export class ClaimsComponent implements OnInit {
 		this.claimsService.getClaim(id).subscribe((data: any) => {
 			this.claim = data;
 			this.claim.status = data.status.name;
+			let _status : {
+				old_status: string,
+				new_status: string,
+				date: string
+			}[] = [];
+			data._status.forEach((element: any) => {
+				_status.push({
+					old_status: element.old_status.name,
+					new_status: element.new_status.name,
+					date: element.date
+				});
+			}
+			);
+			this.claim._status = _status;
+			
 		});
 	}
 
