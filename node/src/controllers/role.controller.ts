@@ -17,17 +17,24 @@ export const findAll = (req: Request, res: Response) => {
 };
 // create
 export const create = (req: Request, res: Response) => {
+    console.log(req.body);
     const role = new Role(req.body);
+    role.save((err, role) => {
+        if (err) res.status(500).send(err)
 
-    role.save((err: any) => {
-        if (err) return res.status(500).send(err);
-        else {
-            const role = Role.findByIdAndUpdate(req.body.role, (err: any, role: any) => {
-                if (err) return res.status(500).send(err);
-                else return res.status(200).send(role);
-            });
-        };
+        else res.send(role)
     })
+    // role.save(req.body);
+    // role.save((err: any) => {
+    //     if (err) return console.log(err);
+    //     else {
+    //         // const role = Role.findByIdAndUpdate(req.body.role, (err: any, role: any) => {
+    //         //     if (err) return res.status(500).send(err);
+    //         //     else return res.status(200).send(role);
+    //         // });
+    //         role.save(req.body)
+    //     };
+    // })
 
 };
 

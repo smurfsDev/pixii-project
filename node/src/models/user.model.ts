@@ -6,7 +6,7 @@ let userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     password: { type: String, required: true },
     role: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.String,
         ref: "role",
     }]
 

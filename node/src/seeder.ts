@@ -1,5 +1,6 @@
 import claim from "./models/claim.model";
 import comment from "./models/comments.model";
+import Role from "./models/role.model";
 import status from "./models/status.model";
 import User from "./models/user.model";
 
@@ -42,6 +43,30 @@ export const seed = async () => {
 		await claim3.save();
 
 	}
+
+	const role1 = new Role({ name: 'Admin' });
+	const role2 = new Role({ name: 'Super Admin' });
+	const role3 = new Role({ name: 'SAV Manager' });
+	const role4 = new Role({ name: 'SAV Technician' });
+	const role5 = new Role({ name: 'Scooter Owner' });
+	await role1.save();
+	await role2.save();
+	await role3.save();
+	await role4.save();
+	await role5.save();
+
+
+	const user1 = new User({ name: 'Super Admin', username: 'superadmin@email.com', password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS' });
+	const user2 = new User({ name: 'Admin', username: 'admin@email.com', password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS' });
+	const user3 = new User({ name: 'SAV Manager', username: 'savmanager@email.com', password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS' });
+	const user4 = new User({ name: 'SAV Technician', username: 'savtechnician@email.com', password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS' });
+	const user5 = new User({ name: 'Scooter Owner', username: 'scooterowner@email.com', password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS' });
+
+	await user1.save();
+	await user2.save();
+	await user3.save();
+	await user4.save();
+	await user5.save();
 
 	console.log('Seeding done');
 

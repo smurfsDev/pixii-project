@@ -19,15 +19,20 @@ import User from "../models/user.model";
 // create
 export const create = (req: Request, res: Response) => {
     const user = new User(req.body);
+    console.log(user);
+    user.save((err, user) => {
+        if (err) res.status(500).send(err)
 
-    user.save((err: any) => {
-        if (err) return res.status(500).send(err);
-        else {
-            const user = User.findByIdAndUpdate(req.body.user, (err: any, user: any) => {
-                if (err) return res.status(500).send(err);
-                else return res.status(200).send(user);
-            });
-        };
+        else res.send(user)
     })
+    // user.save((err: any) => {
+    //     // if (err) return res.status(500).send(err);
+    //     // else {
+    //     const user = User.findByIdAndUpdate(req.body.user, (err: any, user: any) => {
+    //         if (err) return res.status(500).send(err);
+    //         else return res.status(200).send(user);
+    //     });
+    //     // };
+    // })
 
 };
