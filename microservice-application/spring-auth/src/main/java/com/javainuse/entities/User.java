@@ -30,19 +30,19 @@ public class User {
 
     private String name;
     private String password;
-    private String confirmPassword;
+    // private String confirmPassword;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 
     private Set<Role> roles = new HashSet<>();
 
-    public User(String username, String password, String name, String confirmPassword, Set<Role> roles) {
+    public User(String username, String password, String name, Set<Role> roles) {
         this.username = username;
         this.name = name;
         // this.email = email;
         this.password = password;
-        this.confirmPassword = confirmPassword;
+        // this.confirmPassword = confirmPassword;
         this.roles = roles;
     }
 
@@ -74,9 +74,9 @@ public class User {
         this.password = password;
     }
 
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
+    // public void setConfirmPassword(String confirmPassword) {
+    // this.confirmPassword = confirmPassword;
+    // }
 
     public Integer getId() {
         return id;
@@ -94,9 +94,9 @@ public class User {
         return password;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
+    // public String getConfirmPassword() {
+    // return confirmPassword;
+    // }
 
     public Set<Role> getRoles() {
         return roles;

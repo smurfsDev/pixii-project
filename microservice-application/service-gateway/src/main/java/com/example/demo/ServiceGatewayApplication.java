@@ -15,23 +15,30 @@ public class ServiceGatewayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceGatewayApplication.class, args);
 	}
-	@Bean
-	 RouteLocator routes1(RouteLocatorBuilder builder) {
-	 return builder.routes().route(r ->
-	r.path("/authenticate/**").uri("http://localhost:8081")).build();
-	 }
-	
-	/*@Bean
-	 RouteLocator routes(RouteLocatorBuilder builder) {
-	 return builder.routes().route(r ->
-	r.path("/auth/**").uri("lb://SERVICE-AUTH")).build();
-	 } 
 
 	@Bean
-	DiscoveryClientRouteDefinitionLocator
-	dynamicRoutes(ReactiveDiscoveryClient rdc,DiscoveryLocatorProperties
-	dlp) {
-	return new DiscoveryClientRouteDefinitionLocator(rdc, dlp);
-	}*/
+	RouteLocator routesLogin(RouteLocatorBuilder builder) {
+		return builder.routes().route(r -> r.path("/authenticate/**").uri("http://localhost:8081")).build();
+	}
+
+	@Bean
+	RouteLocator routesRegister(RouteLocatorBuilder builder) {
+		return builder.routes().route(r -> r.path("/register/**").uri("http://localhost:8081")).build();
+	}
+
+	/*
+	 * @Bean
+	 * RouteLocator routes(RouteLocatorBuilder builder) {
+	 * return builder.routes().route(r ->
+	 * r.path("/auth/**").uri("lb://SERVICE-AUTH")).build();
+	 * }
+	 * 
+	 * @Bean
+	 * DiscoveryClientRouteDefinitionLocator
+	 * dynamicRoutes(ReactiveDiscoveryClient rdc,DiscoveryLocatorProperties
+	 * dlp) {
+	 * return new DiscoveryClientRouteDefinitionLocator(rdc, dlp);
+	 * }
+	 */
 
 }
