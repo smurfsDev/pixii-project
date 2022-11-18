@@ -1,9 +1,8 @@
 // To parse this JSON data, do
 //
 //     final loginResponse = loginResponseFromJson(jsonString);
-
+import "package:mobile/imports.dart";
 import 'dart:convert';
-import 'package:mobile/models/user.dart';
 
 LoginResponse loginResponseFromJson(String str) =>
     LoginResponse.fromJson(json.decode(str));

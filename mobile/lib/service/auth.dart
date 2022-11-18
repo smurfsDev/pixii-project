@@ -1,10 +1,6 @@
 import 'dart:convert';
 
-import 'package:mobile/global/env.dart';
-import 'package:mobile/models/login.dart';
-import 'package:mobile/models/user.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import "package:mobile/imports.dart";
 import 'package:http/http.dart' as http;
 
 class AuthService with ChangeNotifier {
@@ -24,25 +20,27 @@ class AuthService with ChangeNotifier {
     loggedIn = true;
 
     final request = {'username': username, 'password': password};
-    print(Environment.apiUrl);
-    print(jsonEncode(request));
-    print(request);
-    final response = await http.post(
-        Uri.parse('${Environment.apiUrl}/authenticate'),
-        body: jsonEncode(request),
-        headers: {'Content-Type': 'application/json'});
-    print(response.body);
-    loggedIn = false;
+    try {
+      final response = await http.post(
+          Uri.parse('${Environment.apiUrl}/authenticate'),
+          body: jsonEncode(request),
+          headers: {'Content-Type': 'application/json'});
+      loggedIn = false;
 
-    if (response.statusCode == 200) {
-      final data = loginResponseFromJson(response.body);
-      user = data.user;
+      if (response.statusCode == 200) {
+        final data = loginResponseFromJson(response.body);
+        user = data.user;
 
-      await _saveToStorage('token', data.token);
-      await _saveToStorage('user', jsonEncode(user.toJson()));
-      return true;
-    } else {
-      error = JsonDecoder().convert(response.body)['error'];
+        await _saveToStorage('token', data.token);
+        await _saveToStorage('user', jsonEncode(user.toJson()));
+        return true;
+      } else {
+        error = JsonDecoder().convert(response.body)['error'];
+        error = error;
+        return false;
+      }
+    } catch (e) {
+      error = e.toString();
       error = error;
       return false;
     }

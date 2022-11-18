@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:mobile/service/auth.dart';
-import 'package:mobile/theme/colors.dart';
-import 'package:mobile/ui/auth/login.dart';
-import 'package:provider/provider.dart';
+import "package:mobile/imports.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
