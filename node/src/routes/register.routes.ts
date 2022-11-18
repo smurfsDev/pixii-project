@@ -2,7 +2,7 @@ import { create } from '../controllers/register.controller';
 module.exports = (app: any) => {
 
 
-    // Create a new claim
+    // Create a new user
     app.post("/node/register", create);
 
 
