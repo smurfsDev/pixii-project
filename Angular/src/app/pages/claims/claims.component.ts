@@ -83,6 +83,9 @@ export class ClaimsComponent implements OnInit {
 				});
 			}
 			);
+			_status.sort((a: any, b: any) => {
+				return new Date(b.date).getTime() - new Date(a.date).getTime();
+			});
 			this.claim._status = _status;
 			
 		});
