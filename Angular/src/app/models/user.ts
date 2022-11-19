@@ -4,6 +4,5 @@ export class User {
     public name: String,
     public userName: String,
     public role: any,
-    public token: object,
   ) {}
 }
