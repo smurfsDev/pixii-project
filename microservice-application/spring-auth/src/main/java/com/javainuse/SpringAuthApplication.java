@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import com.javainuse.entities.Role;
 import com.javainuse.entities.User;
@@ -12,6 +13,7 @@ import com.javainuse.repository.RoleRepository;
 import com.javainuse.repository.UserRepository;
 import com.javainuse.repository.UserRoleRepository;
 
+@EnableFeignClients
 @SpringBootApplication
 public class SpringAuthApplication implements CommandLineRunner {
 
