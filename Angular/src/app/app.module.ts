@@ -15,15 +15,24 @@ import { HomeComponent } from './pages/home/home.component';
 import { DetailsComponent } from './pages/claims/details/details.component';
 import { RegisterComponent } from './pages/account/register/register.component';
 import { LoginComponent } from './pages/account/login/login.component';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { AuthState } from './store/auth/stase';
 @NgModule({
-	imports: [BrowserModule, FormsModule, DragDropModule, HttpClientModule,
+	imports: [
+    BrowserModule,
 		RouterModule.forRoot(AppRoutes),
-  BrowserAnimationsModule,
-  MaterialModule,
-  ReactiveFormsModule,
+    NgxsModule.forRoot([AuthState]),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsStoragePluginModule.forRoot(),
+    FormsModule, DragDropModule, HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    ReactiveFormsModule,
+],
 
-	],
 	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent],
-	bootstrap: [AppComponent]
+	bootstrap: [AppComponent],
 })
 export class AppModule { }
