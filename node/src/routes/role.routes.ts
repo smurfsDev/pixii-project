@@ -15,6 +15,8 @@ module.exports = (app: any) => {
     // Delete a role with roleId
     app.delete("/node/role/:id", remove);
 
+    // //find role by name
+    // app.get("/node/role/:name", getId);
 
 
 }

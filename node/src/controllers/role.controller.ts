@@ -64,4 +64,11 @@ export const findOne = (req: Request, res: Response) => {
     })
 };
 
+// export const getId = (req: Request, res: Response) => {
+
+//     let role = Role.findOne({ name: req.params.name });
+//     console.log(role);
+//     return res.status(200).send(role);
+// }
+
 
