@@ -1,4 +1,4 @@
-import { findAll, create, remove, findOne } from '../controllers/role.controller';
+import { findAll, create, remove, findOne, findRoleIdByName } from '../controllers/role.controller';
 module.exports = (app: any) => {
 
 
@@ -15,8 +15,8 @@ module.exports = (app: any) => {
     // Delete a role with roleId
     app.delete("/node/role/:id", remove);
 
-    // //find role by name
-    // app.get("/node/role/:name", getId);
+    //find role by name
+    app.get("/node/role/findName/:name", findRoleIdByName);
 
 
 }

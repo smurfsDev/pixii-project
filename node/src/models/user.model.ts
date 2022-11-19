@@ -7,7 +7,7 @@ let userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     // role: { type: String, required: true },
     roles: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.String,
         ref: "roles",
     }],
     status: {
