@@ -52,35 +52,27 @@ public class JwtAuthenticationController {
     UserRoleRepository userRoleRepository;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public JSONObject createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
-            throws Exception {
-
-        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequest.getUsername());
-
-        final String token = jwtTokenUtil.generateToken(userDetails);
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        // responseHeaders.setLocation(location);
-        responseHeaders.set("MyResponseHeader", "MyValue");
-        JwtResponse tkn = new JwtResponse(token);
-
-        ResponseEntity<String> returned_token = new ResponseEntity<String>(tkn.getToken(), responseHeaders,
-                HttpStatus.OK);
+    public JSONObject createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
         JSONObject item = new JSONObject();
-        item.put("token", returned_token);
-        item.put("username", authenticationRequest.getUsername());
-        item.put("name", userRepository.findUserWithName(authenticationRequest.getUsername()).get().getName());
-        item.put("id", userRepository.findUserWithName(authenticationRequest.getUsername()).get().getId());
-        item.put("role", userRepository.findUserWithName(authenticationRequest.getUsername()).get().getRoles());
-        return item;
-
+        try {
+            authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+            final UserDetails userDetails = userDetailsService
+                    .loadUserByUsername(authenticationRequest.getUsername());
+            final String token = jwtTokenUtil.generateToken(userDetails);
+            item.put("token", token);
+            item.put("user", userRepository.findUserWithName(authenticationRequest.getUsername()).get());
+            return new ResponseEntity<JSONObject>(item, HttpStatus.OK).getBody();
+        } catch (Exception e) {
+            item.put("error", e.getMessage());
+            return new ResponseEntity<JSONObject>(item, HttpStatus.BAD_REQUEST).getBody();
+        }
     }
 
     private void authenticate(String username, String password) throws Exception {
         try {
+            if (!userRepository.findUserWithName(username).isPresent()) {
+                throw new Exception("USER_NOT_FOUND");
+            }
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
