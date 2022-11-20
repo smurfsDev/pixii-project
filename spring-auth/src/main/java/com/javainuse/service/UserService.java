@@ -14,7 +14,6 @@ import com.javainuse.entities.User;
 import com.javainuse.repository.ResetPasswordRepository;
 import com.javainuse.repository.UserRepository;
 
-
 @Service
 @Transactional
 public class UserService {
@@ -25,11 +24,10 @@ public class UserService {
     @Autowired
     private ResetPasswordRepository resetPasswordRepository;
 
-    
     public void createPasswordResetTokenForUser(String email, String token) throws UsernameNotFoundException {
         User user = userrepository.findByEmail(email);
         if (user != null) {
-            ResetPassword resetPassword = new ResetPassword(email,token,user);
+            ResetPassword resetPassword = new ResetPassword(email, token, user);
             resetPasswordRepository.save(resetPassword);
         } else {
             throw new UsernameNotFoundException("User not found");
@@ -38,7 +36,7 @@ public class UserService {
 
     public void verify(String email, String verificationCode) throws Exception {
 
-        Optional<User> user = userrepository.findUserWithName(email);
+        Optional<User> user = userrepository.findByUsername(email);
         if (user.isPresent()) {
             User user1 = user.get();
             if (user1 == null) {
@@ -63,12 +61,12 @@ public class UserService {
     private boolean isTokenExpired(ResetPassword passToken) {
         final Calendar cal = Calendar.getInstance();
         // minus 1 hour
-        cal.add(Calendar.HOUR, -1); 
+        cal.add(Calendar.HOUR, -1);
         return passToken.getExpiryDate()
-            .before(cal.getTime());
+                .before(cal.getTime());
     }
 
-    public void changeUserPassword(String email, String token, String password ) throws Exception {
+    public void changeUserPassword(String email, String token, String password) throws Exception {
         Optional<User> user = userrepository.findUserByEmail(email);
         if (user.isPresent()) {
             User user1 = user.get();
@@ -83,7 +81,7 @@ public class UserService {
                         System.out.println("token matched");
                         System.out.println(resetPassword.getExpiryDate().getTime());
                         System.out.println(System.currentTimeMillis());
-                        if(isTokenExpired(resetPassword)) {
+                        if (isTokenExpired(resetPassword)) {
                             throw new Exception("Token expired");
                         }
                         user1.setPassword(password);

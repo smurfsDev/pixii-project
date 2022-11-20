@@ -72,7 +72,7 @@ public class JwtAuthenticationController {
                     .loadUserByUsername(authenticationRequest.getUsername());
             final String token = jwtTokenUtil.generateToken(userDetails);
             item.put("token", token);
-            item.put("user", userRepository.findUserWithName(authenticationRequest.getUsername()).get());
+            item.put("user", userRepository.findByUsername(authenticationRequest.getUsername()).get());
             return new ResponseEntity<JSONObject>(item, HttpStatus.OK).getBody();
         } catch (Exception e) {
             item.put("error", e.getMessage());
@@ -82,7 +82,7 @@ public class JwtAuthenticationController {
 
     private void authenticate(String username, String password) throws Exception {
         try {
-            if (!userRepository.findUserWithName(username).isPresent()) {
+            if (!userRepository.findByUsername(username).isPresent()) {
                 throw new Exception("USER_NOT_FOUND");
             }
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
@@ -95,14 +95,13 @@ public class JwtAuthenticationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
 
-    public ResponseEntity<JSONObject> saveUser(@RequestBody JSONObject user, HttpServletRequest request)
-            {
+    public ResponseEntity<JSONObject> saveUser(@RequestBody JSONObject user, HttpServletRequest request) {
 
         User appUser = new User();
         user.get("email");
-        if (userRepository.findUserWithName(user.get("email").toString()).isPresent() == true) {
+        if (userRepository.findByUsername(user.get("email").toString()).isPresent()) {
             JSONObject item = new JSONObject();
-            item.put("message", "User already exists");
+            item.put("message", "email already exists");
             item.put("status", HttpStatus.BAD_REQUEST.value());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
         }
@@ -113,24 +112,23 @@ public class JwtAuthenticationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
         }
 
-        appUser.setUsername(user.get("email").toString());
-        appUser.setName(user.get("name").toString());
-        // appUser.setEmail(user.get("email").toString());
-        // if (roleRepository.getById(idRole) != null) {
-        appUser.getRoles().add(roleRepository.findRoleWithName(user.get("role").toString()));
+        appUser.setUsername(user.get("username").toString());
         appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(user.get("password").toString()));
-        // appUser.setConfirmPassword(WebSecurityConfig.passwordEncoder().encode(user.get("confirmPassword").toString()));
-        Role newRole = roleRepository.findRoleWithName(user.get("role").toString());
+        appUser.setName(user.get("name").toString());
+        appUser.setEmail(user.get("email").toString());
+
+        appUser.getRoles().add(roleRepository.findByName(user.get("role").toString()));
+
+        Role newRole = roleRepository.findByName(user.get("role").toString());
         appUser.getRoles().add(newRole);
 
-        String randomCode = RandomString.make(8);
-        appUser.setVerificationCode(randomCode);
+        appUser.setVerificationCode(RandomString.make(8));
         appUser.setEnabled(false);
 
         User newUser = userRepository.save(appUser);
-        try{
+        try {
             sendVerificationEmail(newUser, request.getRequestURL().toString().replace(request.getServletPath(), ""));
-        }catch(Exception e){
+        } catch (Exception e) {
             JSONObject item = new JSONObject();
             item.put("message", "Error sending email");
             item.put("status", HttpStatus.BAD_REQUEST.value());
@@ -140,7 +138,6 @@ public class JwtAuthenticationController {
         JSONObject item = new JSONObject();
         item.put("message", "Account");
         item.put("username", newUser.getUsername());
-        // item.put("email", newUser.getEmail());
         item.put("role", newUser.getRoles());
         return ResponseEntity.status(HttpStatus.CREATED).body(item);
 
@@ -180,5 +177,5 @@ public class JwtAuthenticationController {
         item.put("roles", roleRepository.findAll());
         return ResponseEntity.status(HttpStatus.OK).body(item);
     }
-   
+
 }
