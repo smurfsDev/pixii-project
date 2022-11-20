@@ -19,6 +19,7 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { AuthState } from './store/auth/stase';
+import { AuthComponent } from './pages/account/auth/auth.component';
 @NgModule({
 	imports: [
     BrowserModule,
@@ -32,7 +33,7 @@ import { AuthState } from './store/auth/stase';
     ReactiveFormsModule,
 ],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }
