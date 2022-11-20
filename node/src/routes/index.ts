@@ -4,7 +4,9 @@ const router = express.Router();
 
 // require('./routesfile.routes')(router);
 // example
-// require('./books.routes')(router);
+require('./claims.routes')(router);
+require('./comments.routes')(router);
+require('./status.routes')(router);
 
 export default router;
 

@@ -63,32 +63,28 @@ public class JwtAuthenticationController {
     private JavaMailSender mailSender;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public JSONObject createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
-            throws Exception {
 
-        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequest.getUsername());
-
-        final String token = jwtTokenUtil.generateToken(userDetails);
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-
-        responseHeaders.set("MyResponseHeader", "MyValue");
-        JwtResponse tkn = new JwtResponse(token);
-
-        ResponseEntity<String> returned_token = new ResponseEntity<String>(tkn.getToken(), responseHeaders,
-                HttpStatus.OK);
+    public JSONObject createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
         JSONObject item = new JSONObject();
-        item.put("token", returned_token);
-        item.put("username", authenticationRequest.getUsername());
-        return item;
-
+        try {
+            authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+            final UserDetails userDetails = userDetailsService
+                    .loadUserByUsername(authenticationRequest.getUsername());
+            final String token = jwtTokenUtil.generateToken(userDetails);
+            item.put("token", token);
+            item.put("user", userRepository.findUserWithName(authenticationRequest.getUsername()).get());
+            return new ResponseEntity<JSONObject>(item, HttpStatus.OK).getBody();
+        } catch (Exception e) {
+            item.put("error", e.getMessage());
+            return new ResponseEntity<JSONObject>(item, HttpStatus.BAD_REQUEST).getBody();
+        }
     }
 
     private void authenticate(String username, String password) throws Exception {
         try {
+            if (!userRepository.findUserWithName(username).isPresent()) {
+                throw new Exception("USER_NOT_FOUND");
+            }
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
@@ -103,8 +99,8 @@ public class JwtAuthenticationController {
             {
 
         User appUser = new User();
-        user.get("username");
-        if (userRepository.findUserWithName(user.get("username").toString()).isPresent() == true) {
+        user.get("email");
+        if (userRepository.findUserWithName(user.get("email").toString()).isPresent() == true) {
             JSONObject item = new JSONObject();
             item.put("message", "User already exists");
             item.put("status", HttpStatus.BAD_REQUEST.value());
@@ -117,11 +113,13 @@ public class JwtAuthenticationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
         }
 
-        appUser.setUsername(user.get("username").toString());
-        appUser.setEmail(user.get("email").toString());
+        appUser.setUsername(user.get("email").toString());
+        appUser.setName(user.get("name").toString());
+        // appUser.setEmail(user.get("email").toString());
+        // if (roleRepository.getById(idRole) != null) {
         appUser.getRoles().add(roleRepository.findRoleWithName(user.get("role").toString()));
         appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(user.get("password").toString()));
-        appUser.setConfirmPassword(WebSecurityConfig.passwordEncoder().encode(user.get("confirmPassword").toString()));
+        // appUser.setConfirmPassword(WebSecurityConfig.passwordEncoder().encode(user.get("confirmPassword").toString()));
         Role newRole = roleRepository.findRoleWithName(user.get("role").toString());
         appUser.getRoles().add(newRole);
 
@@ -142,7 +140,7 @@ public class JwtAuthenticationController {
         JSONObject item = new JSONObject();
         item.put("message", "Account");
         item.put("username", newUser.getUsername());
-        item.put("email", newUser.getEmail());
+        // item.put("email", newUser.getEmail());
         item.put("role", newUser.getRoles());
         return ResponseEntity.status(HttpStatus.CREATED).body(item);
 
@@ -176,4 +174,11 @@ public class JwtAuthenticationController {
 
     }
 
+    @RequestMapping(value = "/roles", method = RequestMethod.GET)
+    public ResponseEntity<JSONObject> getRoles() {
+        JSONObject item = new JSONObject();
+        item.put("roles", roleRepository.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(item);
+    }
+   
 }
