@@ -91,15 +91,16 @@ public class JwtAuthenticationController {
         }
     }
 
-    @FeignClient(value = "jplaceholder", url = "localhost:8085/node")
-    public interface JSONPlaceHolderClient {
+    // @FeignClient(value = "jplaceholder", url = "localhost:8085/node")
+    // public interface JSONPlaceHolderClient {
 
-        /*@RequestMapping(method = RequestMethod.GET, value = "/posts")
-        List<Post> getPosts();*/
+    // /*@RequestMapping(method = RequestMethod.GET, value = "/posts")
+    // List<Post> getPosts();*/
 
-        @RequestMapping(method = RequestMethod.POST, value = "/register", produces = "application/json")
-        User registerNode(@RequestBody JSONObject user);
-    }
+    // @RequestMapping(method = RequestMethod.POST, value = "/register", produces =
+    // "application/json")
+    // User registerNode(@RequestBody JSONObject user);
+    // }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
 
