@@ -78,7 +78,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 			else if (this.nameRegister.hasError('maxlength')) {
 				return 'Username must be at most 20 characters';
 			}
-			return 'Username must contain only letters and numbers';
+			return 'Username must contain at least one space';
 		}
 		return '';
 	}
