@@ -19,6 +19,10 @@ export class RegisterService {
 	return this.http.get(`http://localhost:8080/checkEmail/${email}`);
   }
 
+  checkUserName(userName: string) {
+	return this.http.get(`http://localhost:8080/checkUsername/${userName}`);
+  }
+
   
 
 }

@@ -54,7 +54,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 	],
 		this.myValid.userValidator()
 	);
-	userNameRegister = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]);
+	userNameRegister = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)],this.myValid.userNameValidator());
 	nameRegister = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50),
 	Validators.pattern('^(?=.*[ ])[a-zA-Z ]*$')
 	]);
@@ -82,8 +82,8 @@ export class AuthComponent implements OnInit, AfterViewInit {
 		if (this.emailRegister.touched) {
 			if (this.emailRegister.hasError('required')) {
 				return 'You must enter a value';
-			}else if(this.emailRegister.hasError('userNameExists')){
-				return 'Username already exists';
+			}else if(this.emailRegister.hasError('emailExist')){
+				return 'Email already exists';
 			}
 			return 'Not a valid email';
 		}
@@ -100,7 +100,9 @@ export class AuthComponent implements OnInit, AfterViewInit {
 			else if (this.userNameRegister.hasError('maxlength')) {
 				return 'Username must be at most 20 characters';
 			}
-			return 'Username must contain only letters and numbers';
+			else if (this.userNameRegister.hasError('userNameExists')) {
+				return 'Username already exists';
+			}
 		}
 		return '';
 	}

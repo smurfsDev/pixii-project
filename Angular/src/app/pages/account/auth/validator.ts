@@ -12,7 +12,7 @@ import { RegisterService } from 'src/app/service/account/register.service';
 export class validator {
 	constructor(private registerService: RegisterService, private http: HttpClient) { }
 
-	searchUser(email: string) {
+	searchUserByEmail(email: string) {
 		return timer(1000)
 			.pipe(
 				switchMap(() => {
@@ -24,10 +24,33 @@ export class validator {
 
 	userValidator(): AsyncValidatorFn {
 		return (control: AbstractControl):any => {
-			return this.searchUser(control.value)
+			return this.searchUserByEmail(control.value)
 				.pipe(
 					map((res:any) => {
-						// if username is already taken
+						if (!res) {
+							// return error
+							return { 'emailExist': true };
+						}
+						return null;
+					})
+				);
+		};
+	}
+
+	searchUserByUserName(userName: string) {
+		return timer(1000)
+			.pipe(
+				switchMap(() => {
+					return this.registerService.checkUserName(userName);
+				})
+			);
+	}
+
+	userNameValidator(): AsyncValidatorFn {
+		return (control: AbstractControl):any => {
+			return this.searchUserByUserName(control.value)
+				.pipe(
+					map((res:any) => {
 						console.log(res);
 						if (!res) {
 							// return error
@@ -37,7 +60,6 @@ export class validator {
 					})
 				);
 		};
-
 	}
 
 }
