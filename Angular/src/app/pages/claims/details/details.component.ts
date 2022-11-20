@@ -5,9 +5,13 @@ import { AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, I
 	templateUrl: './details.component.html',
 	styleUrls: ['./details.component.scss']
 })
-export class DetailsComponent implements AfterViewInit {
+export class DetailsComponent implements AfterViewInit,OnChanges {
 	constructor() { }
+	ngOnChanges(changes: SimpleChanges): void {
+		this.selectedTab = 0;
+	}
 	comment = "";
+	selectedTab = 0;
 	@Input() opened!: boolean;
 	@Input() claim: any;
 	// @ts-ignore
@@ -22,6 +26,10 @@ export class DetailsComponent implements AfterViewInit {
 
 	scrollToBottom = () => {
 		this.content.nativeElement.scrollTop = this.content.nativeElement.scrollHeight;
+	}
+
+	selectTab(va:any){
+		this.selectedTab = va.index;
 	}
 
 	@Output() commented: EventEmitter<string> = new EventEmitter()
