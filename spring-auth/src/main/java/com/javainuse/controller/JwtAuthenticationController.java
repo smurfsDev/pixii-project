@@ -74,7 +74,7 @@ public class JwtAuthenticationController {
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         HttpHeaders responseHeaders = new HttpHeaders();
-        // responseHeaders.setLocation(location);
+
         responseHeaders.set("MyResponseHeader", "MyValue");
         JwtResponse tkn = new JwtResponse(token);
 
@@ -125,7 +125,6 @@ public class JwtAuthenticationController {
         Role newRole = roleRepository.findRoleWithName(user.get("role").toString());
         appUser.getRoles().add(newRole);
 
-        // generate token and send it enabled to false
         String randomCode = RandomString.make(8);
         appUser.setVerificationCode(randomCode);
         appUser.setEnabled(false);
@@ -152,7 +151,7 @@ public class JwtAuthenticationController {
     private void sendVerificationEmail(User user, String siteURL)
             throws MessagingException, UnsupportedEncodingException {
         String toAddress = user.getEmail();
-        String fromAddress = "mednourbensalah@gmail.com";
+        String fromAddress = "noreplaypiiximotors@gmail.com";
         String senderName = "Your company name";
         String subject = "Please verify your registration";
         String content = "Dear [[name]],<br>"

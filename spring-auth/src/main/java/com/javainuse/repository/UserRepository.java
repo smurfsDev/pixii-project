@@ -7,13 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.javainuse.entities.User;
-import com.jayway.jsonpath.Option;
 
 @EnableJpaRepositories
 public interface UserRepository extends JpaRepository<User, Integer> {
     
-    // @Query(" select u from User u where u.email = ?1")
-    // Optional<User> findUserWithEmail(String email);
 
     @Query(" select u from User u where u.username = ?1")
     Optional<User> findUserWithName(String username);

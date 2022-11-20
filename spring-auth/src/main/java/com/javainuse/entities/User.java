@@ -16,11 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-
-// import org.hibernate.annotations.CreationTimestamp;
-// import org.hibernate.annotations.UpdateTimestamp;
-
 @Entity
 public class User {
 
