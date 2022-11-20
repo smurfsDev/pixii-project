@@ -2,3 +2,14 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-select-placeholder{
+  color:white;
+  font-size: 1.2em;
+  }
+  .mat-select-value{
+    color:white;
+    font-size: 1.2em;
+  }
+  .mat-select-arrow{
+    color:white;
+  }
