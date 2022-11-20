@@ -64,7 +64,7 @@ public class JwtAuthenticationController {
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 
-    public JSONObject createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
+    public ResponseEntity<JSONObject> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
         JSONObject item = new JSONObject();
         try {
             authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -72,17 +72,17 @@ public class JwtAuthenticationController {
                     .loadUserByUsername(authenticationRequest.getUsername());
             final String token = jwtTokenUtil.generateToken(userDetails);
             item.put("token", token);
-            item.put("user", userRepository.findByUsername(authenticationRequest.getUsername()).get());
-            return new ResponseEntity<JSONObject>(item, HttpStatus.OK).getBody();
+            item.put("user", userRepository.findUserByEmail(authenticationRequest.getUsername()).get());
+            return new ResponseEntity<JSONObject>(item, HttpStatus.OK);
         } catch (Exception e) {
             item.put("error", e.getMessage());
-            return new ResponseEntity<JSONObject>(item, HttpStatus.BAD_REQUEST).getBody();
+            return new ResponseEntity<JSONObject>(item, HttpStatus.BAD_REQUEST);
         }
     }
 
     private void authenticate(String username, String password) throws Exception {
         try {
-            if (!userRepository.findByUsername(username).isPresent()) {
+            if (!userRepository.findUserByEmail(username).isPresent()) {
                 throw new Exception("USER_NOT_FOUND");
             }
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
