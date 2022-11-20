@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -13,14 +13,27 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
 import { AppRoutes } from './app.routes';
 import { HomeComponent } from './pages/home/home.component';
 import { DetailsComponent } from './pages/claims/details/details.component';
+import { RegisterComponent } from './pages/account/register/register.component';
+import { LoginComponent } from './pages/account/login/login.component';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { AuthState } from './store/auth/stase';
+import { AuthComponent } from './pages/account/auth/auth.component';
 @NgModule({
-	imports: [BrowserModule, FormsModule, DragDropModule, HttpClientModule,
+	imports: [
+    BrowserModule,
 		RouterModule.forRoot(AppRoutes),
-  BrowserAnimationsModule,
-  MaterialModule,
-  
-	],
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent],
-	bootstrap: [AppComponent]
+    NgxsModule.forRoot([AuthState]),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsStoragePluginModule.forRoot(),
+    FormsModule, DragDropModule, HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    ReactiveFormsModule,
+],
+
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent],
+	bootstrap: [AppComponent],
 })
 export class AppModule { }

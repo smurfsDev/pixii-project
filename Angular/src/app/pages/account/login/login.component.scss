@@ -1,0 +1,74 @@
+@import '../../../app.component.scss';
+.gradient-custom-2 {
+  background: $gradient;
+  color: $main-text-color;
+  /* font Poppins */
+  font-family: 'Poppins', sans-serif;
+  }
+  form {
+    margin: 0 20px;
+    width: 100%;
+    padding: 1em;
+  }
+  .forgotPass{
+    display: flex;
+    justify-content: space-between;
+  }
+  .page{
+    background-color: #686868;
+  }
+  .container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    .title{
+      margin-top: 5em;
+    }
+    .card-body {
+      /* center */
+      display: flex;
+      justify-content: center;
+      width: 50%;
+      .input-container {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #d9d9d9;
+          input {
+            margin-left: 15px;
+            padding: 10px;
+            width: 100%;
+            background: transparent;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            &:focus {
+              outline: none;
+              //hide placeholder
+              &::placeholder {
+                color: transparent;
+              }
+            }
+            &::placeholder {
+              color: #ffffff;
+              font-size: 18px;
+              font-family: 'Poppins', sans-serif;
+            }
+          }
+      }
+    }
+  }
+  @media (min-width: 768px) {
+  .gradient-form {
+  height: 100vh !important;
+  }
+  }
+  @media (min-width: 769px) {
+  .gradient-custom-2 {
+  border-top-right-radius: .3rem;
+  border-bottom-right-radius: .3rem;
+  }
+  }

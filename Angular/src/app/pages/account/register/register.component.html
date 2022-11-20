@@ -1,0 +1,123 @@
+<div class="h-100 gradient-form">
+  <div class="row g-0 page">
+    <div class="col-lg-4 text-start mt-3 px-3"  style="background-color: #686868">
+      <img src="./assets/logo.png" alt="" style="width: 20%;">
+    </div>
+    <div class="col-lg-8  gradient-custom-2">
+      <div class="container">
+        <div class="title">
+          <h1 class="text-center">Sign up</h1>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="form-outline mb-4">
+              <label class="form-label">Email</label>
+              <div class="input-container">
+                <mat-icon class="icon col-4">email</mat-icon>
+                <input  class="input"
+                        matInput
+                        placeholder="Enter your email address"
+                        [formControl]="email"
+                        required>
+              </div>
+              <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+            </div>
+            <div class="form-outline mb-4">
+              <label class="form-label">UserName</label>
+              <div class="input-container">
+                <mat-icon class="icon col-4">person</mat-icon>
+                <input  class="input"
+                        matInput
+                        placeholder="Enter your userName"
+                        [formControl]="userName"
+                        required>
+              </div>
+              <mat-error *ngIf="userName.invalid">{{getUserNameErrorMessage()}}</mat-error>
+            </div>
+            <div class="form-outline mb-4">
+              <label class="form-label">Role</label>
+              <div class="input-container">
+                <mat-icon class="icon col-4">person</mat-icon>
+                <mat-select class="input"
+                            matInput
+                            placeholder="Select your role"
+                            [formControl]="roleInput"
+                            required>
+                  <mat-option *ngFor="let role of roles" [value]="role.name">{{role.name}}</mat-option>
+                </mat-select>
+              </div>
+              <mat-error *ngIf="roleInput.invalid">{{getRoleErrorMessage()}}</mat-error>
+            </div>
+            <div class="form-outline mb-4">
+              <label class="form-label">Password</label>
+              <div class="input-container">
+                <mat-icon class="icon col-4">lock</mat-icon>
+                <input  class="input"
+                        matInput
+                        [type]="hide ? 'password' : 'text'"
+                        placeholder="Enter your password"
+                        formControlName="password"
+                        [formControl]="password"
+                        required>
+                <button mat-icon-button
+                        matSuffix
+                        (click)="hide = !hide"
+                        [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </div>
+              <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+            </div>
+            <div class="form-outline mb-4">
+              <label class="form-label">Confirm Password</label>
+              <div class="input-container">
+                <mat-icon class="icon col-4">lock</mat-icon>
+                <input  class="input"
+                        matInput
+                        [type]="hideConfirm ? 'password' : 'text'"
+                        formControlName="ConfirmPassword"
+                        placeholder="Confirm your password"
+                        [formControl]="ConfirmPassword"
+                        required>
+                <button mat-icon-button
+                        matSuffix
+                        (click)="hideConfirm = !hideConfirm"
+                        [attr.aria-label]="'hideConfirm password'"
+                        [attr.aria-pressed]="hideConfirm">
+                  <mat-icon>{{hideConfirm ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </div>
+              <mat-error *ngIf="ConfirmPassword.invalid">{{getConfirmPasswordErrorMessage()}}</mat-error>
+            </div>
+            <div class="forgotPass">
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+              </div>
+              <div class=" pt-1 mb-5 pb-1">
+                <a class="text-muted" href="#!">Forgot password?</a>
+              </div>
+            </div>
+            <button class="btn btn-primary" style="width:100% ;border-radius: 15px;" type="submit">Log in</button>
+            <div class="text-center">
+              <!-- p or continue with -->
+              <p class="small pt-3">or continue with</p>
+              <div class="row">
+                <div class="col-6">
+                  <img src="./assets/img/Facebook_Logo_(2019).png.webp" alt="facebook" style="width: 40px;">
+                </div>
+                <div class="col-6">
+                  <img src="./assets/img/Google__G__Logo.svg.webp" alt="google" style="width: 40px;">
+                </div>
+              </div>
+              <div class="register mt-5">
+                <p>You don't have an account ? <a href="/login">login here !</a></p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
