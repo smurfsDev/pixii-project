@@ -83,7 +83,20 @@ export const findOne = (req: Request, res: Response) => {
 		if (err) return res.status(500).send(err);
 		else if (!claim) return res.status(404).send("Claim not found");
 		else return res.status(200).send(claim);
-	}).populate('comments').populate('status', 'name');
+	}).populate('comments').populate('status', 'name').populate({
+		path: "_status",
+		populate: [
+			{
+				path: "old_status",
+				model: "status"
+			},
+			{
+				path: "new_status",
+				model: "status"
+			},
+			
+		]
+	});
 };
 
 export const setStatus = (req: Request, res: Response) => {

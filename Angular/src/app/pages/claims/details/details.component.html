@@ -6,69 +6,119 @@
 				<mat-icon>close</mat-icon>
 			</div>
 		</div>
-		<div class="content" dir="ltr">
-			<h1 class="title">{{claim.subject}}</h1>
-			<mat-divider style="border-top-color: white;"></mat-divider>
-			<div class="details">
-				<div class="detail">
-					<div class="label">Status</div>
-					<div class="value">{{claim.status}}</div>
-				</div>
-				<div class="detail">
-					<div class="label">Priority</div>
-					<div class="value">High</div>
-				</div>
-				<div class="detail">
-					<div class="label">Created</div>
-					<div class="value">{{claim.created | date:'short' }}</div>
-				</div>
-				<div class="detail">
-					<div class="label">Updated</div>
-					<div class="value">{{ claim.updated | date:'short'}}</div>
-				</div>
-				<div class="detail mt-3">
-					<div class="label">Description</div>
-				</div>
-				<div class="description">
-					{{claim.message}}
-				</div>
-			</div>
-			<mat-card class="comments" style="border-radius:9px">
-				<h1 class="title">
-					Comments
-				</h1>
-				<!-- <div #scrollMe [scrollTop]="scrollMe.scrollHeight" class="comments-content"> -->
-				<div #scrollMe class="comments-content">
-					<div #messages class="comment" *ngFor="let comment of claim.comments">
-						<div class="label">
-							<div class="name">
-								<div class="avatar">
-									<img [src]="comment.avatar??'https://randomuser.me/api/portraits/men/1.jpg'"
-										[alt]="comment.name">
+		<mat-tab-group dir="ltr" (selectedTabChange)="selectTab($event)" [(selectedIndex)]="selectedTab">
+			<mat-tab label="Overview" dir="ltr">
+				<div class="content" dir="ltr">
+					<h1 class="title">{{claim.subject}}</h1>
+					<mat-divider style="border-top-color: white;"></mat-divider>
+					<div class="details">
+						<div class="detail">
+							<div class="label">Status</div>
+							<div class="value">{{claim.status}}</div>
+						</div>
+						<div class="detail">
+							<div class="label">Priority</div>
+							<div class="value">High</div>
+						</div>
+						<div class="detail">
+							<div class="label">Created</div>
+							<div class="value">{{claim.created | date:'short' }}</div>
+						</div>
+						<div class="detail">
+							<div class="label">Updated</div>
+							<div class="value">{{ claim.updated | date:'short'}}</div>
+						</div>
+						<div class="detail mt-3">
+							<div class="label">Description</div>
+						</div>
+						<div class="description">
+							{{claim.message}}
+						</div>
+					</div>
+					<mat-card class="comments" style="border-radius:9px">
+						<h1 class="title">
+							Comments
+						</h1>
+						<!-- <div #scrollMe [scrollTop]="scrollMe.scrollHeight" class="comments-content"> -->
+						<div #scrollMe class="comments-content">
+							<div #messages class="comment" *ngFor="let comment of claim.comments">
+								<div class="label">
+									<div class="name">
+										<div class="avatar">
+											<img [src]="comment.avatar??'https://randomuser.me/api/portraits/men/1.jpg'"
+												[alt]="comment.name">
+										</div>
+										{{comment.name??'John Doe'}}
+									</div>
+									<div class="date">{{comment.created | date:'longDate' }}</div>
 								</div>
-								{{comment.name??'John Doe'}}
+								<div class="value">
+									{{comment.message}}
+								</div>
 							</div>
-							<div class="date">{{comment.created | date:'longDate' }}</div>
 						</div>
-						<div class="value">
-							{{comment.message}}
+						<div class="comment-input">
+							<div class="form">
+								<div class="avatar">
+									<img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
+								</div>
+								<input type="text" placeholder="Add a comment" class="form-control"
+									placeholder="Add a comment" (keyup.enter)="sendComment()" [(ngModel)]="comment">
+								<button mat-button (click)="sendComment()" color="primary">
+									<mat-icon>send</mat-icon>
+								</button>
+							</div>
 						</div>
-					</div>
+					</mat-card>
 				</div>
-				<div class="comment-input">
-					<div class="form">
-						<div class="avatar">
-							<img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
-						</div>
-						<input type="text" placeholder="Add a comment" class="form-control" placeholder="Add a comment"
-							(keyup.enter)="sendComment()" [(ngModel)]="comment">
-						<button mat-button (click)="sendComment()" color="primary">
-							<mat-icon>send</mat-icon>
-						</button>
+			</mat-tab>
+			<mat-tab label="Status history" dir="ltr">
+				<div class="status-content">
+					<h1 class="title">Transactions </h1>
+					<div class="statuses">
+						<mat-card *ngIf="claim._status.length == 0;else trans">
+							<mat-card-header>
+								<div mat-card-avatar>
+									<mat-icon>info</mat-icon>
+								</div>
+								<mat-card-title>No transaction found </mat-card-title>
+							</mat-card-header>
+						</mat-card>
+						<ng-template #trans>
+							<mat-card *ngFor="
+						let item of claim._status;
+						let index = index;
+						">
+								<mat-card-header>
+									<div mat-card-avatar class="mat-card-header-image"
+										[style]="{'background-image': 'url(https://material.angular.io/assets/img/examples/shiba1.jpg)'}">
+									</div>
+									<mat-card-title>Transaction {{claim._status.length - index}}</mat-card-title>
+									<mat-card-subtitle>Created: {{item.date | date:'short'}}</mat-card-subtitle>
+								</mat-card-header>
+								<mat-card-content>
+									<div class="row">
+										<div class="col-4 status">
+											<p class="d-inline label fw-semibold">Old Status: </p>
+											<p class="d-inline value ml-2">{{item.old_status}}</p>
+										</div>
+										<div class="col-4 status">
+											<p class="d-inline label fw-semibold">New Status: </p>
+											<p class="d-inline value ml-2">{{item.new_status}}</p>
+										</div>
+										<div class="col-4 status">
+											<p class="d-inline label fw-semibold">Author: </p>
+											<p class="d-inline value ml-2"> Admin </p>
+										</div>
+									</div>
+								</mat-card-content>
+							</mat-card>
+						</ng-template>
 					</div>
+
 				</div>
-			</mat-card>
-		</div>
+			</mat-tab>
+		</mat-tab-group>
 	</mat-drawer>
 
 	<div class="details-sidenav-content" dir="ltr">
