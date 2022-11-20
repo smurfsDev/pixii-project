@@ -12,7 +12,7 @@ import { SetIsAuthenticated, SetToken, SetUser } from 'src/app/store/auth/action
 export class LoginComponent implements OnInit {
   hide = true;
   loginForm : FormGroup;
-  user : User = new User( '','','',null);
+  user : User = new User( '','','','',null);
   username = new FormControl('', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,10}$')]);
   password = new FormControl('', [Validators.required,
                                   Validators.minLength(8),
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
         this.user = data;
         this.store.dispatch([
           new SetToken(data.token),
-          new SetUser(new User(data.user.id, data.user.username, data.user.name, data.user.roles)),
+          new SetUser(new User(data.user.id, data.user.username, data.user.name, data.user.email, data.user.roles)),
           new SetIsAuthenticated(true)
         ]);
       }, (error: any) => {
