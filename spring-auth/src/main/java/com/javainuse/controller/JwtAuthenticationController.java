@@ -105,6 +105,12 @@ public class JwtAuthenticationController {
             item.put("status", HttpStatus.BAD_REQUEST.value());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
         }
+        if (userRepository.findByUsername(user.get("username").toString()).isPresent()) {
+            JSONObject item = new JSONObject();
+            item.put("message", "username already exists");
+            item.put("status", HttpStatus.BAD_REQUEST.value());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+        }
         if (!user.get("password").toString().equals(user.get("confirmPassword").toString())) {
             JSONObject item = new JSONObject();
             item.put("message", "Please confirm Password");
