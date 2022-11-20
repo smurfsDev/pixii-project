@@ -10,6 +10,15 @@
 					<div class="card-body">
 						<form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
 							<div class="form-outline mb-4">
+								<label class="form-label">Name</label>
+								<div class="input-container">
+									<mat-icon class="icon col-4">person</mat-icon>
+									<input class="input" matInput placeholder="Enter your name"
+										[formControl]="nameRegister" required>
+								</div>
+								<mat-error *ngIf="nameRegister.invalid">{{getNameErrorMessageRegister()}}</mat-error>
+							</div>
+							<div class="form-outline mb-4">
 								<label class="form-label">Email</label>
 								<div class="input-container">
 									<mat-icon class="icon col-4">email</mat-icon>
