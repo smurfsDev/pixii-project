@@ -12,7 +12,7 @@ let userSchema = new mongoose.Schema({
     }],
     status: {
         type: Number,
-        default: true
+        default: 0
     }
 
 });

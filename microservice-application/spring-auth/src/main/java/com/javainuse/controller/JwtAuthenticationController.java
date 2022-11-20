@@ -1,6 +1,7 @@
 package com.javainuse.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -26,7 +27,7 @@ import com.javainuse.config.JwtTokenUtil;
 import com.javainuse.config.WebSecurityConfig;
 import com.javainuse.entities.Role;
 import com.javainuse.entities.User;
-
+import com.javainuse.entities.UserRole;
 import com.javainuse.model.JwtRequest;
 import com.javainuse.model.JwtResponse;
 import com.javainuse.repository.RoleRepository;
@@ -54,7 +55,7 @@ public class JwtAuthenticationController {
 
     @Autowired
     UserRoleRepository userRoleRepository;
-    
+
     @Autowired
     private RegisterNode registerNode;
 
@@ -123,16 +124,17 @@ public class JwtAuthenticationController {
             item.put("status", HttpStatus.BAD_REQUEST.value());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
         }
-
-        JSONObject newUserNode = new JSONObject();
+      /*  JSONObject newUserNode = new JSONObject();
         newUserNode.put("name", user.get("name").toString());
         newUserNode.put("username", user.get("email").toString());
         newUserNode.put("roles", user.get("role").toString());
         newUserNode.put("password", user.get("password").toString());
-        User userNode = registerNode.register(newUserNode);
+        //newUserNode.put("status", userRole.get().getStatus());
+        User userNode = registerNode.register(newUserNode);*/
+    
         appUser.setUsername(user.get("email").toString());
         appUser.setName(user.get("name").toString());
-        // appUser.setEmail(user.get("email").toString());
+    
         // if (roleRepository.getById(idRole) != null) {
 
         appUser.getRoles().add(roleRepository.findRoleWithName(user.get("role").toString()));
@@ -142,8 +144,32 @@ public class JwtAuthenticationController {
         // appUser.setConfirmPassword(WebSecurityConfig.passwordEncoder().encode(user.get("confirmPassword").toString()));
         Role newRole = roleRepository.findRoleWithName(user.get("role").toString());
         appUser.getRoles().add(newRole);
-        User newUser = userRepository.save(appUser);
-
+          User newUser = userRepository.save(appUser);
+        Optional<UserRole> userRole = userRoleRepository.findFirstByUserId(newUser.getId());
+        if (user.get("role").toString().equals("Super Admin")) {
+        	userRole.get().setStatus(1);
+        }
+        if (user.get("role").toString().equals("Admin")) {
+        	userRole.get().setStatus(1);
+        }
+        if (user.get("role").toString().equals("Scooter Owner")) {
+        	userRole.get().setStatus(0);
+        }
+        if (user.get("role").toString().equals("SAV Manager")) {
+        	userRole.get().setStatus(0);
+        }
+        if (user.get("role").toString().equals("SAV Techinician")) {
+        	userRole.get().setStatus(0);
+        }
+        userRoleRepository.save(userRole.get());
+        JSONObject newUserNode = new JSONObject();
+        newUserNode.put("name", user.get("name").toString());
+        newUserNode.put("username", user.get("email").toString());
+        newUserNode.put("roles", user.get("role").toString());
+        newUserNode.put("password", user.get("password").toString());
+        newUserNode.put("status", userRole.get().getStatus());
+        User userNode = registerNode.register(newUserNode);
+       
         // UserRole userRole = new UserRole();
 
         // userRole.setUser(newUser);
