@@ -16,112 +16,105 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+
 @Entity
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    private Integer id;
-    // private @Id @GeneratedValue Integer id;
-    private String username;
+	private String username;
+	private String email;
+	private String name;
+	private String password;
+	private String confirmPassword;
+	@Column(name = "verification_code", length = 64)
+	private String verificationCode;
+	private boolean enabled;
 
-    private String name;
-    private String password;
-    private String confirmPassword;
-    @Column(name = "verification_code", length = 64)
-    private String verificationCode;
-    private boolean enabled;
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
 
-    private Set<Role> roles = new HashSet<>();
+	public User(String username, String email, String name, String password, String confirmPassword,
+			String verificationCode, boolean enabled, Set<Role> roles) {
+		this.username = username;
+		this.email = email;
+		this.name = name;
+		this.password = password;
+		this.confirmPassword = confirmPassword;
+		this.verificationCode = verificationCode;
+		this.enabled = enabled;
+		this.roles = roles;
+	}
 
-    public User(String username, String password, String name, String confirmPassword, Set<Role> roles) {
-        this.username = username;
-        this.name = name;
-        // this.email = email;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
-        this.roles = roles;
-    }
+	public User() {
+	}
 
-    public User(String username, String name, String password) {
+	public String getUsername() {
+		return username;
+	}
 
-        this.username = username;
-        this.name = name;
-        // this.email = email;
-        this.password = password;
-        // this.confirmPassword = confirmPassword;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public User() {
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getVerificationCode() {
+		return verificationCode;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
 
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
+	public boolean isEnabled() {
+		return enabled;
+	}
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+	public Set<Role> getRoles() {
+		return roles;
+	}
 
-    public String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCode(String verificationCode) {
-        this.verificationCode = verificationCode;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 
 }
