@@ -37,7 +37,7 @@ export class AuthComponent implements OnInit,AfterViewInit {
 	}
 
 	ngAfterViewInit(): void {
-		this.ShowRegister();
+		this.showLogin();
 	}
 
 	registerForm: FormGroup;

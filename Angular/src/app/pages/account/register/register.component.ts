@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
                                   Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]+)$')
                                   ,checkPassword('ConfirmPassword', true)]);
   ConfirmPassword = new FormControl('', [Validators.required,checkPassword('password')]);
-  roleInput = new FormControl('');
+  roleInput = new FormControl('', [Validators.required]);
   getEmailErrorMessage() {
     if (this.email.touched) {
       if (this.email.hasError('required')) {
