@@ -145,8 +145,9 @@ export class AuthComponent implements OnInit, AfterViewInit {
 		if (this.registerForm.valid) {
 			this.RegisterService.register(
 				{
+					name: this.registerForm.value.nameRegister,
 					email: this.registerForm.value.email,
-					name: this.registerForm.value.name,
+					username: this.registerForm.value.name,
 					password: this.registerForm.value.passwordRegister,
 					role: this.registerForm.value.role,
 					confirmPassword: this.registerForm.value.confirmPasswordRegister
