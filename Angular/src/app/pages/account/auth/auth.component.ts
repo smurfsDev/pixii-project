@@ -26,7 +26,7 @@ export class AuthComponent implements OnInit,AfterViewInit {
 		});
 		this.loginForm = this.formBuilder.group({
 			username: this.username,
-			password: this.password
+			password: this.password,
 		  });
 
 
@@ -159,6 +159,7 @@ export class AuthComponent implements OnInit,AfterViewInit {
 	// Login
 	hide = true;
   loginForm : FormGroup;
+  unauthenticated = false;
   user : User = new User( '','','',null);
   username = new FormControl('', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,10}$')]);
   password = new FormControl('', [Validators.required,
@@ -186,17 +187,16 @@ export class AuthComponent implements OnInit,AfterViewInit {
     }
     return '';
   }
+  getAuthErrorMessage() {
+    if (this.unauthenticated) {
+      return 'Invalid username or password';
+    }
+    return '';
+  }
 
 
   ngOnInitLogin(): void {
-    // error messages of the form hide
     localStorage.clear();
-    // this.store.dispatch([
-    //   new SetToken('Ahaha'),
-    //   new SetUser(new User("1", "youssef", "email", "role")),
-    //   new SetIsAuthenticated(true)
-    // ]);
-
   }
   onSubmit() {
     if (this.loginForm.valid) {
@@ -212,6 +212,9 @@ export class AuthComponent implements OnInit,AfterViewInit {
         ]);
       }, (error: any) => {
         console.log(error);
+        // this.loginForm.setErrors({ unauthenticated: true });
+        this.unauthenticated = true;
+
       }
       );
     }

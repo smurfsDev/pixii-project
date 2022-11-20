@@ -87,6 +87,14 @@ form {
           }
         }
     }
+    .register-btn {
+      button{
+        border: none;
+        outline: none;
+        background-color: transparent;
+        color: #fff;
+      }
+    }
   }
 }}
 
@@ -145,8 +153,19 @@ form {
       }
       }
     }
+    .register-btn {
+      button{
+        border: none;
+        outline: none;
+        background-color: transparent;
+        color: #fff;
+      }
+    }
   }
   }
+}
+#other-part {
+  background-color: #686868
 }
 @media (min-width: 768px) {
 .gradient-form {
