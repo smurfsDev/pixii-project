@@ -220,6 +220,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 			else if (this.password.hasError('minlength')) {
 				return 'Password must be at least 8 characters';
 			}
+			return 'Password must contain at least one uppercase letter, one lowercase letter and one number';
 		}
 		return '';
 	}
