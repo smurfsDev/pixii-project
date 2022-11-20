@@ -9,6 +9,7 @@ import { Store } from '@ngxs/store';
 import { User } from 'src/app/models/user';
 import { SetIsAuthenticated, SetToken, SetUser } from 'src/app/store/auth/actions';
 import { validator } from './validator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-auth',
@@ -17,7 +18,7 @@ import { validator } from './validator';
 })
 export class AuthComponent implements OnInit, AfterViewInit {
 
-	constructor(private myValid: validator, private formBuilder: FormBuilder, private RegisterService: RegisterService, private router: Router, private LoginService: LoginService, private store: Store) {
+	constructor(private _snackBar: MatSnackBar,private myValid: validator, private formBuilder: FormBuilder, private RegisterService: RegisterService, private router: Router, private LoginService: LoginService, private store: Store) {
 
 		this.registerForm = this.formBuilder.group({
 			email: this.emailRegister,
@@ -35,6 +36,9 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
 
 	}
+
+	registerLoading = false;
+	loginLoading = false;
 	ngOnInit(): void {
 		this.ngOnInitRegister();
 		this.ngOnInitLogin();
@@ -50,7 +54,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 	roles: any = [];
 
 	emailRegister = new FormControl('', [Validators.required,
-	Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,10}$'),
+	Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,10}$'),
 	],
 		this.myValid.userValidator()
 	);
@@ -151,7 +155,11 @@ export class AuthComponent implements OnInit, AfterViewInit {
 		this.fetchRoles();
 	}
 	onSubmitRegister() {
+		setTimeout(() => {
+		this.transistionFromSideToSide("");
+		}, 1);
 		if (this.registerForm.valid) {
+			this.registerLoading = true;
 			this.RegisterService.register(
 				{
 					name: this.registerForm.value.nameRegister,
@@ -164,7 +172,8 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
 				}
 			).subscribe((data: any) => {
-				this.router.navigate(['/login']);
+				this.showLogin();
+				this.registerLoading = false;
 			});
 			this.ConfirmPasswordRegister.reset();
 		}
@@ -189,7 +198,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 	loginForm: FormGroup;
 	unauthenticated = false;
 	user: User = new User('', '', '', null);
-	username = new FormControl('', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,10}$')]);
+	username = new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,10}$')]);
 	password = new FormControl('', [Validators.required,
 	Validators.minLength(8),
 	Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]+)$')
@@ -211,7 +220,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
 			else if (this.password.hasError('minlength')) {
 				return 'Password must be at least 8 characters';
 			}
-			return 'Password must contain at least one uppercase letter, one lowercase letter and one number';
 		}
 		return '';
 	}
@@ -226,23 +234,39 @@ export class AuthComponent implements OnInit, AfterViewInit {
 	ngOnInitLogin(): void {
 		localStorage.clear();
 	}
+	loginError = "";
 	onSubmit() {
 		if (this.loginForm.valid) {
+			this.loginLoading = true;
 			this.LoginService.login(this.loginForm.value).subscribe((data: any) => {
 				this.user = data;
 				this.store.dispatch([
 					new SetToken(data.token),
 					new SetUser(
 						new User(data.user.id, data.user.username, data.user.name, data.user.roles)
-					),
-					new SetIsAuthenticated(true)
-				]);
+						),
+						new SetIsAuthenticated(true)
+					]);
+					this.loginLoading = false;
 			}, (error: any) => {
-				// this.loginForm.setErrors({ unauthenticated: true });
+				this.loginLoading = false;
 				this.unauthenticated = true;
-
+				if(error.error.error=="USER_DISABLED") {
+					this.loginError = "User is disabled";
+				} else if(error.error.error=="USER_NOT_FOUND") {
+					this.loginError = "User not found";
+				} else if(error.error.error=="INVALID_CREDENTIALS") {
+					this.loginError = "Invalid credentials";
+				} else {
+					this.loginError = "Unknown error";
+				}
+				this._snackBar.open(this.loginError, "Close", {
+					duration: 5000,
+				});
+			}, () => {
+				this.loginLoading = false;
 			}
-			);
+			)
 		}
 		else {
 			this.username.markAsTouched();
