@@ -10,14 +10,14 @@ import com.javainuse.entities.User;
 
 import net.minidev.json.JSONObject;
 
-@FeignClient(value = "jplaceholder", url = "localhost:8085/node")
-public interface JSONPlaceHolderClient {
+@FeignClient(name="NODE-SERVICE")
+public interface RegisterNode {
 
     /*
      * @RequestMapping(method = RequestMethod.GET, value = "/posts")
      * List<Post> getPosts();
      */
 
-    @RequestMapping(method = RequestMethod.POST, value = "/register", produces = "application/json")
-    User registerNode(@RequestBody JSONObject user);
+    @RequestMapping(method = RequestMethod.POST, value = "/node/register", produces = "application/json")
+    User register(@RequestBody JSONObject user);
 }

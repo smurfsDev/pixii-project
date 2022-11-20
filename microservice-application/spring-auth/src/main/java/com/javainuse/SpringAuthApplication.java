@@ -13,8 +13,9 @@ import com.javainuse.repository.RoleRepository;
 import com.javainuse.repository.UserRepository;
 import com.javainuse.repository.UserRoleRepository;
 
-@EnableFeignClients
+
 @SpringBootApplication
+@EnableFeignClients
 public class SpringAuthApplication implements CommandLineRunner {
 
 	@Autowired

@@ -54,6 +54,9 @@ public class JwtAuthenticationController {
 
     @Autowired
     UserRoleRepository userRoleRepository;
+    
+    @Autowired
+    private RegisterNode registerNode;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public JSONObject createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
@@ -121,6 +124,12 @@ public class JwtAuthenticationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
         }
 
+        JSONObject newUserNode = new JSONObject();
+        newUserNode.put("name", user.get("name").toString());
+        newUserNode.put("username", user.get("email").toString());
+        newUserNode.put("roles", user.get("role").toString());
+        newUserNode.put("password", user.get("password").toString());
+        User userNode = registerNode.register(newUserNode);
         appUser.setUsername(user.get("email").toString());
         appUser.setName(user.get("name").toString());
         // appUser.setEmail(user.get("email").toString());
