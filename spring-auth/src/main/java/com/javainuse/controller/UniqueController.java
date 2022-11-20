@@ -22,4 +22,9 @@ public class UniqueController {
 		return new ResponseEntity<>(userRepository.findByEmail(email) == null, HttpStatus.OK);
 	}
 
+	@GetMapping("/checkUsername/{username}")
+	public ResponseEntity checkUsername(@PathVariable String username) {
+		return new ResponseEntity<>(!userRepository.findByUsername(username).isPresent(), HttpStatus.OK);
+	}
+
 }
