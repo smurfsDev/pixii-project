@@ -14,7 +14,7 @@
 								<div class="input-container">
 									<mat-icon class="icon col-4">person</mat-icon>
 									<input class="input" matInput placeholder="Enter your name"
-										[formControl]="nameRegister" required>
+										[formControl]="nameRegister" required name="name">
 								</div>
 								<mat-error *ngIf="nameRegister.invalid">{{getNameErrorMessageRegister()}}</mat-error>
 							</div>
@@ -23,7 +23,7 @@
 								<div class="input-container">
 									<mat-icon class="icon col-4">email</mat-icon>
 									<input class="input" matInput placeholder="Enter your email address"
-										[formControl]="emailRegister" required>
+										[formControl]="emailRegister" required name="email">
 								</div>
 								<mat-error *ngIf="emailRegister.invalid">{{getEmailErrorMessageRegister()}}</mat-error>
 							</div>
@@ -32,7 +32,7 @@
 								<div class="input-container">
 									<mat-icon class="icon col-4">person</mat-icon>
 									<input class="input" matInput placeholder="Enter your userName"
-										[formControl]="userNameRegister" required>
+										[formControl]="userNameRegister" required name="username">
 								</div>
 								<mat-error *ngIf="userNameRegister.invalid">{{getUserNameErrorMessageRegister()}}
 								</mat-error>
@@ -56,7 +56,7 @@
 									<mat-icon class="icon col-4">lock</mat-icon>
 									<input class="input" matInput [type]="hideRegister ? 'password' : 'text'"
 										placeholder="Enter your password" formControlName="passwordRegister"
-										[formControl]="passwordRegister" required>
+										[formControl]="passwordRegister" required name="password">
 									<button
                       mat-icon-button
                       matSuffix
@@ -75,7 +75,7 @@
 									<mat-icon class="icon col-4">lock</mat-icon>
 									<input class="input" matInput [type]="hideConfirmRegister ? 'password' : 'text'"
 										formControlName="confirmPasswordRegister" placeholder="Confirm your password"
-										[formControl]="ConfirmPasswordRegister" required>
+										[formControl]="ConfirmPasswordRegister" required name="password">
 									<button mat-icon-button matSuffix
 										(click)="hideConfirmRegister = !hideConfirmRegister"
 										[attr.aria-label]="'hideConfirmRegister password'"
@@ -138,7 +138,7 @@
 								<div class="input-container">
 									<mat-icon class="icon col-4">email</mat-icon>
 									<input matInput placeholder="Enter your email address" [formControl]="username"
-										formControlName="username" required>
+										formControlName="username" required name="email">
 								</div>
 								<mat-error *ngIf="username.invalid">{{getEmailErrorMessage()}}</mat-error>
 							</div>
@@ -149,7 +149,7 @@
 									<mat-icon class="icon col-4">lock</mat-icon>
 									<input matInput [type]="hide ? 'password' : 'text'"
 										placeholder="Enter your password" [formControl]="password"
-										formControlName="password" required>
+										formControlName="password" required name="password">
 									<button mat-icon-button
                           matSuffix
                           (click)="hide = !hide"
