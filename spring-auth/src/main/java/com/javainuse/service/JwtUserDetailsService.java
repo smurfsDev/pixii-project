@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.javainuse.entities.User;
 import com.javainuse.model.MyUserDetail;
 import com.javainuse.repository.UserRepository;
 
@@ -18,7 +19,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("username: " + username);
-        com.javainuse.entities.User user = userRepository.findUserWithName(username)
+        User user = userRepository.findUserWithName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         System.out.println("user details : " + user.getUsername() + " " + user.getPassword() + " id : " + user.getId());
 
