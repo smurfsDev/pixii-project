@@ -28,7 +28,6 @@ public class User {
 	private String email;
 	private String name;
 	private String password;
-	private String confirmPassword;
 	@Column(name = "verification_code", length = 64)
 	private String verificationCode;
 	private boolean enabled;
@@ -38,19 +37,29 @@ public class User {
 
 	private Set<Role> roles = new HashSet<>();
 
-	public User(String username, String email, String name, String password, String confirmPassword,
-			String verificationCode, boolean enabled, Set<Role> roles) {
+	public User(String username, String email, String name, String password,
+			String verificationCode, Set<Role> roles) {
 		this.username = username;
 		this.email = email;
 		this.name = name;
 		this.password = password;
-		this.confirmPassword = confirmPassword;
 		this.verificationCode = verificationCode;
-		this.enabled = enabled;
+		this.enabled = false;
 		this.roles = roles;
 	}
 
+	public User(String username, String email, String name, String password) {
+		this.username = username;
+		this.email = email;
+		this.name = name;
+		this.password = password;
+	}
+
 	public User() {
+	}
+
+	public Integer getId() {
+		return id;
 	}
 
 	public String getUsername() {
@@ -83,14 +92,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
 	}
 
 	public String getVerificationCode() {
