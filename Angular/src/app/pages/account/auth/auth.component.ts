@@ -133,13 +133,11 @@ export class AuthComponent implements OnInit,AfterViewInit {
 
         }
         ).subscribe((data: any) => {
-				console.log(data);
 				this.router.navigate(['/login']);
 			});
 			this.ConfirmPasswordRegister.reset();
 		}
 		else {
-			console.log('Form is invalid');
 			this.emailRegister.markAsTouched();
 			this.userNameRegister.markAsTouched();
 			this.passwordRegister.markAsTouched();
@@ -150,7 +148,6 @@ export class AuthComponent implements OnInit,AfterViewInit {
 	fetchRoles() {
 		this.RegisterService.fetchRoles().subscribe((data: any) => {
 			this.roles = data.roles;
-			console.log(this.roles);
 		}
 		);
 	}
@@ -201,7 +198,6 @@ export class AuthComponent implements OnInit,AfterViewInit {
   onSubmit() {
     if (this.loginForm.valid) {
       this.LoginService.login(this.loginForm.value).subscribe((data: any) => {
-        console.log(data);
         this.user = data;
         this.store.dispatch([
           new SetToken(data.token),
@@ -211,7 +207,6 @@ export class AuthComponent implements OnInit,AfterViewInit {
           new SetIsAuthenticated(true)
         ]);
       }, (error: any) => {
-        console.log(error);
         // this.loginForm.setErrors({ unauthenticated: true });
         this.unauthenticated = true;
 
@@ -219,7 +214,6 @@ export class AuthComponent implements OnInit,AfterViewInit {
       );
     }
     else {
-      console.log('invalid');
       this.username.markAsTouched();
       this.password.markAsTouched();
     }
@@ -231,13 +225,11 @@ export class AuthComponent implements OnInit,AfterViewInit {
 		this.showRegister = false;
 		this.showLoginF = true;
 		this.transistionFromSideToSide("left");
-		console.log("show login");
 	}
 	ShowRegister(){
 		this.showRegister = true;
 		this.showLoginF = false;
 		this.transistionFromSideToSide("right");
-		console.log("show register");
 	}
 	height = 0;
 	oldHeight = 0;
@@ -255,13 +247,10 @@ export class AuthComponent implements OnInit,AfterViewInit {
 		if(this.showLoginF){
 			await this.timeout(0.1);
 			this.height = toShow.offsetHeight;
-			console.log("login",toShow.offsetHeight);
 		}else{
 			this.height = this.oldHeight;
-			console.log("register");
 		}
 
-		console.log(this.height);
 		otherPart.style.height = this.height + "px";
 
 
