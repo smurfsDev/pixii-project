@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { checkPassword } from '../form-validators';
 import { RegisterService } from 'src/app/service/account/register.service';
@@ -8,6 +8,7 @@ import { LoginService } from 'src/app/service/account/login.service';
 import { Store } from '@ngxs/store';
 import { User } from 'src/app/models/user';
 import { SetIsAuthenticated, SetToken, SetUser } from 'src/app/store/auth/actions';
+import { validator } from './validator';
 
 @Component({
 	selector: 'app-auth',
@@ -16,8 +17,8 @@ import { SetIsAuthenticated, SetToken, SetUser } from 'src/app/store/auth/action
 })
 export class AuthComponent implements OnInit, AfterViewInit {
 
-	constructor(private formBuilder: FormBuilder, private RegisterService: RegisterService, private router: Router, private LoginService: LoginService, private store: Store) {
-		
+	constructor(private myValid: validator, private formBuilder: FormBuilder, private RegisterService: RegisterService, private router: Router, private LoginService: LoginService, private store: Store) {
+
 		this.registerForm = this.formBuilder.group({
 			email: this.emailRegister,
 			name: this.userNameRegister,
@@ -48,7 +49,11 @@ export class AuthComponent implements OnInit, AfterViewInit {
 	hideConfirmRegister = true;
 	roles: any = [];
 
-	emailRegister = new FormControl('', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,10}$')]);
+	emailRegister = new FormControl('', [Validators.required,
+	Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,10}$'),
+	],
+		this.myValid.userValidator()
+	);
 	userNameRegister = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]);
 	nameRegister = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50),
 	Validators.pattern('^(?=.*[ ])[a-zA-Z ]*$')
@@ -77,6 +82,8 @@ export class AuthComponent implements OnInit, AfterViewInit {
 		if (this.emailRegister.touched) {
 			if (this.emailRegister.hasError('required')) {
 				return 'You must enter a value';
+			}else if(this.emailRegister.hasError('userNameExists')){
+				return 'Username already exists';
 			}
 			return 'Not a valid email';
 		}
