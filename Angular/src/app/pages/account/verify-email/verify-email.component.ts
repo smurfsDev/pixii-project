@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { RegisterService } from 'src/app/service/account/register.service';
 import { validator } from '../auth/validator';
 
@@ -11,7 +12,7 @@ import { validator } from '../auth/validator';
 })
 export class VerifyEmailComponent implements OnInit {
 
-	constructor(private formBuilder: FormBuilder, private myValid: validator, private registerService: RegisterService, private _snackBar: MatSnackBar) {
+	constructor(private router: Router ,private formBuilder: FormBuilder, private myValid: validator, private registerService: RegisterService, private _snackBar: MatSnackBar) {
 		this.verifyEmailForm = this.formBuilder.group({
 			email: this.email,
 			code: this.code,
@@ -36,6 +37,9 @@ export class VerifyEmailComponent implements OnInit {
 				this._snackBar.open('Account verified', 'close', {
 					duration: 2000,
 				});
+				setTimeout(() => {
+					this.router.navigate(['/auth']);
+				}, 2000);
 			},
 			(error) => {
 				this._snackBar.open(error.error.message??"Error", 'close', {
