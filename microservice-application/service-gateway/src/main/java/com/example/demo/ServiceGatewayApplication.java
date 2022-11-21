@@ -8,8 +8,10 @@ import org.springframework.cloud.gateway.discovery.DiscoveryLocatorProperties;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @SpringBootApplication
+@CrossOrigin
 public class ServiceGatewayApplication {
 
 	public static void main(String[] args) {
@@ -18,39 +20,25 @@ public class ServiceGatewayApplication {
 
 	@Bean
 	RouteLocator routesLogin(RouteLocatorBuilder builder) {
-		return builder.routes().route(r -> r.path("/**").uri("http://localhost:8081")).build();
+		return builder.routes()
+				.route(r -> r.path(
+						"/*/**")
+						.and().not(p -> p.path("/node/**"))
+						.filters(f -> f.dedupeResponseHeader("Access-Control-Allow-Origin",
+								"RETAIN_UNIQUE"))
+						.uri("http://localhost:8081"))
+				.build();
 	}
-
-	// @Bean
-	// RouteLocator routesRegister(RouteLocatorBuilder builder) {
-	// return builder.routes().route(r ->
-	// r.path("/register/**").uri("http://localhost:8081")).build();
-	// }
 
 	@Bean
 	RouteLocator routesClaims(RouteLocatorBuilder builder) {
-		return builder.routes().route(r -> r.path("/node/**").uri("http://localhost:8080")).build();
+		return builder.routes()
+				.route(r -> r.path("/node/**")
+						.filters(f -> f.dedupeResponseHeader("Access-Control-Allow-Origin",
+								"RETAIN_UNIQUE"))
+
+						.uri("http://localhost:8080"))
+				.build();
 	}
-
-	// @Bean
-	// RouteLocator routesComments(RouteLocatorBuilder builder) {
-	// return builder.routes().route(r ->
-	// r.path("/comments/**").uri("http://localhost:8080")).build();
-	// }
-
-	/*
-	 * @Bean
-	 * RouteLocator routes(RouteLocatorBuilder builder) {
-	 * return builder.routes().route(r ->
-	 * r.path("/auth/**").uri("lb://SERVICE-AUTH")).build();
-	 * }
-	 * 
-	 * @Bean
-	 * DiscoveryClientRouteDefinitionLocator
-	 * dynamicRoutes(ReactiveDiscoveryClient rdc,DiscoveryLocatorProperties
-	 * dlp) {
-	 * return new DiscoveryClientRouteDefinitionLocator(rdc, dlp);
-	 * }
-	 */
 
 }
