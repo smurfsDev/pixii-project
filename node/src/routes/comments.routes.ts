@@ -3,18 +3,18 @@ module.exports = (app: any) => {
 
 
   // Create a new comment
-  app.post("/comments", create);
+  app.post("/node/comments", create);
 
   // Retrieve all comments
-  app.get("/comments", findAll);
+  app.get("/node/comments", findAll);
 
   // Retrieve a single comment with commentId
-  app.get("/comments/:id", findOne);
+  app.get("/node/comments/:id", findOne);
 
   // Update a comment with commentId
-  app.put("/comments/:id", update);
+  app.put("/node/comments/:id", update);
 
   // Delete a comment with commentId
-  app.delete("/comments/:id", remove);
+  app.delete("/node/comments/:id", remove);
 
 }

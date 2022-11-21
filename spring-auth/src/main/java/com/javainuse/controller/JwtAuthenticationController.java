@@ -151,6 +151,34 @@ public class JwtAuthenticationController {
 
 	}
 
+	private void sendVerificationEmail(User user, String siteURL)
+			throws MessagingException, UnsupportedEncodingException {
+		String toAddress = user.getEmail();
+		String fromAddress = "noreplaypiiximotors@gmail.com";
+		String senderName = "Your company name";
+		String subject = "Please verify your registration";
+		String content = "Dear [[name]],<br>"
+				+ "Please click the link below to verify your registration:<br>"
+				+ "<h3>[[OTP]]</h3>"
+				+ "Thank you,<br>"
+				+ "Your company name.";
+
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
+
+		helper.setFrom(fromAddress, senderName);
+		helper.setTo(toAddress);
+		helper.setSubject(subject);
+
+		content = content.replace("[[name]]", user.getUsername());
+		content = content.replace("[[OTP]]", user.getVerificationCode());
+
+		helper.setText(content, true);
+
+		mailSender.send(message);
+
+	}
+
 	@RequestMapping(value = "/roles", method = RequestMethod.GET)
 	public ResponseEntity<JSONObject> getRoles() {
 		JSONObject item = new JSONObject();
@@ -158,4 +186,46 @@ public class JwtAuthenticationController {
 		return ResponseEntity.status(HttpStatus.OK).body(item);
 	}
 
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+
+	public ResponseEntity<JSONObject> saveUser(@RequestBody User newUser,
+			@RequestBody Long idRole) {
+
+		User appUser = new User();
+		if (userRepository.findUserWithName(newUser.getUsername()).isPresent() == true) {
+			JSONObject item = new JSONObject();
+			item.put("message", "User already exists");
+			item.put("status", HttpStatus.BAD_REQUEST.value());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+		}
+		if (!newUser.getPassword().equals(newUser.getConfirmPassword())) {
+			JSONObject item = new JSONObject();
+			item.put("message", "Please confirm Password");
+			item.put("status", HttpStatus.BAD_REQUEST.value());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+		}
+
+		appUser.setUsername(newUser.getUsername());
+		appUser.setEmail(newUser.getEmail());
+		if (roleRepository.getById(idRole) != null) {
+
+			appUser.getRoles().add(roleRepository.getById(idRole));
+		}
+
+		appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(newUser.getPassword()));
+		User user = userRepository.save(appUser);
+
+		UserRole userRole = new UserRole();
+
+		userRole.setUser(user);
+		userRoleRepository.save(userRole);
+		JSONObject item = new JSONObject();
+		item.put("message", "Account");
+		item.put("username", appUser.getUsername());
+		item.put("email", appUser.getEmail());
+		item.put("role", appUser.getRoles());
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(item);
+
+	}
 }
