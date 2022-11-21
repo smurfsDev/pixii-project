@@ -20,7 +20,7 @@ class _LoginPageState extends State<Login> {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.transparent,
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
@@ -89,7 +89,7 @@ class _LoginPageState extends State<Login> {
                                       icon: Icons.lock,
                                       keyboardType:
                                           TextInputType.visiblePassword,
-                                      labelText: 'Enter your email password',
+                                      labelText: 'Enter your password',
                                     ),
                                     SizedBox(height: 20.0),
                                     Row(
@@ -219,7 +219,11 @@ class _LoginPageState extends State<Login> {
         } else {
           message = "An error has occurred";
         }
-        showAlert(context, 'Login Failed', message);
+
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.red,
+        ));
       }
     }
   }
