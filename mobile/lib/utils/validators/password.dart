@@ -21,11 +21,12 @@ String? validatePassword(value) {
     r"(?=.*\d)",
   ).hasMatch(value)) {
     return "Password must contain at least one number";
-  } else if (!RegExp(
-    // check if has at least one special character
-    r"(?=.*[!@#\$%\^&\*])",
-  ).hasMatch(value)) {
-    return "Password must contain at least one special character";
+    // } else if (!RegExp(
+    //   // check if has at least one special character
+    //   r"(?=.*[!@#\$%\^&\*])",
+    // ).hasMatch(value)) {
+    //   return "Password must contain at least one special character";
+    // }
   }
   return null;
 }
