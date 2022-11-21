@@ -10,7 +10,7 @@ export class CommentService {
   constructor(private http:HttpClient) { }
 
   comment(comment: any) {
-	return this.http.post(`${environment.apiUrl}/comments`, comment);
+	return this.http.post(`${environment.apiUrl}/node/comments`, comment);
   }
 
 }
