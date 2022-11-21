@@ -23,6 +23,10 @@ export class RegisterService {
 	return this.http.get(`http://localhost:8080/checkUsername/${userName}`);
   }
 
+  verifyAccount(token: any) {
+	return this.http.post(`http://localhost:8080/verify`, token);
+  }
+
   
 
 }

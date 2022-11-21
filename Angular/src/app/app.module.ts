@@ -20,6 +20,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { AuthState } from './store/auth/stase';
 import { AuthComponent } from './pages/account/auth/auth.component';
+import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
 @NgModule({
 	imports: [
     BrowserModule,
@@ -33,7 +34,7 @@ import { AuthComponent } from './pages/account/auth/auth.component';
     ReactiveFormsModule,
 ],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }

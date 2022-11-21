@@ -172,7 +172,8 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
 				}
 			).subscribe((data: any) => {
-				this.showLogin();
+				// this.showLogin();
+				this.router.navigate(['/verify']);
 				this.registerLoading = false;
 			});
 			this.ConfirmPasswordRegister.reset();
