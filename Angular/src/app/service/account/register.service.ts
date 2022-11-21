@@ -6,27 +6,27 @@ import { Injectable } from '@angular/core';
 })
 export class RegisterService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
   register(register: any) {
-      return  this.http.post(`http://localhost:8080/register`, register);
+    return this.http.post(`http://localhost:8081/register`, register);
   }
-  
+
   fetchRoles() {
-    return this.http.get(`http://localhost:8080/roles`);
+    return this.http.get(`http://localhost:8081/roles`);
   }
 
   checkEmail(email: string) {
-	return this.http.get(`http://localhost:8080/checkEmail/${email}`);
+    return this.http.get(`http://localhost:8081/checkEmail/${email}`);
   }
 
   checkUserName(userName: string) {
-	return this.http.get(`http://localhost:8080/checkUsername/${userName}`);
+    return this.http.get(`http://localhost:8081/checkUsername/${userName}`);
   }
 
   verifyAccount(token: any) {
-	return this.http.post(`http://localhost:8080/verify`, token);
+    return this.http.post(`http://localhost:8081/verify`, token);
   }
 
-  
+
 
 }
