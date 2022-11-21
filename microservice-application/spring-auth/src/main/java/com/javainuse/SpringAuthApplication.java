@@ -13,7 +13,6 @@ import com.javainuse.repository.RoleRepository;
 import com.javainuse.repository.UserRepository;
 import com.javainuse.repository.UserRoleRepository;
 
-
 @SpringBootApplication
 @EnableFeignClients
 public class SpringAuthApplication implements CommandLineRunner {
@@ -40,21 +39,21 @@ public class SpringAuthApplication implements CommandLineRunner {
 		Role role4 = new Role("SAV Technician");
 		Role role5 = new Role("Scooter Owner");
 
-		User user1 = new User("superadmin@email.com", "Super Admin",
+		User user1 = new User("superadmin", "superadmin@email.com", "Super Admin",
 				"$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS");
 
 		User user2 = userRepository
-				.save(new User("admin@email.com", "Admin",
+				.save(new User("admin", "admin@email.com", "Admin",
 						"$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS"));
 
 		User user3 = userRepository
-				.save(new User("savmanager@email.com", "SAV Manager",
+				.save(new User("savmanager", "savmanager@email.com", "SAV Manager",
 						"$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS"));
 		User user4 = userRepository
-				.save(new User("savtechnician@email.com", "SAV Technician",
+				.save(new User("savtechnician", "savtechnician@email.com", "SAV Technician",
 						"$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS"));
 		User user5 = userRepository
-				.save(new User("scooterowner@email.com", "Scooter Owner",
+				.save(new User("scooterowner", "scooterowner@email.com", "Scooter Owner",
 						"$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS"));// password = Password123
 
 		Role superAdminRole = roleRepository.save(role1);

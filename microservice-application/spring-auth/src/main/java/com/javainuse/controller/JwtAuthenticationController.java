@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.javainuse.service.JwtUserDetailsService;
+import com.javainuse.service.MailingService;
 
 import net.minidev.json.JSONObject;
 
@@ -38,196 +39,140 @@ import com.javainuse.repository.UserRoleRepository;
 @CrossOrigin
 public class JwtAuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 
-    @Autowired
-    private JwtUserDetailsService userDetailsService;
+	@Autowired
+	private JwtUserDetailsService userDetailsService;
 
-    @Autowired
-    UserRepository userRepository;
+	@Autowired
+	UserRepository userRepository;
 
-    @Autowired
-    RoleRepository roleRepository;
+	@Autowired
+	RoleRepository roleRepository;
 
-    @Autowired
-    UserRoleRepository userRoleRepository;
+	@Autowired
+	UserRoleRepository userRoleRepository;
 
-    @Autowired
-    private RegisterNode registerNode;
+	@Autowired
+	private RegisterNode registerNode;
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public JSONObject createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
-            throws Exception {
+	@Autowired
+	private MailingService mailingService;
 
-        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+	public ResponseEntity<JSONObject> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
+		JSONObject item = new JSONObject();
+		try {
+			authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+			final UserDetails userDetails = userDetailsService
+					.loadUserByUsername(authenticationRequest.getUsername());
+			final String token = jwtTokenUtil.generateToken(userDetails);
+			item.put("token", token);
+			item.put("user", userRepository.findUserByEmail(authenticationRequest.getUsername()).get());
+			return new ResponseEntity<JSONObject>(item, HttpStatus.OK);
+		} catch (Exception e) {
+			item.put("error", e.getMessage());
+			return new ResponseEntity<JSONObject>(item, HttpStatus.BAD_REQUEST);
+		}
+	}
 
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequest.getUsername());
+	private void authenticate(String username, String password) throws Exception {
+		try {
+			if (!userRepository.findUserByEmail(username).isPresent()) {
+				throw new Exception("USER_NOT_FOUND");
+			}
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+		} catch (DisabledException e) {
+			throw new Exception("USER_DISABLED", e);
+		} catch (BadCredentialsException e) {
+			throw new Exception("INVALID_CREDENTIALS", e);
+		}
+	}
 
-        final String token = jwtTokenUtil.generateToken(userDetails);
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
 
-        HttpHeaders responseHeaders = new HttpHeaders();
-        // responseHeaders.setLocation(location);
-        responseHeaders.set("MyResponseHeader", "MyValue");
-        JwtResponse tkn = new JwtResponse(token);
+	public ResponseEntity<JSONObject> saveUser(@RequestBody JSONObject user) {
 
-        ResponseEntity<String> returned_token = new ResponseEntity<String>(tkn.getToken(), responseHeaders,
-                HttpStatus.OK);
-        JSONObject item = new JSONObject();
-        item.put("token", returned_token);
-        item.put("user", userRepository.findUserWithName(authenticationRequest.getUsername()).get());
-        // item.put("username", authenticationRequest.getUsername());
-        return item;
+		User appUser = new User();
+		user.get("email");
+		if (userRepository.findByUsername(user.get("email").toString()).isPresent()) {
+			JSONObject item = new JSONObject();
+			item.put("message", "email already exists");
+			item.put("status", HttpStatus.BAD_REQUEST.value());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+		}
+		if (userRepository.findByUsername(user.get("username").toString()).isPresent()) {
+			JSONObject item = new JSONObject();
+			item.put("message", "username already exists");
+			item.put("status", HttpStatus.BAD_REQUEST.value());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+		}
+		if (!user.get("password").toString().equals(user.get("confirmPassword").toString())) {
+			JSONObject item = new JSONObject();
+			item.put("message", "Please confirm Password");
+			item.put("status", HttpStatus.BAD_REQUEST.value());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+		}
 
-    }
+		appUser.setUsername(user.get("username").toString());
+		appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(user.get("password").toString()));
+		appUser.setName(user.get("name").toString());
+		appUser.setEmail(user.get("email").toString());
+		appUser.getRoles().add(roleRepository.findRoleWithName(user.get("role").toString()));
+		Role newRole = roleRepository.findRoleWithName(user.get("role").toString());
+		appUser.getRoles().add(newRole);
+		User newUser = userRepository.save(appUser);
+		Optional<UserRole> userRole = userRoleRepository.findFirstByUserId(newUser.getId());
+		if (user.get("role").toString().equals("Super Admin")) {
+			userRole.get().setStatus(1);
+		}
+		if (user.get("role").toString().equals("Admin")) {
+			userRole.get().setStatus(1);
+		}
+		if (user.get("role").toString().equals("Scooter Owner")) {
+			userRole.get().setStatus(0);
+		}
+		if (user.get("role").toString().equals("SAV Manager")) {
+			userRole.get().setStatus(0);
+		}
+		if (user.get("role").toString().equals("SAV Techinician")) {
+			userRole.get().setStatus(0);
+		}
+		userRoleRepository.save(userRole.get());
+		JSONObject newUserNode = new JSONObject();
+		newUserNode.put("name", user.get("name").toString());
+		newUserNode.put("username", user.get("email").toString());
+		newUserNode.put("roles", user.get("role").toString());
+		newUserNode.put("password", user.get("password").toString());
+		newUserNode.put("status", userRole.get().getStatus());
+		User userNode = registerNode.register(newUserNode);
 
-    private void authenticate(String username, String password) throws Exception {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
-        } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
-        }
-    }
+		try {
+			mailingService.sendVerificationEmail(newUser);
+		} catch (Exception e) {
+			JSONObject item = new JSONObject();
+			item.put("message", "Error sending email");
+			item.put("status", HttpStatus.BAD_REQUEST.value());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+		}
 
-    // @FeignClient(value = "jplaceholder", url = "localhost:8085/node")
-    // public interface JSONPlaceHolderClient {
+		JSONObject item = new JSONObject();
+		item.put("message", "Account");
+		item.put("user", userRepository.findByUsername(newUser.getUsername()).get());
 
-    // /*@RequestMapping(method = RequestMethod.GET, value = "/posts")
-    // List<Post> getPosts();*/
+		return ResponseEntity.status(HttpStatus.CREATED).body(item);
 
-    // @RequestMapping(method = RequestMethod.POST, value = "/register", produces =
-    // "application/json")
-    // User registerNode(@RequestBody JSONObject user);
-    // }
+	}
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+	@RequestMapping(value = "/roles", method = RequestMethod.GET)
+	public ResponseEntity<JSONObject> getRoles() {
+		JSONObject item = new JSONObject();
+		item.put("roles", roleRepository.findAll());
+		return ResponseEntity.status(HttpStatus.OK).body(item);
+	}
 
-    public ResponseEntity<JSONObject> saveUser(@RequestBody JSONObject user) {
-
-        User appUser = new User();
-        user.get("email");
-        if (userRepository.findUserWithName(user.get("email").toString()).isPresent() == true) {
-            JSONObject item = new JSONObject();
-            item.put("message", "User already exists");
-            item.put("status", HttpStatus.BAD_REQUEST.value());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
-        }
-        if (!user.get("password").toString().equals(user.get("confirmPassword").toString())) {
-            JSONObject item = new JSONObject();
-            item.put("message", "Please confirm Password");
-            item.put("status", HttpStatus.BAD_REQUEST.value());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
-        }
-        /*
-         * JSONObject newUserNode = new JSONObject();
-         * newUserNode.put("name", user.get("name").toString());
-         * newUserNode.put("username", user.get("email").toString());
-         * newUserNode.put("roles", user.get("role").toString());
-         * newUserNode.put("password", user.get("password").toString());
-         * //newUserNode.put("status", userRole.get().getStatus());
-         * User userNode = registerNode.register(newUserNode);
-         */
-
-        appUser.setUsername(user.get("email").toString());
-        appUser.setName(user.get("name").toString());
-
-        // if (roleRepository.getById(idRole) != null) {
-
-        appUser.getRoles().add(roleRepository.findRoleWithName(user.get("role").toString()));
-        // }
-
-        appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(user.get("password").toString()));
-        // appUser.setConfirmPassword(WebSecurityConfig.passwordEncoder().encode(user.get("confirmPassword").toString()));
-        Role newRole = roleRepository.findRoleWithName(user.get("role").toString());
-        appUser.getRoles().add(newRole);
-        User newUser = userRepository.save(appUser);
-        Optional<UserRole> userRole = userRoleRepository.findFirstByUserId(newUser.getId());
-        if (user.get("role").toString().equals("Super Admin")) {
-            userRole.get().setStatus(1);
-        }
-        if (user.get("role").toString().equals("Admin")) {
-            userRole.get().setStatus(1);
-        }
-        if (user.get("role").toString().equals("Scooter Owner")) {
-            userRole.get().setStatus(0);
-        }
-        if (user.get("role").toString().equals("SAV Manager")) {
-            userRole.get().setStatus(0);
-        }
-        if (user.get("role").toString().equals("SAV Techinician")) {
-            userRole.get().setStatus(0);
-        }
-        userRoleRepository.save(userRole.get());
-        JSONObject newUserNode = new JSONObject();
-        newUserNode.put("name", user.get("name").toString());
-        newUserNode.put("username", user.get("email").toString());
-        newUserNode.put("roles", user.get("role").toString());
-        newUserNode.put("password", user.get("password").toString());
-        newUserNode.put("status", userRole.get().getStatus());
-        User userNode = registerNode.register(newUserNode);
-
-        // UserRole userRole = new UserRole();
-
-        // userRole.setUser(newUser);
-        // userRole.setRole(newRole);
-        // userRoleRepository.save(userRole);
-        JSONObject item = new JSONObject();
-        item.put("message", "Account");
-        item.put("user", userRepository.findUserWithName(newUser.getUsername()).get());
-
-        // item.put("role", appUser.getRoles());
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(item);
-
-    }
-
-    // @RequestMapping(value = "/register", method = RequestMethod.POST)
-
-    // public ResponseEntity<JSONObject> saveUser(@RequestBody User newUser,
-    // @RequestBody Long idRole) {
-
-    // User appUser = new User();
-    // if (userRepository.findUserWithName(newUser.getUsername()).isPresent() ==
-    // true) {
-    // JSONObject item = new JSONObject();
-    // item.put("message", "User already exists");
-    // item.put("status", HttpStatus.BAD_REQUEST.value());
-    // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
-    // }
-    // if (!newUser.getPassword().equals(newUser.getConfirmPassword())) {
-    // JSONObject item = new JSONObject();
-    // item.put("message", "Please confirm Password");
-    // item.put("status", HttpStatus.BAD_REQUEST.value());
-    // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
-    // }
-
-    // appUser.setUsername(newUser.getUsername());
-    // appUser.setEmail(newUser.getEmail());
-    // if (roleRepository.getById(idRole) != null) {
-
-    // appUser.getRoles().add(roleRepository.getById(idRole));
-    // }
-
-    // appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(newUser.getPassword()));
-    // User user = userRepository.save(appUser);
-
-    // UserRole userRole = new UserRole();
-
-    // userRole.setUser(user);
-    // userRoleRepository.save(userRole);
-    // JSONObject item = new JSONObject();
-    // item.put("message", "Account");
-    // item.put("username", appUser.getUsername());
-    // item.put("email", appUser.getEmail());
-    // item.put("role", appUser.getRoles());
-
-    // return ResponseEntity.status(HttpStatus.CREATED).body(item);
-
-    // }
 }
