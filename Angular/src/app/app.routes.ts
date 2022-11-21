@@ -5,11 +5,15 @@ import { RegisterComponent } from './pages/account/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
+import { ResetPasswordComponent } from './pages/account/reset-password/reset-password.component';
+import { CheckemailComponent } from './pages/account/reset-password/checkemail/checkemail.component';
 export const AppRoutes: Routes = [
-	{ path: '', component: HomeComponent },
-	{ path: 'claims', component: ClaimsComponent },
+  { path: '', component: HomeComponent },
+  { path: 'claims', component: ClaimsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'auth', component:AuthComponent},
-	{path: 'verify', component: VerifyEmailComponent},
+  { path: 'auth', component: AuthComponent },
+  { path: 'verify', component: VerifyEmailComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'checkemail', component: CheckemailComponent },
 ];
