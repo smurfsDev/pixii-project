@@ -1,6 +1,6 @@
 <div class="h-100 gradient-form">
   <div class="row g-0 page">
-    <div class="col-lg-4 text-start mt-3 px-3"  style="background-color: #686868">
+    <div class="col-lg-4 text-start mt-3 px-3" style="background-color: #686868">
       <img src="./assets/logo.png" alt="" style="width: 20%;">
     </div>
     <div class="col-lg-8  gradient-custom-2">
@@ -9,16 +9,12 @@
           <h1 class="text-center">Sign up</h1>
         </div>
         <div class="card-body">
-            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="form-outline mb-4">
               <label class="form-label">Email</label>
               <div class="input-container">
                 <mat-icon class="icon col-4">email</mat-icon>
-                <input  class="input"
-                        matInput
-                        placeholder="Enter your email address"
-                        [formControl]="email"
-                        required>
+                <input class="input" matInput placeholder="Enter your email address" [formControl]="email" required>
               </div>
               <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
             </div>
@@ -26,11 +22,7 @@
               <label class="form-label">UserName</label>
               <div class="input-container">
                 <mat-icon class="icon col-4">person</mat-icon>
-                <input  class="input"
-                        matInput
-                        placeholder="Enter your userName"
-                        [formControl]="userName"
-                        required>
+                <input class="input" matInput placeholder="Enter your userName" [formControl]="userName" required>
               </div>
               <mat-error *ngIf="userName.invalid">{{getUserNameErrorMessage()}}</mat-error>
             </div>
@@ -38,11 +30,7 @@
               <label class="form-label">Role</label>
               <div class="input-container">
                 <mat-icon class="icon col-4">person</mat-icon>
-                <mat-select class="input"
-                            matInput
-                            placeholder="Select your role"
-                            [formControl]="roleInput"
-                            required>
+                <mat-select class="input" matInput placeholder="Select your role" [formControl]="roleInput" required>
                   <mat-option *ngFor="let role of roles" [value]="role.name">{{role.name}}</mat-option>
                 </mat-select>
               </div>
@@ -52,18 +40,10 @@
               <label class="form-label">Password</label>
               <div class="input-container">
                 <mat-icon class="icon col-4">lock</mat-icon>
-                <input  class="input"
-                        matInput
-                        [type]="hide ? 'password' : 'text'"
-                        placeholder="Enter your password"
-                        formControlName="password"
-                        [formControl]="password"
-                        required>
-                <button mat-icon-button
-                        matSuffix
-                        (click)="hide = !hide"
-                        [attr.aria-label]="'Hide password'"
-                        [attr.aria-pressed]="hide">
+                <input class="input" matInput [type]="hide ? 'password' : 'text'" placeholder="Enter your password"
+                  formControlName="password" [formControl]="password" required>
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide">
                   <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
               </div>
@@ -73,18 +53,11 @@
               <label class="form-label">Confirm Password</label>
               <div class="input-container">
                 <mat-icon class="icon col-4">lock</mat-icon>
-                <input  class="input"
-                        matInput
-                        [type]="hideConfirm ? 'password' : 'text'"
-                        formControlName="ConfirmPassword"
-                        placeholder="Confirm your password"
-                        [formControl]="ConfirmPassword"
-                        required>
-                <button mat-icon-button
-                        matSuffix
-                        (click)="hideConfirm = !hideConfirm"
-                        [attr.aria-label]="'hideConfirm password'"
-                        [attr.aria-pressed]="hideConfirm">
+                <input class="input" matInput [type]="hideConfirm ? 'password' : 'text'"
+                  formControlName="ConfirmPassword" placeholder="Confirm your password" [formControl]="ConfirmPassword"
+                  required>
+                <button mat-icon-button matSuffix (click)="hideConfirm = !hideConfirm"
+                  [attr.aria-label]="'hideConfirm password'" [attr.aria-pressed]="hideConfirm">
                   <mat-icon>{{hideConfirm ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
               </div>
