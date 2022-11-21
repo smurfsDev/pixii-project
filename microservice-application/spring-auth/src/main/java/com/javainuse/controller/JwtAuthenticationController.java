@@ -1,11 +1,8 @@
 package com.javainuse.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,7 +11,6 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javainuse.service.JwtUserDetailsService;
 import com.javainuse.service.MailingService;
 
+import net.bytebuddy.utility.RandomString;
 import net.minidev.json.JSONObject;
 
 import com.javainuse.config.JwtTokenUtil;
@@ -30,7 +27,6 @@ import com.javainuse.entities.Role;
 import com.javainuse.entities.User;
 import com.javainuse.entities.UserRole;
 import com.javainuse.model.JwtRequest;
-import com.javainuse.model.JwtResponse;
 import com.javainuse.repository.RoleRepository;
 import com.javainuse.repository.UserRepository;
 import com.javainuse.repository.UserRoleRepository;
@@ -122,6 +118,8 @@ public class JwtAuthenticationController {
 		appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(user.get("password").toString()));
 		appUser.setName(user.get("name").toString());
 		appUser.setEmail(user.get("email").toString());
+		appUser.setVerificationCode(RandomString.make(8));
+		appUser.setEnabled(false);
 		appUser.getRoles().add(roleRepository.findRoleWithName(user.get("role").toString()));
 		Role newRole = roleRepository.findRoleWithName(user.get("role").toString());
 		appUser.getRoles().add(newRole);
@@ -155,8 +153,9 @@ public class JwtAuthenticationController {
 			mailingService.sendVerificationEmail(newUser);
 		} catch (Exception e) {
 			JSONObject item = new JSONObject();
-			item.put("message", "Error sending email");
+			item.put("message", e.getMessage());
 			item.put("status", HttpStatus.BAD_REQUEST.value());
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
 		}
 

@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 public class User {
@@ -23,8 +24,9 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
+	@Column(unique = true)
 	private String username;
+	@Column(unique = true)
 	private String email;
 	private String name;
 	private String password;
