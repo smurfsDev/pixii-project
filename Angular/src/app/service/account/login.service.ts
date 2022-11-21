@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 })
 export class LoginService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
   login(login: any) {
 	return  this.http.post(`${environment.apiUrl}/authenticate`, login);
   }
