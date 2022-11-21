@@ -18,13 +18,14 @@ public class ServiceGatewayApplication {
 
 	@Bean
 	RouteLocator routesLogin(RouteLocatorBuilder builder) {
-		return builder.routes().route(r -> r.path("/authenticate/**").uri("http://localhost:8081")).build();
+		return builder.routes().route(r -> r.path("/**").uri("http://localhost:8081")).build();
 	}
 
-	@Bean
-	RouteLocator routesRegister(RouteLocatorBuilder builder) {
-		return builder.routes().route(r -> r.path("/register/**").uri("http://localhost:8081")).build();
-	}
+	// @Bean
+	// RouteLocator routesRegister(RouteLocatorBuilder builder) {
+	// return builder.routes().route(r ->
+	// r.path("/register/**").uri("http://localhost:8081")).build();
+	// }
 
 	@Bean
 	RouteLocator routesClaims(RouteLocatorBuilder builder) {
