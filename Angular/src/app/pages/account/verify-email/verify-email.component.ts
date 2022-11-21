@@ -19,6 +19,7 @@ export class VerifyEmailComponent implements OnInit {
 		});
 	}
 
+	loading = false;
 	verifyEmailForm: FormGroup;
 	email = new FormControl('', [Validators.required,
 	Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,10}$')
@@ -29,6 +30,7 @@ export class VerifyEmailComponent implements OnInit {
 	code = new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
 
 	onSubmit() {
+		this.loading = true;
 		this.registerService.verifyAccount({
 			email: this.verifyEmailForm.value.email,
 			code: this.verifyEmailForm.value.code
@@ -37,14 +39,20 @@ export class VerifyEmailComponent implements OnInit {
 				this._snackBar.open('Account verified', 'close', {
 					duration: 2000,
 				});
+				this.loading = false;
 				setTimeout(() => {
 					this.router.navigate(['/auth']);
 				}, 2000);
+				
 			},
 			(error) => {
 				this._snackBar.open(error.error.message??"Error", 'close', {
 					duration: 2000,
 				});
+				this.loading = false;
+			},
+			() => {
+				this.loading = false;
 			}
 
 		);

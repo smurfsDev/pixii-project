@@ -31,7 +31,10 @@
                             Code is <strong>invalid</strong>
                         </mat-error>
 					</mat-form-field>
-					<button type="submit" class="btn btn-primary" [disabled]="verifyEmailForm.invalid">Submit</button>
+					<button type="submit" class="btn btn-primary" style="width:100% ;border-radius: 15px;" [disabled]="verifyEmailForm.invalid">
+                            <span *ngIf="!loading">Verify</span>
+                            <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+                    </button>
 				</form>
 			</div>
 	</div>
