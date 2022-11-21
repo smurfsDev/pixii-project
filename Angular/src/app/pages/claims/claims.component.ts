@@ -1,8 +1,10 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit, VERSION } from '@angular/core';
+import { Store } from '@ngxs/store';
 import { Board } from 'src/app/models/board.model';
 import { Claim } from 'src/app/models/claim.model';
 import { Column } from 'src/app/models/column.model';
+import { User } from 'src/app/models/user';
 import { ClaimsService } from 'src/app/service/claims/claims.service';
 import { CommentService } from 'src/app/service/claims/comment.service';
 import { StatusService } from 'src/app/service/claims/status.service';
@@ -90,8 +92,10 @@ export class ClaimsComponent implements OnInit {
 			
 		});
 	}
+	
+	authUser: User | undefined;
 
-	constructor(private claimsService: ClaimsService, private statusService: StatusService, private commentsService: CommentService) { }
+	constructor(private store:Store,private claimsService: ClaimsService, private statusService: StatusService, private commentsService: CommentService) { }
 	name = 'Angular Material ' + VERSION.major + ' Kanban board';
 	public board: Board = new Board("", []);
 	current = '/home';
@@ -103,6 +107,7 @@ export class ClaimsComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.fetchClaims();
+		this.authUser = this.store.selectSnapshot(state => state.AuthState.user);
 	}
 
 	async fetchClaims(): Promise<void> {
