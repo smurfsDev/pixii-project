@@ -250,6 +250,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 						new SetIsAuthenticated(true)
 					]);
 					this.loginLoading = false;
+					this.router.navigate(['/claims']);
 			}, (error: any) => {
 				this.loginLoading = false;
 				this.unauthenticated = true;
