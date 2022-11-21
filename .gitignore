@@ -5,3 +5,4 @@ Angular/node_modules/*
 Angular/dist/*
 Angular/.env
 /.metadata/
+microservice-application/service-config/cloud-conf/.git/*
