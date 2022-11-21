@@ -3,9 +3,9 @@ package com.javainuse.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.javainuse.entities.Role;
+import com.javainuse.entities.ResetPassword;
 
 @EnableJpaRepositories
-public interface RoleRepository extends JpaRepository<Role, Long> {
-	Role findByName(String name);
+public interface ResetPasswordRepository extends JpaRepository<ResetPassword, Long>{
+    ResetPassword findByEmail(String email);
 }

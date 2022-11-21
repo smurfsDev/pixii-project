@@ -1,5 +1,4 @@
 @import '../../../app.component.scss';
-
 .details-container {
 	width: 100%;
 	height: 100%;
@@ -29,7 +28,7 @@
 				cursor: pointer;
 			}
 		}
-		.content{
+		.content, .status-content{
 			color: $main-text-color;
 			background-color: $main-component-color;
 			border-radius: 10px;
@@ -54,7 +53,7 @@
 						color: $main-text-color;
 					}
 					.value{
-						font-size: 16px;
+						font-size: 12px;
 						color: $main-text-color;
 					}
 				}
@@ -144,6 +143,40 @@
 						font-size: 12px;
 						color: lighten($bg-icons-color, 10%);
 					}
+				}
+			}
+		}
+
+		.status-content{
+			
+			margin-top: 20px;
+			.mat-card{
+				margin-bottom: 20px;
+				.mat-card-header{
+					&-image {
+						// background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+						background-size: cover;
+					}
+					.mat-card-title{
+						font-size: 20px;
+						font-weight: 600;
+					}
+				}
+				
+			}
+			.statuses{
+				margin-top: 20px;
+			}
+			.status{
+				margin-bottom: 10px;
+				.label{
+					font-size: 16px;
+					font-weight: 500;
+					color: $secondary-component-color;
+				}
+				.value{
+					font-size: 12px;
+					color: $secondary-text-color;
 				}
 			}
 		}

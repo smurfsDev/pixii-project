@@ -2,3 +2,22 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-select-placeholder{
+  color:white;
+  font-size: 1.2em;
+}
+.mat-select-value{
+  color:white;
+  font-size: 1.2em;
+}
+.mat-select-arrow{
+  color:white;
+}
+.mat-tab-label-active{
+	background-color: rgb(174, 189, 221);
+	color: rgb(53,77,120)!important;
+	border-radius: 9px 9px 0 0;
+}
+.mat-tab-label,.mat-form-field-label {
+	color: white;
+}

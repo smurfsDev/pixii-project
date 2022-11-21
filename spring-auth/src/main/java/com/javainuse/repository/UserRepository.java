@@ -10,9 +10,14 @@ import com.javainuse.entities.User;
 
 @EnableJpaRepositories
 public interface UserRepository extends JpaRepository<User, Integer> {
-    @Query(" select u from User u where u.username = ?1")
-    Optional<User> findUserWithName(String username);
 
-    // @Query(" select u from User u where u.email = ?1")
-    // User findUserWithEmail(String email);
+	Optional<User> findByUsername(String username);
+
+	public User findByVerificationCode(String code);
+
+	public User findByEmail(String email);
+
+	@Query("SELECT u FROM User u WHERE u.email = ?1")
+	Optional<User> findUserByEmail(String email);
+
 }
