@@ -10,7 +10,7 @@ export const AppRoutes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    canActivate: [IsAuthenticatedGuard]
+    // canActivate: [IsAuthenticatedGuard]
   },
   {
     path: 'claims',
