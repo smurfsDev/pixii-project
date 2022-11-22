@@ -21,19 +21,19 @@ export const AppRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [IsAuthenticatedGuard]
+
 
   },
   {
     path: 'register',
     component: RegisterComponent,
-    canActivate: [IsAuthenticatedGuard]
+
 
   },
   {
     path: 'auth',
     component: AuthComponent,
-    canActivate: [IsAuthenticatedGuard]
+
 
   },
   {
