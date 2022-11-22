@@ -12,7 +12,13 @@ export class IsAuthenticatedGuard implements CanActivate {
 
     constructor(private loginService: LoginService, private router: Router) { }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-        return true
+        return this.loginService.isLoggedIn$.pipe(
+            tap((isLoggedIn) => {
+                if (!isLoggedIn) {
+                    this.router.navigate(['login']);
+                }
+            })
+        );
 
         // return localStorage.getItem("")
     }

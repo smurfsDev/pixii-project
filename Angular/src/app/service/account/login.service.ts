@@ -7,22 +7,22 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class LoginService {
-  // private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  // isLoggedIn$ = this._isLoggedIn$.asObservable();
+  private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
+  isLoggedIn$ = this._isLoggedIn$.asObservable();
 
 
 
   constructor(private http: HttpClient) {
-    // const token = localStorage.getItem('profanis_auth');
-    // this._isLoggedIn$.next(!!token);
+    const token = localStorage.getItem('token');
+    this._isLoggedIn$.next(!!token);
   }
   login(login: any) {
     return this.http.post(`${environment.apiUrl}/authenticate`, login)
-    // .pipe(
-    //   tap((response: any) => {
-    //     this._isLoggedIn$.next(true);
-    //     localStorage.setItem('profanis_auth', response.token);
-    //   })
-    // );;
+      .pipe(
+        tap((response: any) => {
+          this._isLoggedIn$.next(true);
+          localStorage.setItem('token', response.token);
+        })
+      );;
   }
 }
