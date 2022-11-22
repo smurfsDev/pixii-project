@@ -20,6 +20,6 @@ export class IsAuthenticatedGuard implements CanActivate {
             })
         );
 
-        // return localStorage.getItem("")
+
     }
 }
