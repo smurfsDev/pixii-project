@@ -1,23 +1,9 @@
 <app-navbar>
 
   <app-details (commented)="commented($event)" [opened]="opened" [claim]="claim">
+
     <div class="root">
-      <div class="header">
-        <mat-icon class="search-icon">search</mat-icon>
-        <div class="cont">
-          <h1 class="item">Tickets</h1>
-          <h1 class="item">Home</h1>
-          <h1 class="item">Desktop</h1>
-        </div>
-
-        <div class="actions">
-          <img class="avatar"
-            src="https://resize.elle.fr/article/var/plain_site/storage/images/loisirs/cinema/news/avatar-2-une-premiere-bande-annonce-en-mai-4010741/96462268-1-fre-FR/Avatar-2-une-premiere-bande-annonce-en-mai.jpg" />
-          <div class="hello">Hello, <span class="name">{{authUser?.userName?.split(' ')?.at(0)}}</span></div>
-          <mat-icon class="more-icon">arrow_drop_down</mat-icon>
-        </div>
-
-      </div>
+      <app-topbar></app-topbar>
       <div class="board">
         <div class="board-wrapper">
           <h1 class="title">Tickets</h1>
