@@ -6,8 +6,6 @@
 		</div>
 		<div class="separator"></div>
 		<mat-nav-list class="dashboard">
-
-
 		</mat-nav-list>
 		<mat-nav-list class="dashboard">
 			<a mat-list-item (click)="showSubmenu = !showSubmenu" class="my-3">
@@ -21,9 +19,6 @@
 						showSubmenu}" *ngIf="isExpanded || 
 						   isShowing">expand_more</mat-icon>
 				</div>
-
-
-
 			</a>
 			<div *ngIf="showSubmenu">
 				<a mat-list-item>
@@ -35,9 +30,6 @@
 							Activity </p>
 
 					</div>
-
-
-
 				</a>
 				<a mat-list-item>
 
@@ -48,9 +40,6 @@
 							Traffic </p>
 
 					</div>
-
-
-
 				</a>
 				<a mat-list-item>
 
@@ -61,28 +50,35 @@
 							Statics </p>
 
 					</div>
-
-
-
 				</a>
-
 			</div>
-
-
 
 			<a mat-list-item class="my-3" (click)="toggleActive('/claims')">
 				<div matLine class="item" [ngClass]="{'active': current === '/claims','open':isExpanded}">
-					<mat-icon class="icon">home</mat-icon>
+					<mat-icon class="icon">person</mat-icon>
+					<p *ngIf="isExpanded">Profile</p>
+				</div>
+			</a>
+			<a mat-list-item class="my-3" (click)="toggleActive('/claims')">
+				<div matLine class="item" [ngClass]="{'active': current === '/claims','open':isExpanded}">
+					<mat-icon class="icon">recycling</mat-icon>
 					<p *ngIf="isExpanded">Claims</p>
+				</div>
+			</a>
+			<a mat-list-item class="my-3" (click)="toggleActive('/claims')">
+				<div matLine class="item" [ngClass]="{'active': current === '/claims','open':isExpanded}">
+					<mat-icon class="icon">feed</mat-icon>
+					<p *ngIf="isExpanded">Invoices</p>
 				</div>
 			</a>
 
 			<a mat-list-item class="my-3" (click)="toggleActive('/home2')">
 				<div matLine class="item" [ngClass]="{'active': current === '/home2','open':isExpanded}">
-					<mat-icon class="icon">favorite</mat-icon>
-					<p *ngIf="isExpanded">Contact</p>
+					<mat-icon class="icon">account_balance_wallet</mat-icon>
+					<p *ngIf="isExpanded">Wallet</p>
 				</div>
 			</a>
+
 
 			<a mat-list-item class="last-item" (click)="
 				isExpanded = !isExpanded;
