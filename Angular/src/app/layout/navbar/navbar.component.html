@@ -5,27 +5,25 @@
 			<div class="slogan">ride the future</div>
 		</div>
 		<div class="separator"></div>
-		<mat-nav-list class="dashboard">
-		</mat-nav-list>
+		<!-- <mat-nav-list class="dashboard">
+		</mat-nav-list> -->
 		<mat-nav-list class="dashboard">
 			<a mat-list-item (click)="showSubmenu = !showSubmenu" class="my-3">
 
-				<div matLine class="item" [ngClass]="{'active': current === '/','open':isExpanded}" *ngIf="isExpanded || 
-					isShowing">
+				<div matLine class="item" [ngClass]="{'active': current === '/','open':isExpanded}">
 					<mat-icon class="icon">grid_view</mat-icon>
 					<p *ngIf="isExpanded">
 						Dashboard </p>
 					<mat-icon class="menu-button" [ngClass]="{'rotated' : 
 						showSubmenu}" *ngIf="isExpanded || 
-						   isShowing">expand_more</mat-icon>
+						   isShowing" style="color: white;">expand_more</mat-icon>
 				</div>
 			</a>
 			<div *ngIf="showSubmenu">
 				<a mat-list-item>
 
-					<div matLine class="item" [ngClass]="{'open':isExpanded}" *ngIf="isExpanded || 
-					isShowing">
-						<mat-icon class="icon"></mat-icon>
+					<div matLine class="item" [ngClass]="{'open':isExpanded}">
+						<mat-icon class="icon">home</mat-icon>
 						<p *ngIf="isExpanded">
 							Activity </p>
 
@@ -33,9 +31,8 @@
 				</a>
 				<a mat-list-item>
 
-					<div matLine class="item" [ngClass]="{'open':isExpanded}" *ngIf="isExpanded || 
-					isShowing">
-						<mat-icon class="icon"></mat-icon>
+					<div matLine class="item" [ngClass]="{'open':isExpanded}">
+						<mat-icon class="icon">traffic</mat-icon>
 						<p *ngIf="isExpanded">
 							Traffic </p>
 
@@ -43,11 +40,10 @@
 				</a>
 				<a mat-list-item>
 
-					<div matLine class="item" [ngClass]="{'open':isExpanded}" *ngIf="isExpanded || 
-					isShowing">
-						<mat-icon class="icon"></mat-icon>
+					<div matLine class="item" [ngClass]="{'open':isExpanded}">
+						<mat-icon class="icon">insert_chart</mat-icon>
 						<p *ngIf="isExpanded">
-							Statics </p>
+							Statistic </p>
 
 					</div>
 				</a>
