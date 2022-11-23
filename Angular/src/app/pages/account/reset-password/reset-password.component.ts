@@ -60,34 +60,40 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    this.loading = true;
-    this.restpasswordService.resetpasword({
-      email: this.resetpassword.value.email,
-      token: this.resetpassword.value.token,
-      password: this.resetpassword.value.password,
-    })
-    .subscribe(
-      (data) => {
-        console.log('test');
-        this._snackBar.open('Password restored', 'close', {
-          duration: 2000,
-        });
-        this.loading = false;
-        setTimeout(() => {
-          this.router.navigate(['/auth']);
-        }, 2000);
-      },
-      (error) => {
-        this._snackBar.open(error.error.message ?? 'Error', 'close', {
-          duration: 2000,
-        });
-        this.loading = false;
-      },
-      () => {
-        this.loading = false;
-      }
-    );
-  }
+    if (this.resetpassword.valid) {
+      this.loading = true;
+      this.restpasswordService
+        .resetpasword({
+          email: this.resetpassword.value.email,
+          token: this.resetpassword.value.token,
+          password: this.resetpassword.value.password,
+        })
 
+        .subscribe(
+          (data) => {
+            this._snackBar.open('Password restored', 'close', {
+              duration: 2000,
+            });
+            this.loading = false;
+            setTimeout(() => {
+              this.router.navigate(['/auth']);
+            }, 2000);
+          },
+          (error) => {
+            this._snackBar.open(error.error.message ?? 'Error', 'close', {
+              duration: 2000,
+            });
+            this.loading = false;
+          },
+          () => {
+            this.loading = false;
+          }
+        );
+    } else {
+      this._snackBar.open("Password doesn't match", 'close', {
+        duration: 2000,
+      });
+    }
+  }
   ngOnInit(): void {}
 }
