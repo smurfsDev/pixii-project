@@ -13,10 +13,11 @@
 				<div matLine class="item" [ngClass]="{'active': current === '/','open':isExpanded}">
 					<mat-icon class="icon">grid_view</mat-icon>
 					<p *ngIf="isExpanded">
-						Dashboard </p>
+						Dashboard
+					</p>
 					<mat-icon class="menu-button" [ngClass]="{'rotated' : 
-						showSubmenu}" *ngIf="isExpanded || 
-						   isShowing" style="color: white;">expand_more</mat-icon>
+					showSubmenu}" *ngIf="isExpanded || 
+					   isShowing" style="color: white; " class="float-right">expand_more</mat-icon>
 				</div>
 			</a>
 			<div *ngIf="showSubmenu">
@@ -79,12 +80,25 @@
 			<a mat-list-item class="last-item" (click)="
 				isExpanded = !isExpanded;
 			">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Let's start</h5>
+						<p class="card-text">Creating or adding ne Scooter couldn't be easier.</p>
+						<button type="button" class="btn btn-primary">
+							<mat-icon>add</mat-icon> Add New Scooter
+						</button>
+					</div>
+				</div>
+			</a>
+			<!-- <a mat-list-item class="last-item" (click)="
+				isExpanded = !isExpanded;
+			">
 				<div matLine class="item active">
 					<mat-icon class="icon">
 						{{isExpanded ? 'arrow_left' : 'arrow_right'}}
 					</mat-icon>
 				</div>
-			</a>
+			</a> -->
 
 		</mat-nav-list>
 	</mat-drawer>
