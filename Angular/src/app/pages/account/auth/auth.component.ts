@@ -18,7 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AuthComponent implements OnInit, AfterViewInit {
 
-	constructor(private _snackBar: MatSnackBar,private myValid: validator, private formBuilder: FormBuilder, private RegisterService: RegisterService, private router: Router, private LoginService: LoginService, private store: Store) {
+	constructor(private _snackBar: MatSnackBar, private myValid: validator, private formBuilder: FormBuilder, private RegisterService: RegisterService, private router: Router, private LoginService: LoginService, private store: Store) {
 
 		this.registerForm = this.formBuilder.group({
 			email: this.emailRegister,
@@ -58,7 +58,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 	],
 		this.myValid.userValidator()
 	);
-	userNameRegister = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)],this.myValid.userNameValidator());
+	userNameRegister = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)], this.myValid.userNameValidator());
 	nameRegister = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50),
 	Validators.pattern('^(?=.*[ ])[a-zA-Z ]*$')
 	]);
@@ -86,7 +86,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 		if (this.emailRegister.touched) {
 			if (this.emailRegister.hasError('required')) {
 				return 'You must enter a value';
-			}else if(this.emailRegister.hasError('emailExist')){
+			} else if (this.emailRegister.hasError('emailExist')) {
 				return 'Email already exists';
 			}
 			return 'Not a valid email';
@@ -156,7 +156,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 	}
 	onSubmitRegister() {
 		setTimeout(() => {
-		this.transistionFromSideToSide("");
+			this.transistionFromSideToSide("");
 		}, 1);
 		if (this.registerForm.valid) {
 			this.registerLoading = true;
@@ -198,7 +198,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 	hide = true;
 	loginForm: FormGroup;
 	unauthenticated = false;
-	user: User = new User('', '', '', '',null);
+	user: User = new User('', '', '', '', null);
 	username = new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,10}$')]);
 	password = new FormControl('', [Validators.required,
 	Validators.minLength(8),
@@ -246,19 +246,19 @@ export class AuthComponent implements OnInit, AfterViewInit {
 					new SetToken(data.token),
 					new SetUser(
 						new User(data.user.id, data.user.username, data.user.name, data.user.roles, data.user.email)
-						),
-						new SetIsAuthenticated(true)
-					]);
-					this.loginLoading = false;
-					this.router.navigate(['/claims']);
+					),
+					new SetIsAuthenticated(true)
+				]);
+				this.loginLoading = false;
+				this.router.navigate(['/']);
 			}, (error: any) => {
 				this.loginLoading = false;
 				this.unauthenticated = true;
-				if(error.error.error=="USER_DISABLED") {
+				if (error.error.error == "USER_DISABLED") {
 					this.loginError = "User is disabled";
-				} else if(error.error.error=="USER_NOT_FOUND") {
+				} else if (error.error.error == "USER_NOT_FOUND") {
 					this.loginError = "User not found";
-				} else if(error.error.error=="INVALID_CREDENTIALS") {
+				} else if (error.error.error == "INVALID_CREDENTIALS") {
 					this.loginError = "Invalid credentials";
 				} else {
 					this.loginError = "Unknown error";

@@ -40,7 +40,7 @@ export class ClaimsComponent implements OnInit {
 				created: "2022-01-01"
 			},
 		],
-		_status : [
+		_status: [
 			{
 				"old_status": "Done",
 				"new_status": "In Progress",
@@ -72,7 +72,7 @@ export class ClaimsComponent implements OnInit {
 		this.claimsService.getClaim(id).subscribe((data: any) => {
 			this.claim = data;
 			this.claim.status = data.status.name;
-			let _status : {
+			let _status: {
 				old_status: string,
 				new_status: string,
 				date: string
@@ -89,13 +89,13 @@ export class ClaimsComponent implements OnInit {
 				return new Date(b.date).getTime() - new Date(a.date).getTime();
 			});
 			this.claim._status = _status;
-			
+
 		});
 	}
-	
+
 	authUser: User | undefined;
 
-	constructor(private store:Store,private claimsService: ClaimsService, private statusService: StatusService, private commentsService: CommentService) { }
+	constructor(private store: Store, private claimsService: ClaimsService, private statusService: StatusService, private commentsService: CommentService) { }
 	name = 'Angular Material ' + VERSION.major + ' Kanban board';
 	public board: Board = new Board("", []);
 	current = '/home';
@@ -108,6 +108,7 @@ export class ClaimsComponent implements OnInit {
 	ngOnInit(): void {
 		this.fetchClaims();
 		this.authUser = this.store.selectSnapshot(state => state.AuthState.user);
+		console.log(this.authUser);
 	}
 
 	async fetchClaims(): Promise<void> {
