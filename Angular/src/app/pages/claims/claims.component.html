@@ -30,9 +30,7 @@
                 </div>
                 <div class="tasks-container" id="{{column.id}}" [cdkDropListConnectedTo]="ids" cdkDropList
                   [cdkDropListData]="column.claims" (cdkDropListDropped)="drop($event)">
-                  <mat-card class="my-2" *ngFor="let item of column.claims" cdkDrag
-                  (click)="openDetails(item._id)"
-                  >
+                  <mat-card class="my-2" *ngFor="let item of column.claims" cdkDrag (click)="openDetails(item._id)">
                     {{ item.subject }}
                     {{ item.message }}
                   </mat-card>
