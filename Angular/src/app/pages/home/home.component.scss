@@ -1,0 +1,30 @@
+@import '../../app.component.scss';
+
+.board {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	min-width: 0;
+	min-height: 0;
+}
+
+.board-wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-grow: 1;
+	overflow-x: auto;
+	background-color: $main-component-color;
+	border-radius: 9px;
+}
+
+.card {
+	text-align: left;
+	width: 60%;
+	background-color: black;
+	color: white;
+	border: 0ch;
+	margin-left: 15px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
