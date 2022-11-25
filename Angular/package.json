@@ -25,6 +25,7 @@
     "@ngxs/storage-plugin": "^3.7.5",
     "@ngxs/store": "^3.7.5",
     "@popperjs/core": "^2.10.2",
+    "battery-indicator-element": "^1.1.6",
     "bootstrap": "^5.2.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
