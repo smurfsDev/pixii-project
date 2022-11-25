@@ -11,6 +11,8 @@ export class HomeComponent implements OnInit {
 
   authUser: User | undefined;
   title = 'Angular';
+  color = '#3DCC93';
+  percentage = 90;
   constructor() {
 
 

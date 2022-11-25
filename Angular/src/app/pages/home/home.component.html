@@ -33,11 +33,20 @@
 						</div>
 					</div>
 					<div class="col-md-3"><img src="../../../assets/moto.png" height="95px"></div>
-					<div class="col-md-2"><img src="../../../assets/moto.png" height="75px"></div>
-					<battery-indicator percentage="85">
-					</battery-indicator>
+					<div class="col-md-2">
+						<br />
+						<mat-icon>battery_charging_full</mat-icon>
+						<br />
+
+						<battery-percentage [color]="color" [percentage]="percentage"></battery-percentage>
+					</div>
+					<!-- <battery-percentage [color]="color" [percentage]="percentage"></battery-percentage> -->
+
+					<!-- <battery-indicator percentage="85">
+					</battery-indicator> -->
 				</div>
 			</div>
 		</div>
 	</div>
+
 </app-navbar>

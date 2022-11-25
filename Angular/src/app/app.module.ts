@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -22,10 +22,12 @@ import { AuthState } from './store/auth/stase';
 import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
 import { TopbarComponent } from './layout/topbar/topbar.component';
+import { BatteryPercentageComponent } from './percentage-bar/percentage-bar.component';
+
 @NgModule({
-	imports: [
+  imports: [
     BrowserModule,
-		RouterModule.forRoot(AppRoutes),
+    RouterModule.forRoot(AppRoutes),
     NgxsModule.forRoot([AuthState]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsStoragePluginModule.forRoot(),
@@ -33,9 +35,9 @@ import { TopbarComponent } from './layout/topbar/topbar.component';
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
-],
+  ],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, TopbarComponent],
-	bootstrap: [AppComponent],
+  declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, TopbarComponent, BatteryPercentageComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
