@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 import comments from "./comments.model";
+import User from "./user.model";
 
 
 let claimsSchema = new mongoose.Schema({
@@ -25,6 +26,10 @@ let claimsSchema = new mongoose.Schema({
 				type: mongoose.Schema.Types.ObjectId,
 				ref: "status",
 			},
+			author: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "users",
+			},
 			date: { type: Date, default: Date.now },
 		}
 	],
@@ -36,16 +41,26 @@ claimsSchema.plugin(mongoosePaginate);
 
 claimsSchema.pre("findOneAndUpdate", async function (next) {
 	// @ts-ignore
+	const author = this.getUpdate()?.author;
+	// @ts-ignore
 	const newStatus = this.getUpdate()?.status;
-	const item = await this.model.findOne(this.getQuery());
-	item.updated = Date.now();
-	item.save();
-	const currentStatus = item.status;
-	if (newStatus && currentStatus) {
-		if (newStatus != currentStatus) {
-			item._status.push({ old_status: currentStatus, new_status: newStatus, date: Date.now() });
+
+	try {
+		const item:any = await this.model.findOne(this.getQuery());
+		const user = await User.findOne({ email: author.email }).exec();
+		item.updated = Date.now();
+		item.save();
+		
+		const currentStatus = item.status;
+		if (newStatus && currentStatus) {
+			if (newStatus != currentStatus) {
+				item._status.push({ old_status: currentStatus, new_status: newStatus, date: Date.now(), author: user!._id });
+			}
 		}
+	} catch (error) {
+		console.log(error);
 	}
+
 	next();
 });
 
