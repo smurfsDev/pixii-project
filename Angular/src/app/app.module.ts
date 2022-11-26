@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ClaimsComponent } from './pages/claims/claims.component';
@@ -21,6 +21,7 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { AuthState } from './store/auth/stase';
 import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
+import { HttpInterceptorService } from './http-interceptor.service';
 @NgModule({
 	imports: [
 		NgxsModule.forRoot([AuthState]),
@@ -35,6 +36,13 @@ import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.
 	],
 
 	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent],
+	providers: [
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: HttpInterceptorService,
+			multi: true
+		}
+	],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }
