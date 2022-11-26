@@ -11,17 +11,19 @@ export class HttpInterceptorService implements HttpInterceptor{
   constructor(private store:Store) { }
 
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-		req = req.clone({
-			setHeaders: {
-				Authorization: `Bearer ${this.store.selectSnapshot(state => state.AuthState.token)}`
-			}
-		});
-
-		req = req.clone({
-			setHeaders: {
-				AutorizationNode: `${this.store.selectSnapshot(state => state.AuthState.user.email)}`
-			}
-		});
+		if (this.store.selectSnapshot(state => state.AuthState?.isAuthenticated)){
+			req = req.clone({
+				setHeaders: {
+					Authorization: `Bearer ${this.store.selectSnapshot(state => state.AuthState?.token)}`
+				}
+			});
+			
+			req = req.clone({
+				setHeaders: {
+					AutorizationNode: `${this.store.selectSnapshot(state => state.AuthState?.user?.email)}`
+				}
+			});
+		}
 	
 		return next.handle(req); 
 	}
