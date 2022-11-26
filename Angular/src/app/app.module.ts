@@ -22,6 +22,7 @@ import { AuthState } from './store/auth/stase';
 import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
 import { HttpInterceptorService } from './http-interceptor.service';
+import { ChefComponent } from './pages/claims/chef/chef.component';
 @NgModule({
 	imports: [
 		NgxsModule.forRoot([AuthState]),
@@ -35,7 +36,7 @@ import { HttpInterceptorService } from './http-interceptor.service';
 		ReactiveFormsModule,
 	],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent],
 	providers: [
 		{
 			provide: HTTP_INTERCEPTORS,
