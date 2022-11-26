@@ -25,4 +25,8 @@ export class ClaimsService {
 	return this._http.put(`${environment.apiUrl}/node/claims/`+claim._id, claim);
   }
 
+  affectClaim(claim:any,technician:any) {
+	return this._http.post(`${environment.apiUrl}/node/claims/claim/${claim}/${technician}`, null);
+  }
+
 }
