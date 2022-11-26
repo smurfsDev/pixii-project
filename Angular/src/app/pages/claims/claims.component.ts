@@ -75,12 +75,14 @@ export class ClaimsComponent implements OnInit {
 			let _status : {
 				old_status: string,
 				new_status: string,
+				author: String,
 				date: string
 			}[] = [];
 			data._status.forEach((element: any) => {
 				_status.push({
 					old_status: element.old_status.name,
 					new_status: element.new_status.name,
+					author: element.author.name,
 					date: element.date
 				});
 			}
@@ -130,7 +132,8 @@ export class ClaimsComponent implements OnInit {
 							element.description,
 							element.created,
 							element.updated,
-							element.status._id
+							element.status._id,
+							element.author
 						));
 					}
 				});
@@ -146,7 +149,7 @@ export class ClaimsComponent implements OnInit {
 			claim.docs.forEach((element: any) => {
 				this.board.columns.forEach((column: any) => {
 					if (column.id === element.status._id) {
-						column.claims.push(new Claim(element._id, element.subject, element.description, element.created, element.status._id, element.updated));
+						column.claims.push(new Claim(element._id, element.subject, element.description, element.created, element.status._id, element.updated,element.author));
 					}
 				});
 			});
@@ -168,6 +171,7 @@ export class ClaimsComponent implements OnInit {
 				event.currentIndex);
 			var claim = event.container.data[event.currentIndex];
 			claim.status = event.container.id;
+			claim.author = this.authUser!;
 			this.claimsService.putClaims(claim).subscribe(data => {
 				console.log(data);
 				// this.fetchOnlyClaims();
