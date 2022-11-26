@@ -13,7 +13,7 @@ export const findAll = async (req: Request, res: Response) => {
 	// 		res.send(claims);
 	// 	}
 	// 	);
-	Claim.find().populate("_status").populate('status','name').then((claims) => {
+	Claim.find().populate("_status").populate('status', 'name').then((claims) => {
 		res.send(claims);
 	});
 };
@@ -94,7 +94,11 @@ export const findOne = (req: Request, res: Response) => {
 				path: "new_status",
 				model: "status"
 			},
-			
+			{
+				path: "author",
+				select: "name",
+				model: "User"
+			}
 		]
 	});
 };
