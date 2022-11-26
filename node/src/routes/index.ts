@@ -10,6 +10,7 @@ require('./comments.routes')(router);
 require('./status.routes')(router);
 require('./register.routes')(router);
 require('./role.routes')(router);
+require('./users.routes')(router);
 
 export default router;
 
