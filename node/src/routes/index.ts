@@ -1,7 +1,8 @@
 import express from 'express';
+import { fetchUser } from '../configs/auth.config';
 
 const router = express.Router();
-
+router.use(fetchUser);
 // require('./routesfile.routes')(router);
 // example
 require('./claims.routes')(router);
