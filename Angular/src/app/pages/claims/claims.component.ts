@@ -121,7 +121,7 @@ export class ClaimsComponent implements OnInit {
 			});
 		});
 
-		this.claimsService.getClaims().forEach((claim: any) => {
+		this.claimsService.getClaimsAffectedToMe().forEach((claim: any) => {
 			claim.forEach((element: any) => {
 				console.log(element);
 				this.board.columns.forEach((column: any) => {
@@ -145,7 +145,7 @@ export class ClaimsComponent implements OnInit {
 		this.board.columns.forEach((column: any) => {
 			column.claims = [];
 		});
-		this.claimsService.getClaims().forEach((claim: any) => {
+		this.claimsService.getClaimsAffectedToMe().forEach((claim: any) => {
 			claim.docs.forEach((element: any) => {
 				this.board.columns.forEach((column: any) => {
 					if (column.id === element.status._id) {
@@ -171,7 +171,6 @@ export class ClaimsComponent implements OnInit {
 				event.currentIndex);
 			var claim = event.container.data[event.currentIndex];
 			claim.status = event.container.id;
-			claim.author = this.authUser!;
 			this.claimsService.putClaims(claim).subscribe(data => {
 				console.log(data);
 				// this.fetchOnlyClaims();

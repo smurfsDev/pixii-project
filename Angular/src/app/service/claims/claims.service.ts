@@ -13,6 +13,10 @@ export class ClaimsService {
 	return this._http.get(`${environment.apiUrl}/node/claims`);
   }
 
+  getClaimsAffectedToMe() {
+	return this._http.get(`${environment.apiUrl}/node/claims/affectedToMe`);
+	}	
+
   getClaim(id:any) {
 	return this._http.get(`${environment.apiUrl}/node/claims/` + id);
 	}
