@@ -118,6 +118,52 @@
 
 				</div>
 			</mat-tab>
+			<mat-tab label="Employee in charge history" dir="ltr">
+				<div class="status-content">
+					<h1 class="title">Transactions </h1>
+					<div class="employees">
+						<mat-card *ngIf="claim._technician.length == 0;else transs">
+							<mat-card-header>
+								<div mat-card-avatar>
+									<mat-icon>info</mat-icon>
+								</div>
+								<mat-card-title>No transaction found </mat-card-title>
+							</mat-card-header>
+						</mat-card>
+						<ng-template #transs>
+							<mat-card *ngFor="
+						let item of claim._technician;
+						let index = index;
+						">
+								<mat-card-header>
+									<div mat-card-avatar class="mat-card-header-image"
+										[style]="{'background-image': 'url(https://material.angular.io/assets/img/examples/shiba1.jpg)'}">
+									</div>
+									<mat-card-title>Transaction {{claim._technician.length - index}}</mat-card-title>
+									<mat-card-subtitle>Created: {{item.date | date:'short'}}</mat-card-subtitle>
+								</mat-card-header>
+								<mat-card-content>
+									<div class="row">
+										<div class="col-4 status">
+											<p class="d-inline label fw-semibold">Old Employee: </p>
+											<p class="d-inline value ml-2">{{item.old_technician}}</p>
+										</div>
+										<div class="col-4 status">
+											<p class="d-inline label fw-semibold">New Employee: </p>
+											<p class="d-inline value ml-2">{{item.new_technician}}</p>
+										</div>
+										<div class="col-4 status">
+											<p class="d-inline label fw-semibold">Author: </p>
+											<p class="d-inline value ml-2">{{item.author}}</p>
+										</div>
+									</div>
+								</mat-card-content>
+							</mat-card>
+						</ng-template>
+					</div>
+
+				</div>
+			</mat-tab>
 		</mat-tab-group>
 	</mat-drawer>
 

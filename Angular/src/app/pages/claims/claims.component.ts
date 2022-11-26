@@ -56,6 +56,14 @@ export class ClaimsComponent implements OnInit {
 				"new_status": "In Progress",
 				"date": "2022-11-16T19:10:56.107Z"
 			},
+		],
+		_technician: [
+				{
+					"old_technician": "John Doe",
+					"new_technician": "John Doe",
+					"date": "2022-11-16T19:10:56.107Z",
+					"author": "John Doe"
+				}	
 		]
 	};
 	opened = false;
@@ -75,9 +83,16 @@ export class ClaimsComponent implements OnInit {
 			let _status : {
 				old_status: string,
 				new_status: string,
-				author: String,
+				author: string,
 				date: string
 			}[] = [];
+			let _technician : {
+				old_technician: string,
+				new_technician: string,
+				author: string,
+				date: string
+			}[] = [];
+
 			data._status.forEach((element: any) => {
 				_status.push({
 					old_status: element.old_status.name,
@@ -87,10 +102,24 @@ export class ClaimsComponent implements OnInit {
 				});
 			}
 			);
+			data._technician.forEach((element: any) => {
+				console.log(element.old_technician.name);
+				_technician.push({
+					old_technician: element.old_technician.name,
+					new_technician: element.new_technician.name,
+					author: element.author.name,
+					date: element.date
+				});
+			}
+			);
 			_status.sort((a: any, b: any) => {
 				return new Date(b.date).getTime() - new Date(a.date).getTime();
 			});
+			_technician.sort((a: any, b: any) => {
+				return new Date(b.date).getTime() - new Date(a.date).getTime();
+			});
 			this.claim._status = _status;
+			this.claim._technician = _technician;
 			
 		});
 	}

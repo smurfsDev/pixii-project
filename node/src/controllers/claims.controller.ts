@@ -110,6 +110,23 @@ export const findOne = (req: Request, res: Response) => {
 				model: "User"
 			}
 		]
+	}).populate({
+		path: "_technician",
+		populate: [
+			{
+				path: "old_technician",
+				model: "User"
+			},
+			{
+				path: "new_technician",
+				model: "User"
+			},
+			{
+				path: "author",
+				select: "name",
+				model: "User"
+			}
+		]
 	});
 };
 
