@@ -34,6 +34,36 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => AuthService()),
       ],
       child: MaterialApp(
+        routes: {
+          Register.id: (context) => MainLayout(
+                child: const Register(),
+              ),
+          Login.id: (context) => MainLayout(
+                child: const Login(),
+              ),
+        },
+        // onGenerateRoute: (settings) {
+        //   if (settings.name == Register.id) {
+        //     return MaterialPageRoute(
+        //       builder: (context) => MainLayout(
+        //         child: const Register(),
+        //       ),
+        //     );
+        //   }else if (settings.name == Login.id) {
+        //     return MaterialPageRoute(
+        //       builder: (context) => MainLayout(
+        //         child: const Login(),
+        //       ),
+        //     );
+        //   }
+        //   else {
+        //     return MaterialPageRoute(
+        //       builder: (context) => MainLayout(
+        //         child: main,
+        //       ),
+        //     );
+        //   }
+        // },
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: white,
@@ -42,4 +72,6 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
+  
+
 }
