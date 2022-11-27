@@ -17,6 +17,7 @@ class _RegisterPageState extends State<Register> {
   String username = "Admin";
   String confirmPassword = "Password123";
   String name = "Admin";
+  String role = "Admin";
   bool rememberMe = false;
   bool loading = false;
   @override
@@ -105,6 +106,57 @@ class _RegisterPageState extends State<Register> {
                                       labelText: 'Enter your username',
                                     ),
                                     SizedBox(height: 30.0),
+                                    // MyInput(
+                                    //   validation: validateRole,
+                                    //   onChanged: (value) {
+                                    //     setState(() {
+                                    //       role = value;
+                                    //     });
+                                    //   },
+                                    //   hintText: 'Role',
+                                    //   icon: Icons.person,
+                                    //   keyboardType: TextInputType.name,
+                                    //   labelText: 'Enter your role',
+
+                                    // ),
+                                    DropdownButtonFormField(
+                                      decoration: InputDecoration(
+                                        labelText: 'Role',
+                                        hintText: 'Role',
+                                        labelStyle: TextStyle(
+                                          color: Color.fromARGB(255, 255, 255, 255),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 20.0,
+                                        ),
+                                        hintStyle: const TextStyle(color: Colors.white),
+                                        enabledBorder: const UnderlineInputBorder(
+                                          borderSide: BorderSide(width: 3, color: Colors.white),
+                                        ),
+                                        focusedBorder: const UnderlineInputBorder(
+                                          borderSide: BorderSide(width: 3, color: Colors.blue),
+                                        ),
+                                        errorBorder: const UnderlineInputBorder(
+                                          borderSide: BorderSide(width: 3, color: Colors.red),
+                                        ),
+                                      ),
+                                      value: role,
+                                      items: const [
+                                        DropdownMenuItem(
+                                          child: Text('User',style: const TextStyle(color: Colors.white),),
+                                          value: 'User',
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text('Admin',style: const TextStyle(color: Colors.white),),
+                                          value: 'Admin',
+                                        ),
+                                      ],
+                                      onChanged: (value) {
+                                        setState(() {
+                                          role = value.toString();
+                                        });
+                                      },
+                                    ),
+                                    SizedBox(height: 30.0),
                                     MyInput(
                                       validation: validatePassword,
                                       onChanged: (value) {
@@ -162,12 +214,12 @@ class _RegisterPageState extends State<Register> {
                                     : Text(
                                         'Register',
                                         style: TextStyle(
-                                            fontSize: 25.0,
+                                            fontSize: 20.0,
                                             color: Colors.white),
                                       ),
                               ),
                             ),
-                            SizedBox(height: 20.0),
+                            SizedBox(height: 30.0),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -208,20 +260,19 @@ class _RegisterPageState extends State<Register> {
       setState(() {
         loading = true;
       });
-      final registerOK = await auth.register(email, password, username, name);
+      final registerOK = await auth.register(email, password, username, name, role, confirmPassword);
       setState(() {
         loading = false;
       });
       if (registerOK) {
         showAlert(context, 'register Success', auth.user!.name);
+        Navigator.pushNamed(context, Login.id);
       } else {
         var message = "";
-        if (auth.error == "USER_NOT_FOUND") {
-          message = "Your email is not registered";
-        } else if (auth.error == "INVALID_CREDENTIALS") {
-          message = "Your password is incorrect";
-        } else if (auth.error == "USER_DISABLED") {
-          message = "Please verify your email";
+        if (auth.error == "email already exists") {
+          message = "email already exists";
+        } else if (auth.error == "username already exists") {
+          message = "username already exists";
         } else {
           message = "An error has occurred";
         }
