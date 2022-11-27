@@ -245,7 +245,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 				this.store.dispatch([
 					new SetToken(data.token),
 					new SetUser(
-						new User(data.user.id, data.user.username, data.user.name, data.user.roles, data.user.email)
+						new User(data.user.id, data.user.username, data.user.name, data.user.email,data.user.roles)
 						),
 						new SetIsAuthenticated(true)
 					]);

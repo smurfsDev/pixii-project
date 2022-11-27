@@ -6,6 +6,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
 import { IsAuthenticatedGuard } from './is-authenticated.guard';
+import { ChefComponent } from './pages/claims/chef/chef.component';
 export const AppRoutes: Routes = [
   {
     path: '',
@@ -17,6 +18,11 @@ export const AppRoutes: Routes = [
     component: ClaimsComponent,
     canActivate: [IsAuthenticatedGuard]
 
+  },
+  {
+	path: 'chef',
+	component: ChefComponent,
+	canActivate: [IsAuthenticatedGuard]
   },
   {
     path: 'login',

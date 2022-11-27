@@ -3,6 +3,7 @@ import mongoosePaginate from "mongoose-paginate";
 let commentsSchema = new mongoose.Schema({
 	message: {type: String, required: true},
 	created: {type: Date, default: Date.now},
+	user: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
 	claim: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "claims",

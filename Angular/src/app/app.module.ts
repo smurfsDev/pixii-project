@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ClaimsComponent } from './pages/claims/claims.component';
@@ -21,20 +21,29 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { AuthState } from './store/auth/stase';
 import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
+import { HttpInterceptorService } from './http-interceptor.service';
+import { ChefComponent } from './pages/claims/chef/chef.component';
 @NgModule({
 	imports: [
-    BrowserModule,
+		NgxsModule.forRoot([AuthState]),
+		NgxsStoragePluginModule.forRoot(),
+		BrowserModule,
 		RouterModule.forRoot(AppRoutes),
-    NgxsModule.forRoot([AuthState]),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsStoragePluginModule.forRoot(),
-    FormsModule, DragDropModule, HttpClientModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    ReactiveFormsModule,
-],
+		NgxsReduxDevtoolsPluginModule.forRoot(),
+		FormsModule, DragDropModule, HttpClientModule,
+		BrowserAnimationsModule,
+		MaterialModule,
+		ReactiveFormsModule,
+	],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent],
+	providers: [
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: HttpInterceptorService,
+			multi: true
+		}
+	],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }
