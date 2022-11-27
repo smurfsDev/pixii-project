@@ -60,13 +60,11 @@ claimsSchema.pre("findOneAndUpdate", async function (next) {
 	try {
 		const item: any = await this.model.findOne(this.getQuery());
 		item.updated = Date.now();
-		item.save();
 		const currentStatus = item.status;
 		if (author && newStatus && currentStatus) {
 			const user = await User.findOne({ email: author }).exec();
 			if (newStatus != currentStatus) {
 				item._status.push({ old_status: currentStatus, new_status: newStatus, date: Date.now(), author: user!._id });
-				item.save();
 			}
 		}
 		const currentTechnician = item.technician;
@@ -75,9 +73,10 @@ claimsSchema.pre("findOneAndUpdate", async function (next) {
 
 			if (newTechnician != currentTechnician) {
 				item._technician.push({old_technician: currentTechnician, new_technician: newTechnician, date: Date.now(), author: user!._id});
-				item.save();
 			}
 		}
+		item.save();
+
 	} catch (error) {
 		console.log(error);
 	}
