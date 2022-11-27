@@ -45,6 +45,26 @@ class AuthService with ChangeNotifier {
       return false;
     }
   }
+  Future register( String username, String password, String email, String name,String role , String confirmPassword) async {
+    final request = {'username': username, 'password': password, 'email': email, 'name': name , 'role': role , 'confirmPassword': confirmPassword};
+    try {
+      final response = await http.post(
+          Uri.parse('${Environment.apiUrl}/register'),
+          body: jsonEncode(request),
+          headers: {'Content-Type': 'application/json'});
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        error = JsonDecoder().convert(response.body)['error'];
+        error = error;
+        return false;
+      }
+    } catch (e) {
+      error = e.toString();
+      error = error;
+      return false;
+    }
+  }
 
   Future _saveToStorage(String key, String token) async {
     var writeToken = await _storage.write(key: key, value: token);
