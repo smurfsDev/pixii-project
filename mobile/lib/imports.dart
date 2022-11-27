@@ -29,6 +29,7 @@ export "package:mobile/utils/validators/password.dart";
   export 'package:mobile/ui/pages/auth/login.dart';
   export 'package:mobile/ui/pages/loading.dart';
   export 'package:mobile/ui/layout/main_layout.dart';
+  export 'package:mobile/ui/pages/auth/register.dart';
 
   // styles
   export 'package:mobile/ui/theme/colors.dart';
