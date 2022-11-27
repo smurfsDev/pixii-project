@@ -23,6 +23,10 @@ import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
 import { TopbarComponent } from './layout/topbar/topbar.component';
 import { BatteryPercentageComponent } from './percentage-bar/percentage-bar.component';
+import { NgxEchartsModule } from 'ngx-echarts';
+// import { NgApexchartsModule } from "ng-apexcharts";
+
+import { ChartBatteryUsageComponent } from './chart-battery-usage/chart-battery-usage.component';
 
 @NgModule({
   imports: [
@@ -35,9 +39,13 @@ import { BatteryPercentageComponent } from './percentage-bar/percentage-bar.comp
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
+    // NgApexchartsModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    })
   ],
 
-  declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, TopbarComponent, BatteryPercentageComponent],
+  declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
