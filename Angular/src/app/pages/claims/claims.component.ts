@@ -28,13 +28,17 @@ export class ClaimsComponent implements OnInit {
 		created: "2022-01-01",
 		comments: [
 			{
-				name: "John Doe",
+				user:{
+					name: "John Doe",
+				},
 				avatar: "https://randomuser.me/api/portraits/men/1.jpg",
 				message: `Lorem ipsum dolor sit amet consectetur adipisicing elit. In quae ex, tempore consequuntur labore`,
 				created: "2022-01-01"
 			},
 			{
-				name: "John Doe",
+				user:{
+					name: "John Doe",
+				},
 				avatar: "https://randomuser.me/api/portraits/men/2.jpg",
 				message: `Lorem ipsum dolor sit amet consectetur adipisicing elit. In quae ex, tempore consequuntur labore`,
 				created: "2022-01-01"
