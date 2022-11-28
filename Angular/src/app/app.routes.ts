@@ -45,7 +45,7 @@ export const AppRoutes: Routes = [
   {
     path: 'verify',
     component: VerifyEmailComponent,
-    canActivate: [IsAuthenticatedGuard]
+    // canActivate: [IsAuthenticatedGuard]
 
   },
 ];
