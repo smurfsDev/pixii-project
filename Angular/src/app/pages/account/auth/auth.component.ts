@@ -263,8 +263,12 @@ export class AuthComponent implements OnInit, AfterViewInit {
 				} else {
 					this.loginError = "Unknown error";
 				}
-				this._snackBar.open(this.loginError, "Close", {
+				this._snackBar.open(this.loginError, this.loginError=="User is disabled"?"Navigate to verify":"Close", {
 					duration: 5000,
+				}).onAction().subscribe(() => {
+					if(this.loginError=="User is disabled") {
+						this.router.navigate(['/verify']);
+					}
 				});
 			}, () => {
 				this.loginLoading = false;
