@@ -163,6 +163,10 @@
 	transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
+.cards{
+	margin:0  38px;
+}
+
 
 .count-card {
 	border-radius: 9px;
@@ -176,6 +180,7 @@
 	grid-template-rows: 1fr;
 
 	.count {
+		color: $main-text-color;
 		padding: 10px;
 		margin: 0;
 		font-size: 1.5em;
