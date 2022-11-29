@@ -3,10 +3,11 @@
 	<div class="back">
 	</div>
 	<div class="content">
-			<h1 class="big-title">Verify your email address</h1>
+			<h1 class="big-title">Resend verification token</h1>
 			<div class="message">
-				<p class="text">We mailed you an eigh-digit code to your  “email”
-					Enter the code and your email below to confirm your email adress.</p>
+				<p class="text">
+					Enter your email below to resend verification token.
+				</p>
 			</div>
 			<div class="form">
 				<form [formGroup]="verifyEmailForm" (ngSubmit)="onSubmit()">
@@ -21,23 +22,13 @@
                             Email is <strong>invalid</strong>
                         </mat-error>
 					</mat-form-field>
-					<mat-form-field class="d-block my-2" color="accent" appearance="outline">
-						<mat-label for="code">Code</mat-label>
-						<input matInput type="text"  id="code" formControlName="code" placeholder="Enter your code">
-                        <mat-error *ngIf="verifyEmailForm.get('code')?.hasError('required')">
-                            Code is <strong>required</strong>
-                        </mat-error>
-                        <mat-error *ngIf="!verifyEmailForm.get('code')?.hasError('required')&&verifyEmailForm.get('code')?.errors">
-                            Code is <strong>invalid</strong>
-                        </mat-error>
-					</mat-form-field>
 					<button type="submit" class="btn btn-primary" style="width:100% ;border-radius: 15px;" [disabled]="verifyEmailForm.invalid">
-                            <span *ngIf="!loading">Verify</span>
+                            <span *ngIf="!loading">Submit</span>
                             <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
                     </button>
 					<div class="text-center mt-3 d-flex" style="justify-content: space-around;">
 						<a routerLink="/auth" class="text-primary">Back to login</a>
-						<a routerLink="/resend-verification" class="text-primary">Didn't recieve token?</a>
+						<a routerLink="/verify" class="text-primary">Verify email</a>
 					</div>
 				</form>
 			</div>

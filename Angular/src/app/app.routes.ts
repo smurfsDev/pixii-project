@@ -7,6 +7,7 @@ import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
 import { IsAuthenticatedGuard } from './is-authenticated.guard';
 import { ChefComponent } from './pages/claims/chef/chef.component';
+import { ResendVerificationComponent } from './pages/account/resend-verification/resend-verification.component';
 export const AppRoutes: Routes = [
   {
     path: '',
@@ -48,4 +49,8 @@ export const AppRoutes: Routes = [
     // canActivate: [IsAuthenticatedGuard]
 
   },
+  {
+	path: 'resend-verification',
+	component: ResendVerificationComponent,
+  }
 ];
