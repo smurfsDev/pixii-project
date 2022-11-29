@@ -4,18 +4,11 @@
 			<img src="assets/logo.png" alt="logo pixii">
 			<div class="slogan">ride the future</div>
 		</div>
+
 		<div class="separator"></div>
 		<!-- <mat-nav-list class="dashboard">
 		</mat-nav-list> -->
-		<!-- <a mat-list-item (click)="
-				isExpanded = !isExpanded;
-			">
-			<div matLine class="item active">
-				<mat-icon class="icon">
-					{{isExpanded ? 'arrow_left' : 'arrow_right'}}
-				</mat-icon>
-			</div>
-		</a> -->
+
 		<mat-nav-list class="dashboard">
 			<a mat-list-item (click)="showSubmenu = !showSubmenu" class="my-3">
 
@@ -24,12 +17,12 @@
 					<p *ngIf="isExpanded">
 						Dashboard
 					</p>
-					<mat-icon class="menu-button" [ngClass]="{'rotated' : 
+					<!-- <mat-icon class="menu-button" [ngClass]="{'rotated' : 
 					showSubmenu}" *ngIf="isExpanded || 
-					   isShowing" style="color: white; " class="float-right">expand_more</mat-icon>
+					   isShowing" style="color: white; " class="float-right">expand_more</mat-icon> -->
 				</div>
 			</a>
-			<div *ngIf="showSubmenu">
+			<!-- <div *ngIf="showSubmenu">
 				<a mat-list-item>
 
 					<div matLine class="item" [ngClass]="{'open':isExpanded}">
@@ -57,7 +50,7 @@
 
 					</div>
 				</a>
-			</div>
+			</div> -->
 
 			<a mat-list-item class="my-3" (click)="toggleActive('/claims')">
 				<div matLine class="item" [ngClass]="{'active': current === '/claims','open':isExpanded}">
