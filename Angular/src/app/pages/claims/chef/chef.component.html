@@ -39,10 +39,10 @@
 								Active tickets
 							</div>
 							<div class="tasks-container">
-								<mat-card class="my-2" *ngFor="let item of openClaims" (click)="openDetails(item._id)">
+								<mat-card class="my-2 d-flex" style="justify-content: space-between;align-items: center;" *ngFor="let item of openClaims" (click)="openDetails(item._id)">
 									{{ item.subject }}
 									{{ item.message }}
-									<div class="float-end">
+									<div class="">
 
 										<button mat-icon-button [matMenuTriggerFor]="menu"
 											aria-label="Example icon-button with a menu">
