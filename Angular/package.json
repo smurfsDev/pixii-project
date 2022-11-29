@@ -28,7 +28,7 @@
     "battery-indicator-element": "^1.1.6",
     "bootstrap": "^5.2.0",
     "echarts": "^5.4.0",
-    "ngx-echarts": "^15.0.0",
+    "ngx-echarts": "^14.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
