@@ -7,6 +7,15 @@
 		<div class="separator"></div>
 		<!-- <mat-nav-list class="dashboard">
 		</mat-nav-list> -->
+		<!-- <a mat-list-item (click)="
+				isExpanded = !isExpanded;
+			">
+			<div matLine class="item active">
+				<mat-icon class="icon">
+					{{isExpanded ? 'arrow_left' : 'arrow_right'}}
+				</mat-icon>
+			</div>
+		</a> -->
 		<mat-nav-list class="dashboard">
 			<a mat-list-item (click)="showSubmenu = !showSubmenu" class="my-3">
 
@@ -80,15 +89,23 @@
 			<a mat-list-item class="last-item">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title">Let's start</h5>
-						<p class="card-text">Creating or adding ne Scooter couldn't be easier.</p>
-						<button type="button" class="btn btn-primary">
-							<mat-icon>add</mat-icon> Add New Scooter
-						</button>
+						<div *ngIf="isExpanded">
+							<h5 class="card-title">Let's start</h5>
+							<p class="card-text">Creating or adding ne Scooter couldn't be easier.</p>
+							<button type="button" class="btn btn-primary">
+								<mat-icon>add</mat-icon> Add New Scooter
+							</button>
+						</div>
+						<div *ngIf="!isExpanded">
+							<button type="button" class="btn btn-primary">
+								<mat-icon>add</mat-icon>
+							</button>
+						</div>
+
 					</div>
 				</div>
 			</a>
-			<!-- <a mat-list-item class="last-item" (click)="
+			<a mat-list-item (click)="
 				isExpanded = !isExpanded;
 			">
 				<div matLine class="item active">
@@ -96,7 +113,7 @@
 						{{isExpanded ? 'arrow_left' : 'arrow_right'}}
 					</mat-icon>
 				</div>
-			</a> -->
+			</a>
 
 		</mat-nav-list>
 	</mat-drawer>
