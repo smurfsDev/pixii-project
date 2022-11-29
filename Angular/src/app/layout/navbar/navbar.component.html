@@ -10,7 +10,8 @@
 		</mat-nav-list> -->
 
 		<mat-nav-list class="dashboard">
-			<a mat-list-item (click)="showSubmenu = !showSubmenu" class="my-3">
+			<a [matTooltip]="isExpanded? '' : 'Dashboard'" matTooltipPosition="right" mat-list-item class="my-3"
+				(click)="toggleActive('/')">
 
 				<div matLine class="item" [ngClass]="{'active': current === '/','open':isExpanded}">
 					<mat-icon class="icon">grid_view</mat-icon>
@@ -21,6 +22,7 @@
 					showSubmenu}" *ngIf="isExpanded || 
 					   isShowing" style="color: white; " class="float-right">expand_more</mat-icon> -->
 				</div>
+
 			</a>
 			<!-- <div *ngIf="showSubmenu">
 				<a mat-list-item>
@@ -52,8 +54,8 @@
 				</a>
 			</div> -->
 
-			<a mat-list-item class="my-3" (click)="toggleActive('/claims')">
-				<div matLine class="item" [ngClass]="{'active': current === '/claims','open':isExpanded}">
+			<a mat-list-item class="my-3" (click)="toggleActive('/profile')">
+				<div matLine class="item" [ngClass]="{'active': current === '/profile','open':isExpanded}">
 					<mat-icon class="icon">person</mat-icon>
 					<p *ngIf="isExpanded">Profile</p>
 				</div>
@@ -64,8 +66,8 @@
 					<p *ngIf="isExpanded">Claims</p>
 				</div>
 			</a>
-			<a mat-list-item class="my-3" (click)="toggleActive('/claims')">
-				<div matLine class="item" [ngClass]="{'active': current === '/claims','open':isExpanded}">
+			<a mat-list-item class="my-3" (click)="toggleActive('/profile')">
+				<div matLine class="item" [ngClass]="{'active': current === '/profile','open':isExpanded}">
 					<mat-icon class="icon">feed</mat-icon>
 					<p *ngIf="isExpanded">Invoices</p>
 				</div>
