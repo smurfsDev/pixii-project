@@ -41,6 +41,16 @@
 	margin-right: 15px;
 	margin-top: 15px;
 	margin-bottom: 15px;
+	background: #29375B;
+
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: -webkit-linear-gradient(to right, #1f273a, #191d22);
+
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	background: linear-gradient(to right, #192238, #161b1f);
+	color: #fff;
+	/* font Poppins */
+	font-family: 'Poppins', sans-serif;
 }
 
 .support {
@@ -123,6 +133,20 @@
 	background: -o-linear-gradient(left, #21d4fd, #b721ff);
 	background: -moz-linear-gradient(left, #21d4fd, #b721ff);
 	background: linear-gradient(left, #21d4fd, #b721ff);
+}
+
+.gradient-custom-2 {
+	/* fallback for old browsers */
+	background: #29375B;
+
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: -webkit-linear-gradient(to right, #3a4768, #21272D);
+
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	background: linear-gradient(to right, #29375B, #21272D);
+	color: #fff;
+	/* font Poppins */
+	font-family: 'Poppins', sans-serif;
 }
 
 .input-form {
