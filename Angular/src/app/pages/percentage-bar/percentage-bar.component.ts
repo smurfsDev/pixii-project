@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { batteryArrayElement } from '../models/battery-array-element.model';
+// import { batteryArrayElement } from '../models/battery-array-element.model';
+import { batteryArrayElement } from 'src/app/models/battery-array-element.model';
 
 @Component({
   selector: 'battery-percentage',
