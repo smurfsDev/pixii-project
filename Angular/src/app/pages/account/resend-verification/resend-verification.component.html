@@ -22,7 +22,7 @@
                             Email is <strong>invalid</strong>
                         </mat-error>
 					</mat-form-field>
-					<button type="submit" class="btn btn-primary" style="width:100% ;border-radius: 15px;" [disabled]="verifyEmailForm.invalid">
+					<button type="submit" class="btn btn-primary d-flex" style="width:100% ;border-radius: 15px;align-items: center;justify-content: center;" [disabled]="verifyEmailForm.invalid">
                             <span *ngIf="!loading">Submit</span>
                             <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
                     </button>

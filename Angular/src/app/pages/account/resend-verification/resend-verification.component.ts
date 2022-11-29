@@ -28,7 +28,7 @@ export class ResendVerificationComponent implements OnInit {
 
 	onSubmit() {
 		this.loading = true;
-		this.registerService.verifyAccount({
+		this.registerService.resendVerificationEmail({
 			email: this.verifyEmailForm.value.email,
 		}).subscribe(
 			(data) => {

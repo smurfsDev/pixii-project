@@ -28,6 +28,10 @@ export class RegisterService {
     return this.http.post(`${environment.apiUrl}/verify`, token);
   }
 
+  resendVerificationEmail(email: any) {
+	return this.http.post(`${environment.apiUrl}/resend`, email);
+  }
+
 
 
 }
