@@ -8,16 +8,21 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
 
-	isExpanded = false;
+	// isExpanded = false;
+	panelOpenState = false;
+	showSubmenu = false;
+	isShowing = false;
+	showSubSubMenu: boolean = false;
+	isExpanded = true;
 
 	current = this.router.url;
-	
-	constructor(private router: Router) { 
+
+	constructor(private router: Router) {
 		setInterval(() => {
 			this.current = this.router.url;
 		}, 125);
 	}
-	
+
 	async toggleActive(event: string) {
 		const navigated = await this.router.navigate([event])
 		console.log(this.router.url);

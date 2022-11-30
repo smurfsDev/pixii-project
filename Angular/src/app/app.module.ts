@@ -21,6 +21,12 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { AuthState } from './store/auth/stase';
 import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
+import { TopbarComponent } from './layout/topbar/topbar.component';
+import { BatteryPercentageComponent } from './pages/home/percentage-bar/percentage-bar.component';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { ChartBatteryUsageComponent } from './pages/home/chart-battery-usage/chart-battery-usage.component';
+import { BatteryComponent } from './pages/home/battery/battery.component';
+
 import { HttpInterceptorService } from './http-interceptor.service';
 import { ChefComponent } from './pages/claims/chef/chef.component';
 import { ResendVerificationComponent } from './pages/account/resend-verification/resend-verification.component';
@@ -35,9 +41,12 @@ import { ResendVerificationComponent } from './pages/account/resend-verification
 		BrowserAnimationsModule,
 		MaterialModule,
 		ReactiveFormsModule,
+		NgxEchartsModule.forRoot({
+			echarts: () => import('echarts')
+		  })
 	],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent],
 	providers: [
 		{
 			provide: HTTP_INTERCEPTORS,
