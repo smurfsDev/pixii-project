@@ -17,7 +17,7 @@
 	flex-grow: 1;
 	overflow-x: auto;
 	background-color: $main-component-color;
-	border-radius: 9px;
+	// border-radius: 9px;
 	width: 70%;
 }
 
@@ -27,7 +27,7 @@
 	justify-content: center;
 	flex-grow: 0;
 	background-color: $main-component-color;
-	border-radius: 9px;
+	border-top-left-radius: 9px;
 
 }
 
@@ -51,6 +51,19 @@
 	color: #fff;
 	/* font Poppins */
 	font-family: 'Poppins', sans-serif;
+}
+
+.bike-photo {
+
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: -webkit-linear-gradient(to bottom, #1b2234, #191d22);
+
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	background: linear-gradient(to bottom, #151f36, #161b1f);
+	color: #fff;
+	/* font Poppins */
+	font-family: 'Poppins', sans-serif;
+	margin-right: 15px;
 }
 
 .support {
@@ -140,10 +153,10 @@
 	background: #29375B;
 
 	/* Chrome 10-25, Safari 5.1-6 */
-	background: -webkit-linear-gradient(to right, #3a4768, #21272D);
+	background: -webkit-linear-gradient(to left, #29334a, #21272D);
 
 	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-	background: linear-gradient(to right, #29375B, #21272D);
+	background: linear-gradient(to left, #29375B, #21272D);
 	color: #fff;
 	/* font Poppins */
 	font-family: 'Poppins', sans-serif;
@@ -204,4 +217,22 @@
 .col-md-2 {
 	margin-top: 0%;
 	height: 100px;
+}
+
+.buttons {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	flex-grow: 0;
+	display: flex;
+
+	justify-content: left;
+	flex-grow: 1;
+	overflow-x: auto;
+	background-color: $main-component-color;
+	// border-radius: 9px;
+	border-bottom-left-radius: 9px;
+	margin-bottom: 15px;
+	width: 100%;
+
 }
