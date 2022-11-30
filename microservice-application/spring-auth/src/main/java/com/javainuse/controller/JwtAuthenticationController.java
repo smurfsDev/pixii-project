@@ -143,7 +143,8 @@ public class JwtAuthenticationController {
 		userRoleRepository.save(userRole.get());
 		JSONObject newUserNode = new JSONObject();
 		newUserNode.put("name", user.get("name").toString());
-		newUserNode.put("username", user.get("email").toString());
+		newUserNode.put("email", user.get("email").toString());
+		newUserNode.put("username", user.get("username").toString());
 		newUserNode.put("roles", user.get("role").toString());
 		newUserNode.put("password", user.get("password").toString());
 		newUserNode.put("status", userRole.get().getStatus());

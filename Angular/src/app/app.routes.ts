@@ -5,11 +5,52 @@ import { RegisterComponent } from './pages/account/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
+import { IsAuthenticatedGuard } from './is-authenticated.guard';
+import { ChefComponent } from './pages/claims/chef/chef.component';
+import { ResendVerificationComponent } from './pages/account/resend-verification/resend-verification.component';
 export const AppRoutes: Routes = [
-	{ path: '', component: HomeComponent },
-	{ path: 'claims', component: ClaimsComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'auth', component:AuthComponent},
-	{path: 'verify', component: VerifyEmailComponent},
+  {
+    path: '',
+    component: HomeComponent,
+    // canActivate: [IsAuthenticatedGuard]
+  },
+  {
+    path: 'claims',
+    component: ClaimsComponent,
+    canActivate: [IsAuthenticatedGuard]
+
+  },
+  {
+	path: 'chef',
+	component: ChefComponent,
+	canActivate: [IsAuthenticatedGuard]
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+
+
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+
+
+  },
+  {
+    path: 'auth',
+    component: AuthComponent,
+
+
+  },
+  {
+    path: 'verify',
+    component: VerifyEmailComponent,
+    // canActivate: [IsAuthenticatedGuard]
+
+  },
+  {
+	path: 'resend-verification',
+	component: ResendVerificationComponent,
+  }
 ];

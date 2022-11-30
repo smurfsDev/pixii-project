@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export class Claim {
 	constructor(
 		public _id:String,
@@ -5,6 +7,7 @@ export class Claim {
 		public subject:String,
 		public created:Date,
 		public updated:Date,
-		public status: String
+		public status: String,
+		public author: User,
 	){}
 }

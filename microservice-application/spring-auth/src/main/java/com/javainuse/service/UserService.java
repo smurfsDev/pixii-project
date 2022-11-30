@@ -14,6 +14,8 @@ import com.javainuse.entities.User;
 import com.javainuse.repository.ResetPasswordRepository;
 import com.javainuse.repository.UserRepository;
 
+import net.bytebuddy.utility.RandomString;
+
 @Service
 @Transactional
 public class UserService {
@@ -23,6 +25,21 @@ public class UserService {
 
 	@Autowired
 	private ResetPasswordRepository resetPasswordRepository;
+
+	public void resendCode(String email) throws Exception {
+		Optional<User> user = userrepository.findUserByEmail(email);
+		if (user.isPresent()) {
+			User u = user.get();
+			if (u.isEnabled()) {
+				throw new Exception("User already verified");
+			} else {
+				u.setVerificationCode(RandomString.make(8));
+				userrepository.save(u);
+			}
+		} else {
+			throw new UsernameNotFoundException("User not found");
+		}
+	}
 
 	public void createPasswordResetTokenForUser(String email, String token) throws UsernameNotFoundException {
 		User user = userrepository.findByEmail(email);

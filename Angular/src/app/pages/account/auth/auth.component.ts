@@ -245,12 +245,12 @@ export class AuthComponent implements OnInit, AfterViewInit {
 				this.store.dispatch([
 					new SetToken(data.token),
 					new SetUser(
-						new User(data.user.id, data.user.username, data.user.name, data.user.roles, data.user.email)
-					),
-					new SetIsAuthenticated(true)
-				]);
-				this.loginLoading = false;
-				this.router.navigate(['/']);
+						new User(data.user.id, data.user.username, data.user.name, data.user.email,data.user.roles)
+						),
+						new SetIsAuthenticated(true)
+					]);
+					this.loginLoading = false;
+					this.router.navigate(['/claims']);
 			}, (error: any) => {
 				this.loginLoading = false;
 				this.unauthenticated = true;
@@ -263,8 +263,12 @@ export class AuthComponent implements OnInit, AfterViewInit {
 				} else {
 					this.loginError = "Unknown error";
 				}
-				this._snackBar.open(this.loginError, "Close", {
+				this._snackBar.open(this.loginError, this.loginError=="User is disabled"?"Navigate to verify":"Close", {
 					duration: 5000,
+				}).onAction().subscribe(() => {
+					if(this.loginError=="User is disabled") {
+						this.router.navigate(['/verify']);
+					}
 				});
 			}, () => {
 				this.loginLoading = false;

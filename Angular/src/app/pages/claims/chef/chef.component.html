@@ -1,0 +1,81 @@
+<app-navbar>
+	<app-details (commented)="commented($event)" [opened]="opened" [claim]="claim">
+
+		<div class="root">
+			<div class="header">
+				<mat-icon class="search-icon">search</mat-icon>
+				<div class="cont">
+					<h1 class="item">Tickets</h1>
+					<h1 class="item">Home</h1>
+					<h1 class="item">Desktop</h1>
+				</div>
+
+				<div class="actions">
+					<img class="avatar"
+						src="https://resize.elle.fr/article/var/plain_site/storage/images/loisirs/cinema/news/avatar-2-une-premiere-bande-annonce-en-mai-4010741/96462268-1-fre-FR/Avatar-2-une-premiere-bande-annonce-en-mai.jpg" />
+					<div class="hello">Hello, <span class="name">{{authUser?.userName??"name"}}</span></div>
+					<mat-icon class="more-icon">arrow_drop_down</mat-icon>
+				</div>
+
+			</div>
+			<div class="board">
+				<div class="board-wrapper">
+					<div class="d-flex" style="justify-content: space-between;">
+						<h1 class="title">All Tickets</h1>
+						<div class="cards d-flex ml-4">
+							<div class="count-card">
+								<div class="count">{{openCount}}</div>
+								<div class="title">OPEN TICKETS</div>
+							</div>
+							<div class="count-card">
+								<div class="count">{{resolvedCount}}</div>
+								<div class="title">RESOLVED TICKETS</div>
+							</div>
+						</div>
+					</div>
+					<div class="board-columns">
+						<div class="board-column">
+							<div class="column-title">
+								Active tickets
+							</div>
+							<div class="tasks-container">
+								<mat-card class="my-2 d-flex" style="justify-content: space-between;align-items: center;" *ngFor="let item of openClaims" (click)="openDetails(item._id)">
+									{{ item.subject }}
+									{{ item.message }}
+									<div class="">
+
+										<button mat-icon-button [matMenuTriggerFor]="menu"
+											aria-label="Example icon-button with a menu">
+											<mat-icon>more_vert</mat-icon>
+										</button>
+										<mat-menu #menu="matMenu">
+											<button mat-menu-item [matMenuTriggerFor]="technicien">Techniciens</button>
+										</mat-menu>
+
+										<mat-menu #technicien="matMenu">
+											<button (click)="affectClaim(item._id,ite._id)"
+												[ngClass]="ite._id == item.technician ? 'active' : ' ' " mat-menu-item
+												*ngFor="let ite of users">{{ite.name}}</button>
+										</mat-menu>
+									</div>
+								</mat-card>
+							</div>
+						</div>
+						<div class="board-column resolved">
+							<div class="column-title">
+								Ressolved tickets
+							</div>
+							<div class="tasks-container">
+								<mat-card class="my-2" *ngFor="let item of resolvedClaims"
+									(click)="openDetails(item._id)">
+									{{ item.subject }}
+									{{ item.message }}
+								</mat-card>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</app-details>
+</app-navbar>

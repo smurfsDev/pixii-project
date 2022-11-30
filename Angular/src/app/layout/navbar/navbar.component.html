@@ -10,9 +10,7 @@
 		</mat-nav-list> -->
 
 		<mat-nav-list class="dashboard">
-			<a [matTooltip]="isExpanded? '' : 'Dashboard'" matTooltipPosition="right" mat-list-item class="my-3"
-				(click)="toggleActive('/')">
-
+			<a [matTooltip]="isExpanded? '' : 'Dashboard'" matTooltipPosition="right" mat-list-item class="my-3" (click)="toggleActive('/')">
 				<div matLine class="item" [ngClass]="{'active': current === '/','open':isExpanded}">
 					<mat-icon class="icon">grid_view</mat-icon>
 					<p *ngIf="isExpanded">
@@ -60,7 +58,14 @@
 					<p *ngIf="isExpanded">Profile</p>
 				</div>
 			</a>
-			<a mat-list-item class="my-3" (click)="toggleActive('/claims')">
+			
+			<a [matTooltip]="isExpanded? '' :'Affect claims'" matTooltipPosition="right" mat-list-item class="my-3" (click)="toggleActive('/chef')">
+				<div matLine class="item" [ngClass]="{'active': current === '/chef','open':isExpanded}">
+					<mat-icon class="icon">move_down</mat-icon>
+					<p *ngIf="isExpanded">Affect Claims</p>
+				</div>
+			</a>
+			<a [matTooltip]="isExpanded? '' : 'Claims'" matTooltipPosition="right" mat-list-item class="my-3" (click)="toggleActive('/claims')">
 				<div matLine class="item" [ngClass]="{'active': current === '/claims','open':isExpanded}">
 					<mat-icon class="icon">recycling</mat-icon>
 					<p *ngIf="isExpanded">Claims</p>
@@ -72,6 +77,7 @@
 					<p *ngIf="isExpanded">Invoices</p>
 				</div>
 			</a>
+
 
 			<a mat-list-item class="my-3" (click)="toggleActive('/home2')">
 				<div matLine class="item" [ngClass]="{'active': current === '/home2','open':isExpanded}">
@@ -100,7 +106,7 @@
 					</div>
 				</div>
 			</a>
-			<a mat-list-item (click)="
+			<a mat-list-item class="last-item" (click)="
 				isExpanded = !isExpanded;
 			">
 				<div matLine class="item active">
