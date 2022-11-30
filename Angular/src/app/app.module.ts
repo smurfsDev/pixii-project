@@ -29,6 +29,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 
 // import { ChartBatteryUsageComponent } from './chart-battery-usage/chart-battery-usage.component';
 import { ChartBatteryUsageComponent } from './pages/home/chart-battery-usage/chart-battery-usage.component';
+import { BatteryComponent } from './pages/home/battery/battery.component';
 
 @NgModule({
   imports: [
@@ -47,7 +48,7 @@ import { ChartBatteryUsageComponent } from './pages/home/chart-battery-usage/cha
     })
   ],
 
-  declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent],
+  declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -234,8 +234,8 @@
 	border-bottom-left-radius: 9px;
 	margin-bottom: 15px;
 	width: 100%;
-
 }
+
 
 .icon-dash {
 	position: relative;
@@ -274,4 +274,11 @@
 		margin-bottom: 0px;
 		color: $icons-color;
 	}
+}
+
+.battery-container{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
