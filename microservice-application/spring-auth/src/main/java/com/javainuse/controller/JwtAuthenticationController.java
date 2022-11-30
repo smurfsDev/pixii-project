@@ -1,5 +1,7 @@
 package com.javainuse.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -171,6 +174,48 @@ public class JwtAuthenticationController {
 	public ResponseEntity<JSONObject> getRoles() {
 		JSONObject item = new JSONObject();
 		item.put("roles", roleRepository.findAll());
+		return ResponseEntity.status(HttpStatus.OK).body(item);
+	}
+
+	@RequestMapping(value = "/accept/{id}", method = RequestMethod.GET)
+	public ResponseEntity<JSONObject> accept(@PathVariable("id") int id) {
+		JSONObject item = new JSONObject();
+		Optional<UserRole> userRole = userRoleRepository.findFirstByUserId(id);
+		userRole.get().setStatus(1);
+		userRoleRepository.save(userRole.get());
+		item.put("message", "User Accepted");
+		return ResponseEntity.status(HttpStatus.OK).body(item);
+	}
+
+	@RequestMapping(value = "/reject/{id}", method = RequestMethod.GET)
+	public ResponseEntity<JSONObject> reject(@PathVariable("id") int id) {
+		JSONObject item = new JSONObject();
+		Optional<UserRole> userRole = userRoleRepository.findFirstByUserId(id);
+		userRole.get().setStatus(2);
+		userRoleRepository.save(userRole.get());
+		item.put("message", "User Rejected");
+		return ResponseEntity.status(HttpStatus.OK).body(item);
+	}
+
+	// list of users where status = 0
+	@RequestMapping(value = "/pending", method = RequestMethod.GET)
+	public ResponseEntity<JSONObject> pending() {
+		JSONObject item = new JSONObject();
+		List<UserRole> userRoles = userRoleRepository.findAllByStatus(0);
+		List<User> users = new ArrayList<User>();
+		for (UserRole userRole : userRoles) {
+			users.add(userRepository.findById(userRole.getUser().getId()).get());
+		}
+		item.put("users", users);
+		return ResponseEntity.status(HttpStatus.OK).body(item);
+	}
+
+	// list of users
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	public ResponseEntity<JSONObject> users() {
+		JSONObject item = new JSONObject();
+		List<User> users = userRepository.findAll();
+		item.put("users", users);
 		return ResponseEntity.status(HttpStatus.OK).body(item);
 	}
 
