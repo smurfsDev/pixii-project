@@ -35,11 +35,11 @@ export class ResendVerificationComponent implements OnInit {
 				this._snackBar.open('New verification token sent', 'verify', {
 					duration: 2000,
 				}).onAction().subscribe(() => {
-					this.router.navigate(['/resend-verification']);
+					this.router.navigate(['/verify']);
 				});
 				this.loading = false;
 				setTimeout(() => {
-					this.router.navigate(['/resend-verification']);
+					this.router.navigate(['/verify']);
 				}, 2000);
 				
 			},
