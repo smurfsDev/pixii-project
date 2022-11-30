@@ -236,3 +236,42 @@
 	width: 100%;
 
 }
+
+.icon-dash {
+	position: relative;
+}
+
+.item {
+	// 2 colls
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	margin: 10px 0px;
+	width: auto;
+	height: auto;
+	border-radius: 12px;
+
+
+
+	.icon {
+		color: $icons-color;
+		// center icon
+		display: flex;
+		align-self: center;
+		align-items: center;
+		justify-content: center;
+		font-size: 24px;
+		margin-bottom: 5px;
+	}
+
+
+
+	p {
+		font-size: 14px;
+		font-weight: 600;
+		margin-bottom: 0px;
+		color: $icons-color;
+	}
+}
