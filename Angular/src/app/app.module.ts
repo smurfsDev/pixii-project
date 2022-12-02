@@ -23,6 +23,7 @@ import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
 import { HttpInterceptorService } from './http-interceptor.service';
 import { ChefComponent } from './pages/claims/chef/chef.component';
+import { MgUsersComponent } from './pages/users/superAdmin/mg-users/mg-users.component';
 @NgModule({
 	imports: [
 		NgxsModule.forRoot([AuthState]),
@@ -36,7 +37,7 @@ import { ChefComponent } from './pages/claims/chef/chef.component';
 		ReactiveFormsModule,
 	],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, MgUsersComponent],
 	providers: [
 		{
 			provide: HTTP_INTERCEPTORS,

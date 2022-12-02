@@ -7,6 +7,7 @@ import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
 import { IsAuthenticatedGuard } from './is-authenticated.guard';
 import { ChefComponent } from './pages/claims/chef/chef.component';
+import { MgUsersComponent } from './pages/users/superAdmin/mg-users/mg-users.component';
 export const AppRoutes: Routes = [
   {
     path: '',
@@ -48,4 +49,9 @@ export const AppRoutes: Routes = [
     canActivate: [IsAuthenticatedGuard]
 
   },
+  {
+    path: 'manageUsers',
+    component: MgUsersComponent,
+    canActivate: [IsAuthenticatedGuard]
+  }
 ];
