@@ -128,7 +128,7 @@ class _RegisterPageState extends State<Register> {
                                           fontWeight: FontWeight.w500,
                                           fontSize: 20.0,
                                         ),
-                                        hintStyle: const TextStyle(color: Colors.white),
+                                        // hintStyle: const TextStyle(color: Colors.white),
                                         enabledBorder: const UnderlineInputBorder(
                                           borderSide: BorderSide(width: 3, color: Colors.white),
                                         ),
@@ -138,15 +138,16 @@ class _RegisterPageState extends State<Register> {
                                         errorBorder: const UnderlineInputBorder(
                                           borderSide: BorderSide(width: 3, color: Colors.red),
                                         ),
+
                                       ),
                                       value: role,
-                                      items: const [
+                                      items: [
                                         DropdownMenuItem(
-                                          child: Text('User',style: const TextStyle(color: Colors.white),),
+                                          child: Text('User', style: TextStyle(color: this.role=="User"?Colors.white:Colors.black),),
                                           value: 'User',
                                         ),
                                         DropdownMenuItem(
-                                          child: Text('Admin',style: const TextStyle(color: Colors.white),),
+                                          child: Text('Admin',style: TextStyle(color: this.role=="Admin"?Colors.white:Colors.black)),
                                           value: 'Admin',
                                         ),
                                       ],
@@ -260,25 +261,17 @@ class _RegisterPageState extends State<Register> {
       setState(() {
         loading = true;
       });
-      final registerOK = await auth.register(email, password, username, name, role, confirmPassword);
+      final registerOK = await auth.register(username, password, email, name, role, confirmPassword);
       setState(() {
         loading = false;
       });
       if (registerOK) {
-        showAlert(context, 'register Success', auth.user!.name);
+        showAlert(context, 'register Success', 'Welcome $username');
         Navigator.pushNamed(context, Login.id);
       } else {
-        var message = "";
-        if (auth.error == "email already exists") {
-          message = "email already exists";
-        } else if (auth.error == "username already exists") {
-          message = "username already exists";
-        } else {
-          message = "An error has occurred";
-        }
-
+       
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(message),
+          content: Text(auth.registerError),
           backgroundColor: Colors.red,
         ));
       }

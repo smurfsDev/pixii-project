@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 class AuthService with ChangeNotifier {
   late User user;
   late String error;
+  late String registerError;
   bool _loggedIn = false;
 
   final _storage = const FlutterSecureStorage();
@@ -45,23 +46,23 @@ class AuthService with ChangeNotifier {
       return false;
     }
   }
-  Future register( String username, String password, String email, String name,String role , String confirmPassword) async {
+  Future<bool> register( String username, String password, String email, String name,String role , String confirmPassword) async {
     final request = {'username': username, 'password': password, 'email': email, 'name': name , 'role': role , 'confirmPassword': confirmPassword};
+    print(request);
     try {
       final response = await http.post(
           Uri.parse('${Environment.apiUrl}/register'),
           body: jsonEncode(request),
           headers: {'Content-Type': 'application/json'});
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return true;
       } else {
-        error = JsonDecoder().convert(response.body)['error'];
-        error = error;
+        registerError = JsonDecoder().convert(response.body)['message'];
         return false;
       }
     } catch (e) {
       error = e.toString();
-      error = error;
+      registerError = error;
       return false;
     }
   }
