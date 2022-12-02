@@ -1,0 +1,182 @@
+@import '../../../../app.component.scss';
+.container{
+  font-family: 'Montserrat';
+  .avatar{
+    margin-left: 10px;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 50%;
+  }
+  .nav{
+    display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		width: 100%;
+		margin-right: 10px;
+    margin-top: 10px;
+    padding: 5px;
+    background-color: #263147;
+    border-radius: 5px;
+
+    .hello{
+      font-size: 1.5em;
+      font-weight: 500;
+      margin-right: 50px;
+    }
+    .arrow-icon{
+      margin-right: 10px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+  .users{
+    margin-top: 20px;
+    margin-left: 10px;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+
+  }
+  .manipulation{
+    .filter{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      margin-bottom: 10px;
+
+      .search{
+        display: flex;
+        align-items: center;
+        border: 1px solid #ffffff;
+        border-radius: 20px;
+        justify-content: space-between;
+        width: 25%;
+        margin-left: 10px;
+        .search-icon{
+          margin-right: 10px;
+        }
+        .search-input{
+          font-size: 1.2em;
+          font-weight: 500;
+          border: none;
+          color: white;
+          background-color: transparent;
+          margin-left: 10px;
+          padding: 5px;
+          outline: none;
+          &::placeholder{
+            color: white;
+            margin-left: 10px;
+          }
+
+        }
+      }
+      .filter-btn{
+        display: flex;
+        background-color: #5092FF;
+        border : none;
+        border-radius: 5px;
+        color: white;
+        font-size: 1.2em;
+        font-weight: 500;
+        padding: 5px 20px 5px 10px;
+        align-items: center;
+        .btn-menu{
+          display: flex;
+          align-items: center;
+          margin-right: 20px;
+          background-color: transparent;
+          border: none;
+          .icon{
+            color: white;
+          }
+        }
+      }
+
+  }
+
+  }
+  .table {
+    margin-top: 20px;
+    background-color: #273148;
+    padding: 0 10px;
+
+    table{
+      margin-top: 20px;
+      width: 100%;
+      background-color: #2B364F;
+      .header{
+        background-color: #263147;
+        color: white;
+        font-size: 1.2em;
+        font-weight: 500;
+        padding: 10px;
+        .header-item{
+          padding: 10px;
+        }
+      }
+      .cell{
+        color: white;
+        font-size: 1.2em;
+        font-weight: 500;
+        padding: 10px;
+        .cell-item{
+          padding: 10px;
+        }
+        .status-active{
+          color: white;
+          background-color: #7CC57F;
+          border-radius: 20px;
+          padding: 5px;
+          width: 100px;
+          text-align: center;
+
+        }
+        .status-inactive{
+          color: white;
+          background-color: #AE5453;
+          border-radius: 20px;
+          padding: 5px;
+          width: 100px;
+          text-align: center;
+        }
+        .actions{
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center;
+          .action-btn{
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 500;
+            padding: 5px;
+            cursor: pointer;
+            .icon-done {
+              width: 20px;
+              height: 20px;
+              color: #7CC57F;
+            }
+            .icon-delete {
+              width: 20px;
+              height: 20px;
+              color: #AE5453;
+            }
+            .icon-close {
+              width: 20px;
+              height: 20px;
+              color: #AE5453;
+            }
+          }
+        }
+      }
+    }
+    mat-paginator{
+      background-color: #263147;
+      color: white;
+    }
+
+  }
+}
