@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:mobile/imports.dart';
+import 'package:mobile/models/Role.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
   static String id = '/RegisterPage';
-
   @override
   State<Register> createState() => _RegisterPageState();
 }
@@ -20,9 +20,17 @@ class _RegisterPageState extends State<Register> {
   String role = "Admin";
   bool rememberMe = false;
   bool loading = false;
+  List<DropdownMenuItem<String>> roles = [];
+  @override
+  void initState() {
+    super.initState();
+    fetchRoles();
+  }
+
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.transparent,
@@ -79,7 +87,9 @@ class _RegisterPageState extends State<Register> {
                                       keyboardType: TextInputType.name,
                                       labelText: 'Enter your name',
                                     ),
-                                    SizedBox(height: 30.0,),
+                                    SizedBox(
+                                      height: 30.0,
+                                    ),
                                     MyInput(
                                       validation: validateEmail,
                                       onChanged: (value) {
@@ -120,37 +130,32 @@ class _RegisterPageState extends State<Register> {
 
                                     // ),
                                     DropdownButtonFormField(
+                                      dropdownColor: Color.fromRGBO(44, 55, 91, 1),
                                       decoration: InputDecoration(
                                         labelText: 'Role',
                                         hintText: 'Role',
                                         labelStyle: TextStyle(
-                                          color: Color.fromARGB(255, 255, 255, 255),
+                                          color: Color.fromARGB(
+                                              255, 255, 255, 255),
                                           fontWeight: FontWeight.w500,
                                           fontSize: 20.0,
                                         ),
                                         // hintStyle: const TextStyle(color: Colors.white),
-                                        enabledBorder: const UnderlineInputBorder(
-                                          borderSide: BorderSide(width: 3, color: Colors.white),
+                                        enabledBorder:const UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 3, color: Colors.white),
                                         ),
-                                        focusedBorder: const UnderlineInputBorder(
-                                          borderSide: BorderSide(width: 3, color: Colors.blue),
+                                        focusedBorder:const UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 3, color: Colors.blue),
                                         ),
                                         errorBorder: const UnderlineInputBorder(
-                                          borderSide: BorderSide(width: 3, color: Colors.red),
+                                          borderSide: BorderSide(
+                                              width: 3, color: Colors.red),
                                         ),
-
                                       ),
                                       value: role,
-                                      items: [
-                                        DropdownMenuItem(
-                                          child: Text('User', style: TextStyle(color: this.role=="User"?Colors.white:Colors.black),),
-                                          value: 'User',
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text('Admin',style: TextStyle(color: this.role=="Admin"?Colors.white:Colors.black)),
-                                          value: 'Admin',
-                                        ),
-                                      ],
+                                      items: roles,
                                       onChanged: (value) {
                                         setState(() {
                                           role = value.toString();
@@ -167,7 +172,8 @@ class _RegisterPageState extends State<Register> {
                                       },
                                       hintText: 'Password',
                                       icon: Icons.lock,
-                                      keyboardType:TextInputType.visiblePassword,
+                                      keyboardType:
+                                          TextInputType.visiblePassword,
                                       labelText: 'Enter your password',
                                     ),
                                     SizedBox(height: 30.0),
@@ -188,10 +194,10 @@ class _RegisterPageState extends State<Register> {
                                       },
                                       hintText: 'Confirm Password',
                                       icon: Icons.lock,
-                                      keyboardType: TextInputType.visiblePassword,
+                                      keyboardType:
+                                          TextInputType.visiblePassword,
                                       labelText: 'Confirm your password',
                                     ),
-                                    
                                   ],
                                 )),
                             SizedBox(height: 40),
@@ -224,7 +230,6 @@ class _RegisterPageState extends State<Register> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                
                                 Text(
                                   'You already have an account?',
                                   style: TextStyle(
@@ -261,7 +266,8 @@ class _RegisterPageState extends State<Register> {
       setState(() {
         loading = true;
       });
-      final registerOK = await auth.register(username, password, email, name, role, confirmPassword);
+      final registerOK = await auth.register(
+          username, password, email, name, role, confirmPassword);
       setState(() {
         loading = false;
       });
@@ -269,12 +275,28 @@ class _RegisterPageState extends State<Register> {
         showAlert(context, 'register Success', 'Welcome $username');
         Navigator.pushNamed(context, Login.id);
       } else {
-       
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(auth.registerError),
           backgroundColor: Colors.red,
         ));
       }
     }
+  }
+
+  void fetchRoles() async {
+    Future<List<Role>> sss = AuthService().getRoles();
+    sss.then((value) {
+      setState(() {
+        roles = value
+            .map((e) => DropdownMenuItem(
+                  value: e.name,
+                  child: Text(
+                    e.name,
+                    style: TextStyle(color:Colors.white),
+                  ),
+                ))
+            .toList();
+      });
+    });
   }
 }
