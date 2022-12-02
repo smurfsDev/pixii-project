@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: white,
         ),
-        home: MainLayout(child: main),
+        home: MainLayout(child: Login()),
       ),
     );
   }
