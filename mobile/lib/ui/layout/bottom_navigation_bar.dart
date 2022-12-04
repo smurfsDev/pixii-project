@@ -20,7 +20,7 @@ class _bottomNav extends State<bottomNav> {
   @override
   Widget build(BuildContext context) {
     return CurvedNavigationBar(
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: Color.fromARGB(255, 19, 27, 54),
       items: <Widget>[
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
