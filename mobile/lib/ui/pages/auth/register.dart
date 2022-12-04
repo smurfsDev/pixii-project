@@ -82,10 +82,10 @@ class _RegisterPageState extends State<Register> {
                                       onChanged: (value) {
                                         name = value;
                                       },
-                                      hintText: 'Name',
+                                      hintText: 'Enter your name',
                                       icon: Icons.person,
                                       keyboardType: TextInputType.name,
-                                      labelText: 'Enter your name',
+                                      labelText: 'Name',
                                     ),
                                     SizedBox(
                                       height: 30.0,
@@ -97,10 +97,10 @@ class _RegisterPageState extends State<Register> {
                                           email = value;
                                         });
                                       },
-                                      hintText: 'Email',
+                                      hintText: 'Enter your email address',
                                       icon: Icons.email,
                                       keyboardType: TextInputType.emailAddress,
-                                      labelText: 'Enter your email address',
+                                      labelText: 'Email',
                                     ),
                                     SizedBox(height: 30.0),
                                     MyInput(
@@ -110,10 +110,10 @@ class _RegisterPageState extends State<Register> {
                                           username = value;
                                         });
                                       },
-                                      hintText: 'Username',
+                                      hintText: 'Enter your username',
                                       icon: Icons.person,
                                       keyboardType: TextInputType.name,
-                                      labelText: 'Enter your username',
+                                      labelText: 'Username',
                                     ),
                                     SizedBox(height: 30.0),
                                     // MyInput(
@@ -170,11 +170,11 @@ class _RegisterPageState extends State<Register> {
                                           password = value;
                                         });
                                       },
-                                      hintText: 'Password',
+                                      hintText: 'Enter your password',
                                       icon: Icons.lock,
                                       keyboardType:
                                           TextInputType.visiblePassword,
-                                      labelText: 'Enter your password',
+                                      labelText: 'Password',
                                     ),
                                     SizedBox(height: 30.0),
                                     MyInput(
@@ -192,11 +192,11 @@ class _RegisterPageState extends State<Register> {
                                           confirmPassword = value;
                                         });
                                       },
-                                      hintText: 'Confirm Password',
+                                      hintText: 'Confirm your password',
                                       icon: Icons.lock,
                                       keyboardType:
                                           TextInputType.visiblePassword,
-                                      labelText: 'Confirm your password',
+                                      labelText: 'Confirm Password',
                                     ),
                                   ],
                                 )),
