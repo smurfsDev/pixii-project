@@ -20,25 +20,25 @@
           <input class="search-input" placeholder="  Search ..." />
           <mat-icon style="color:white" class="search-icon">search</mat-icon>
         </div>
-        <div class="filter-btn">
-          <button class="btn-menu" [matMenuTriggerFor]="menu">
-            <mat-icon class="icon">
-              chevron_left
-            </mat-icon>
-          </button>
-          Filter
+        <div class="filter">
+          <div class="filter-select">
+            Filter By :
+            <div class="filterData" *ngFor="let dataFilter of dataFilters">
+                {{dataFilter.name}}
+              <mat-select [(value)]="dataFilter.defaultValue"  (selectionChange)="applyFilter($event, dataFilter)">
+                <mat-option *ngFor="let option of dataFilter.options" [value]="option.value">
+                  {{option.name}}
+                </mat-option>
+              </mat-select>
+            </div>
+            </div>
         </div>
-        <mat-menu #menu="matMenu" class="menu" xPosition="before">
-          <button mat-menu-item>Role</button>
-          <button mat-menu-item>Status</button>
-        </mat-menu>
       </div>
     </div>
     <div class="table">
 
       <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
 
-        <!-- Position Column -->
         <ng-container matColumnDef="name">
           <th class="header" mat-header-cell *matHeaderCellDef> Name </th>
           <td class="cell" mat-cell *matCellDef="let element">
@@ -46,22 +46,18 @@
             src="https://resize.elle.fr/article/var/plain_site/storage/images/loisirs/cinema/news/avatar-2-une-premiere-bande-annonce-en-mai-4010741/96462268-1-fre-FR/Avatar-2-une-premiere-bande-annonce-en-mai.jpg" /> {{element.name}} </td>
         </ng-container>
 
-        <!-- Name Column -->
         <ng-container matColumnDef="role">
           <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription> Role </th>
           <td class="cell" mat-cell *matCellDef="let element"> {{element.role}} </td>
         </ng-container>
 
-        <!-- Weight Column -->
         <ng-container matColumnDef="email">
           <th class="header" mat-header-cell *matHeaderCellDef> E-mail </th>
           <td class="cell" mat-cell *matCellDef="let element"> {{element.email}} </td>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="status">
           <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription> Status </th>
-          <!-- <td class="cell" mat-cell *matCellDef="let element"> {{element.Status}} </td> -->
           <td class="cell" mat-cell *matCellDef="let element">
             <div class="status-{{element.Status == 1 ? 'active' : 'inactive'}}">
               {{element.Status == 1 ? 'Active' : 'Inactive'}}
