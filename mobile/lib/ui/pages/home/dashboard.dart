@@ -82,7 +82,8 @@ class _Dashboard extends State<Dashboard> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            'assets/images/avatar.jpg',
+                            'assets/images/tyre.png',
+                            height: 300.0,
                             fit: BoxFit.fill,
                           ),
                           Padding(
