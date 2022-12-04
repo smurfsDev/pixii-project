@@ -89,10 +89,6 @@ export class ResetPasswordComponent implements OnInit {
             this.loading = false;
           }
         );
-    } else {
-      this._snackBar.open("Password doesn't match", 'close', {
-        duration: 2000,
-      });
     }
   }
   ngOnInit(): void {}
