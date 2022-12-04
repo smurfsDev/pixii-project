@@ -29,8 +29,75 @@ class _Dashboard extends State<Dashboard> {
               ),
               backgroundColor: const Color.fromARGB(255, 19, 27, 54),
             ),
-            body: Text(user.name),
+            body: Padding(
+              padding: const EdgeInsets.all(40),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  DecoratedBox(
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 231, 232, 234),
+                    ),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50)),
+                      title: const Text("Tires pressure"),
+                      trailing: PopupMenuButton<String>(
+                        icon: const Icon(Icons.arrow_drop_down_outlined),
+                        padding: EdgeInsets.zero,
+                        onSelected: (value) => showInSnackBar(
+                          "text1",
+                        ),
+                        itemBuilder: (context) => <PopupMenuItem<String>>[
+                          const PopupMenuItem<String>(
+                            value: "text1",
+                            child: Text(
+                              "text1",
+                            ),
+                          ),
+                          const PopupMenuItem<String>(
+                            enabled: false,
+                            child: Text(
+                              "text2",
+                            ),
+                          ),
+                          const PopupMenuItem<String>(
+                            value: "text3",
+                            child: Text(
+                              "text3",
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            //  Padding(
+            //   padding: const EdgeInsets.all(40),
+            //   child: Column(
+            //     mainAxisSize: MainAxisSize.max,
+
+            //     children: [
+            //       SizedBox(
+            //         height: 50,
+            //         width: 300,
+
+            //         child: ElevatedButton.icon(
+
+            //           label: Text("Tires Pressure"),
+            //           icon: Icon(Icons.arrow_drop_down, size: 18),
+            //           onPressed: () {},
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             backgroundColor: const Color.fromARGB(255, 19, 27, 54),
             drawer: NavDrawerDemo(this.user))));
   }
+
+  showInSnackBar(demoMenuSelected) {}
 }
