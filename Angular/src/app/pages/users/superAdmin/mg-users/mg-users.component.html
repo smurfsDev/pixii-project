@@ -43,24 +43,26 @@
           <th class="header" mat-header-cell *matHeaderCellDef> Name </th>
           <td class="cell" mat-cell *matCellDef="let element">
             <img class="avatar"
-            src="https://resize.elle.fr/article/var/plain_site/storage/images/loisirs/cinema/news/avatar-2-une-premiere-bande-annonce-en-mai-4010741/96462268-1-fre-FR/Avatar-2-une-premiere-bande-annonce-en-mai.jpg" /> {{element.name}} </td>
+            src="https://resize.elle.fr/article/var/plain_site/storage/images/loisirs/cinema/news/avatar-2-une-premiere-bande-annonce-en-mai-4010741/96462268-1-fre-FR/Avatar-2-une-premiere-bande-annonce-en-mai.jpg" />
+            {{element[0].user.name}}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="role">
           <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription> Role </th>
-          <td class="cell" mat-cell *matCellDef="let element"> {{element.role}} </td>
+          <td class="cell" mat-cell *matCellDef="let element"> {{element[0].role.name}} </td>
         </ng-container>
 
         <ng-container matColumnDef="email">
           <th class="header" mat-header-cell *matHeaderCellDef> E-mail </th>
-          <td class="cell" mat-cell *matCellDef="let element"> {{element.email}} </td>
+          <td class="cell" mat-cell *matCellDef="let element"> {{element[0].user.email}} </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
           <th class="header" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription> Status </th>
           <td class="cell" mat-cell *matCellDef="let element">
-            <div class="status-{{element.Status == 1 ? 'active' : 'inactive'}}">
-              {{element.Status == 1 ? 'Active' : 'Inactive'}}
+            <div class="status-{{element[0].status == 1 ? 'active' : 'inactive'}}">
+              {{element[0].status == 1 ? 'Active' : 'Inactive'}}
             </div>
           </td>
         </ng-container>
@@ -68,12 +70,12 @@
           <th class="header text-center" mat-header-cell *matHeaderCellDef> Actions </th>
           <td class="cell" mat-cell *matCellDef="let element">
             <div class="actions">
-              <button class="action-btn">
-                <mat-icon class="icon-close">
+              <button class="action-btn"  >
+                <mat-icon class="icon-close" (click)="rejectUser(element[0].user.id,element[0].role.id)">
                 close
                 </mat-icon></button>
-              <button class="action-btn">
-                <mat-icon class="icon-done">
+              <button class="action-btn" [class]="element[0].status == 1 ? 'disabled' : ''" >
+                <mat-icon class="icon-done" (click)="acceptUser(element[0].user.id,element[0].role.id)">
                 done
                 </mat-icon></button>
               <button class="action-btn">
