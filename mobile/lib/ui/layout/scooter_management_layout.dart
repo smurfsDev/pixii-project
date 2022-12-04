@@ -12,8 +12,10 @@ class ScooterManagement extends StatelessWidget {
             Column(
               children: [
                 Padding(
+                    // padding: const EdgeInsets.only(
+                    //     top: 15, bottom: 15, right: 50, left: 15),
                     padding: const EdgeInsets.only(
-                        top: 15, bottom: 15, right: 50, left: 15),
+                        top: 15, bottom: 15, right: 50, left: 30),
                     child: Column(
                       children: [
                         ElevatedButton(
@@ -41,7 +43,7 @@ class ScooterManagement extends StatelessWidget {
                     )),
                 Padding(
                     padding: const EdgeInsets.only(
-                        top: 15, bottom: 15, right: 50, left: 15),
+                        top: 15, bottom: 15, right: 50, left: 30),
                     child: Column(
                       children: [
                         ElevatedButton(
@@ -138,7 +140,7 @@ class ScooterManagement extends StatelessWidget {
               children: [
                 Padding(
                     padding: const EdgeInsets.only(
-                        top: 15, bottom: 15, right: 50, left: 15),
+                        top: 15, bottom: 15, right: 50, left: 30),
                     child: Column(
                       children: [
                         ElevatedButton(
