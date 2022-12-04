@@ -41,34 +41,15 @@ class _MyAppState extends State<MyApp> {
           Login.id: (context) => MainLayout(
                 child: const Login(),
               ),
+          VerifyEmail.id: (context) => MainLayout(
+                child: const VerifyEmail(),
+              ),
         },
-        // onGenerateRoute: (settings) {
-        //   if (settings.name == Register.id) {
-        //     return MaterialPageRoute(
-        //       builder: (context) => MainLayout(
-        //         child: const Register(),
-        //       ),
-        //     );
-        //   }else if (settings.name == Login.id) {
-        //     return MaterialPageRoute(
-        //       builder: (context) => MainLayout(
-        //         child: const Login(),
-        //       ),
-        //     );
-        //   }
-        //   else {
-        //     return MaterialPageRoute(
-        //       builder: (context) => MainLayout(
-        //         child: main,
-        //       ),
-        //     );
-        //   }
-        // },
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: white,
         ),
-        home: MainLayout(child: Login()),
+        home: MainLayout(child: Register()),
       ),
     );
   }
