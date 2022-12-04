@@ -124,6 +124,25 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  Future resendVerificationToken(String email) async {
+    final request = {'email': email};
+    try {
+      final response = await http.post(
+          Uri.parse('${Environment.apiUrl}/resend'),
+          body: jsonEncode(request),
+          headers: {'Content-Type': 'application/json'});
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        verifyError = JsonDecoder().convert(response.body)['message'];
+        return false;
+      }
+    } catch (e) {
+      verifyError = e.toString();
+      return false;
+    }
+  }
+
   Future logout() async {
     await _storage.delete(key: 'token');
   }

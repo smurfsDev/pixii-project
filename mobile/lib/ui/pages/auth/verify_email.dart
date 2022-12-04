@@ -16,6 +16,7 @@ class _VerifyEmailPageState extends State<VerifyEmail> {
   String Code = "Code123";
   bool rememberMe = false;
   bool loading = false;
+  int _counter = 0;
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
@@ -91,8 +92,8 @@ class _VerifyEmailPageState extends State<VerifyEmail> {
                                     ),
                                     SizedBox(height: 20.0),
                                     MyInput(
-                                      validation: (val){
-                                        if(val!.length!=8){
+                                      validation: (val) {
+                                        if (val!.length != 8) {
                                           return 'Code must be 8 characters';
                                         }
                                         return null;
@@ -104,12 +105,11 @@ class _VerifyEmailPageState extends State<VerifyEmail> {
                                       },
                                       hintText: 'Enter your code',
                                       icon: Icons.lock,
-                                      keyboardType:
-                                          TextInputType.text,
+                                      keyboardType: TextInputType.text,
                                       labelText: 'Code',
                                     ),
                                     SizedBox(height: 20.0),
-                                    ],
+                                  ],
                                 )),
                             SizedBox(height: 40),
                             Container(
@@ -155,7 +155,7 @@ class _VerifyEmailPageState extends State<VerifyEmail> {
       setState(() {
         loading = true;
       });
-      final VerifyEmailOK =  await auth.verifyEmail(email, Code);
+      final VerifyEmailOK = await auth.verifyEmail(email, Code);
       setState(() {
         loading = false;
       });
@@ -169,19 +169,62 @@ class _VerifyEmailPageState extends State<VerifyEmail> {
         Navigator.pushNamed(context, Login.id);
       } else {
         var message = "";
-        message = auth.verifyError==''?'Verify Email Failed':auth.verifyError;
-
-        var snack = ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(message),
-          backgroundColor: Colors.red,
-        ));
-        if(message=='User already verified'){
-          Future.delayed(Duration(seconds: 2), () {
-            snack.close();
-            Navigator.pushNamed(context, Login.id);
+        message =
+            auth.verifyError == '' ? 'Verify Email Failed' : auth.verifyError;
+        if (auth.verifyError == 'Wrong verification code') {
+          setState(() {
+            _counter++;
           });
+          if (_counter > 3) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Did not receive the code?'),
+              backgroundColor: Colors.red,
+              action: SnackBarAction(
+                label: 'Resend',
+                onPressed: () async {
+                  try {
+                    var scal =
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('Sending code...'),
+                      backgroundColor: Colors.blue,
+                    ));
+                    await auth.resendVerificationToken(email);
+                    scal.close();
+                    scal = ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('Code sent'),
+                      backgroundColor: Colors.green,
+                    ));
+                    Future.delayed(Duration(seconds: 2), () {
+                      scal.close();
+                    });
+
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('Code not sent'),
+                      backgroundColor: Colors.red,
+                    ));
+                  }
+                },
+              ),
+            ));
+          }else{
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(message),
+            backgroundColor: Colors.red,
+          ));
+          }
+        } else {
+          var snack = ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(message),
+            backgroundColor: Colors.red,
+          ));
+          if (message == 'User already verified') {
+            Future.delayed(Duration(seconds: 2), () {
+              snack.close();
+              Navigator.pushNamed(context, Login.id);
+            });
+          }
         }
-        
       }
     }
   }
