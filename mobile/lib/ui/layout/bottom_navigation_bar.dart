@@ -32,25 +32,37 @@ class _bottomNav extends State<bottomNav> {
         backgroundColor: const Color.fromARGB(255, 19, 27, 54),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.electric_scooter_outlined,
-                color: Color.fromARGB(255, 249, 249, 249)),
+            icon: Icon(
+              Icons.electric_scooter_outlined,
+              color: Color.fromARGB(255, 249, 249, 249),
+              size: 30,
+            ),
             label: 'Management',
             backgroundColor: Color.fromARGB(255, 19, 27, 54),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.location_on,
-                color: Color.fromARGB(255, 249, 249, 249)),
+            icon: Icon(
+              Icons.location_on,
+              color: Color.fromARGB(255, 249, 249, 249),
+              size: 30,
+            ),
             label: 'Localization',
           ),
           BottomNavigationBarItem(
-            icon:
-                Icon(Icons.settings, color: Color.fromARGB(255, 249, 249, 249)),
+            icon: Icon(
+              Icons.settings,
+              color: Color.fromARGB(255, 249, 249, 249),
+              size: 30,
+            ),
             label: 'Settings',
             backgroundColor: Color.fromARGB(255, 19, 27, 54),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications,
-                color: Color.fromARGB(255, 249, 249, 249)),
+            icon: Icon(
+              Icons.notifications,
+              color: Color.fromARGB(255, 249, 249, 249),
+              size: 30,
+            ),
             label: 'Notification',
             backgroundColor: Color.fromARGB(255, 10, 17, 38),
           ),
