@@ -177,23 +177,31 @@ public class JwtAuthenticationController {
 		return ResponseEntity.status(HttpStatus.OK).body(item);
 	}
 
-	@RequestMapping(value = "/accept/{id}", method = RequestMethod.GET)
-	public ResponseEntity<JSONObject> accept(@PathVariable("id") int id) {
+	@RequestMapping(value = "/accept/{idUser}/{idRole}", method = RequestMethod.GET)
+	public ResponseEntity<JSONObject> accept(@PathVariable("idUser") int id, @PathVariable("idRole") Long idRole) {
 		JSONObject item = new JSONObject();
-		Optional<UserRole> userRole = userRoleRepository.findFirstByUserId(id);
-		userRole.get().setStatus(1);
-		userRoleRepository.save(userRole.get());
-		item.put("message", "User Accepted");
-		return ResponseEntity.status(HttpStatus.OK).body(item);
+		Optional<UserRole> userRole = userRoleRepository.findByUserIdAndRoleId(id, idRole);
+		if (userRole.isPresent()) {
+			userRole.get().setStatus(1);
+			userRoleRepository.save(userRole.get());
+			item.put("message", "User accepted");
+			return ResponseEntity.status(HttpStatus.OK).body(item);
+		}
+		item.put("message", "User not found");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
 	}
 
-	@RequestMapping(value = "/reject/{id}", method = RequestMethod.GET)
-	public ResponseEntity<JSONObject> reject(@PathVariable("id") int id) {
+	@RequestMapping(value = "/reject/{idUser}/{idRole}", method = RequestMethod.GET)
+	public ResponseEntity<JSONObject> reject(@PathVariable("idUser") int id, @PathVariable("idRole") Long idRole) {
 		JSONObject item = new JSONObject();
-		Optional<UserRole> userRole = userRoleRepository.findFirstByUserId(id);
-		userRole.get().setStatus(2);
-		userRoleRepository.save(userRole.get());
-		item.put("message", "User Rejected");
+		Optional<UserRole> userRole = userRoleRepository.findByUserIdAndRoleId(id, idRole);
+		if (userRole.isPresent()) {
+			userRole.get().setStatus(2);
+			userRoleRepository.save(userRole.get());
+			item.put("message", "User Rejected");
+			return ResponseEntity.status(HttpStatus.OK).body(item);
+		}
+		item.put("message", "User not found");
 		return ResponseEntity.status(HttpStatus.OK).body(item);
 	}
 
@@ -210,12 +218,12 @@ public class JwtAuthenticationController {
 		return ResponseEntity.status(HttpStatus.OK).body(item);
 	}
 
-	// list of users
+	// return pivot table of users and their roles
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public ResponseEntity<JSONObject> users() {
 		JSONObject item = new JSONObject();
-		List<User> users = userRepository.findAll();
-		item.put("users", users);
+		List<Object[]> userRoles = userRepository.findUserAndRole();
+		item.put("users", userRoles);
 		return ResponseEntity.status(HttpStatus.OK).body(item);
 	}
 
