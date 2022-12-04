@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:mobile/imports.dart';
+import 'package:mobile/ui/pages/home/dashboard.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -208,6 +209,9 @@ class _LoginPageState extends State<Login> {
       });
       if (loginOK) {
         showAlert(context, 'Login Success', auth.user!.name);
+        // ignore: use_build_context_synchronously
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Dashboard(auth.user)));
       } else {
         var message = "";
         if (auth.error == "USER_NOT_FOUND") {
