@@ -73,10 +73,10 @@ class _LoginPageState extends State<Login> {
                                           email = value;
                                         });
                                       },
-                                      hintText: 'Email',
+                                      hintText: 'Enter your email address',
                                       icon: Icons.email,
                                       keyboardType: TextInputType.emailAddress,
-                                      labelText: 'Enter your email address',
+                                      labelText: 'Email',
                                     ),
                                     SizedBox(height: 60.0),
                                     MyInput(
@@ -86,11 +86,11 @@ class _LoginPageState extends State<Login> {
                                           password = value;
                                         });
                                       },
-                                      hintText: 'Password',
+                                      hintText: 'Enter your password',
                                       icon: Icons.lock,
                                       keyboardType:
                                           TextInputType.visiblePassword,
-                                      labelText: 'Enter your password',
+                                      labelText: 'Password',
                                     ),
                                     SizedBox(height: 20.0),
                                     Row(
@@ -174,7 +174,7 @@ class _LoginPageState extends State<Login> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    // Navigator.pushNamed(context, RegisterPage.id);
+                                    Navigator.pushNamed(context, Register.id);
                                   },
                                   child: Text(
                                     ' Sign Up',

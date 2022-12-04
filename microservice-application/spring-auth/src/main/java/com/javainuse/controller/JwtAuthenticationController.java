@@ -1,6 +1,7 @@
 package com.javainuse.controller;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -95,7 +96,7 @@ public class JwtAuthenticationController {
 
 		User appUser = new User();
 		user.get("email");
-		if (userRepository.findByUsername(user.get("email").toString()).isPresent()) {
+		if (userRepository.findUserByEmail(user.get("email").toString()).isPresent()) {
 			JSONObject item = new JSONObject();
 			item.put("message", "email already exists");
 			item.put("status", HttpStatus.BAD_REQUEST.value());
@@ -168,10 +169,18 @@ public class JwtAuthenticationController {
 
 	}
 
+	// @RequestMapping(value = "/roles", method = RequestMethod.GET)
+	// public ResponseEntity<JSONObject> getRoles() {
+	// JSONObject item = new JSONObject();
+	// item.put("roles", roleRepository.findAll());
+	// return ResponseEntity.status(HttpStatus.OK).body(item);
+	// }
+	// retern roles without super admin
 	@RequestMapping(value = "/roles", method = RequestMethod.GET)
 	public ResponseEntity<JSONObject> getRoles() {
 		JSONObject item = new JSONObject();
-		item.put("roles", roleRepository.findAll());
+		item.put("roles", roleRepository.findAll().stream().filter(role -> !role.getName().equals("Super Admin"))
+				.collect(Collectors.toList()));
 		return ResponseEntity.status(HttpStatus.OK).body(item);
 	}
 
