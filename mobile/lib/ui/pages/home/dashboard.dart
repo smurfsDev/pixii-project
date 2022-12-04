@@ -40,11 +40,13 @@ class _Dashboard extends State<Dashboard> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   DecoratedBox(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
                       color: Color.fromARGB(255, 252, 253, 255),
                     ),
                     child: ListTile(
                       shape: RoundedRectangleBorder(
+                          side: BorderSide(width: 2),
                           borderRadius: BorderRadius.circular(50)),
                       title: const Text("Tires pressure"),
                       trailing: PopupMenuButton<String>(
@@ -91,32 +93,33 @@ class _Dashboard extends State<Dashboard> {
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Container(
-                                  color:
-                                      const Color.fromARGB(255, 254, 254, 254),
-                                  child: SizedBox(
-                                      height: 40,
-                                      width: 600,
-                                      child: ElevatedButton.icon(
-                                        style: ElevatedButton.styleFrom(
-                                            minimumSize: const Size(60, 30),
-                                            fixedSize: const Size(10, 2),
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    255, 254, 254, 254)),
-                                        label: const Text(
-                                          "Check your front right tyre",
-                                          style: TextStyle(
-                                              color:
-                                                  Color.fromARGB(255, 5, 5, 5)),
-                                        ),
-                                        icon: const Icon(Icons.warning,
-                                            color: Color.fromARGB(
-                                                255, 234, 26, 26),
-                                            size: 18),
-                                        onPressed: () {},
-                                      )),
-                                )
+                                SizedBox(
+                                    height: 40,
+                                    width: 600,
+                                    child: ElevatedButton.icon(
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  const Color.fromARGB(
+                                                      255, 247, 247, 247)),
+                                          shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(18.0),
+                                          ))),
+                                      label: const Text(
+                                        "Check your front right tyre",
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 5, 5, 5)),
+                                      ),
+                                      icon: const Icon(Icons.warning,
+                                          color:
+                                              Color.fromARGB(255, 234, 26, 26),
+                                          size: 18),
+                                      onPressed: () {},
+                                    ))
                               ],
                             ),
                           ),
