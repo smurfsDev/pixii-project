@@ -18,6 +18,8 @@ class ScooterManagement extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
                           minimumSize: const Size(60, 30),
                           fixedSize: const Size(10, 2),
                           backgroundColor:
@@ -44,6 +46,8 @@ class ScooterManagement extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
                           minimumSize: const Size(60, 30),
                           fixedSize: const Size(10, 2),
                           backgroundColor:
@@ -75,6 +79,8 @@ class ScooterManagement extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
                           minimumSize: const Size(60, 30),
                           fixedSize: const Size(10, 2),
                           backgroundColor:
@@ -100,6 +106,8 @@ class ScooterManagement extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
                           minimumSize: const Size(60, 30),
                           fixedSize: const Size(10, 2),
                           backgroundColor:
@@ -131,6 +139,8 @@ class ScooterManagement extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
                           minimumSize: const Size(60, 30),
                           fixedSize: const Size(10, 2),
                           backgroundColor:
@@ -156,6 +166,8 @@ class ScooterManagement extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
                           minimumSize: const Size(60, 30),
                           fixedSize: const Size(10, 2),
                           backgroundColor:
