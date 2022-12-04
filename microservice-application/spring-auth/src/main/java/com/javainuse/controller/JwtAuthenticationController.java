@@ -96,7 +96,7 @@ public class JwtAuthenticationController {
 
 		User appUser = new User();
 		user.get("email");
-		if (userRepository.findByUsername(user.get("email").toString()).isPresent()) {
+		if (userRepository.findUserByEmail(user.get("email").toString()).isPresent()) {
 			JSONObject item = new JSONObject();
 			item.put("message", "email already exists");
 			item.put("status", HttpStatus.BAD_REQUEST.value());
