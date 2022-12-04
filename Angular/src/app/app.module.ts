@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ClaimsComponent } from './pages/claims/claims.component';
@@ -23,20 +23,39 @@ import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
 import { ResetPasswordComponent } from './pages/account/reset-password/reset-password.component';
 import { CheckemailComponent } from './pages/account/reset-password/checkemail/checkemail.component';
+import { TopbarComponent } from './layout/topbar/topbar.component';
+import { BatteryPercentageComponent } from './pages/home/percentage-bar/percentage-bar.component';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { ChartBatteryUsageComponent } from './pages/home/chart-battery-usage/chart-battery-usage.component';
+import { BatteryComponent } from './pages/home/battery/battery.component';
+
+import { HttpInterceptorService } from './http-interceptor.service';
+import { ChefComponent } from './pages/claims/chef/chef.component';
+import { ResendVerificationComponent } from './pages/account/resend-verification/resend-verification.component';
 @NgModule({
 	imports: [
-    BrowserModule,
+		NgxsModule.forRoot([AuthState]),
+		NgxsStoragePluginModule.forRoot(),
+		BrowserModule,
 		RouterModule.forRoot(AppRoutes),
-    NgxsModule.forRoot([AuthState]),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsStoragePluginModule.forRoot(),
-    FormsModule, DragDropModule, HttpClientModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    ReactiveFormsModule,
-],
+		NgxsReduxDevtoolsPluginModule.forRoot(),
+		FormsModule, DragDropModule, HttpClientModule,
+		BrowserAnimationsModule,
+		MaterialModule,
+		ReactiveFormsModule,
+		NgxEchartsModule.forRoot({
+			echarts: () => import('echarts')
+		  })
+	],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ResetPasswordComponent, CheckemailComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent],
+	providers: [
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: HttpInterceptorService,
+			multi: true
+		}
+	],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }

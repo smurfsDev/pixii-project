@@ -35,6 +35,10 @@
                             <span *ngIf="!loading">Verify</span>
                             <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
                     </button>
+					<div class="text-center mt-3 d-flex" style="justify-content: space-around;">
+						<a routerLink="/auth" class="text-primary">Back to login</a>
+						<a routerLink="/resend-verification" class="text-primary">Didn't recieve token?</a>
+					</div>
 				</form>
 			</div>
 	</div>

@@ -1,38 +1,44 @@
 @import '../../app.component.scss';
-.content{
+
+.content {
 	height: 100%;
 }
+
 .root-container {
 
 	background-color: $main-bg-color;
 	color: $main-text-color;
 	height: 100%;
 	width: 100%;
+
 	.example-sidenav-content {
 		display: flex;
 		height: 100%;
 		align-items: center;
 		justify-content: center;
-	  }
-	  
-	  .sidenav {
+	}
+
+	.sidenav {
 		max-width: 250px;
 		padding: 20px;
 		background-color: $main-component-color;
-		.logo{
-			img{
+
+		.logo {
+			img {
 				width: 52px;
 				height: 44px;
-			transition: all 0.3s ease-in;
+				transition: all 0.3s ease-in;
 
 			}
-			&.open{
-				img{
+
+			&.open {
+				img {
 					width: 100px;
 					height: 82px;
 				}
 			}
-			.slogan{
+
+			.slogan {
 				margin-top: 5px;
 				color: $main-text-color;
 				font-size: 9px;
@@ -40,17 +46,20 @@
 				font-weight: 600;
 
 			}
+
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			flex-direction: column;
 		}
-		.separator{
+
+		.separator {
 			margin-top: 5px;
 			margin-bottom: 5px;
 			border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
 		}
-		.items{
+
+		.items {
 			margin-top: 25px;
 			margin-bottom: 25px;
 			background-color: $main-component-color;
@@ -58,7 +67,8 @@
 			flex-direction: column;
 			align-items: center;
 		}
-		.item{
+
+		.item {
 			// 2 colls
 			width: 100%;
 			display: flex;
@@ -66,23 +76,27 @@
 			justify-content: center;
 			min-width: 56px;
 			min-height: 55px;
-			margin : 10px 0px;
+			margin: 10px 0px;
 			width: auto;
 			height: auto;
 			border-radius: 12px;
-			&.open{
+
+			&.open {
 				display: grid;
 				grid-template-columns: 1fr 1fr;
 				align-items: center;
 				justify-items: start;
-				.icon{
+
+				.icon {
 					margin-left: 18px;
 				}
-				p{
+
+				p {
 					padding-right: 8px;
 				}
 			}
-			.icon{
+
+			.icon {
 				color: $icons-color;
 				// center icon
 				display: flex;
@@ -91,16 +105,20 @@
 				justify-content: center;
 				font-size: 30px;
 			}
-			&.active{
+
+			&.active {
 				background-color: $bg-icons-color;
-				.icon{
+
+				.icon {
 					color: $icons-active-color;
 				}
-				p{
+
+				p {
 					color: $main-text-color;
 				}
 			}
-			p{
+
+			p {
 				font-size: 14px;
 				font-weight: 600;
 				margin-bottom: 0px;
@@ -110,11 +128,30 @@
 	}
 
 
-	  
+
 }
-.last-item{
+
+// .before-last-item {
+// 	position: absolute;
+// 	bottom: 0;
+// 	left: 0;
+// 	margin-top: 75%;
+// 	// margin-top: 1500px;
+// }
+
+.last-item {
 	position: absolute;
-	bottom:0;
+	bottom: 0;
 	left: 0;
+
+
+	// margin-top: 100%;
 	margin-bottom: 20px;
+}
+
+.card {
+	text-align: center;
+	background-color: $main-component-color;
+	color: white;
+	border: 0ch;
 }

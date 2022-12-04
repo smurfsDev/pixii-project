@@ -1,6 +1,7 @@
 import Claim from "../models/claim.model";
 import { Request, Response } from 'express';
 import status from "../models/status.model";
+import User from "../models/user.model";
 
 export const findAll = async (req: Request, res: Response) => {
 	// const search = req.query.search || '';
@@ -13,10 +14,19 @@ export const findAll = async (req: Request, res: Response) => {
 	// 		res.send(claims);
 	// 	}
 	// 	);
-	Claim.find().populate("_status").populate('status','name').then((claims) => {
+	Claim.find().populate("_status").populate('status', 'name').then((claims) => {
 		res.send(claims);
 	});
 };
+
+// get mine
+export const findAffectedToMe = async (req: Request, res: Response) => {
+	// const user =
+	Claim.find({ technician: req.body.user }).populate("_status").populate('status', 'name').then((claims) => {
+		res.send(claims);
+	});
+};
+
 // create
 export const create = (req: Request, res: Response) => {
 	const claim = new Claim(req.body);
@@ -67,7 +77,7 @@ export const remove = (req: Request, res: Response) => {
 
 // update
 export const update = (req: Request, res: Response) => {
-	Claim.findByIdAndUpdate(req.params.id, req.body, (err: any, claim: any) => {
+	Claim.findByIdAndUpdate(req.params.id, {...req.body,author:req.body.user.email}, (err: any, claim: any) => {
 		if (err) return res.status(500).send(err);
 		else if (!claim) return res.status(404).send("Claim not found");
 		else Claim.findById(req.params.id, (err: any, claim: any) => {
@@ -83,7 +93,15 @@ export const findOne = (req: Request, res: Response) => {
 		if (err) return res.status(500).send(err);
 		else if (!claim) return res.status(404).send("Claim not found");
 		else return res.status(200).send(claim);
-	}).populate('comments').populate('status', 'name').populate({
+	}).populate('status', 'name')
+	.populate({
+		path: 'comments',
+		populate: {
+			path: 'user',
+			model: 'User',
+		}
+	})
+	.populate({
 		path: "_status",
 		populate: [
 			{
@@ -94,13 +112,34 @@ export const findOne = (req: Request, res: Response) => {
 				path: "new_status",
 				model: "status"
 			},
-			
+			{
+				path: "author",
+				select: "name",
+				model: "User"
+			}
+		]
+	}).populate({
+		path: "_technician",
+		populate: [
+			{
+				path: "old_technician",
+				model: "User"
+			},
+			{
+				path: "new_technician",
+				model: "User"
+			},
+			{
+				path: "author",
+				select: "name",
+				model: "User"
+			}
 		]
 	});
 };
 
 export const setStatus = (req: Request, res: Response) => {
-	Claim.findByIdAndUpdate(req.params.id, { status: req.params.status }, (err: any, claim: any) => {
+	Claim.findByIdAndUpdate(req.params.id, { status: req.params.status,author:req.body.user.email }, (err: any, claim: any) => {
 		if (err) return res.status(500).send(err);
 		else if (!claim) return res.status(404).send("Claim not found");
 		else {
@@ -111,4 +150,17 @@ export const setStatus = (req: Request, res: Response) => {
 	})
 }
 
+export const affectClaimToTechnician = async(req: Request, res: Response) => {
+	const technician = await User.findById(req.params.technician);
+	Claim.findByIdAndUpdate(req.params.id, { technician: technician,author:req.body.user.email }, (err: any, claim: any) => {
+		if (err) return res.status(
+			500).send(err);
+		else if (!claim) return res.status(404).send("Claim not found");
+		else {
+			Claim.findById(req.params.id, (err: any, claim: any) => {
+				return res.status(200).send(claim);
+			});
+		}
+	})
+}
 

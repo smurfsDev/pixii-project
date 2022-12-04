@@ -3,21 +3,21 @@ module.exports = (app: any) => {
 
 
   // Create a new claim
-  app.post("/status", create);
+  app.post("/node/status", create);
 
   // Retrieve all status
-  app.get("/status", findAll);
+  app.get("/node/status", findAll);
 
   // Retrieve a single claim with claimId
-  app.get("/status/:id", findOne);
+  app.get("/node/status/:id", findOne);
 
   // Update a claim with claimId
-  app.put("/status/:id", update);
+  app.put("/node/status/:id", update);
 
   // Delete a claim with claimId
-  app.delete("/status/:id", remove);
+  app.delete("/node/status/:id", remove);
 
   // Set status of claim with claimId
-  app.put("/status/:id/:status", setStatus);
+  app.put("/node/status/:id/:status", setStatus);
 
 }
