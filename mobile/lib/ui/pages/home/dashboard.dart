@@ -36,7 +36,7 @@ class _Dashboard extends State<Dashboard> {
                 children: [
                   DecoratedBox(
                     decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 231, 232, 234),
+                      color: Color.fromARGB(255, 252, 253, 255),
                     ),
                     child: ListTile(
                       shape: RoundedRectangleBorder(
