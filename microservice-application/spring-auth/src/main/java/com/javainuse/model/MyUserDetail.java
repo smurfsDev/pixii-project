@@ -3,11 +3,15 @@ package com.javainuse.model;
 import java.util.Collection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import javax.swing.GroupLayout.Group;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.javainuse.entities.Role;
 import com.javainuse.entities.User;
 
 public class MyUserDetail implements UserDetails {
@@ -21,9 +25,12 @@ public class MyUserDetail implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
-		List<SimpleGrantedAuthority> authority = new ArrayList<>();
-
-		return authority;
+		Set<Role> roles = user.getRoles();
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		for (Role role : roles) {
+			authorities.add(new SimpleGrantedAuthority(role.getName()));
+		}
+		return authorities;
 	}
 
 	@Override
