@@ -273,7 +273,7 @@ class _RegisterPageState extends State<Register> {
       });
       if (registerOK) {
         showAlert(context, 'register Success', 'Welcome $username');
-        Navigator.pushNamed(context, Login.id);
+        Navigator.pushNamed(context, VerifyEmail.id);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(auth.registerError),
