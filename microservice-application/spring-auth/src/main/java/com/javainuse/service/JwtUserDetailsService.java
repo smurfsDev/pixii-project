@@ -25,4 +25,13 @@ public class JwtUserDetailsService implements UserDetailsService {
 
 		return new MyUserDetail(user);
 	}
+
+	public UserDetails loadUserByUsernameReel(String username) throws UsernameNotFoundException {
+		System.out.println("username: " + username);
+		User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		System.out.println("user details : " + user.getUsername() + " " + user.getPassword() + " id : " + user.getId());
+
+		return new MyUserDetail(user);
+	}
 }
