@@ -8,6 +8,7 @@ class AuthService with ChangeNotifier {
   late User user;
   late String error;
   late String registerError;
+  late String verifyError;
   bool _loggedIn = false;
 
   final _storage = const FlutterSecureStorage();
@@ -100,6 +101,25 @@ class AuthService with ChangeNotifier {
       return true;
     } else {
       logout();
+      return false;
+    }
+  }
+
+  Future<bool> verifyEmail(String email,String token) async {
+    final request = {'email': email,'code': token};
+    try {
+      final response = await http.post(
+          Uri.parse('${Environment.apiUrl}/verify'),
+          body: jsonEncode(request),
+          headers: {'Content-Type': 'application/json'});
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        verifyError = JsonDecoder().convert(response.body)['message'];
+        return false;
+      }
+    } catch (e) {
+      verifyError = e.toString();
       return false;
     }
   }
