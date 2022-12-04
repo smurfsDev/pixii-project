@@ -27,6 +27,7 @@ class _bottomNav extends State<bottomNav> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.electric_scooter_outlined,
+                size: 30,
                 color: _selectedIndex == 0
                     ? Colors.black
                     : Color.fromARGB(255, 171, 160, 160)),
@@ -43,6 +44,7 @@ class _bottomNav extends State<bottomNav> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.location_on,
+                size: 30,
                 color: _selectedIndex == 1
                     ? Colors.black
                     : Color.fromARGB(255, 171, 160, 160)),
@@ -59,6 +61,7 @@ class _bottomNav extends State<bottomNav> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.settings,
+                size: 30,
                 color: _selectedIndex == 2
                     ? Colors.black
                     : Color.fromARGB(255, 171, 160, 160)),
@@ -75,7 +78,8 @@ class _bottomNav extends State<bottomNav> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.notifications_on_sharp,
-                color: _selectedIndex == 0
+                size: 30,
+                color: _selectedIndex == 3
                     ? Colors.black
                     : Color.fromARGB(255, 171, 160, 160)),
             Text(
