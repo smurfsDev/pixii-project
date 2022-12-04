@@ -52,7 +52,7 @@ class _bottomNav extends State<bottomNav> {
             icon: Icon(Icons.notifications,
                 color: Color.fromARGB(255, 249, 249, 249)),
             label: 'Notification',
-            backgroundColor: Color.fromARGB(255, 19, 27, 54),
+            backgroundColor: Color.fromARGB(255, 10, 17, 38),
           ),
         ],
         type: BottomNavigationBarType.shifting,
