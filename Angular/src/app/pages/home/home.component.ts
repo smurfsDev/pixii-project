@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   authUser: User | undefined;
   title = 'Angular';
   color = '#3DCC93';
+  claimSendingLoading = false;
   percentage = 90;
   claim = {
     title: "",
@@ -35,16 +36,17 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  createClaim() {
+  async createClaim() {
     this.claimTitle.markAsTouched();
     this.claimSubject.markAsTouched();
     this.claimMessage.markAsTouched();
     if (!this.claimFormGroup.invalid) {
+      this.claimSendingLoading = true;
       this.claim.title = this.claimTitle.value!;
       this.claim.subject = this.claimSubject.value!;
       this.claim.message = this.claimMessage.value!;
-      this.claimService.createClaim(this.claim).subscribe((data: any) => {
-        if (data) {
+      const res = await this.claimService.createClaim(this.claim).toPromise();
+        if (res) {
           this._snackBar.open("We recieved your claim, One of our technicians will get to you soon", "OK", {
             duration: 10000,
           });
@@ -54,8 +56,8 @@ export class HomeComponent implements OnInit {
             duration: 2000,
           });
         }
-      });
-    }
+		this.claimSendingLoading = false;
+      }
   }
 
   ngOnInit(): void {

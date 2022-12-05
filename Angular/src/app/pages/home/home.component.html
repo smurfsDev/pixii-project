@@ -117,8 +117,15 @@
 					</div>
 					<button class="btn btn-primary"
 						(click)="createClaim()"
-						style="width:50% ;border-radius: 15px; margin-left:80px ; margin-bottom: 15px;"
-						type="submit">Send</button>
+						style="width:50% ;border-radius: 15px; margin-left:80px ; margin-bottom: 15px;display:flex;justify-content:center;align-items:center;"
+						type="submit">
+						<span *ngIf="!claimSendingLoading">
+							Send
+						</span>
+						<span *ngIf="claimSendingLoading">
+							<mat-spinner [diameter]="20" [strokeWidth]="4"></mat-spinner>
+						</span>
+					</button>
 
 
 
