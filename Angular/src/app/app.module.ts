@@ -32,6 +32,7 @@ import { BatteryComponent } from './pages/home/battery/battery.component';
 import { HttpInterceptorService } from './http-interceptor.service';
 import { ChefComponent } from './pages/claims/chef/chef.component';
 import { ResendVerificationComponent } from './pages/account/resend-verification/resend-verification.component';
+import { UserComponent } from './pages/claims/user/user.component';
 @NgModule({
 	imports: [
 		NgxsModule.forRoot([AuthState]),
@@ -48,7 +49,7 @@ import { ResendVerificationComponent } from './pages/account/resend-verification
 		  })
 	],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent],
 	providers: [
 		{
 			provide: HTTP_INTERCEPTORS,
