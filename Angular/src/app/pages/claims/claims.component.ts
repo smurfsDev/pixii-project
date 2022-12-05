@@ -162,6 +162,7 @@ export class ClaimsComponent implements OnInit {
 					if (column.id === element.status._id) {
 						column.claims.push(new Claim(
 							element._id,
+							element.title,
 							element.subject,
 							element.description,
 							element.created,
@@ -183,7 +184,7 @@ export class ClaimsComponent implements OnInit {
 			claim.docs.forEach((element: any) => {
 				this.board.columns.forEach((column: any) => {
 					if (column.id === element.status._id) {
-						column.claims.push(new Claim(element._id, element.subject, element.description, element.created, element.status._id, element.updated,element.author));
+						column.claims.push(new Claim(element._id,element.title, element.subject, element.description, element.created, element.status._id, element.updated,element.author));
 					}
 				});
 			});

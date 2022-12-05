@@ -5,6 +5,7 @@ import User from "./user.model";
 
 
 let claimsSchema = new mongoose.Schema({
+	title: { type: String, required: true },
 	subject: { type: String, required: true },
 	message: { type: String, required: true },
 	created: { type: Date, default: Date.now },
