@@ -70,12 +70,12 @@
           <th class="header text-center" mat-header-cell *matHeaderCellDef> Actions </th>
           <td class="cell" mat-cell *matCellDef="let element">
             <div class="actions">
-              <button class="action-btn"  >
-                <mat-icon class="icon-close" (click)="rejectUser(element[0].user.id,element[0].role.id)">
+              <button class="action-btn" [disabled]="element[0].status == 2 ? true : false" (click)="rejectUser(element[0].user.id,element[0].role.id)">
+                <mat-icon class="icon-close" >
                 close
                 </mat-icon></button>
-              <button class="action-btn" [class]="element[0].status == 1 ? 'disabled' : ''" >
-                <mat-icon class="icon-done" (click)="acceptUser(element[0].user.id,element[0].role.id)">
+              <button class="action-btn" (click)="acceptUser(element[0].user.id,element[0].role.id)" [disabled]="element[0].status == 1 ? true : false">
+                <mat-icon class="icon-done"  >
                 done
                 </mat-icon></button>
               <button class="action-btn">
