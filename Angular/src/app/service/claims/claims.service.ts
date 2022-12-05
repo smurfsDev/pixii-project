@@ -29,4 +29,8 @@ export class ClaimsService {
 	return this._http.post(`${environment.apiUrl}/node/claims/claim/${claim}/${technician}`, null);
   }
 
+  createClaim(claim:any) {
+	return this._http.post(`${environment.apiUrl}/node/claims`, claim);
+  }
+
 }
