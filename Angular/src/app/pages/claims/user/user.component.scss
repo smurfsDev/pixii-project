@@ -1,0 +1,33 @@
+@import '../../../app.component.scss';
+
+.board {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	min-width: 0;
+	min-height: 0;
+}
+
+.title {
+	color: $main-text-color;
+	font-size: 24px;
+	font-weight: 500;
+	margin: 1rem 4rem 0 1.5rem;
+}
+
+
+.board-wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-grow: 1;
+	overflow-x: auto;
+	background-color: $main-component-color;
+	border-radius: 9px;
+}
+.root {
+	margin: 15px 15px 0 25px;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
