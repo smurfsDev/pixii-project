@@ -3,7 +3,8 @@ export class User {
     public _id: String,
     public name: String,
     public userName: String,
-	public email: String,
+	  public email: String,
     public role: any,
+    public status: String,
   ) {}
 }
