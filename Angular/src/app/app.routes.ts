@@ -10,6 +10,7 @@ import { CheckemailComponent } from './pages/account/reset-password/checkemail/c
 import { IsAuthenticatedGuard } from './is-authenticated.guard';
 import { ChefComponent } from './pages/claims/chef/chef.component';
 import { ResendVerificationComponent } from './pages/account/resend-verification/resend-verification.component';
+import { UserComponent } from './pages/claims/user/user.component';
 export const AppRoutes: Routes = [
   {
     path: '',
@@ -57,5 +58,6 @@ export const AppRoutes: Routes = [
   },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'checkemail', component: CheckemailComponent },
+  { path: 'myclaims', component: UserComponent },
 
 ];
