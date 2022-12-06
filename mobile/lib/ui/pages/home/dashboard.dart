@@ -62,7 +62,7 @@ class _Dashboard extends State<Dashboard> {
                         itemBuilder: (context) => <PopupMenuItem<String>>[
                           PopupMenuItem<String>(
                             value: "Tires pressure",
-                            child: Text(
+                            child: const Text(
                               "Tires pressure",
                             ),
                             onTap: () => setState(() {
