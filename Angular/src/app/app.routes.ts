@@ -8,6 +8,7 @@ import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.
 import { IsAuthenticatedGuard } from './is-authenticated.guard';
 import { ChefComponent } from './pages/claims/chef/chef.component';
 import { MgUsersComponent } from './pages/users/superAdmin/mg-users/mg-users.component';
+import { HasRoleGuard } from './has-role.guard';
 export const AppRoutes: Routes = [
   {
     path: '',
@@ -17,7 +18,10 @@ export const AppRoutes: Routes = [
   {
     path: 'claims',
     component: ClaimsComponent,
-    canActivate: [IsAuthenticatedGuard]
+    canActivate: [IsAuthenticatedGuard,,HasRoleGuard],
+    data: {
+      role: 'Admin',
+    }
 
   },
   {
@@ -52,6 +56,9 @@ export const AppRoutes: Routes = [
   {
     path: 'manageUsers',
     component: MgUsersComponent,
-    canActivate: [IsAuthenticatedGuard]
+    canActivate: [IsAuthenticatedGuard,HasRoleGuard],
+    data: {
+      role: 'Admin',
+    }
   }
 ];
