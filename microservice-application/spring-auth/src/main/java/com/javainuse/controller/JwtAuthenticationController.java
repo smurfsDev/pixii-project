@@ -71,7 +71,7 @@ public class JwtAuthenticationController {
 					.loadUserByUsername(authenticationRequest.getUsername());
 			final String token = jwtTokenUtil.generateToken(userDetails);
 			item.put("token", token);
-			item.put("user", userRepository.findUserByEmail(authenticationRequest.getUsername()).get());
+			item.put("user", userRepository.findUserByEmailForLogin(authenticationRequest.getUsername()).get());
 			return new ResponseEntity<JSONObject>(item, HttpStatus.OK);
 		} catch (Exception e) {
 			item.put("error", e.getMessage());
