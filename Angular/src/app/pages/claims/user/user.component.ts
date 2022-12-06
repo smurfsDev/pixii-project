@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ClaimsService } from 'src/app/service/claims/claims.service';
 
 @Component({
   selector: 'app-user',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  constructor(private claimsService: ClaimsService) { }
+
+  claims : any;
 
   ngOnInit(): void {
+	this.claimsService.getClaimsMine().subscribe((data:any) => {
+		console.log(data);
+		this.claims = data;
+	});
   }
 
 }

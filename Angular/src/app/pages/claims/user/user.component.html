@@ -5,8 +5,47 @@
 	<div class="board">
 		<div class="board-wrapper">
 			<h1 class="title">Your tickets</h1>
-
-			<div class="h-100">
+			<div class="h-100 container">
+				<!-- search -->
+				<!-- <div class="d-flex" style="justify-content: space-between;align-items: center;">
+					<div class="d-flex" style="align-items: center;">
+						<mat-form-field class="w-100">
+							<input matInput placeholder="Search" >
+						</mat-form-field>
+						<mat-form-field>
+							<mat-select placeholder="Status" [(ngModel)]="status">
+								<mat-option *ngFor="let status of statuses" [value]="status.id">
+									{{ status.name }}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+					<div class="d-flex" style="align-items: center;">
+						<mat-form-field>
+							<mat-select placeholder="Sort by" >
+								<mat-option value="updated">Last updated</mat-option>
+								<mat-option value="created">Created</mat-option>
+							</mat-select>
+						</mat-form-field>
+						<mat-form-field>
+							<mat-select placeholder="Order" >
+								<mat-option value="desc">Descending</mat-option>
+								<mat-option value="asc">Ascending</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+					</div> -->
+				<mat-card  class="my-2 d-flex" style="justify-content: space-between;align-items: center;background-color: #2B364F;color:white!important;" *ngFor="let item of claims">
+					<div class="d-flex" style="align-items: center;">
+						<!-- color circle -->
+						<div class="circle" [matTooltip]="item.status.name" [ngStyle]="{'background-color': item.status.color}"></div>
+						{{ item.title }},
+						{{ item.subject }}
+					</div>
+					<div class="">
+						{{ item.updated|date:'dd/MM/yyyy' }}
+					</div>
+				</mat-card>
 			</div>
 		</div>
 	</div>
