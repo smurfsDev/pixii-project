@@ -18,10 +18,7 @@ export const AppRoutes: Routes = [
   {
     path: 'claims',
     component: ClaimsComponent,
-    canActivate: [IsAuthenticatedGuard,,HasRoleGuard],
-    data: {
-      role: 'Admin',
-    }
+    canActivate: [IsAuthenticatedGuard],
 
   },
   {
@@ -58,7 +55,10 @@ export const AppRoutes: Routes = [
     component: MgUsersComponent,
     canActivate: [IsAuthenticatedGuard,HasRoleGuard],
     data: {
-      role: 'Admin',
+      role:
+      [
+        'Super Admin','Admin'
+      ]
     }
   }
 ];
