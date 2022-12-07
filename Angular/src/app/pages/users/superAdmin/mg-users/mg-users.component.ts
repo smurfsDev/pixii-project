@@ -13,16 +13,14 @@ import { ManageUsersService } from 'src/app/service/users/superAdmin/manage-user
   styleUrls: ['./mg-users.component.scss']
 })
 export class MgUsersComponent implements AfterViewInit, OnInit {
-  // filterByRole = new FormControl('all' as ThemePalette);
-  // filterByStatus = new FormControl('all' as ThemePalette);
-  dataFilters: dataFilter[]=[];
   Roles : any = [{value: 'All',name: 'All'}];
   Status : any = [{value: 'All',name: 'All'},{value: 1,name: 'Active'}, {value: 0,name: 'Inactive'}];
   authUser: User | undefined;
   displayedColumns: string[] = ['name', 'role', 'email', 'status', 'actions'];
   ELEMENT_DATAFilled: any =[];
-
-  filterDictionary= new Map<string,string>();
+  searchText = '';
+  filterRoles: string = 'All';
+  filterStatus: string = 'All';
   dataSource = new MatTableDataSource<any>(this.ELEMENT_DATAFilled);
   FiltredData : any =[];
   @ViewChild(MatPaginator)
@@ -36,8 +34,6 @@ export class MgUsersComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.authUser = this.store.selectSnapshot(state => state.AuthState.user);
-    this.dataFilters.push({name: 'Role', options: this.Roles,defaultValue: 'All'});
-    this.dataFilters.push({name: 'Status', options: this.Status,defaultValue: 'All'});
     this.fetchRoles();
     this.fetchUsers();
   }
@@ -54,22 +50,39 @@ export class MgUsersComponent implements AfterViewInit, OnInit {
       });
     }
   }
-  applyFilter(event: any,dataFilter:dataFilter) {
-    var LastFilter : any[] = [];
-    this.ELEMENT_DATAFilled = this.FiltredData;
-    this.dataFilters.forEach(dataFilter => {
-         this.filterDictionary.set(dataFilter.name,dataFilter.defaultValue);
-    });
-    this.filterDictionary.set(dataFilter.name,event.value);
-    this.dataSource.filter = JSON.stringify(Array.from(this.filterDictionary.entries()));
-    this.ELEMENT_DATAFilled.forEach((element: any) => {
-      if(this.filterDictionary.get('Role') == 'All' || this.filterDictionary.get('Role') == element[0].role.name){
-        if(this.filterDictionary.get('Status') == 'All' || this.filterDictionary.get('Status') == element[0].status){
-          LastFilter.push(element);
-        }
+  applyFilterByRole(event: any) {
+    this.filterRoles = event.value;
+    this.filterSequence();
+
+  }
+  applyFilterByStatus(event: any) {
+    this.filterStatus = event.value;
+    this.filterSequence();
+
+  }
+  applySearch(event: Event) {
+    this.searchText = (event.target as HTMLInputElement).value;
+    this.filterSequence();
+  }
+  filterSequence() {
+    let arr = this.ELEMENT_DATAFilled.filter((item:any) => {
+      console.log("item",item);
+
+      if(this.filterRoles == 'All' && this.filterStatus == 'All'){
+        return item[0].user.name.toLowerCase().includes(this.searchText.toLowerCase());
+      }else if (this.filterRoles !='All' && this.filterStatus == 'All'){
+        return item[0].role.name.toLowerCase()==(this.filterRoles.toLowerCase()) && item[0].user.name.toLowerCase().includes(this.searchText.toLowerCase());
+      } else if (this.filterRoles == 'All' && this.filterStatus != 'All'){
+        return item[0].status==(this.filterStatus) && item[0].user.name.toLowerCase().includes(this.searchText.toLowerCase());
+      } else if (this.filterRoles != 'All' && this.filterStatus != 'All'){
+        return item[0].role.name.toLowerCase()==(this.filterRoles.toLowerCase()) && item[0].status==(this.filterStatus) && item[0].user.name.toLowerCase().includes(this.searchText.toLowerCase());
+      }
+      else{
+        return true;
       }
     });
-    this.dataSource = new MatTableDataSource<any>(LastFilter);
+    this.dataSource = new MatTableDataSource<any>(arr);
+    this.dataSource.paginator = this.paginator;
   }
   fetchRoles() {
     this.ManageUsersService.fetchRoles().subscribe((data:any) => {
@@ -100,12 +113,13 @@ export class MgUsersComponent implements AfterViewInit, OnInit {
       this.fetchUsers();
     });
   }
+
 }
-export interface dataFilter {
-  name:string;
-  options:any[];
-  defaultValue:string;
-}
+// export interface dataFilter {
+//   name:string;
+//   options:any[];
+//   defaultValue:string;
+// }
 function compare(name: string, name1: string, isAsc: boolean): number {
   return (name < name1 ? -1 : 1) * (isAsc ? 1 : -1);
 }

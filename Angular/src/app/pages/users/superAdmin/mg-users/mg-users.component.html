@@ -17,21 +17,29 @@
     <div class="manipulation">
       <div class="filter">
         <div class="search">
-          <input class="search-input" placeholder="  Search ..." />
+          <input matInput  class="search-input" placeholder="  Search ..." (keyup)="applySearch($event)" type="search"/>
           <mat-icon style="color:white" class="search-icon">search</mat-icon>
         </div>
         <div class="filter">
           <div class="filter-select">
             Filter By :
-            <div class="filterData" *ngFor="let dataFilter of dataFilters">
-                {{dataFilter.name}}
-              <mat-select [(value)]="dataFilter.defaultValue"  (selectionChange)="applyFilter($event, dataFilter)">
-                <mat-option *ngFor="let option of dataFilter.options" [value]="option.value">
+            <div class="filterData">
+              Role
+              <mat-select (selectionChange)="applyFilterByRole($event)">
+                <mat-option *ngFor="let option of Roles" [value]="option.value">
                   {{option.name}}
                 </mat-option>
               </mat-select>
             </div>
-            </div>
+            <div class="filterData">
+              Status
+              <mat-select (selectionChange)="applyFilterByStatus($event)">
+                <mat-option *ngFor="let option of Status" [value]="option.value">
+                  {{option.name}}
+                </mat-option>
+              </mat-select>
+              </div>
+          </div>
         </div>
       </div>
     </div>
