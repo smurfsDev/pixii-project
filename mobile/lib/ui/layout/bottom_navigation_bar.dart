@@ -2,18 +2,27 @@
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:mobile/imports.dart';
+import 'package:mobile/ui/pages/home/localization.dart';
 
 class bottomNav extends StatefulWidget {
+  User user;
+  bottomNav(this.user, {super.key});
   @override
   // ignore: no_logic_in_create_state
-  State<bottomNav> createState() => _bottomNav();
+  State<bottomNav> createState() => _bottomNav(this.user);
 }
 
 class _bottomNav extends State<bottomNav> {
+  User user;
+  _bottomNav(this.user);
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      if (index == 1) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Localization(user)));
+      }
     });
   }
 

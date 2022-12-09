@@ -7,19 +7,17 @@ import 'package:mobile/ui/layout/scooter_management_layout.dart';
 
 // ignore: must_be_immutable
 class Localization extends StatefulWidget {
-  Localization({super.key});
+  User user;
+  Localization(this.user, {super.key});
 
   @override
   // ignore: no_logic_in_create_state
-  State<Localization> createState() => _Localization();
+  State<Localization> createState() => _Localization(user);
 }
 
 class _Localization extends State<Localization> {
-  String image = 'assets/images/tyre.png';
-
-  String titleMenu = "Tires pressure";
-  String messagePopUpMenu = "Check your front right tyre";
-  IconData? iconPopUpElement = Icons.warning;
+  User user;
+  _Localization(this.user);
   @override
   Widget build(BuildContext context) {
     return (MaterialApp(
@@ -33,7 +31,8 @@ class _Localization extends State<Localization> {
             backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           ),
           backgroundColor: const Color.fromARGB(255, 19, 27, 54),
-          bottomNavigationBar: bottomNav(),
+          bottomNavigationBar: bottomNav(this.user),
+          drawer: NavDrawerDemo(this.user),
         )));
   }
 

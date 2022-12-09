@@ -156,7 +156,7 @@ class _Dashboard extends State<Dashboard> {
           )),
           backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           drawer: NavDrawerDemo(this.user),
-          bottomNavigationBar: bottomNav(),
+          bottomNavigationBar: bottomNav(this.user),
         )));
   }
 
