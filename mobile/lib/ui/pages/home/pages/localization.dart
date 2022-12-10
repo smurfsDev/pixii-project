@@ -66,6 +66,9 @@ class _LocalizationState extends State<Localization> {
               ),
             ),
           ),
+          SizedBox(
+            height: 20,
+          ),
           
         Padding(
           padding: const EdgeInsets.all(8),
@@ -127,9 +130,7 @@ class _LocalizationState extends State<Localization> {
                         children: [
                           TileLayer(
                             urlTemplate:
-                                'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                            userAgentPackageName:
-                                'dev.fleaflet.flutter_map.example',
+                                'https://a.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png ',
                           ),
                           MarkerLayer(markers: markers),
                         ],
@@ -137,8 +138,13 @@ class _LocalizationState extends State<Localization> {
               Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     MaterialButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      color: const Color.fromARGB(255, 252, 253, 255),
                       onPressed: () {
                         final bounds = LatLngBounds();
                         markers.forEach((marker) {
@@ -151,41 +157,9 @@ class _LocalizationState extends State<Localization> {
                           ),
                         );
                       },
-                      child: const Text('Fit Bounds'),
+                      child: const Text('Center map'),
                     ),
-                    Builder(builder: (BuildContext context) {
-                      return MaterialButton(
-                        onPressed: () {
-                          final bounds = _mapController.bounds!;
-
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(
-                              'Map bounds: \n'
-                              'E: ${bounds.east} \n'
-                              'N: ${bounds.north} \n'
-                              'W: ${bounds.west} \n'
-                              'S: ${bounds.south}',
-                            ),
-                          ));
-                        },
-                        child: const Text('Get Bounds'),
-                      );
-                    }),
-                    const Text('Rotation:'),
-                    Expanded(
-                      child: Slider(
-                        value: _rotation,
-                        min: 0,
-                        max: 360,
-                        onChanged: (degree) {
-                          setState(() {
-                            _rotation = degree;
-                          });
-                          _mapController.rotate(degree);
-                        },
-                      ),
-                    )
-                  ],
+                   ],
                 ),
               ),
             ],
