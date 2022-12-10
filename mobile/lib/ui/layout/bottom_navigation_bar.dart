@@ -2,7 +2,6 @@
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:mobile/imports.dart';
-import 'package:mobile/ui/pages/home/localization.dart';
 
 class bottomNav extends StatefulWidget {
   Function(int) callback;
