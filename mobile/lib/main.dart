@@ -1,4 +1,5 @@
 import "package:mobile/imports.dart";
+import 'package:mobile/ui/pages/home/dashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,7 +50,9 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: white,
         ),
-        home: MainLayout(child: Register()),
+        home: MainLayout(child: Dashboard(
+          User(name: "tet",username:"test")
+        )),
       ),
     );
   }
