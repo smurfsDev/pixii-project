@@ -7,23 +7,15 @@ class Dashboard extends StatefulWidget {
 
   @override
   // ignore: no_logic_in_create_state
-  State<Dashboard> createState() => _Dashboard(user);
+  State<Dashboard> createState() => _Dashboard();
 }
 
 class _Dashboard extends State<Dashboard> {
   String password = "";
-  User user;
-  String image = 'assets/images/tyre.png';
-  String titleMenu = "Tires pressure";
-  String messagePopUpMenu = "Check your front right tyre";
-  IconData? iconPopUpElement = Icons.warning;
   var index = 0;
   List<Widget> pages = <Widget>[];
   @override
   void initState() {
-    print("initState");
-    super.initState();
-    
     super.initState();
     pages = [
       const Managment(),
@@ -33,7 +25,7 @@ class _Dashboard extends State<Dashboard> {
     ];
   }
 
-  _Dashboard(this.user);
+  _Dashboard();
 
   @override
   Widget build(BuildContext context) {
@@ -48,17 +40,16 @@ class _Dashboard extends State<Dashboard> {
             backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           ),
           body: SingleChildScrollView(
-              child: Container(
             child: Padding(
                 padding: const EdgeInsets.all(40),
                 child: FadeIndexedStack(
                   key: ValueKey(1),
                   index: index,
                   children: pages,
-                )),
+                ),
           )),
           backgroundColor: const Color.fromARGB(255, 19, 27, 54),
-          drawer: NavDrawerDemo(this.user),
+          drawer: NavDrawerDemo(widget.user),
           bottomNavigationBar: bottomNav(
             callback: (int i) => setState(() => index = i),
           ),
