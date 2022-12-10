@@ -31,7 +31,7 @@ class _Localization extends State<Localization> {
             backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           ),
           backgroundColor: const Color.fromARGB(255, 19, 27, 54),
-          bottomNavigationBar: bottomNav(this.user),
+          bottomNavigationBar: bottomNav(callback: (_) {}),
           drawer: NavDrawerDemo(this.user),
         )));
   }

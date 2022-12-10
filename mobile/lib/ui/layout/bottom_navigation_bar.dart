@@ -5,24 +5,20 @@ import 'package:mobile/imports.dart';
 import 'package:mobile/ui/pages/home/localization.dart';
 
 class bottomNav extends StatefulWidget {
-  User user;
-  bottomNav(this.user, {super.key});
+  Function(int) callback;
+  bottomNav({required this.callback, super.key});
   @override
   // ignore: no_logic_in_create_state
-  State<bottomNav> createState() => _bottomNav(this.user);
+  State<bottomNav> createState() => _bottomNav();
 }
 
 class _bottomNav extends State<bottomNav> {
-  User user;
-  _bottomNav(this.user);
+  _bottomNav();
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
+    widget.callback(index);
     setState(() {
       _selectedIndex = index;
-      if (index == 1) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => Localization(user)));
-      }
     });
   }
 
