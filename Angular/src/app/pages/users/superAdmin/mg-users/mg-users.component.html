@@ -1,6 +1,6 @@
 <app-navbar>
 
-  <div class="container">
+  <div class="Mycontainer">
     <div class="nav">
       <mat-icon class="bell-icon">notifications</mat-icon>
       <img class="avatar"
@@ -10,7 +10,7 @@
     </div>
     <div class="users">
       <div class="users-count">
-        <span class="count">{{dataSource?.data?.length}}</span>
+        <span class="count">{{dataSource.data.length}}</span>
       </div>
       <div class="users-title m-lg-2">Users</div>
     </div>
@@ -77,7 +77,7 @@
         <ng-container matColumnDef="actions">
           <th class="header text-center" mat-header-cell *matHeaderCellDef> Actions </th>
           <td class="cell" mat-cell *matCellDef="let element">
-            <div class="actions">
+            <div class="actions" *ngIf="element[0].role.name != 'Scooter Owner'">
               <button class="action-btn" [disabled]="element[0].status == 2 ? true : false" (click)="rejectUser(element[0].user.id,element[0].role.id)">
                 <mat-icon class="icon-close" >
                 close
@@ -86,10 +86,19 @@
                 <mat-icon class="icon-done"  >
                 done
                 </mat-icon></button>
-              <button class="action-btn">
+              <button class="action-btn" *ngIf="authUser?.role[0].name =='Super Admin'" (click)="deleteUser(element[0].user.id,element[0].role.id)">
                 <mat-icon class="icon-delete">
                 delete
                 </mat-icon></button>
+            </div>
+            <div class="actions" *ngIf="element[0].role.name == 'Scooter Owner'">
+              <button class="action-btn" *ngIf="authUser?.role[0].name =='Super Admin'" (click)="deleteUser(element[0].user.id,element[0].role.id)">
+                <mat-icon class="icon-delete">
+                delete
+                </mat-icon></button>
+                <div *ngIf="authUser?.role[0].name !='Super Admin'">
+                  no actions
+                </div>
             </div>
           </td>
         </ng-container>
