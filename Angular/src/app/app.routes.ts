@@ -67,8 +67,8 @@ export const AppRoutes: Routes = [
         'Super Admin','Admin'
       ]
     }
-  }
-
+  },
+  {
 	path: 'resend-verification',
 	component: ResendVerificationComponent,
   },

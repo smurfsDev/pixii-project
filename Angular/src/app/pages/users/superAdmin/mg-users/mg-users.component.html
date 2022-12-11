@@ -78,11 +78,15 @@
           <th class="header text-center" mat-header-cell *matHeaderCellDef> Actions </th>
           <td class="cell" mat-cell *matCellDef="let element">
             <div class="actions" *ngIf="element[0].role.name != 'Scooter Owner'">
-              <button class="action-btn" [disabled]="element[0].status == 2 ? true : false" (click)="rejectUser(element[0].user.id,element[0].role.id)">
+              <button class="action-btn"
+              (click)="rejectUser(element[0].user.id,element[0].role.id)"
+              [disabled]="element[0].status == 2 ? true : false">
                 <mat-icon class="icon-close" >
                 close
                 </mat-icon></button>
-              <button class="action-btn" (click)="acceptUser(element[0].user.id,element[0].role.id)" [disabled]="element[0].status == 1 ? true : false">
+              <button class="action-btn"
+                (click)="acceptUser(element[0].user.id,element[0].role.id)"
+                [disabled]="element[0].status == 1 ? true : false">
                 <mat-icon class="icon-done"  >
                 done
                 </mat-icon></button>

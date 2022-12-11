@@ -16,8 +16,8 @@
 					<p *ngIf="isExpanded">
 						Dashboard
 					</p>
-					<!-- <mat-icon class="menu-button" [ngClass]="{'rotated' : 
-					showSubmenu}" *ngIf="isExpanded || 
+					<!-- <mat-icon class="menu-button" [ngClass]="{'rotated' :
+					showSubmenu}" *ngIf="isExpanded ||
 					   isShowing" style="color: white; " class="float-right">expand_more</mat-icon> -->
 				</div>
 
@@ -58,7 +58,7 @@
 					<p *ngIf="isExpanded">Profile</p>
 				</div>
 			</a>
-			
+
 			<a [matTooltip]="isExpanded? '' :'Affect claims'" matTooltipPosition="right" mat-list-item class="my-3" (click)="toggleActive('/chef')">
 				<div matLine class="item" [ngClass]="{'active': current === '/chef','open':isExpanded}">
 					<mat-icon class="icon">move_down</mat-icon>
@@ -78,10 +78,10 @@
 					<p *ngIf="isExpanded">My claims</p>
 				</div>
 			</a>
-      <a mat-list-item class="my-3" (click)="toggleActive('/manageUsers')">
+      <a mat-list-item class="my-3" (click)="toggleActive('/manageUsers')" *ngIf="(authUser?.role[0].name =='Admin') || (authUser?.role[0].name =='Super Admin')" >
 				<div matLine class="item" [ngClass]="{'active': current === '/manageUsers','open':isExpanded}">
 					<mat-icon class="icon">group</mat-icon>
-					<p *ngIf="isExpanded">Contact</p>
+					<p *ngIf="isExpanded">Manage Users</p>
 				</div>
 			</a>
 
