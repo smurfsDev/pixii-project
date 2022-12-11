@@ -79,6 +79,20 @@ public class SpringAuthApplication implements CommandLineRunner {
 		User scooterOwner = userRepository.save(user5);
 		User admin2 = userRepository.save(user6);
 
+		admin.setEnabled(true);
+		admin2.setEnabled(true);
+		super_admin.setEnabled(true);
+		savManger.setEnabled(true);
+		savTechnician.setEnabled(true);
+		scooterOwner.setEnabled(true);
+
+		userRepository.save(admin);
+		userRepository.save(admin2);
+		userRepository.save(super_admin);
+		userRepository.save(savManger);
+		userRepository.save(savTechnician);
+		userRepository.save(scooterOwner);
+
 		UserRole ur1 = userRoleRepository.findFirstByUserId(super_admin.getId()).get();
 		ur1.setStatus(1);
 
