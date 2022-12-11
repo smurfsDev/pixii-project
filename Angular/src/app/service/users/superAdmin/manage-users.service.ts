@@ -20,5 +20,8 @@ export class ManageUsersService {
   rejectUser(idUser : number,idRole : number) {
     return this.http.get(`${environment.apiUrl}/reject/${idUser}/${idRole}`);
   }
+  deleteUser(idUser : number,idRole : number) {
+    return this.http.delete(`${environment.apiUrl}/delete/${idUser}/${idRole}`);
+  }
 
 }

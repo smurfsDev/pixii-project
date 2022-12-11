@@ -66,8 +66,6 @@ export class MgUsersComponent implements AfterViewInit, OnInit {
   }
   filterSequence() {
     let arr = this.ELEMENT_DATAFilled.filter((item:any) => {
-      console.log("item",item);
-
       if(this.filterRoles == 'All' && this.filterStatus == 'All'){
         return item[0].user.name.toLowerCase().includes(this.searchText.toLowerCase());
       }else if (this.filterRoles !='All' && this.filterStatus == 'All'){
@@ -97,6 +95,7 @@ export class MgUsersComponent implements AfterViewInit, OnInit {
       this.ELEMENT_DATAFilled = data.users;
       this.dataSource = new MatTableDataSource<any>(this.ELEMENT_DATAFilled);
       this.FiltredData = this.dataSource.data;
+      this.filterSequence();
     });
   }
   acceptUser(idUser : number,idRole : number) {
@@ -113,7 +112,13 @@ export class MgUsersComponent implements AfterViewInit, OnInit {
       this.fetchUsers();
     });
   }
-
+  deleteUser(idUser : number,idRole : number) {
+    this.ManageUsersService.deleteUser(idUser,idRole).subscribe((data) => {
+      console.log(data);
+      console.log("delete");
+      this.fetchUsers();
+    });
+  }
 }
 // export interface dataFilter {
 //   name:string;
