@@ -1,16 +1,26 @@
 package com.javainuse.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,6 +71,12 @@ public class JwtAuthenticationController {
 
 	@Autowired
 	private MailingService mailingService;
+
+	public User getUser(HttpServletRequest request) {
+		Principal principal = request.getUserPrincipal();
+		User user = userRepository.findByUsername(principal.getName()).get();
+		return user;
+	}
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<JSONObject> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
@@ -132,10 +148,12 @@ public class JwtAuthenticationController {
 			userRole.get().setStatus(1);
 		}
 		if (user.get("role").toString().equals("Admin")) {
-			userRole.get().setStatus(1);
+			userRole.get().setStatus(0);
 		}
 		if (user.get("role").toString().equals("Scooter Owner")) {
 			userRole.get().setStatus(0);
+			// user Authority is not set
+
 		}
 		if (user.get("role").toString().equals("SAV Manager")) {
 			userRole.get().setStatus(0);
@@ -165,7 +183,6 @@ public class JwtAuthenticationController {
 		JSONObject item = new JSONObject();
 		item.put("message", "Account");
 		item.put("user", userRepository.findByUsername(newUser.getUsername()).get());
-
 		return ResponseEntity.status(HttpStatus.CREATED).body(item);
 
 	}
@@ -180,11 +197,35 @@ public class JwtAuthenticationController {
 	@RequestMapping(value = "/accept/{idUser}/{idRole}", method = RequestMethod.GET)
 	public ResponseEntity<JSONObject> accept(@PathVariable("idUser") int id, @PathVariable("idRole") Long idRole) {
 		JSONObject item = new JSONObject();
+		boolean isSuperAdmin = false;
+		boolean isAdmin = false;
 		Optional<UserRole> userRole = userRoleRepository.findByUserIdAndRoleId(id, idRole);
-		if (userRole.isPresent()) {
+		String userAcceptedRole = userRole.get().getRole().getName();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userRepository.findByUsername(auth.getName()).get();
+		Set<Role> roles = user.getRoles();
+		for (Role role : roles) {
+			if (role.getName().equals("Super Admin")) {
+				isSuperAdmin = true;
+			} else if (role.getName().equals("Admin")) {
+				isAdmin = true;
+			}
+		}
+		if (userRole.isPresent() && isSuperAdmin == true && userAcceptedRole.equals("Admin") && isAdmin == false) {
 			userRole.get().setStatus(1);
 			userRoleRepository.save(userRole.get());
-			item.put("message", "User accepted");
+			item.put("message", "admin accepted");
+			return ResponseEntity.status(HttpStatus.OK).body(item);
+		} else if (userRole.isPresent() && isAdmin && userAcceptedRole.equals("SAV Manager") && isSuperAdmin == false) {
+			userRole.get().setStatus(1);
+			userRoleRepository.save(userRole.get());
+			item.put("message", "SAV Manager accepted");
+			return ResponseEntity.status(HttpStatus.OK).body(item);
+		} else if (userRole.isPresent() && isAdmin && userAcceptedRole.equals("SAV Technician")
+				&& isSuperAdmin == false) {
+			userRole.get().setStatus(1);
+			userRoleRepository.save(userRole.get());
+			item.put("message", "SAV Technician accepted");
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}
 		item.put("message", "User not found");
@@ -194,18 +235,41 @@ public class JwtAuthenticationController {
 	@RequestMapping(value = "/reject/{idUser}/{idRole}", method = RequestMethod.GET)
 	public ResponseEntity<JSONObject> reject(@PathVariable("idUser") int id, @PathVariable("idRole") Long idRole) {
 		JSONObject item = new JSONObject();
+		boolean isSuperAdmin = false;
+		boolean isAdmin = false;
 		Optional<UserRole> userRole = userRoleRepository.findByUserIdAndRoleId(id, idRole);
-		if (userRole.isPresent()) {
+		String userAcceptedRole = userRole.get().getRole().getName();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userRepository.findByUsername(auth.getName()).get();
+		Set<Role> roles = user.getRoles();
+		for (Role role : roles) {
+			if (role.getName().equals("Super Admin")) {
+				isSuperAdmin = true;
+			} else if (role.getName().equals("Admin")) {
+				isAdmin = true;
+			}
+		}
+		if (userRole.isPresent() && isSuperAdmin == true && userAcceptedRole.equals("Admin") && isAdmin == false) {
 			userRole.get().setStatus(2);
 			userRoleRepository.save(userRole.get());
-			item.put("message", "User Rejected");
+			item.put("message", "admin rejected");
+			return ResponseEntity.status(HttpStatus.OK).body(item);
+		} else if (userRole.isPresent() && isAdmin && userAcceptedRole.equals("SAV Manager") && isSuperAdmin) {
+			userRole.get().setStatus(2);
+			userRoleRepository.save(userRole.get());
+			item.put("message", "SAV Manager rejected");
+			return ResponseEntity.status(HttpStatus.OK).body(item);
+		} else if (userRole.isPresent() && isAdmin && userAcceptedRole.equals("SAV Technician")
+				&& isSuperAdmin) {
+			userRole.get().setStatus(2);
+			userRoleRepository.save(userRole.get());
+			item.put("message", "SAV Technician rejected");
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}
 		item.put("message", "User not found");
 		return ResponseEntity.status(HttpStatus.OK).body(item);
 	}
 
-	// list of users where status = 0
 	@RequestMapping(value = "/pending", method = RequestMethod.GET)
 	public ResponseEntity<JSONObject> pending() {
 		JSONObject item = new JSONObject();
@@ -218,13 +282,43 @@ public class JwtAuthenticationController {
 		return ResponseEntity.status(HttpStatus.OK).body(item);
 	}
 
-	// return pivot table of users and their roles
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public ResponseEntity<JSONObject> users() {
+	public ResponseEntity<JSONObject> users(HttpServletRequest request) {
 		JSONObject item = new JSONObject();
-		List<Object[]> userRoles = userRepository.findUserAndRole();
-		item.put("users", userRoles);
-		return ResponseEntity.status(HttpStatus.OK).body(item);
+		if (getUser(request).getRoles().contains(roleRepository.findRoleWithName("Admin"))) {
+			List<Object[]> userRoles = userRepository.findUserAndRoleWithoutAdmin(getUser(request).getUsername());
+			item.put("users", userRoles);
+			return ResponseEntity.status(HttpStatus.OK).body(item);
+		} else if (getUser(request).getRoles().contains(roleRepository.findRoleWithName("Super Admin"))) {
+			List<Object[]> userRoles = userRepository.findUserAndRole(getUser(request).getUsername());
+			item.put("users", userRoles);
+			return ResponseEntity.status(HttpStatus.OK).body(item);
+		}
+
+		item.put("message", "You are not authorized to access this page");
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(item);
 	}
 
+	@RequestMapping(value = "/delete/{idUser}/{idRole}", method = RequestMethod.DELETE)
+	public ResponseEntity<JSONObject> deleteUser(@PathVariable("idUser") int id, @PathVariable("idRole") Long idRole,
+			HttpServletRequest request) {
+		JSONObject item = new JSONObject();
+		if (getUser(request).getRoles().contains(roleRepository.findRoleWithName("Super Admin"))) {
+			Optional<UserRole> userRole = userRoleRepository.findByUserIdAndRoleId(id, idRole);
+			Long count = userRoleRepository.countByUserId(id);
+			if (userRole.isPresent() && count > 1) {
+				userRoleRepository.delete(userRole.get());
+				item.put("message", "UserRole deleted");
+				return ResponseEntity.status(HttpStatus.OK).body(item);
+			} else if (userRole.isPresent() && count == 1) {
+				userRoleRepository.delete(userRole.get());
+				userRepository.deleteById(id);
+				item.put("message", "User deleted");
+				return ResponseEntity.status(HttpStatus.OK).body(item);
+			}
+		}
+
+		item.put("message", "You are not authorized to access this page");
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(item);
+	}
 }
