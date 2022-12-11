@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -226,13 +225,13 @@ public class JwtAuthenticationController {
 			userRoleRepository.save(userRole.get());
 			item.put("message", "admin accepted");
 			return ResponseEntity.status(HttpStatus.OK).body(item);
-		} else if (userRole.isPresent() && isAdmin && userAcceptedRole.equals("SAV Manager") && isSuperAdmin) {
+		} else if (userRole.isPresent() && userAcceptedRole.equals("SAV Manager") && (isSuperAdmin || isAdmin)) {
 			userRole.get().setStatus(1);
 			userRoleRepository.save(userRole.get());
 			item.put("message", "SAV Manager accepted");
 			return ResponseEntity.status(HttpStatus.OK).body(item);
-		} else if (userRole.isPresent() && isAdmin && userAcceptedRole.equals("SAV Technician")
-				&& isSuperAdmin) {
+		} else if (userRole.isPresent() && userAcceptedRole.equals("SAV Technician")
+				&& (isSuperAdmin || isAdmin)) {
 			userRole.get().setStatus(1);
 			userRoleRepository.save(userRole.get());
 			item.put("message", "SAV Technician accepted");
@@ -264,13 +263,14 @@ public class JwtAuthenticationController {
 			userRoleRepository.save(userRole.get());
 			item.put("message", "admin rejected");
 			return ResponseEntity.status(HttpStatus.OK).body(item);
-		} else if (userRole.isPresent() && isAdmin && userAcceptedRole.equals("SAV Manager") && isSuperAdmin) {
+		} else if (userRole.isPresent() && userAcceptedRole.equals("SAV Manager")
+				&& (isSuperAdmin || isAdmin)) {
 			userRole.get().setStatus(2);
 			userRoleRepository.save(userRole.get());
 			item.put("message", "SAV Manager rejected");
 			return ResponseEntity.status(HttpStatus.OK).body(item);
-		} else if (userRole.isPresent() && isAdmin && userAcceptedRole.equals("SAV Technician")
-				&& isSuperAdmin) {
+		} else if (userRole.isPresent() && userAcceptedRole.equals("SAV Technician")
+				&& (isSuperAdmin || isAdmin)) {
 			userRole.get().setStatus(2);
 			userRoleRepository.save(userRole.get());
 			item.put("message", "SAV Technician rejected");
