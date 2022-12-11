@@ -216,13 +216,13 @@ public class JwtAuthenticationController {
 			userRoleRepository.save(userRole.get());
 			item.put("message", "admin accepted");
 			return ResponseEntity.status(HttpStatus.OK).body(item);
-		} else if (userRole.isPresent() && isAdmin && userAcceptedRole.equals("SAV Manager") && isSuperAdmin == false) {
+		} else if (userRole.isPresent() && isAdmin && userAcceptedRole.equals("SAV Manager") && isSuperAdmin) {
 			userRole.get().setStatus(1);
 			userRoleRepository.save(userRole.get());
 			item.put("message", "SAV Manager accepted");
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userRole.isPresent() && isAdmin && userAcceptedRole.equals("SAV Technician")
-				&& isSuperAdmin == false) {
+				&& isSuperAdmin) {
 			userRole.get().setStatus(1);
 			userRoleRepository.save(userRole.get());
 			item.put("message", "SAV Technician accepted");
