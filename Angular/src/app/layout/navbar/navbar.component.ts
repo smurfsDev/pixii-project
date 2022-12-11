@@ -1,7 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { User } from 'src/app/models/user';
 
 @Component({
 	selector: 'app-navbar',
@@ -16,7 +15,7 @@ export class NavbarComponent {
 	isShowing = false;
 	showSubSubMenu: boolean = false;
 	isExpanded = true;
-  authUser: User | undefined;
+  authState: any | undefined;
 
 	current = this.router.url;
 
@@ -26,7 +25,7 @@ export class NavbarComponent {
 		}, 125);
 	}
     ngOnInit(): void {
-    this.authUser = this.store.selectSnapshot(state => state.AuthState.user);
+    this.authState = this.store.selectSnapshot(state => state.AuthState);
   }
 
 	async toggleActive(event: string) {

@@ -7,6 +7,11 @@ export class AuthStateModel {
 	isAuthenticated: boolean = false;
 	token: string | null | undefined;
 	user: User | null | undefined;
+	isAdmin: boolean = false;
+	isSuperAdmin: boolean = false;
+	isSavManager: boolean = false;
+	isSavTechnician: boolean = false;
+	isScooterOwner: boolean = false;
 }
 
 @State<AuthStateModel>({
@@ -15,6 +20,11 @@ export class AuthStateModel {
 		isAuthenticated: false,
 		token: null,
 		user: null,
+		isAdmin: false,
+		isSuperAdmin: false,
+		isSavManager: false,
+		isSavTechnician: false,
+		isScooterOwner: false,
 	}
 })
 @Injectable()
@@ -34,16 +44,36 @@ export class AuthState {
 		return user;
 	}
 
+	@Selector()
+	static getIsAdmin({ isAdmin }: AuthStateModel) {
+		return isAdmin;
+	}
+
+	@Selector()
+	static getIsSuperAdmin({ isSuperAdmin }: AuthStateModel) {
+		return isSuperAdmin;
+	}
+
+	@Selector()
+	static getIsSavManager({ isSavManager }: AuthStateModel) {
+		return isSavManager;
+	}
+
 	@Action(SetToken)
 	setToken({ getState, patchState }: StateContext<AuthStateModel>, { payload }: SetToken) {
 		patchState({
 			token: payload
 		});
 	}
-@Action(SetUser)
+	@Action(SetUser)
 	setUser({ getState, patchState }: StateContext<AuthStateModel>, { payload }: SetUser) {
 		patchState({
-			user: payload
+			user: payload,
+			isAdmin: payload?.role.find((r:any)=>r.name == "Admin" && r.status == 1)?true:false,
+			isSuperAdmin: payload?.role.find((r:any)=>r.name == "Super Admin" && r.status == 1)?true:false,
+			isSavManager: payload?.role.find((r:any)=>r.name == "SAV Manager" && r.status == 1)?true:false,
+			isSavTechnician: payload?.role.find((r:any)=>r.name == "SAV Technician" && r.status == 1)?true:false,
+			isScooterOwner: payload?.role.find((r:any)=>r.name == "Scooter Owner" && r.status == 1)?true:false,
 		});
 	}
 
