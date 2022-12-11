@@ -16,42 +16,10 @@
 					<p *ngIf="isExpanded">
 						Dashboard
 					</p>
-					<!-- <mat-icon class="menu-button" [ngClass]="{'rotated' :
-					showSubmenu}" *ngIf="isExpanded ||
-					   isShowing" style="color: white; " class="float-right">expand_more</mat-icon> -->
 				</div>
 
 			</a>
-			<!-- <div *ngIf="showSubmenu">
-				<a mat-list-item>
-
-					<div matLine class="item" [ngClass]="{'open':isExpanded}">
-						<mat-icon class="icon">home</mat-icon>
-						<p *ngIf="isExpanded">
-							Activity </p>
-
-					</div>
-				</a>
-				<a mat-list-item>
-
-					<div matLine class="item" [ngClass]="{'open':isExpanded}">
-						<mat-icon class="icon">traffic</mat-icon>
-						<p *ngIf="isExpanded">
-							Traffic </p>
-
-					</div>
-				</a>
-				<a mat-list-item>
-
-					<div matLine class="item" [ngClass]="{'open':isExpanded}">
-						<mat-icon class="icon">insert_chart</mat-icon>
-						<p *ngIf="isExpanded">
-							Statistic </p>
-
-					</div>
-				</a>
-			</div> -->
-
+			
 			<a mat-list-item class="my-3" (click)="toggleActive('/profile')">
 				<div matLine class="item" [ngClass]="{'active': current === '/profile','open':isExpanded}">
 					<mat-icon class="icon">person</mat-icon>

@@ -223,8 +223,15 @@ public class JwtAuthenticationController {
 		JSONObject item = new JSONObject();
 		boolean isSuperAdmin = false;
 		boolean isAdmin = false;
-		Optional<UserRole> userRole = userRoleRepository.findByUserIdAndRoleId(id, idRole);
-		String userAcceptedRole = userRole.get().getRole().getName();
+
+		Optional<UserRole> userRoleOptional = userRoleRepository.findByUserIdAndRoleId(id, idRole);
+		if (!userRoleOptional.isPresent()) {
+			item.put("message", "user role not found");
+			item.put("status", HttpStatus.BAD_REQUEST.value());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+		}
+		UserRole userRole = userRoleOptional.get();
+		String userAcceptedRole = userRole.getRole().getName();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userRepository.findByUsername(auth.getName()).get();
 		Set<Role> roles = user.getRoles();
@@ -235,25 +242,23 @@ public class JwtAuthenticationController {
 				isAdmin = true;
 			}
 		}
-		if (userRole.isPresent() && isSuperAdmin == true && userAcceptedRole.equals("Admin") && isAdmin == false) {
-			userRole.get().setStatus(1);
-			userRoleRepository.save(userRole.get());
+
+		if (isSuperAdmin == true && userAcceptedRole.equals("Admin") && isAdmin == false) {
+			acceptUser(userRole);
 			item.put("message", "admin accepted");
 			return ResponseEntity.status(HttpStatus.OK).body(item);
-		} else if (userRole.isPresent() && userAcceptedRole.equals("SAV Manager") && (isSuperAdmin || isAdmin)) {
-			userRole.get().setStatus(1);
-			userRoleRepository.save(userRole.get());
+		} else if (userAcceptedRole.equals("SAV Manager") && (isSuperAdmin || isAdmin)) {
+			acceptUser(userRole);
 			item.put("message", "SAV Manager accepted");
 			return ResponseEntity.status(HttpStatus.OK).body(item);
-		} else if (userRole.isPresent() && userAcceptedRole.equals("SAV Technician")
+		} else if (userAcceptedRole.equals("SAV Technician")
 				&& (isSuperAdmin || isAdmin)) {
-			userRole.get().setStatus(1);
-			userRoleRepository.save(userRole.get());
+			acceptUser(userRole);
 			item.put("message", "SAV Technician accepted");
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}
-		item.put("message", "User not found");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+		item.put("message", "You are not allowed to accept this role");
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(item);
 	}
 
 	@RequestMapping(value = "/reject/{idUser}/{idRole}", method = RequestMethod.GET)
@@ -261,8 +266,14 @@ public class JwtAuthenticationController {
 		JSONObject item = new JSONObject();
 		boolean isSuperAdmin = false;
 		boolean isAdmin = false;
-		Optional<UserRole> userRole = userRoleRepository.findByUserIdAndRoleId(id, idRole);
-		String userAcceptedRole = userRole.get().getRole().getName();
+		Optional<UserRole> userRoleOptional = userRoleRepository.findByUserIdAndRoleId(id, idRole);
+		if (!userRoleOptional.isPresent()) {
+			item.put("message", "user role not found");
+			item.put("status", HttpStatus.BAD_REQUEST.value());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+		}
+		UserRole userRole = userRoleOptional.get();
+		String userDeclinedRole = userRole.getRole().getName();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userRepository.findByUsername(auth.getName()).get();
 		Set<Role> roles = user.getRoles();
@@ -273,49 +284,35 @@ public class JwtAuthenticationController {
 				isAdmin = true;
 			}
 		}
-		if (userRole.isPresent() && isSuperAdmin == true && userAcceptedRole.equals("Admin") && isAdmin == false) {
-			userRole.get().setStatus(2);
-			userRoleRepository.save(userRole.get());
+		if (isSuperAdmin == true && userDeclinedRole.equals("Admin") && isAdmin == false) {
+			rejectUser(userRole);
 			item.put("message", "admin rejected");
 			return ResponseEntity.status(HttpStatus.OK).body(item);
-		} else if (userRole.isPresent() && userAcceptedRole.equals("SAV Manager")
+		} else if (userDeclinedRole.equals("SAV Manager")
 				&& (isSuperAdmin || isAdmin)) {
-			userRole.get().setStatus(2);
-			userRoleRepository.save(userRole.get());
+			rejectUser(userRole);
 			item.put("message", "SAV Manager rejected");
 			return ResponseEntity.status(HttpStatus.OK).body(item);
-		} else if (userRole.isPresent() && userAcceptedRole.equals("SAV Technician")
+		} else if (userDeclinedRole.equals("SAV Technician")
 				&& (isSuperAdmin || isAdmin)) {
-			userRole.get().setStatus(2);
-			userRoleRepository.save(userRole.get());
+			rejectUser(userRole);
 			item.put("message", "SAV Technician rejected");
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}
-		item.put("message", "User not found");
-		return ResponseEntity.status(HttpStatus.OK).body(item);
-	}
-
-	@RequestMapping(value = "/pending", method = RequestMethod.GET)
-	public ResponseEntity<JSONObject> pending() {
-		JSONObject item = new JSONObject();
-		List<UserRole> userRoles = userRoleRepository.findAllByStatus(0);
-		List<User> users = new ArrayList<User>();
-		for (UserRole userRole : userRoles) {
-			users.add(userRepository.findById(userRole.getUser().getId()).get());
-		}
-		item.put("users", users);
-		return ResponseEntity.status(HttpStatus.OK).body(item);
+		item.put("message", "You are not allowed to accept this role");
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(item);
 	}
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public ResponseEntity<JSONObject> users(HttpServletRequest request) {
 		JSONObject item = new JSONObject();
-		if (getUser(request).getRoles().contains(roleRepository.findRoleWithName("Admin"))) {
-			List<Object[]> userRoles = userRepository.findUserAndRoleWithoutAdmin(getUser(request).getUsername());
+		User user = getUser(request);
+		if (user.getRoles().contains(roleRepository.findRoleWithName("Admin"))) {
+			List<Object[]> userRoles = userRepository.findUserAndRoleWithoutAdmin(user.getUsername());
 			item.put("users", userRoles);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
-		} else if (getUser(request).getRoles().contains(roleRepository.findRoleWithName("Super Admin"))) {
-			List<Object[]> userRoles = userRepository.findUserAndRole(getUser(request).getUsername());
+		} else if (user.getRoles().contains(roleRepository.findRoleWithName("Super Admin"))) {
+			List<Object[]> userRoles = userRepository.findUserAndRole(user.getUsername());
 			item.put("users", userRoles);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}
@@ -345,5 +342,15 @@ public class JwtAuthenticationController {
 
 		item.put("message", "You are not authorized to access this page");
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(item);
+	}
+
+	void acceptUser(UserRole userRole) {
+		userRole.setStatus(1);
+		userRoleRepository.save(userRole);
+	}
+
+	void rejectUser(UserRole userRole) {
+		userRole.setStatus(2);
+		userRoleRepository.save(userRole);
 	}
 }
