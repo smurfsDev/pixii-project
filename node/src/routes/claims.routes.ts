@@ -1,4 +1,4 @@
-import { findAll, create, update, remove, findOne, setStatus, affectClaimToTechnician, findAffectedToMe } from '../controllers/claims.controller';
+import { findAll, create, update, remove, findOne, setStatus, affectClaimToTechnician, findAffectedToMe, findMine } from '../controllers/claims.controller';
 module.exports = (app: any) => {
 
 
@@ -7,6 +7,9 @@ module.exports = (app: any) => {
 
   // Retrieve all claims affected to a technician
   app.get("/node/claims/affectedToMe", findAffectedToMe);
+
+  // Retrieve all claims created by a user
+  app.get("/node/claims/mine", findMine);
 
   // Retrieve all claims
   app.get("/node/claims", findAll);

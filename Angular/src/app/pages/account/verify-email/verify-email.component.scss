@@ -42,4 +42,11 @@
 			color: white;
 		}
 	}
+  .field{
+    input{
+      &::placeholder{
+        color: white;
+      }
+    }
+  }
 }

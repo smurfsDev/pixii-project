@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -114,7 +115,7 @@ public class JwtAuthenticationController {
 
 		User appUser = new User();
 		user.get("email");
-		if (userRepository.findByUsername(user.get("email").toString()).isPresent()) {
+		if (userRepository.findUserByEmail(user.get("email").toString()).isPresent()) {
 			JSONObject item = new JSONObject();
 			item.put("message", "email already exists");
 			item.put("status", HttpStatus.BAD_REQUEST.value());
@@ -164,7 +165,8 @@ public class JwtAuthenticationController {
 		userRoleRepository.save(userRole.get());
 		JSONObject newUserNode = new JSONObject();
 		newUserNode.put("name", user.get("name").toString());
-		newUserNode.put("username", user.get("email").toString());
+		newUserNode.put("email", user.get("email").toString());
+		newUserNode.put("username", user.get("username").toString());
 		newUserNode.put("roles", user.get("role").toString());
 		newUserNode.put("password", user.get("password").toString());
 		newUserNode.put("status", userRole.get().getStatus());
@@ -187,10 +189,18 @@ public class JwtAuthenticationController {
 
 	}
 
+	// @RequestMapping(value = "/roles", method = RequestMethod.GET)
+	// public ResponseEntity<JSONObject> getRoles() {
+	// JSONObject item = new JSONObject();
+	// item.put("roles", roleRepository.findAll());
+	// return ResponseEntity.status(HttpStatus.OK).body(item);
+	// }
+	// retern roles without super admin
 	@RequestMapping(value = "/roles", method = RequestMethod.GET)
 	public ResponseEntity<JSONObject> getRoles() {
 		JSONObject item = new JSONObject();
-		item.put("roles", roleRepository.findAll());
+		item.put("roles", roleRepository.findAll().stream().filter(role -> !role.getName().equals("Super Admin"))
+				.collect(Collectors.toList()));
 		return ResponseEntity.status(HttpStatus.OK).body(item);
 	}
 

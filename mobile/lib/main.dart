@@ -34,12 +34,25 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => AuthService()),
       ],
       child: MaterialApp(
+        routes: {
+          Register.id: (context) => MainLayout(
+                child: const Register(),
+              ),
+          Login.id: (context) => MainLayout(
+                child: const Login(),
+              ),
+          VerifyEmail.id: (context) => MainLayout(
+                child: const VerifyEmail(),
+              ),
+        },
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: white,
         ),
-        home: MainLayout(child: main),
+        home: MainLayout(child: Register()),
       ),
     );
   }
+  
+
 }

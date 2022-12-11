@@ -5,6 +5,7 @@ import User from "./user.model";
 
 
 let claimsSchema = new mongoose.Schema({
+	title: { type: String, required: true },
 	subject: { type: String, required: true },
 	message: { type: String, required: true },
 	created: { type: Date, default: Date.now },
@@ -43,7 +44,8 @@ let claimsSchema = new mongoose.Schema({
 			date: { type: Date, default: Date.now },
 		}
 	],
-	updated: { type: Date, default: Date.now }
+	updated: { type: Date, default: Date.now },
+	user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
 
