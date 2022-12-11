@@ -26,6 +26,12 @@
 					<p *ngIf="isExpanded">Contact</p>
 				</div>
 			</a>
+      <a mat-list-item class="my-3" (click)="toggleActive('/manageUsers')">
+				<div matLine class="item" [ngClass]="{'active': current === '/manageUsers','open':isExpanded}">
+					<mat-icon class="icon">group</mat-icon>
+					<p *ngIf="isExpanded">Contact</p>
+				</div>
+			</a>
 
 			<a mat-list-item class="last-item" (click)="
 				isExpanded = !isExpanded;
