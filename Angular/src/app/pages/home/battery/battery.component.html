@@ -1,0 +1,10 @@
+<div [class]="batteryClasses()">
+	
+	<div *ngIf="percentage!=0" [class]="fillClasses()" [style.height.%]="percentage">
+		<div class="percentage">{{percentage}}%</div>
+	</div>
+
+	<div *ngIf="percentage==0" class="fill" [style]="{height:'100%',backgroundColor:'transparent'}">
+		<div class="percentage" style="color:white">{{percentage}}%</div>
+	</div>
+</div>

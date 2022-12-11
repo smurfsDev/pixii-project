@@ -1,0 +1,45 @@
+@import '../../app.component.scss';
+
+.header {
+    .search-icon {
+        margin: 10px;
+    }
+
+    background-color: $secondary-component-color;
+    color: $main-text-color;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 15px;
+    border-radius: 9px;
+    display: flex;
+
+    .cont {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 10px;
+        align-items: baseline;
+        width: 100%;
+
+    }
+
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 300px;
+        margin-right: 10px;
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .hello {
+            font-size: 1.5em;
+            font-weight: 500;
+        }
+
+    }
+}

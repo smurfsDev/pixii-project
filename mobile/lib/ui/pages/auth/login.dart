@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:mobile/imports.dart';
+import 'package:mobile/ui/pages/home/dashboard.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -72,10 +73,10 @@ class _LoginPageState extends State<Login> {
                                           email = value;
                                         });
                                       },
-                                      hintText: 'Email',
+                                      hintText: 'Enter your email address',
                                       icon: Icons.email,
                                       keyboardType: TextInputType.emailAddress,
-                                      labelText: 'Enter your email address',
+                                      labelText: 'Email',
                                     ),
                                     SizedBox(height: 60.0),
                                     MyInput(
@@ -85,11 +86,11 @@ class _LoginPageState extends State<Login> {
                                           password = value;
                                         });
                                       },
-                                      hintText: 'Password',
+                                      hintText: 'Enter your password',
                                       icon: Icons.lock,
                                       keyboardType:
                                           TextInputType.visiblePassword,
-                                      labelText: 'Enter your password',
+                                      labelText: 'Password',
                                     ),
                                     SizedBox(height: 20.0),
                                     Row(
@@ -173,7 +174,7 @@ class _LoginPageState extends State<Login> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    // Navigator.pushNamed(context, RegisterPage.id);
+                                    Navigator.pushNamed(context, Register.id);
                                   },
                                   child: Text(
                                     ' Sign Up',
@@ -208,6 +209,9 @@ class _LoginPageState extends State<Login> {
       });
       if (loginOK) {
         showAlert(context, 'Login Success', auth.user!.name);
+        // ignore: use_build_context_synchronously
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Dashboard(auth.user)));
       } else {
         var message = "";
         if (auth.error == "USER_NOT_FOUND") {

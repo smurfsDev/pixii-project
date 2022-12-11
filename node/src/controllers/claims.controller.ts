@@ -27,6 +27,14 @@ export const findAffectedToMe = async (req: Request, res: Response) => {
 	});
 };
 
+// get mine
+export const findMine = async (req: Request, res: Response) => {
+	// const user =
+	Claim.find({user:req.body.user}).populate("_status").populate('status').then((claims) => {
+		res.send(claims);
+	});
+};
+
 // create
 export const create = (req: Request, res: Response) => {
 	const claim = new Claim(req.body);

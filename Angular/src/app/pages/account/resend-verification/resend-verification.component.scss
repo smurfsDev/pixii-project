@@ -1,0 +1,45 @@
+@import "../../../app.component.scss";
+.background{
+	background: $gradient;
+	color: white!important;
+	text-align: center;
+}
+.back{
+	background-image: url(/assets/logo.png);
+	background-size: 90vh;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 100vh;
+	width: 100vw;
+	opacity: 0.5;
+	background-attachment: fixed;
+	filter: blur(35px);
+	-webkit-filter: blur(35px);
+	-moz-filter: blur(35px);
+	-o-filter: blur(35px);
+}
+
+.content{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	.big-title{
+		margin : 5vh 0;
+		font-size: 5vh!important;
+		font-weight: 700;
+		color: white;
+	}
+	.message{
+		.text{
+			font-size: 3vh!important;
+			line-height: 4vh;
+			font-weight: 500;
+			color: white;
+		}
+	}
+}

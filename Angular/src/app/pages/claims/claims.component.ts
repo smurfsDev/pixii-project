@@ -44,7 +44,7 @@ export class ClaimsComponent implements OnInit {
 				created: "2022-01-01"
 			},
 		],
-		_status : [
+		_status: [
 			{
 				"old_status": "Done",
 				"new_status": "In Progress",
@@ -84,7 +84,7 @@ export class ClaimsComponent implements OnInit {
 		this.claimsService.getClaim(id).subscribe((data: any) => {
 			this.claim = data;
 			this.claim.status = data.status.name;
-			let _status : {
+			let _status: {
 				old_status: string,
 				new_status: string,
 				author: string,
@@ -127,10 +127,10 @@ export class ClaimsComponent implements OnInit {
 			
 		});
 	}
-	
+
 	authUser: User | undefined;
 
-	constructor(private store:Store,private claimsService: ClaimsService, private statusService: StatusService, private commentsService: CommentService) { }
+	constructor(private store: Store, private claimsService: ClaimsService, private statusService: StatusService, private commentsService: CommentService) { }
 	name = 'Angular Material ' + VERSION.major + ' Kanban board';
 	public board: Board = new Board("", []);
 	current = '/home';
@@ -143,6 +143,7 @@ export class ClaimsComponent implements OnInit {
 	ngOnInit(): void {
 		this.fetchClaims();
 		this.authUser = this.store.selectSnapshot(state => state.AuthState.user);
+		console.log(this.authUser);
 	}
 
 	async fetchClaims(): Promise<void> {
@@ -161,6 +162,7 @@ export class ClaimsComponent implements OnInit {
 					if (column.id === element.status._id) {
 						column.claims.push(new Claim(
 							element._id,
+							element.title,
 							element.subject,
 							element.description,
 							element.created,
@@ -182,7 +184,7 @@ export class ClaimsComponent implements OnInit {
 			claim.docs.forEach((element: any) => {
 				this.board.columns.forEach((column: any) => {
 					if (column.id === element.status._id) {
-						column.claims.push(new Claim(element._id, element.subject, element.description, element.created, element.status._id, element.updated,element.author));
+						column.claims.push(new Claim(element._id,element.title, element.subject, element.description, element.created, element.status._id, element.updated,element.author));
 					}
 				});
 			});

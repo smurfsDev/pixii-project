@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { User } from 'src/app/models/user';
-import { SetIsAuthenticated, SetToken, SetUser } from "./actions";
+import { SetIsAuthenticated, SetToken, SetUser, LogoutAction } from "./actions";
 
 export class AuthStateModel {
 	isAuthenticated: boolean = false;
@@ -51,6 +51,15 @@ export class AuthState {
 	setIsAuthenticated({ getState, patchState }: StateContext<AuthStateModel>, { payload }: SetIsAuthenticated) {
 		patchState({
 			isAuthenticated: payload
+		});
+	}
+
+	@Action(LogoutAction)
+	logout({ getState, patchState }: StateContext<AuthStateModel>) {
+		patchState({
+			isAuthenticated: false,
+			token: null,
+			user: null,
 		});
 	}
 }
