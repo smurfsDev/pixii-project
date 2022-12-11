@@ -87,7 +87,22 @@ public class JwtAuthenticationController {
 					.loadUserByUsername(authenticationRequest.getUsername());
 			final String token = jwtTokenUtil.generateToken(userDetails);
 			item.put("token", token);
-			item.put("user", userRepository.findUserByEmailForLogin(authenticationRequest.getUsername()).get());
+			User user = userRepository.findUserByEmail(authenticationRequest.getUsername()).get();
+			Object userResp = new Object() {
+				public Integer id = user.getId();
+				public String username = user.getUsername();
+				public String email = user.getEmail();
+				public String name = user.getName();
+				public String password = user.getPassword();
+				public Object roles = user.getRoles().stream().map(role -> new Object() {
+					public Long id = role.getId();
+					public String name = role.getName();
+					UserRole userRole = userRoleRepository.findByUserIdAndRoleId(user.getId(), role.getId()).get();
+					public Integer status = userRole.getStatus();
+				}).collect(Collectors.toList());
+			};
+
+			item.put("user", userResp);
 			return new ResponseEntity<JSONObject>(item, HttpStatus.OK);
 		} catch (Exception e) {
 			item.put("error", e.getMessage());
