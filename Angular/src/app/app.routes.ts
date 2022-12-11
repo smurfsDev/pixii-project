@@ -7,11 +7,11 @@ import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
 import { ResetPasswordComponent } from './pages/account/reset-password/reset-password.component';
 import { CheckemailComponent } from './pages/account/reset-password/checkemail/checkemail.component';
-import { IsAuthenticatedGuard } from './is-authenticated.guard';
+import { IsAuthenticatedGuard } from './guards/is-authenticated.guard';
 import { ChefComponent } from './pages/claims/chef/chef.component';
 
 import { MgUsersComponent } from './pages/users/superAdmin/mg-users/mg-users.component';
-import { HasRoleGuard } from './has-role.guard';
+import { HasRoleGuard } from './guards/has-role.guard';
 
 import { ResendVerificationComponent } from './pages/account/resend-verification/resend-verification.component';
 import { UserComponent } from './pages/claims/user/user.component';
