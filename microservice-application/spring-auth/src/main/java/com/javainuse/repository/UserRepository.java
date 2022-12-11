@@ -24,7 +24,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("SELECT u,ru.status FROM User u JOIN UserRole ru ON u.id = ru.user.id WHERE u.email = ?1")
 	Optional<Object[]> findUserByEmailForLogin(String email);
 
-	// list of users and their roles pivot table
-	@Query("SELECT ru FROM User u JOIN UserRole ru ON u.id = ru.user.id Join Role r ON ru.role.id = r.id")
-	List<Object[]> findUserAndRole();
+	@Query("SELECT ru FROM User u JOIN UserRole ru ON u.id = ru.user.id Join Role r ON ru.role.id = r.id WHERE u.username <> ?1 AND u.username <> 'superadmin'")
+	List<Object[]> findUserAndRole(String username);
+
+	@Query("SELECT ru FROM User u JOIN UserRole ru ON u.id = ru.user.id Join Role r ON ru.role.id = r.id WHERE u.username <> ?1 AND u.username <> 'superadmin' AND r.name <> 'admin'")
+	List<Object[]> findUserAndRoleWithoutAdmin(String username);
+
+	public User findById(int id);
+
 }
