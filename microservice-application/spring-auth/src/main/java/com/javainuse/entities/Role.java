@@ -7,6 +7,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Role {
+	@Column(name = "role_id")
 	private @Id @GeneratedValue Long id;
 	@Column(unique = true)
 	private String name;

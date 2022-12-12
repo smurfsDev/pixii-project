@@ -6,34 +6,34 @@ import User from "./models/user.model";
 
 export const seed = async () => {
 	// clear db
-	// await claim.deleteMany({});
-	// await comment.deleteMany({});
-	// await Role.deleteMany({});
-	// await status.deleteMany({});
-	// await User.deleteMany({});
+	await claim.deleteMany({});
+	await comment.deleteMany({});
+	await Role.deleteMany({});
+	await status.deleteMany({});
+	await User.deleteMany({});
 	// seed db
 	console.log('Seeding...');
 	let todo = await status.findOne({ name: 'TODO' });
 	if (!todo) {
-		todo = new status({ name: 'TODO' });
+		todo = new status({ name: 'TODO', color: '#FF0000' });
 		await todo.save();
 	}
 
 	let inProgressStatus = await status.findOne({ name: 'INPROGRESS' });
 	if (!inProgressStatus) {
-		inProgressStatus = new status({ name: 'INPROGRESS' });
+		inProgressStatus = new status({ name: 'INPROGRESS', color: '#FFA500' });
 		await inProgressStatus.save();
 	}
 
 	let doneStatus = await status.findOne({ name: 'DONE' });
 	if (!doneStatus) {
-		doneStatus = new status({ name: 'DONE' });
+		doneStatus = new status({ name: 'DONE', color: '#008000' });
 		await doneStatus.save();
 	}
 
 	let stuckStatus = await status.findOne({ name: 'STUCK' });
 	if (!stuckStatus) {
-		stuckStatus = new status({ name: 'STUCK' });
+		stuckStatus = new status({ name: 'STUCK', color: '#0000FF' });
 		await stuckStatus.save();
 	}
 
@@ -42,9 +42,9 @@ export const seed = async () => {
 	// get count of claims
 	let count = await claim.countDocuments();
 	if (count < 6) {
-		const claim1 = new claim({ subject: 'Claim 1', message: 'Description 1', status: todo._id });
-		const claim2 = new claim({ subject: 'Claim 2', message: 'Description 2', status: inProgressStatus._id });
-		const claim3 = new claim({ subject: 'Claim 3', message: 'Description 3', status: doneStatus._id });
+		const claim1 = new claim({ title:"Title 1",subject: 'Claim 1', message: 'Description 1', status: todo._id });
+		const claim2 = new claim({ title:"Title 2",subject: 'Claim 2', message: 'Description 2', status: inProgressStatus._id });
+		const claim3 = new claim({ title:"Title 3",subject: 'Claim 3', message: 'Description 3', status: doneStatus._id });
 		await claim1.save();
 		await claim2.save();
 		await claim3.save();

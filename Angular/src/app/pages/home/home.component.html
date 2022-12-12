@@ -63,7 +63,7 @@
 
 						</div>
 					</div>
-					<div class="card">
+					<div class="card" style="height:367px">
 						<h2 class="card-header" style="font-size:bold ;">Battery usage</h2>
 						<app-chart-battery-usage></app-chart-battery-usage>
 					</div>
@@ -76,24 +76,56 @@
 						Support
 					</span>
 					<br /><br />
-					<div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
-						<span class="input-form">Email</span>
-						<input class="input100" type="text" name="email">
+					<div class="wrap-input100 validate-input">
+						<span class="input-form">Title</span>
+						<input class="input100 myInput" type="text" [formControl]="claimTitle"  name="Title">
+						<mat-error style="margin-left:15px;" *ngIf="claimTitle.invalid && (claimTitle.dirty || claimTitle.touched)">
+							<span *ngIf="claimTitle.errors && claimTitle.errors['required']">
+								Title is required
+							</span>
+							<span *ngIf="claimTitle.errors && claimTitle.errors['minlength']">
+								Title must be at least 3 characters long.
+							</span>
+						</mat-error>
 
 					</div>
 					<div class="wrap-input100 validate-input">
-						<span class="input-form">Object</span>
-						<input class="input100" type="text" name="object">
+						<span class="input-form">Subject</span>
+						<input class="input100 myInput" [formControl]="claimSubject" type="text"  name="Subject">
+						<mat-error style="margin-left:15px;" *ngIf="claimSubject.invalid && (claimSubject.dirty || claimSubject.touched)">
+							<span *ngIf="claimSubject.errors && claimSubject.errors['required']">
+								Subject is required
+							</span>
+							<span *ngIf="claimSubject.errors && claimSubject.errors['minlength']">
+								Subject must be at least 3 characters long.
+							</span>
+						</mat-error>
 					</div>
 					<div class="wrap-input100 validate-input">
-						<span class="input-form subject-input">Subject</span>
-						<!-- <input class="input100" type="textarea"> -->
-						<textarea id="w3review" class="input100" name="w3review" rows="4" cols="100"
+						<span class="input-form  subject-input">Message</span>
+						<textarea id="w3review" class="input100 myInput" [formControl]="claimMessage"  name="w3review" rows="4" cols="100"
 							style="height: 150px;"></textarea>
+						<mat-error style="margin-left:15px;" *ngIf="claimMessage.invalid && (claimMessage.dirty || claimMessage.touched)">
+							<span *ngIf="claimMessage.errors && claimMessage.errors['required']">
+								Message is required
+							</span>
+							<span *ngIf="claimMessage.errors && claimMessage.errors['minlength']">
+								Message must be at least 3 characters long.
+							</span>
+						</mat-error>
+
 					</div>
 					<button class="btn btn-primary"
-						style="width:50% ;border-radius: 15px; margin-left:80px ; margin-bottom: 15px;"
-						type="submit">Send</button>
+						(click)="createClaim()"
+						style="width:50% ;border-radius: 15px; margin-left:80px ; margin-bottom: 15px;display:flex;justify-content:center;align-items:center;"
+						type="submit">
+						<span *ngIf="!claimSendingLoading">
+							Send
+						</span>
+						<span *ngIf="claimSendingLoading">
+							<mat-spinner [diameter]="20" [strokeWidth]="4"></mat-spinner>
+						</span>
+					</button>
 
 
 

@@ -1,26 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { User } from 'src/app/models/user';
-import { UsersService } from 'src/app/service/account/users.service';
 import { ClaimsService } from 'src/app/service/claims/claims.service';
 import { CommentService } from 'src/app/service/claims/comment.service';
 
 @Component({
-	selector: 'app-chef',
-	templateUrl: './chef.component.html',
-	styleUrls: ['./chef.component.scss']
+	selector: 'app-user',
+	templateUrl: './user.component.html',
+	styleUrls: ['./user.component.scss']
 })
-export class ChefComponent implements OnInit {
+export class UserComponent implements OnInit {
 
-	constructor(private store: Store, private claimsService: ClaimsService, private usersService: UsersService, private commentsService: CommentService) { }
-	openCount = 0;
-	resolvedCount = 0;
-	openClaims: any[] = [];
-	resolvedClaims: any[] = [];
-	authUser: User | undefined;
-	claims: any[] = [];
-	users: any[] = [];
-	claim = {
+	constructor(private claimsService: ClaimsService,private commentService:CommentService) { }
+
+	claims: any = [];
+	opened = false;
+	claim: any = {
 		_id: "",
 		subject: "Claim subject",
 		status: "Done",
@@ -46,7 +39,7 @@ export class ChefComponent implements OnInit {
 				created: "2022-01-01"
 			},
 		],
-		_status : [
+		_status: [
 			{
 				"old_status": "Done",
 				"new_status": "In Progress",
@@ -72,40 +65,25 @@ export class ChefComponent implements OnInit {
 				}	
 		]
 	};
-	ngOnInit(): void {
-		// this.authUser = this.store.selectSnapshot(state => state.AuthState.user);
-		this.claims = [];
-		this.users = [];
-		this.claimsService.getClaims().subscribe((data: any) => {
-			this.claims = data;
-			this.openCount = this.claims.filter((claim: any) => claim.status.name !== 'DONE').length;
-			this.resolvedCount = this.claims.filter((claim: any) => claim.status.name === 'DONE').length;
-			this.openClaims = this.claims.filter((claim: any) => claim.status.name !== 'DONE');
-			this.resolvedClaims = this.claims.filter((claim: any) => claim.status.name === 'DONE');
-		});
-
-		this.usersService.getUsers().subscribe((data: any) => {
-			this.users = data;
-		});
+	openDetails(id: any) {
+		console.log(id);
+		this.opened = false;
+		setTimeout(() => {
+			this.opened = true;
+		}, 100);
+		this.fetchClaimDetails(id)
 	}
-
-	affectClaim(claim: any, technician: any) {
-		this.claimsService.affectClaim(claim, technician).subscribe((data: any) => {
-			this.ngOnInit();
-		});
-	}
-
 	fetchClaimDetails(id: any) {
 		this.claimsService.getClaim(id).subscribe((data: any) => {
 			this.claim = data;
 			this.claim.status = data.status.name;
-			let _status : {
+			let _status: {
 				old_status: string,
 				new_status: string,
 				author: string,
 				date: string
 			}[] = [];
-			let _technician : {
+			let _technician: {
 				old_technician: string,
 				new_technician: string,
 				author: string,
@@ -139,20 +117,9 @@ export class ChefComponent implements OnInit {
 			});
 			this.claim._status = _status;
 			this.claim._technician = _technician;
-			
+
 		});
 	}
-	
-	opened = false;
-	openDetails(id: any) {
-		console.log(id);
-		this.opened = false;
-		setTimeout(() => {
-			this.opened = true;
-		}, 100);
-		this.fetchClaimDetails(id)
-	}
-
 
 	commented(event: any) {
 		const comment = {
@@ -160,13 +127,18 @@ export class ChefComponent implements OnInit {
 			message: event
 		};
 
-		this.commentsService.comment(comment).subscribe(data => {
+		this.commentService.comment(comment).subscribe(data => {
 			this.fetchClaimDetails(this.claim._id);
 		}
 		)
 	}
 
 
-
+	ngOnInit(): void {
+		this.claimsService.getClaimsMine().subscribe((data: any) => {
+			console.log(data);
+			this.claims = data;
+		});
+	}
 
 }

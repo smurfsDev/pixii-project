@@ -16,96 +16,44 @@
 					<p *ngIf="isExpanded">
 						Dashboard
 					</p>
-					<!-- <mat-icon class="menu-button" [ngClass]="{'rotated' : 
-					showSubmenu}" *ngIf="isExpanded || 
-					   isShowing" style="color: white; " class="float-right">expand_more</mat-icon> -->
 				</div>
 
 			</a>
-			<!-- <div *ngIf="showSubmenu">
-				<a mat-list-item>
-
-					<div matLine class="item" [ngClass]="{'open':isExpanded}">
-						<mat-icon class="icon">home</mat-icon>
-						<p *ngIf="isExpanded">
-							Activity </p>
-
-					</div>
-				</a>
-				<a mat-list-item>
-
-					<div matLine class="item" [ngClass]="{'open':isExpanded}">
-						<mat-icon class="icon">traffic</mat-icon>
-						<p *ngIf="isExpanded">
-							Traffic </p>
-
-					</div>
-				</a>
-				<a mat-list-item>
-
-					<div matLine class="item" [ngClass]="{'open':isExpanded}">
-						<mat-icon class="icon">insert_chart</mat-icon>
-						<p *ngIf="isExpanded">
-							Statistic </p>
-
-					</div>
-				</a>
-			</div> -->
-
+			
 			<a mat-list-item class="my-3" (click)="toggleActive('/profile')">
 				<div matLine class="item" [ngClass]="{'active': current === '/profile','open':isExpanded}">
 					<mat-icon class="icon">person</mat-icon>
 					<p *ngIf="isExpanded">Profile</p>
 				</div>
 			</a>
-			
-			<a [matTooltip]="isExpanded? '' :'Affect claims'" matTooltipPosition="right" mat-list-item class="my-3" (click)="toggleActive('/chef')">
+
+			<a [matTooltip]="isExpanded? '' :'Affect claims'" matTooltipPosition="right" *ngIf="authState.isSAVManager" mat-list-item class="my-3" (click)="toggleActive('/chef')">
 				<div matLine class="item" [ngClass]="{'active': current === '/chef','open':isExpanded}">
 					<mat-icon class="icon">move_down</mat-icon>
 					<p *ngIf="isExpanded">Affect Claims</p>
 				</div>
 			</a>
-			<a [matTooltip]="isExpanded? '' : 'Claims'" matTooltipPosition="right" mat-list-item class="my-3" (click)="toggleActive('/claims')">
+			<a [matTooltip]="isExpanded? '' : 'Claims'" matTooltipPosition="right" *ngIf="authState.isSAVManager||authState.isSAVTechnician" mat-list-item class="my-3" (click)="toggleActive('/claims')">
 				<div matLine class="item" [ngClass]="{'active': current === '/claims','open':isExpanded}">
 					<mat-icon class="icon">recycling</mat-icon>
 					<p *ngIf="isExpanded">Claims</p>
 				</div>
 			</a>
-			<a mat-list-item class="my-3" (click)="toggleActive('/profile')">
-				<div matLine class="item" [ngClass]="{'active': current === '/profile','open':isExpanded}">
+
+			<a mat-list-item class="my-3" [matTooltip]="isExpanded? '' :'My claims'" *ngIf="authState.isScooterOwner"  matTooltipPosition="right" (click)="toggleActive('/myclaims')">
+				<div matLine class="item" [ngClass]="{'active': current === '/myclaims','open':isExpanded}">
 					<mat-icon class="icon">feed</mat-icon>
-					<p *ngIf="isExpanded">Invoices</p>
+					<p *ngIf="isExpanded">My claims</p>
+				</div>
+			</a>
+      <a mat-list-item class="my-3" (click)="toggleActive('/manageUsers')" *ngIf="authState.isAdmin || authState.isSuperAdmin" >
+				<div matLine class="item" [ngClass]="{'active': current === '/manageUsers','open':isExpanded}">
+					<mat-icon class="icon">group</mat-icon>
+					<p *ngIf="isExpanded">Manage Users</p>
 				</div>
 			</a>
 
-
-			<a mat-list-item class="my-3" (click)="toggleActive('/home2')">
-				<div matLine class="item" [ngClass]="{'active': current === '/home2','open':isExpanded}">
-					<mat-icon class="icon">account_balance_wallet</mat-icon>
-					<p *ngIf="isExpanded">Wallet</p>
-				</div>
-			</a>
-
-
-			<a mat-list-item class="last-item">
-				<div class="card">
-					<div class="card-body">
-						<div *ngIf="isExpanded">
-							<h5 class="card-title">Let's start</h5>
-							<p class="card-text">Creating or adding ne Scooter couldn't be easier.</p>
-							<button type="button" class="btn btn-primary">
-								<mat-icon>add</mat-icon> Add New Scooter
-							</button>
-						</div>
-						<div *ngIf="!isExpanded">
-							<button type="button" class="btn btn-primary">
-								<mat-icon>add</mat-icon>
-							</button>
-						</div>
-
-					</div>
-				</div>
-			</a>
+			
 			<a mat-list-item class="last-item" (click)="
 				isExpanded = !isExpanded;
 			">

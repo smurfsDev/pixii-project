@@ -9,6 +9,16 @@
 	width: 100%;
 }
 
+.myInput{
+	border: 0!important;
+	outline: 0!important;
+	// background: transparent!important;
+	padding: 10px!important;
+	font-family: "Roboto", sans-serif!important;
+
+
+}
+
 
 .board-wrapper {
 	display: flex;
@@ -75,17 +85,15 @@
 .login100-form-title {
 	display: block;
 	margin-top: 50px;
-	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	font-family: 'Roboto', sans-serif;
 	// font-family: Poppins-Regular;
 	font-size: 30px;
 	color: #ffffff;
-	line-height: 1.2;
+	// line-height: 1.2;
 	text-align: center;
+	margin-bottom: 25px;
 }
 
-.login100-form-title i {
-	font-size: 60px;
-}
 
 .wrap-input100 {
 	width: 100%;
@@ -153,10 +161,10 @@
 	background: #29375B;
 
 	/* Chrome 10-25, Safari 5.1-6 */
-	background: -webkit-linear-gradient(to left, #29334a, #21272D);
+	background: -webkit-linear-gradient(-145deg, #29334a, #21272D,rgba(14, 18, 29, 0.2315));
 
 	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-	background: linear-gradient(to left, #29375B, #21272D);
+	background: linear-gradient(-145deg, #29375B, #21272D,rgba(14, 18, 29, 0.2315));
 	color: #fff;
 	/* font Poppins */
 	font-family: 'Poppins', sans-serif;

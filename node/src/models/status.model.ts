@@ -4,6 +4,7 @@ import comments from "./comments.model";
 let statusSchema = new mongoose.Schema({
 	name: {type: String, required: true},
 	created: {type: Date, default: Date.now},
+	color: {type: String, required: true},
 	claims: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "claims",

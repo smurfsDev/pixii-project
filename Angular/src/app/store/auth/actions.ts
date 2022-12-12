@@ -19,3 +19,7 @@ export class SetIsAuthenticated {
 	constructor(public payload: boolean) {
 	}
 }
+
+export class LogoutAction {
+	static readonly type = '[Auth] Logout';
+}

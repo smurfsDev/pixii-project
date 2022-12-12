@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
   initState() {
     super.initState();
     Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(seconds: 2),
       () => setState(
         () {
           main = const Login();
@@ -44,6 +44,9 @@ class _MyAppState extends State<MyApp> {
               ),
           VerifyEmail.id: (context) => MainLayout(
                 child: const VerifyEmail(),
+              ),
+          ResetPassword.id: (context) => MainLayout(
+                child: const ResetPassword(),
               ),
         },
         debugShowCheckedModeBanner: false,

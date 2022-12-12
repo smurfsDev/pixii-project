@@ -130,6 +130,15 @@
 .tasks-container {
 	flex-grow: 1;
 	overflow-y: auto;
+	.item:hover {
+
+		transition: box-shadow 0.3s ease-in-out;
+		box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+		border-radius: 9px;
+	}
+	.item{
+		padding: 5px;
+	}
 }
 
 .task {
