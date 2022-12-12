@@ -50,9 +50,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: white,
         ),
-        home: MainLayout(child: Dashboard(
-          User(name: "tet",username:"test")
-        )),
+        home: MainLayout(child: Login()),
       ),
     );
   }
