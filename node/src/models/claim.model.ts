@@ -82,7 +82,8 @@ claimsSchema.pre("findOneAndUpdate", async function (next) {
 	} catch (error) {
 		console.log(error);
 	}
-
+	// @ts-ignore
+	delete this.getUpdate().user;
 	next();
 });
 
