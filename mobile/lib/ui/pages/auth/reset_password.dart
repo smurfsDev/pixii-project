@@ -180,16 +180,13 @@ class _ResetPasswordPageState extends State<ResetPassword> {
                             const SizedBox(height: 40),
                             
                             Container(
-                              // margin: EdgeInsets.symmetric(horizontal: 30.0),
-                              child: Column(
-                                  children: [
-
-                              Visibility(
+                              margin: EdgeInsets.symmetric(horizontal: 30.0),
+                              child: Visibility(
                                 visible: !isVisibal,
                                 child : ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 10.0),
+                                      padding: const EdgeInsets.symmetric(vertical: 10.0),
                                       shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30.0),
                                       ),
@@ -202,7 +199,7 @@ class _ResetPasswordPageState extends State<ResetPassword> {
                                   color: Colors.white,
                                 )
                                     : const Text(
-                                  'Reset Password',
+                                  'Request code',
                                   style: TextStyle(
                                       fontSize: 25.0,
                                       color: Colors.white,
@@ -210,13 +207,13 @@ class _ResetPasswordPageState extends State<ResetPassword> {
                                       ),
                                       
                                 ),
-                              ),),
+                              ),),),
                                 Visibility(
                                 visible: isVisibal,
                                 child : ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.blue,
-                                      padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 10.0),
+                                      padding: const EdgeInsets.symmetric(vertical: 10.0),
                                       shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30.0),
                                       ),
@@ -241,10 +238,8 @@ class _ResetPasswordPageState extends State<ResetPassword> {
                           ],
                         ),
                       ),
-                    ],
                   ),
-                )),
-          );
+                );
         },
       ),
     );
