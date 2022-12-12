@@ -15,17 +15,17 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Widget main = const Loading();
+  final authService = AuthService();
   @override
   initState() {
     super.initState();
-    Future.delayed(
-      const Duration(seconds: 2),
-      () => setState(
+    authService.loadSettings().then((value) => setState(
         () {
-          main = const Login();
-        },
-      ),
-    );
+          main = authService.loggedIn
+                ? Dashboard(authService.user!)
+                : const Login();
+          },
+     ));
   }
 
   @override
@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: white,
         ),
-        home: MainLayout(child: Login()),
+        home: MainLayout(child: main),
       ),
     );
   }

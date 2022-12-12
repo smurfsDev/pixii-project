@@ -5,11 +5,15 @@ import 'package:http/http.dart' as http;
 import 'package:mobile/models/Role.dart';
 
 class AuthService with ChangeNotifier {
-  late User user;
+  late User? user = null;
   late String error;
   late String registerError;
   late String verifyError;
-  bool _loggedIn = false;
+  late bool _loggedIn = false;
+
+  AuthService() {
+    loadSettings();
+  }
 
   final _storage = const FlutterSecureStorage();
 
@@ -17,6 +21,35 @@ class AuthService with ChangeNotifier {
   set loggedIn(value) {
     _loggedIn = value;
     notifyListeners();
+  }
+
+
+  Future _saveToStorage(String key, String token) async {
+    var writeToken = await _storage.write(key: key, value: token);
+    // var readToken = await _storage.read(key: 'token');
+    //print(readToken);
+
+    return writeToken;
+  }
+
+  Future<String?> _getFromStorage(String key) async {
+    var writeToken = await _storage.read(key: key);
+    // var readToken = await _storage.read(key: 'token');
+    //print(readToken);
+
+    return writeToken;
+  }
+
+
+  Future loadSettings() async {
+    var token = await _getFromStorage('token');
+    var user = await _getFromStorage('user');
+    var loggedIn = await _storage.read(key: 'loggedIn');
+    if (token != null && user != null && loggedIn != null) {
+      this.user = User.fromJson(jsonDecode(user));
+      this._loggedIn = loggedIn == "false" ? false : true;
+      notifyListeners();
+    }
   }
 
   Future login(String username, String password) async {
@@ -33,10 +66,12 @@ class AuthService with ChangeNotifier {
       if (response.statusCode == 200) {
         final data = loginResponseFromJson(response.body);
         user = data.user;
-
+        _loggedIn = true;
         await _saveToStorage('token', data.token);
-        await _saveToStorage('user', jsonEncode(user.toJson()));
+        await _saveToStorage('user', jsonEncode(user?.toJson()));
+        await _saveToStorage('loggedIn', jsonEncode(_loggedIn));
         return true;
+        notifyListeners();
       } else {
         error = JsonDecoder().convert(response.body)['error'];
         error = error;
@@ -67,22 +102,6 @@ class AuthService with ChangeNotifier {
       registerError = error;
       return false;
     }
-  }
-
-  Future _saveToStorage(String key, String token) async {
-    var writeToken = await _storage.write(key: key, value: token);
-    // var readToken = await _storage.read(key: 'token');
-    //print(readToken);
-
-    return writeToken;
-  }
-
-  Future _getFromStorage(String key) async {
-    var writeToken = await _storage.read(key: key);
-    // var readToken = await _storage.read(key: 'token');
-    //print(readToken);
-
-    return writeToken;
   }
 
   Future<bool> logged() async {
