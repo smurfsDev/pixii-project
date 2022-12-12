@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:mobile/imports.dart';
+import 'package:mobile/main.dart';
 
 class NavDrawerDemo extends StatelessWidget {
   User user;
@@ -84,6 +85,24 @@ class NavDrawerDemo extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text(
+              "Logout",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            leading: const Icon(
+              Icons.logout,
+              color: white,
+            ),
+            onTap: () {
+              AuthService().logout().then((value) => {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MyApp()))
+                  });
             },
           ),
         ],
