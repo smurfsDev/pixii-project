@@ -73,7 +73,7 @@ export class AuthState {
 			isSuperAdmin: payload?.role.find((r:any)=>r.name == "Super Admin" && r.status == 1)?true:false,
 			isSAVManager: payload?.role.find((r:any)=>r.name == "SAV Manager" && r.status == 1)?true:false,
 			isSAVTechnician: payload?.role.find((r:any)=>r.name == "SAV Technician" && r.status == 1)?true:false,
-			isScooterOwner: payload?.role.find((r:any)=>r.name == "Scooter Owner" && r.status == 1)?true:false,
+			isScooterOwner: payload?.role.find((r:any)=>r.name == "Scooter Owner" )?true:false,
 		});
 	}
 
