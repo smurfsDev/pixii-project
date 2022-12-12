@@ -4,14 +4,18 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:mobile/imports.dart';
 
 class bottomNav extends StatefulWidget {
+  Function(int) callback;
+  bottomNav({required this.callback, super.key});
   @override
   // ignore: no_logic_in_create_state
   State<bottomNav> createState() => _bottomNav();
 }
 
 class _bottomNav extends State<bottomNav> {
+  _bottomNav();
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
+    widget.callback(index);
     setState(() {
       _selectedIndex = index;
     });
