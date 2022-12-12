@@ -31,7 +31,7 @@ export "package:mobile/utils/validators/password.dart";
   export 'package:mobile/ui/layout/main_layout.dart';
   export 'package:mobile/ui/pages/auth/register.dart';
   export 'package:mobile/ui/pages/auth/verify_email.dart';
-
+  export 'package:mobile/ui/pages/auth/reset_password.dart';
 
   // styles
   export 'package:mobile/ui/theme/colors.dart';

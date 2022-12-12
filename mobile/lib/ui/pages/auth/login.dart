@@ -124,7 +124,8 @@ class _LoginPageState extends State<Login> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            // Navigator.pushNamed(context, ForgotPassword.id);
+                                            Navigator.pushNamed(context,
+                                                ResetPassword.id);
                                           },
                                           child: Text(
                                             'Forgot Password?',
