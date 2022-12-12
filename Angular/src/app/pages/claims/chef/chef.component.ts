@@ -73,7 +73,7 @@ export class ChefComponent implements OnInit {
 		]
 	};
 	ngOnInit(): void {
-		this.authUser = this.store.selectSnapshot(state => state.AuthState.user);
+		// this.authUser = this.store.selectSnapshot(state => state.AuthState.user);
 		this.claims = [];
 		this.users = [];
 		this.claimsService.getClaims().subscribe((data: any) => {

@@ -1,0 +1,126 @@
+<app-navbar>
+
+	<div class="Mycontainer">
+		<div class="root">
+
+			<app-topbar></app-topbar>
+			<div class="board">
+				<div class="board-wrapper">
+
+				<div class="users">
+					<div class="users-count">
+						<span class="count">{{dataSource.data.length}}</span>
+					</div>
+					<div class="users-title m-lg-2">Users</div>
+				</div>
+				<div class="manipulation">
+					<div class="filter">
+						<div class="search">
+							<input matInput class="search-input" placeholder="  Search ..."
+								(keyup)="applySearch($event)" type="search" />
+							<mat-icon style="color:white" class="search-icon">search</mat-icon>
+						</div>
+						<div class="filter">
+							<div class="filter-select">
+								Filter By :
+								<div class="filterData">
+									Role
+									<mat-select (selectionChange)="applyFilterByRole($event)">
+										<mat-option *ngFor="let option of Roles" [value]="option.value">
+											{{option.name}}
+										</mat-option>
+									</mat-select>
+								</div>
+								<div class="filterData">
+									Status
+									<mat-select (selectionChange)="applyFilterByStatus($event)">
+										<mat-option *ngFor="let option of Status" [value]="option.value">
+											{{option.name}}
+										</mat-option>
+									</mat-select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="table">
+
+					<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+
+						<ng-container matColumnDef="name">
+							<th class="header" mat-header-cell *matHeaderCellDef> Name </th>
+							<td class="cell" mat-cell *matCellDef="let element">
+								<img class="avatar"
+									src="https://resize.elle.fr/article/var/plain_site/storage/images/loisirs/cinema/news/avatar-2-une-premiere-bande-annonce-en-mai-4010741/96462268-1-fre-FR/Avatar-2-une-premiere-bande-annonce-en-mai.jpg" />
+								{{element[0].user.name}}
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="role">
+							<th class="header" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription>
+								Role </th>
+							<td class="cell" mat-cell *matCellDef="let element"> {{element[0].role.name}} </td>
+						</ng-container>
+
+						<ng-container matColumnDef="email">
+							<th class="header" mat-header-cell *matHeaderCellDef> E-mail </th>
+							<td class="cell" mat-cell *matCellDef="let element"> {{element[0].user.email}} </td>
+						</ng-container>
+
+						<ng-container matColumnDef="status">
+							<th class="header" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription>
+								Status </th>
+							<td class="cell" mat-cell *matCellDef="let element">
+								<div class="status-{{element[0].status == 1 ? 'active' : 'inactive'}}">
+									{{element[0].status == 1 ? 'Active' : 'Inactive'}}
+								</div>
+							</td>
+						</ng-container>
+						<ng-container matColumnDef="actions">
+							<th class="header text-center" mat-header-cell *matHeaderCellDef> Actions </th>
+							<td class="cell" mat-cell *matCellDef="let element">
+								<div class="actions" *ngIf="element[0].role.name != 'Scooter Owner'">
+									<button class="action-btn"
+										(click)="rejectUser(element[0].user.id,element[0].role.id)"
+										[disabled]="element[0].status == 2 ? true : false">
+										<mat-icon class="icon-close">
+											close
+										</mat-icon></button>
+									<button class="action-btn"
+										(click)="acceptUser(element[0].user.id,element[0].role.id)"
+										[disabled]="element[0].status == 1 ? true : false">
+										<mat-icon class="icon-done">
+											done
+										</mat-icon></button>
+									<button class="action-btn" *ngIf="authUser?.role[0].name =='Super Admin'"
+										(click)="deleteUser(element[0].user.id,element[0].role.id)">
+										<mat-icon class="icon-delete">
+											delete
+										</mat-icon></button>
+								</div>
+								<div class="actions" *ngIf="element[0].role.name == 'Scooter Owner'">
+									<button class="action-btn" *ngIf="authUser?.role[0].name =='Super Admin'"
+										(click)="deleteUser(element[0].user.id,element[0].role.id)">
+										<mat-icon class="icon-delete">
+											delete
+										</mat-icon></button>
+									<div *ngIf="authUser?.role[0].name !='Super Admin'">
+										no actions
+									</div>
+								</div>
+							</td>
+						</ng-container>
+
+						<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+						<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+					</table>
+
+					<mat-paginator [pageSizeOptions]="[7, 14, 21]" showFirstLastButtons
+						aria-label="Select page of periodic elements">
+					</mat-paginator>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+</app-navbar>

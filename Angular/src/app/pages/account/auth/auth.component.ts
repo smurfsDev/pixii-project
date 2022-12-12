@@ -198,7 +198,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 	hide = true;
 	loginForm: FormGroup;
 	unauthenticated = false;
-	user: User = new User('', '', '', '', null);
+	user: User = new User('', '', '', '',null);
 	username = new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,10}$')]);
 	password = new FormControl('', [Validators.required,
 	Validators.minLength(8),
@@ -242,6 +242,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 			this.loginLoading = true;
 			this.LoginService.login(this.loginForm.value).subscribe((data: any) => {
 				this.user = data;
+        console.log(data);
 				this.store.dispatch([
 					new SetToken(data.token),
 					new SetUser(
@@ -250,7 +251,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 						new SetIsAuthenticated(true)
 					]);
 					this.loginLoading = false;
-					this.router.navigate(['/claims']);
+					this.router.navigate(['/']);
 			}, (error: any) => {
 				this.loginLoading = false;
 				this.unauthenticated = true;
