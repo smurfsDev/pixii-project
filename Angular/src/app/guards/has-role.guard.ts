@@ -29,7 +29,7 @@ export class HasRoleGuard implements CanActivate {
 		}
 		if (!isAuthorized) {
 			window.alert('you are not authorized');
-			this.router.navigate(['claims']);
+			this.router.navigate(['/']);
 
 		}
 		return isAuthorized || false;

@@ -9,8 +9,8 @@ export class AuthStateModel {
 	user: User | null | undefined;
 	isAdmin: boolean = false;
 	isSuperAdmin: boolean = false;
-	isSavManager: boolean = false;
-	isSavTechnician: boolean = false;
+	isSAVManager: boolean = false;
+	isSAVTechnician: boolean = false;
 	isScooterOwner: boolean = false;
 }
 
@@ -22,8 +22,8 @@ export class AuthStateModel {
 		user: null,
 		isAdmin: false,
 		isSuperAdmin: false,
-		isSavManager: false,
-		isSavTechnician: false,
+		isSAVManager: false,
+		isSAVTechnician: false,
 		isScooterOwner: false,
 	}
 })
@@ -55,8 +55,8 @@ export class AuthState {
 	}
 
 	@Selector()
-	static getIsSavManager({ isSavManager }: AuthStateModel) {
-		return isSavManager;
+	static getIsSAVManager({ isSAVManager }: AuthStateModel) {
+		return isSAVManager;
 	}
 
 	@Action(SetToken)
@@ -71,8 +71,8 @@ export class AuthState {
 			user: payload,
 			isAdmin: payload?.role.find((r:any)=>r.name == "Admin" && r.status == 1)?true:false,
 			isSuperAdmin: payload?.role.find((r:any)=>r.name == "Super Admin" && r.status == 1)?true:false,
-			isSavManager: payload?.role.find((r:any)=>r.name == "SAV Manager" && r.status == 1)?true:false,
-			isSavTechnician: payload?.role.find((r:any)=>r.name == "SAV Technician" && r.status == 1)?true:false,
+			isSAVManager: payload?.role.find((r:any)=>r.name == "SAV Manager" && r.status == 1)?true:false,
+			isSAVTechnician: payload?.role.find((r:any)=>r.name == "SAV Technician" && r.status == 1)?true:false,
 			isScooterOwner: payload?.role.find((r:any)=>r.name == "Scooter Owner" && r.status == 1)?true:false,
 		});
 	}
