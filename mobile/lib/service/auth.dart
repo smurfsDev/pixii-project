@@ -173,4 +173,40 @@ class AuthService with ChangeNotifier {
       return [];
     }
   }
+  Future<bool> ForgotPassword(String email) async {
+    final request = {'email': email};
+    try {
+      final response = await http.post(
+          Uri.parse('${Environment.apiUrl}/forgot_password'),
+          body: jsonEncode(request),
+          headers: {'Content-Type': 'application/json'});
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        verifyError = JsonDecoder().convert(response.body)['message'];
+        return false;
+      }
+    } catch (e) {
+      verifyError = e.toString();
+      return false;
+    }
+  }
+  Future<bool> ResetPassword(String email,String token,String password) async {
+    final request = {'email': email,'token': token,'password': password};
+    try {
+      final response = await http.post(
+          Uri.parse('${Environment.apiUrl}/reset_password'),
+          body: jsonEncode(request),
+          headers: {'Content-Type': 'application/json'});
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        verifyError = JsonDecoder().convert(response.body)['message'];
+        return false;
+      }
+    } catch (e) {
+      verifyError = e.toString();
+      return false;
+    }
+  }
 }
