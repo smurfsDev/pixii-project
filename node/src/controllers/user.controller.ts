@@ -8,3 +8,16 @@ export const getUsers = (req: Request, res: Response) => {
 		else return res.status(200).send(users);
 	});
 };
+
+
+export const findUserByUsername = (req: Request, res: Response) => {
+
+	User.findOne({ username: req.params.username }, (err: Error, user: any) => {
+		if (err) return res.status(500).send(err);
+		else if (!user) return res.status(404).send("User not found");
+		else
+			return res.status(200).send(user._id);
+	})
+
+
+};
