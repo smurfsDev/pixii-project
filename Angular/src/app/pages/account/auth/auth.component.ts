@@ -26,7 +26,8 @@ export class AuthComponent implements OnInit, AfterViewInit {
 			nameRegister: this.nameRegister,
 			passwordRegister: this.passwordRegister,
 			role: this.roleInputRegister,
-			confirmPasswordRegister: this.ConfirmPasswordRegister
+			confirmPasswordRegister: this.ConfirmPasswordRegister,
+			bikeIdRegister: this.bikeIdRegister
 		});
 
 		this.loginForm = this.formBuilder.group({
@@ -67,6 +68,20 @@ export class AuthComponent implements OnInit, AfterViewInit {
 		, checkPassword('ConfirmPasswordRegister', true)]);
 	ConfirmPasswordRegister = new FormControl('', [Validators.required, checkPassword('passwordRegister')]);
 	roleInputRegister = new FormControl('', [Validators.required]);
+	bikeIdRegister = new FormControl('',
+	this.roleInputRegister.value == "Scooter Owner"?
+		[Validators.required]
+		:[]
+		);
+	getBikeIdErrorMessageRegister() {
+		if (this.bikeIdRegister.touched) {
+			if (this.bikeIdRegister.hasError('required')) {
+				return 'You must enter a value';
+			}
+		}
+		return '';
+	}
+	
 	getNameErrorMessageRegister() {
 		if (this.nameRegister.touched) {
 			if (this.nameRegister.hasError('required')) {
@@ -167,8 +182,8 @@ export class AuthComponent implements OnInit, AfterViewInit {
 					username: this.registerForm.value.name,
 					password: this.registerForm.value.passwordRegister,
 					role: this.registerForm.value.role,
-					confirmPassword: this.registerForm.value.confirmPasswordRegister
-
+					confirmPassword: this.registerForm.value.confirmPasswordRegister,
+					scooterId: this.registerForm.value.bikeIdRegister
 
 				}
 			).subscribe((data: any) => {
@@ -184,6 +199,12 @@ export class AuthComponent implements OnInit, AfterViewInit {
 			this.passwordRegister.markAsTouched();
 			this.ConfirmPasswordRegister.markAsTouched();
 			this.roleInputRegister.markAsTouched();
+			this.nameRegister.markAsTouched();
+			if(this.roleInputRegister.value == "Scooter Owner"){
+				this.bikeIdRegister.markAsTouched();
+			}else{
+				this.bikeIdRegister.reset();
+			}
 		}
 	}
 	fetchRoles() {

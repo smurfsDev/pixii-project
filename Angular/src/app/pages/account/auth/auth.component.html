@@ -49,6 +49,16 @@
 								<mat-error *ngIf="roleInputRegister.invalid">{{getRoleErrorMessageRegister()}}
 								</mat-error>
 							</div>
+							<div class="form-outline mb-4" *ngIf="roleInputRegister.value == 'Scooter Owner'">
+								<label class="form-label">Bike id</label>
+								<div class="input-container">
+									<mat-icon class="icon col-4">electric_scooter</mat-icon>
+									<input class="input" matInput placeholder="Enter your bike id"
+										[formControl]="bikeIdRegister" required name="bikeid">
+								</div>
+								<mat-error *ngIf="bikeIdRegister.invalid">{{getBikeIdErrorMessageRegister()}}
+								</mat-error>
+							</div>
 							<div class="form-outline mb-4">
 								<label class="form-label">Password</label>
 								<div class="input-container">
