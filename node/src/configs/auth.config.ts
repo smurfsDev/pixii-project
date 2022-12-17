@@ -3,7 +3,7 @@ import User from "../models/user.model";
 
 
 export const fetchUser = async (req: Request, res: Response, next: NextFunction) => {
-	if (req.path.includes("role") || req.path.includes("register") ) {
+	if (req.path.includes("role") || req.path.includes("register") || req.path.includes("bike") ) {
 		next();
 	} else {
 	let token = req.header('AutorizationNode');
