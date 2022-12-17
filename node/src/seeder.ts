@@ -164,9 +164,9 @@ export const seed = async () => {
 	});
 
 	await bike3.save();
-	console.log(bike1._id);
-	console.log(bike2._id);
-	console.log(bike3._id);
+	// console.log(bike1._id);
+	// console.log(bike2._id);
+	// console.log(bike3._id);
 	
 
 	console.log('Seeding done');

@@ -147,6 +147,13 @@ public class JwtAuthenticationController {
 			item.put("status", HttpStatus.BAD_REQUEST.value());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
 		}
+		if (user.get("role").toString().equals("Scooter Owner")
+				&& (user.get("scooterId") == null || user.get("scooterId").toString().equals(""))) {
+			JSONObject item = new JSONObject();
+			item.put("message", "Please provide scooter id");
+			item.put("status", HttpStatus.BAD_REQUEST.value());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
+		}
 
 		appUser.setUsername(user.get("username").toString());
 		appUser.setPassword(WebSecurityConfig.passwordEncoder().encode(user.get("password").toString()));
@@ -166,8 +173,9 @@ public class JwtAuthenticationController {
 			userRole.get().setStatus(0);
 		}
 		if (user.get("role").toString().equals("Scooter Owner")) {
-			userRole.get().setStatus(0);
-			// user Authority is not set
+			UserRole ur = userRole.get();
+			ur.setStatus(1);
+			ur.setBike_id(user.get("scooterId").toString());
 
 		}
 		if (user.get("role").toString().equals("SAV Manager")) {
