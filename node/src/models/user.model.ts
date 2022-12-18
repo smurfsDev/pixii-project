@@ -16,7 +16,7 @@ let userSchema = new mongoose.Schema({
             },
 
             status: {
-                type: String,
+                type: Number,
                 required: true,
                 default: 0
             }

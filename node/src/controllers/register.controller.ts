@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import User from "../models/user.model";
 import Role from "../models/role.model";
 import roleController, { findRoleIdByName, findRoleIdByNameBody } from "./role.controller"
+import { findUserByUsername } from './user.controller';
 
 
 export const create = (req: Request, res: Response) => {
@@ -23,3 +24,20 @@ export const create = (req: Request, res: Response) => {
     })
 
 };
+
+export const accept = (req: Request, res: Response) => {
+
+    User.updateOne({ 'username': req.params.username }, {
+        '$set': {
+            'roles.$[].status': 1
+        }
+    }, (err: Error, user: any) => {
+        if (err) return res.status(500).send(err);
+        else if (!user) return res.status(404).send("User not found");
+        else {
+            return res.status(200).send(user);
+        }
+
+    })
+
+}
