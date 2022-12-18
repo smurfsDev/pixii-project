@@ -1,3 +1,4 @@
+import console from 'console';
 import { Request, Response } from 'express';
 import Role from "../models/role.model";
 
@@ -72,8 +73,18 @@ export const findRoleIdByName = (req: Request, res: Response) => {
         else return res.status(200).send(role._id);
     })
 }
+//find role by name
+export const findRoleIdByNameBody = (req: Request, res: Response) => {
+    console.log(req.body.role)
+    Role.findOne({ name: req.body.role }, (err: Error, role: any) => {
+        if (err) return res.status(500).send(err);
+        else if (!role) return res.status(404).send("Role not found");
+        else return res.status(200).send(role._id);
+    })
+}
 export default [
-    findRoleIdByName
+    findRoleIdByName,
+    findRoleIdByNameBody
 ]
 // export const getId = (req: Request, res: Response) => {
 

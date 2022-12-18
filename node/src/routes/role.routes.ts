@@ -1,4 +1,4 @@
-import { findAll, create, remove, findOne, findRoleIdByName } from '../controllers/role.controller';
+import { findAll, create, remove, findOne, findRoleIdByName, findRoleIdByNameBody } from '../controllers/role.controller';
 module.exports = (app: any) => {
 
 
@@ -17,6 +17,9 @@ module.exports = (app: any) => {
 
     //find role by name
     app.get("/node/role/findName/:name", findRoleIdByName);
+
+    //find role by name
+    app.post("/node/role/findNameBody", findRoleIdByNameBody);
 
 
 }
