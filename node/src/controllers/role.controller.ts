@@ -79,18 +79,12 @@ export const findRoleIdByNameBody = (req: Request, res: Response) => {
     Role.findOne({ name: req.body.role }, (err: Error, role: any) => {
         if (err) return res.status(500).send(err);
         else if (!role) return res.status(404).send("Role not found");
-        else return res.status(200).send(role._id);
+        else return role._id;
     })
 }
 export default [
     findRoleIdByName,
     findRoleIdByNameBody
 ]
-// export const getId = (req: Request, res: Response) => {
-
-//     let role = Role.findOne({ name: req.params.name });
-//     console.log(role);
-//     return res.status(200).send(role);
-// }
 
 
