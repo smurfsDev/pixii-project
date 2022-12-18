@@ -27,7 +27,7 @@ export const create = (req: Request, res: Response) => {
 
 export const accept = (req: Request, res: Response) => {
 
-    User.updateOne({ 'username': req.params.username }, {
+    User.updateOne({ 'username': req.params.username, 'roles.$[]._id': req.params.role }, {
         '$set': {
             'roles.$[].status': 1
         }
