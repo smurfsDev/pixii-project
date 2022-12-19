@@ -297,16 +297,19 @@ public class JwtAuthenticationController {
 		if (isSuperAdmin == true && userDeclinedRole.equals("Admin") && isAdmin == false) {
 			rejectUser(userRole);
 			item.put("message", "admin rejected");
+			registerNode.refuse(user.getUsername(), userDeclinedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userDeclinedRole.equals("SAV Manager")
 				&& (isSuperAdmin || isAdmin)) {
 			rejectUser(userRole);
 			item.put("message", "SAV Manager rejected");
+			registerNode.refuse(user.getUsername(), userDeclinedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userDeclinedRole.equals("SAV Technician")
 				&& (isSuperAdmin || isAdmin)) {
 			rejectUser(userRole);
 			item.put("message", "SAV Technician rejected");
+			registerNode.refuse(user.getUsername(), userDeclinedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}
 		item.put("message", "You are not allowed to accept this role");

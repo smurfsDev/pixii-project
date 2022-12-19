@@ -24,4 +24,7 @@ public interface RegisterNode {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/node/accept/{username}/{role}", produces = "application/json")
     User accept(@PathVariable("username") String username, @PathVariable("role") String role);
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/node/refuse/{username}/{role}", produces = "application/json")
+    User refuse(@PathVariable("username") String username, @PathVariable("role") String role);
 }
