@@ -232,6 +232,7 @@ public class JwtAuthenticationController {
 			item.put("status", HttpStatus.BAD_REQUEST.value());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
 		}
+
 		UserRole userRole = userRoleOptional.get();
 		String userAcceptedRole = userRole.getRole().getName();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -248,19 +249,25 @@ public class JwtAuthenticationController {
 		if (isSuperAdmin == true && userAcceptedRole.equals("Admin") && isAdmin == false) {
 			acceptUser(userRole);
 			item.put("message", "admin accepted");
+			System.out.println("userAcceptedRole");
+			registerNode.accept(user.getUsername(), userAcceptedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userAcceptedRole.equals("SAV Manager") && (isSuperAdmin || isAdmin)) {
 			acceptUser(userRole);
 			item.put("message", "SAV Manager accepted");
+			System.out.println("userAcceptedRole");
+			registerNode.accept(user.getUsername(), userAcceptedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userAcceptedRole.equals("SAV Technician")
 				&& (isSuperAdmin || isAdmin)) {
 			acceptUser(userRole);
 			item.put("message", "SAV Technician accepted");
+			System.out.println("userAcceptedRole");
+			registerNode.accept(user.getUsername(), userAcceptedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}
 		item.put("message", "You are not allowed to accept this role");
-		// registerNode.accept(user.getUsername(), userAcceptedRole);
+
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(item);
 	}
 
