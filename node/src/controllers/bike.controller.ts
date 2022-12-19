@@ -8,3 +8,12 @@ export const CheckExist = (req: Request, res: Response) => {
 		else return res.status(200).send(true);
 	});
 };
+
+// find by id
+export const FindById = (req: Request, res: Response) => {
+	BikeData.findOne({id:req.params.id}, (err: Error, bike: any) => {
+		if (err) return res.status(500).send();
+		if (!bike) return res.status(404).send();
+		return res.status(200).send(bike);
+	});
+};
