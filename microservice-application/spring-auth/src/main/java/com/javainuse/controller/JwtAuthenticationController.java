@@ -181,9 +181,11 @@ public class JwtAuthenticationController {
 		newUserNode.put("name", user.get("name").toString());
 		newUserNode.put("email", user.get("email").toString());
 		newUserNode.put("username", user.get("username").toString());
-		newUserNode.put("roles", user.get("role").toString());
+		newUserNode.put("role", user.get("role").toString());
+		// newUserNode.put("roles", user.get("role").toString());
 		newUserNode.put("password", user.get("password").toString());
 		newUserNode.put("status", userRole.get().getStatus());
+		System.out.println(newUserNode);
 		User userNode = registerNode.register(newUserNode);
 
 		try {
@@ -258,7 +260,7 @@ public class JwtAuthenticationController {
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}
 		item.put("message", "You are not allowed to accept this role");
-		registerNode.accept(user.getUsername(), userAcceptedRole);
+		// registerNode.accept(user.getUsername(), userAcceptedRole);
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(item);
 	}
 

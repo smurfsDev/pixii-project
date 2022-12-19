@@ -22,6 +22,8 @@ public interface RegisterNode {
     @RequestMapping(method = RequestMethod.POST, value = "/node/register", produces = "application/json")
     User register(@RequestBody JSONObject user);
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/node/accept/{username}/{role}", produces = "application/json")
-    User accept(@PathVariable("username") String username, @PathVariable("role") String role);
+    // @RequestMapping(method = RequestMethod.PUT, value =
+    // "/node/accept/{username}/{role}", produces = "application/json")
+    // User accept(@PathVariable("username") String username, @PathVariable("role")
+    // String role);
 }
