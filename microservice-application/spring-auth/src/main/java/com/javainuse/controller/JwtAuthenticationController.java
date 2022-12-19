@@ -99,6 +99,7 @@ public class JwtAuthenticationController {
 					public String name = role.getName();
 					UserRole userRole = userRoleRepository.findByUserIdAndRoleId(user.getId(), role.getId()).get();
 					public Integer status = userRole.getStatus();
+					public String bike_id = userRole.getBike_id();
 				}).collect(Collectors.toList());
 			};
 

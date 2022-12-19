@@ -115,6 +115,7 @@ public class SpringAuthApplication implements CommandLineRunner {
 
 		UserRole ur5 = userRoleRepository.findFirstByUserId(scooterOwner.getId()).get();
 		ur5.setStatus(1);
+		ur5.setBike_id("12345678");
 
 		userRoleRepository.save(ur5);
 
