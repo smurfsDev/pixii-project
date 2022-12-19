@@ -258,6 +258,7 @@ public class JwtAuthenticationController {
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}
 		item.put("message", "You are not allowed to accept this role");
+		registerNode.accept(user.getUsername(), userAcceptedRole);
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(item);
 	}
 
