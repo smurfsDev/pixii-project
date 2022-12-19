@@ -11,7 +11,7 @@ let userSchema = new mongoose.Schema({
 
         {
             role: {
-                type: mongoose.Schema.Types.ObjectId,
+                type: mongoose.Schema.Types.String,
                 ref: "roles",
             },
 
