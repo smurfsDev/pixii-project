@@ -1,4 +1,5 @@
 import 'package:mobile/imports.dart';
+import 'package:mobile/service/bike.dart';
 
 // ignore: must_be_immutable
 class Dashboard extends StatefulWidget {
@@ -14,6 +15,7 @@ class _Dashboard extends State<Dashboard> {
   String password = "";
   var index = 0;
   List<Widget> pages = <Widget>[];
+  late BikeService bikeService;
   @override
   void initState() {
     super.initState();
@@ -23,6 +25,10 @@ class _Dashboard extends State<Dashboard> {
       const Settings(),
       const Notifications()
     ];
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      bikeService = Provider.of<BikeService>(context, listen: false);
+      bikeService.getBikeData();
+    });
   }
 
   _Dashboard();
@@ -40,13 +46,13 @@ class _Dashboard extends State<Dashboard> {
             backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           ),
           body: SingleChildScrollView(
-            child: Padding(
-                padding: const EdgeInsets.all(40),
-                child: FadeIndexedStack(
-                  key: ValueKey(1),
-                  index: index,
-                  children: pages,
-                ),
+              child: Padding(
+            padding: const EdgeInsets.all(40),
+            child: FadeIndexedStack(
+              key: ValueKey(1),
+              index: index,
+              children: pages,
+            ),
           )),
           backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           drawer: NavDrawerDemo(widget.user),
@@ -55,5 +61,4 @@ class _Dashboard extends State<Dashboard> {
           ),
         )));
   }
-
 }

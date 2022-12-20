@@ -1,4 +1,5 @@
 import "package:mobile/imports.dart";
+import 'package:mobile/service/bike.dart';
 
 class Managment extends StatefulWidget {
   const Managment({Key? key}) : super(key: key);
@@ -17,6 +18,8 @@ class _ManagmentState extends State<Managment> {
 
   @override
   Widget build(BuildContext context) {
+    var bikeService = Provider.of<BikeService>(context, listen: false);
+    var bike = bikeService.bikeData;
     return Column(mainAxisSize: MainAxisSize.max, children: [
       DecoratedBox(
         decoration: BoxDecoration(
@@ -57,7 +60,8 @@ class _ManagmentState extends State<Managment> {
                 onTap: () => setState(() {
                   titleMenu = "Battery level";
                   image = "assets/images/battery_level.png";
-                  messagePopUpMenu = "90%";
+                  messagePopUpMenu =
+                      (bike?.batteryHistory.last['value'][1].toString() ?? '0').toString()+"%";
                   iconPopUpElement = Icons.battery_5_bar;
                 }),
               ),
@@ -121,4 +125,3 @@ class _ManagmentState extends State<Managment> {
     ]);
   }
 }
-

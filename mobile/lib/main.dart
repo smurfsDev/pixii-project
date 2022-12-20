@@ -1,4 +1,5 @@
 import "package:mobile/imports.dart";
+import 'package:mobile/service/bike.dart';
 import 'package:mobile/ui/pages/home/dashboard.dart';
 
 void main() async {
@@ -33,6 +34,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider(create: (_) => BikeService()),
       ],
       child: MaterialApp(
         routes: {
