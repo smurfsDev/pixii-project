@@ -36,10 +36,10 @@ import { MgUsersComponent } from './pages/users/superAdmin/mg-users/mg-users.com
 
 import { ResendVerificationComponent } from './pages/account/resend-verification/resend-verification.component';
 import { UserComponent } from './pages/claims/user/user.component';
-
+import { MapDashboardComponent } from './pages/home/map-dashboard/map-dashboard.component';
 @NgModule({
 	imports: [
-		NgxsModule.forRoot([AuthState]),
+    NgxsModule.forRoot([AuthState]),
 		NgxsStoragePluginModule.forRoot(),
 		BrowserModule,
 		RouterModule.forRoot(AppRoutes),
@@ -49,11 +49,11 @@ import { UserComponent } from './pages/claims/user/user.component';
 		MaterialModule,
 		ReactiveFormsModule,
 		NgxEchartsModule.forRoot({
-			echarts: () => import('echarts')
-		  })
+      echarts: () => import('echarts')
+    }),
 	],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent, MapDashboardComponent],
 	providers: [
 		{
 			provide: HTTP_INTERCEPTORS,
