@@ -54,18 +54,18 @@
                   </div>
                 </div>
                 <div class="col-3"><img src="../../../assets/moto.png" height="150px"></div>
-                <div class="col-md-3 battery-container">
-                  <h1 style="font-size:18px;margin-bottom: 0;">Battery</h1>
-                  <app-battery></app-battery>
-                  <div class="mb-4"></div>
-                </div>
+							<div class="col-md-3 battery-container">
+								<h1 style="font-size:18px;margin-bottom: 0;">Battery</h1>
+								<app-battery [percentage]="percentage"></app-battery>
+								<div class="mb-4"></div>
+							</div>
 
 
               </div>
             </div>
             <div class="card" style="height:367px">
               <div *ngIf="vehicle">
-                <app-chart-battery-usage></app-chart-battery-usage>
+                <app-chart-battery-usage [data]="BikeData?.BatteryHistory??[]"></app-chart-battery-usage>
               </div>
               <div *ngIf="location">
                 <app-map-dashboard></app-map-dashboard>

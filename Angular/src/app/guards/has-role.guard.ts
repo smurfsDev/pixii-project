@@ -22,14 +22,19 @@ export class HasRoleGuard implements CanActivate {
 		
 		for (var rid in route.data['role']) {
 			var r = route.data['role'][rid];
-			if (authState["is" + r[0].toUpperCase() + r.slice(1).replace(" ", "")]) {
+			if (r=="Scooter Owner" ) {
+				if (authState.isScooterOwner.isScooterOwner === true){
+					isAuthorized = true;
+					break;
+				}
+			} else if (authState["is" + r[0].toUpperCase() + r.slice(1).replace(" ", "")]) {
 				isAuthorized = true;
 				break;
 			}
 		}
 		if (!isAuthorized) {
 			window.alert('you are not authorized');
-			this.router.navigate(['/']);
+			this.router.navigate(['/auth']);
 
 		}
 		return isAuthorized || false;

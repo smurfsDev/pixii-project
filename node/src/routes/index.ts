@@ -11,6 +11,7 @@ require('./status.routes')(router);
 require('./register.routes')(router);
 require('./role.routes')(router);
 require('./users.routes')(router);
+require('./bike.routes')(router);
 
 export default router;
 
