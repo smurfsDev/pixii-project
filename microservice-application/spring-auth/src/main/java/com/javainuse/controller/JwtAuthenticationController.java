@@ -250,20 +250,20 @@ public class JwtAuthenticationController {
 			acceptUser(userRole);
 			item.put("message", "admin accepted");
 			System.out.println("userAcceptedRole");
-			registerNode.accept(user.getUsername(), userAcceptedRole);
+			registerNode.accept(userRole.getUser().getUsername(), userAcceptedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userAcceptedRole.equals("SAV Manager") && (isSuperAdmin || isAdmin)) {
 			acceptUser(userRole);
 			item.put("message", "SAV Manager accepted");
 			System.out.println("userAcceptedRole");
-			registerNode.accept(user.getUsername(), userAcceptedRole);
+			registerNode.accept(userRole.getUser().getUsername(), userAcceptedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userAcceptedRole.equals("SAV Technician")
 				&& (isSuperAdmin || isAdmin)) {
 			acceptUser(userRole);
 			item.put("message", "SAV Technician accepted");
 			System.out.println("userAcceptedRole");
-			registerNode.accept(user.getUsername(), userAcceptedRole);
+			registerNode.accept(userRole.getUser().getUsername(), userAcceptedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}
 		item.put("message", "You are not allowed to accept this role");
@@ -297,19 +297,19 @@ public class JwtAuthenticationController {
 		if (isSuperAdmin == true && userDeclinedRole.equals("Admin") && isAdmin == false) {
 			rejectUser(userRole);
 			item.put("message", "admin rejected");
-			registerNode.refuse(user.getUsername(), userDeclinedRole);
+			registerNode.refuse(userRole.getUser().getUsername(), userDeclinedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userDeclinedRole.equals("SAV Manager")
 				&& (isSuperAdmin || isAdmin)) {
 			rejectUser(userRole);
 			item.put("message", "SAV Manager rejected");
-			registerNode.refuse(user.getUsername(), userDeclinedRole);
+			registerNode.refuse(userRole.getUser().getUsername(), userDeclinedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userDeclinedRole.equals("SAV Technician")
 				&& (isSuperAdmin || isAdmin)) {
 			rejectUser(userRole);
 			item.put("message", "SAV Technician rejected");
-			registerNode.refuse(user.getUsername(), userDeclinedRole);
+			registerNode.refuse(userRole.getUser().getUsername(), userDeclinedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}
 		item.put("message", "You are not allowed to accept this role");
