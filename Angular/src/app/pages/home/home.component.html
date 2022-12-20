@@ -1,147 +1,152 @@
 <app-navbar>
 	<app-topbar (value)="values($event)" ></app-topbar>
-		<div class="board">
-			<div class="container">
-				<div class="board-wrapper ">
-					<div class="card">
-						<h1 class="card-header" style="font-size:bold ;">Shadow</h1>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="pb-3">
-									<div class="row">
 
-										<div class="col-md-6"> <br />
-											<div class="item">
-												<p>Your motorcycle</p>
+      <div class="board">
+        <div *ngIf="!controlPanel">
+        <div class="container">
+          <div class="board-wrapper">
+            <div class="card">
+              <h1 class="card-header" style="font-size:bold ;">Shadow</h1>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="pb-3">
+                    <div class="row">
 
-											</div>
+                      <div class="col-md-6"> <br />
+                        <div class="item">
+                          <p>Your motorcycle</p>
 
-										</div>
+                        </div>
 
-										<div class="col-md-6"> <br />
-											<div class="item">
-												<mat-icon style="padding-top: 3px;" class="icon">pin_drop</mat-icon>
+                      </div>
 
-												<p>Your motorcycle</p>
-												<!-- <mat-icon class="menu-button" [ngClass]="{'rotated' :
-												showSubmenu}" *ngIf="isExpanded ||
-												   isShowing" style="color: white; " class="float-right">expand_more</mat-icon> -->
-											</div>
+                      <div class="col-md-6"> <br />
+                        <div class="item">
+                          <mat-icon style="padding-top: 3px;" class="icon">pin_drop</mat-icon>
 
-
-										</div>
-									</div>
-								</div>
-								<div class="row">
-
-									<div class="col-md-6">
-										<div class="item">
-											<mat-icon style="padding-top: 4px;" class="icon">settings</mat-icon>
-											<p>Your motorcycle</p>
-										</div>
-
-									</div>
-									<div class="col-md-6">
-										<div class="item">
-											<mat-icon style="padding-top: 4px;" class="icon">
-												notifications</mat-icon>
-											<p>Your motorcycle</p>
-										</div>
-
-									</div>
-								</div>
-							</div>
-							<div class="col-3"><img src="../../../assets/moto.png" height="150px"></div>
-							<div class="col-md-3 battery-container">
-								<h1 style="font-size:18px;margin-bottom: 0;">Battery</h1>
-								<app-battery></app-battery>
-								<div class="mb-4"></div>
-							</div>
+                          <p>Your motorcycle</p>
+                          <!-- <mat-icon class="menu-button" [ngClass]="{'rotated' :
+                          showSubmenu}" *ngIf="isExpanded ||
+                             isShowing" style="color: white; " class="float-right">expand_more</mat-icon> -->
+                        </div>
 
 
-						</div>
-					</div>
-					<div class="card" style="height:367px">
-            <div *ngIf="vehicle">
-              <app-chart-battery-usage></app-chart-battery-usage>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+
+                    <div class="col-md-6">
+                      <div class="item">
+                        <mat-icon style="padding-top: 4px;" class="icon">settings</mat-icon>
+                        <p>Your motorcycle</p>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="item">
+                        <mat-icon style="padding-top: 4px;" class="icon">
+                          notifications</mat-icon>
+                        <p>Your motorcycle</p>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3"><img src="../../../assets/moto.png" height="150px"></div>
+                <div class="col-md-3 battery-container">
+                  <h1 style="font-size:18px;margin-bottom: 0;">Battery</h1>
+                  <app-battery></app-battery>
+                  <div class="mb-4"></div>
+                </div>
+
+
+              </div>
             </div>
-            <div *ngIf="location">
-              <app-map-dashboard></app-map-dashboard>
+            <div class="card" style="height:367px">
+              <div *ngIf="vehicle">
+                <app-chart-battery-usage></app-chart-battery-usage>
+              </div>
+              <div *ngIf="location">
+                <app-map-dashboard></app-map-dashboard>
+              </div>
             </div>
-					</div>
 
-				</div>
+          </div>
 
-				<div class="support card  gradient-custom-2">
+          <div class="support card  gradient-custom-2">
 
-					<span class="login100-form-title p-b-26">
-						Support
-					</span>
-					<br /><br />
-					<div class="wrap-input100 validate-input">
-						<span class="input-form">Title</span>
-						<input class="input100 myInput" type="text" [formControl]="claimTitle"  name="Title">
-						<mat-error style="margin-left:15px;" *ngIf="claimTitle.invalid && (claimTitle.dirty || claimTitle.touched)">
-							<span *ngIf="claimTitle.errors && claimTitle.errors['required']">
-								Title is required
-							</span>
-							<span *ngIf="claimTitle.errors && claimTitle.errors['minlength']">
-								Title must be at least 3 characters long.
-							</span>
-						</mat-error>
+            <span class="login100-form-title p-b-26">
+              Support
+            </span>
+            <br /><br />
+            <div class="wrap-input100 validate-input">
+              <span class="input-form">Title</span>
+              <input class="input100 myInput" type="text" [formControl]="claimTitle"  name="Title">
+              <mat-error style="margin-left:15px;" *ngIf="claimTitle.invalid && (claimTitle.dirty || claimTitle.touched)">
+                <span *ngIf="claimTitle.errors && claimTitle.errors['required']">
+                  Title is required
+                </span>
+                <span *ngIf="claimTitle.errors && claimTitle.errors['minlength']">
+                  Title must be at least 3 characters long.
+                </span>
+              </mat-error>
 
-					</div>
-					<div class="wrap-input100 validate-input">
-						<span class="input-form">Subject</span>
-						<input class="input100 myInput" [formControl]="claimSubject" type="text"  name="Subject">
-						<mat-error style="margin-left:15px;" *ngIf="claimSubject.invalid && (claimSubject.dirty || claimSubject.touched)">
-							<span *ngIf="claimSubject.errors && claimSubject.errors['required']">
-								Subject is required
-							</span>
-							<span *ngIf="claimSubject.errors && claimSubject.errors['minlength']">
-								Subject must be at least 3 characters long.
-							</span>
-						</mat-error>
-					</div>
-					<div class="wrap-input100 validate-input">
-						<span class="input-form  subject-input">Message</span>
-						<textarea id="w3review" class="input100 myInput" [formControl]="claimMessage"  name="w3review" rows="4" cols="100"
-							style="height: 150px;"></textarea>
-						<mat-error style="margin-left:15px;" *ngIf="claimMessage.invalid && (claimMessage.dirty || claimMessage.touched)">
-							<span *ngIf="claimMessage.errors && claimMessage.errors['required']">
-								Message is required
-							</span>
-							<span *ngIf="claimMessage.errors && claimMessage.errors['minlength']">
-								Message must be at least 3 characters long.
-							</span>
-						</mat-error>
+            </div>
+            <div class="wrap-input100 validate-input">
+              <span class="input-form">Subject</span>
+              <input class="input100 myInput" [formControl]="claimSubject" type="text"  name="Subject">
+              <mat-error style="margin-left:15px;" *ngIf="claimSubject.invalid && (claimSubject.dirty || claimSubject.touched)">
+                <span *ngIf="claimSubject.errors && claimSubject.errors['required']">
+                  Subject is required
+                </span>
+                <span *ngIf="claimSubject.errors && claimSubject.errors['minlength']">
+                  Subject must be at least 3 characters long.
+                </span>
+              </mat-error>
+            </div>
+            <div class="wrap-input100 validate-input">
+              <span class="input-form  subject-input">Message</span>
+              <textarea id="w3review" class="input100 myInput" [formControl]="claimMessage"  name="w3review" rows="4" cols="100"
+                style="height: 150px;"></textarea>
+              <mat-error style="margin-left:15px;" *ngIf="claimMessage.invalid && (claimMessage.dirty || claimMessage.touched)">
+                <span *ngIf="claimMessage.errors && claimMessage.errors['required']">
+                  Message is required
+                </span>
+                <span *ngIf="claimMessage.errors && claimMessage.errors['minlength']">
+                  Message must be at least 3 characters long.
+                </span>
+              </mat-error>
 
-					</div>
-					<button class="btn btn-primary"
-						(click)="createClaim()"
-						style="width:50% ;border-radius: 15px; margin-left:80px ; margin-bottom: 15px;display:flex;justify-content:center;align-items:center;"
-						type="submit">
-						<span *ngIf="!claimSendingLoading">
-							Send
-						</span>
-						<span *ngIf="claimSendingLoading">
-							<mat-spinner [diameter]="20" [strokeWidth]="4"></mat-spinner>
-						</span>
-					</button>
-
+            </div>
+            <button class="btn btn-primary"
+              (click)="createClaim()"
+              style="width:50% ;border-radius: 15px; margin-left:80px ; margin-bottom: 15px;display:flex;justify-content:center;align-items:center;"
+              type="submit">
+              <span *ngIf="!claimSendingLoading">
+                Send
+              </span>
+              <span *ngIf="claimSendingLoading">
+                <mat-spinner [diameter]="20" [strokeWidth]="4"></mat-spinner>
+              </span>
+            </button>
 
 
-				</div>
-			</div>
-			<div class="buttons">
-				<button class="btn btn-primary"
-					style="width:50% ;border-radius: 15px; margin:60px ; margin-bottom: 15px;"
-					type="submit">S.O.S</button>
-				<button class="btn btn-primary"
-					style="width:50% ;border-radius: 15px; margin:60px ; margin-bottom: 15px;" type="submit"></button>
-				<button class="btn btn-primary"
-					style="width:50% ;border-radius: 15px; margin:60px ; margin-bottom: 15px;" type="submit"></button>
 
-			</div>
-		</div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="btn btn-primary"
+            style="width:50% ;border-radius: 15px; margin:60px ; margin-bottom: 15px;"
+            type="submit">S.O.S</button>
+          <button class="btn btn-primary"
+            style="width:50% ;border-radius: 15px; margin:60px ; margin-bottom: 15px;" type="submit"></button>
+          <button class="btn btn-primary"
+            style="width:50% ;border-radius: 15px; margin:60px ; margin-bottom: 15px;" type="submit"></button>
+        </div>
+      </div>
+      <div *ngIf="controlPanel">
+        <app-control-pannel></app-control-pannel>
+      </div>
+    </div>
 </app-navbar>

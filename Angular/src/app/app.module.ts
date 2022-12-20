@@ -37,6 +37,7 @@ import { MgUsersComponent } from './pages/users/superAdmin/mg-users/mg-users.com
 import { ResendVerificationComponent } from './pages/account/resend-verification/resend-verification.component';
 import { UserComponent } from './pages/claims/user/user.component';
 import { MapDashboardComponent } from './pages/home/map-dashboard/map-dashboard.component';
+import { ControlPannelComponent } from './pages/home/control-pannel/control-pannel.component';
 @NgModule({
 	imports: [
     NgxsModule.forRoot([AuthState]),
@@ -53,7 +54,7 @@ import { MapDashboardComponent } from './pages/home/map-dashboard/map-dashboard.
     }),
 	],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent, MapDashboardComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent, MapDashboardComponent, ControlPannelComponent],
 	providers: [
 		{
 			provide: HTTP_INTERCEPTORS,
