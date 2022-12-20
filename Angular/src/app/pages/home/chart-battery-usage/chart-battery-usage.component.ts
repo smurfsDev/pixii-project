@@ -37,12 +37,14 @@ export class ChartBatteryUsageComponent implements OnInit, OnChanges {
 			},
 			xAxis: {
 				type: 'time',
+				name: 'Date',
 				splitLine: {
 					show: false
 				},
 			},
 			yAxis: {
 				type: 'value',
+				name: 'Battery Level',
 				boundaryGap: [0, '100%'],
 				splitLine: {
 					show: false
