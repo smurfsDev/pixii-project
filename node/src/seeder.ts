@@ -133,6 +133,8 @@ export const seed = async () => {
 		TheftState: false,
 		SystemSOS: false,
 		UserSOS: false,
+		AlarmState: false,
+		LightState: false,
 	});
 	await bike1.save();
 
@@ -157,6 +159,8 @@ export const seed = async () => {
 		TheftState: false,
 		SystemSOS: false,
 		UserSOS: false,
+		AlarmState: false,
+		LightState: false,
 	});
 
 	await bike2.save();
@@ -182,6 +186,8 @@ export const seed = async () => {
 		TheftState: false,
 		SystemSOS: false,
 		UserSOS: false,
+		AlarmState: false,
+		LightState: false,
 	});
 
 	await bike3.save();
