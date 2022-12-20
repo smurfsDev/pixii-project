@@ -1,12 +1,10 @@
 <app-navbar>
-	<app-topbar></app-topbar>
-	<div>
+	<app-topbar (value)="values($event)" ></app-topbar>
 		<div class="board">
 			<div class="container">
 				<div class="board-wrapper ">
-					<div class="card ">
+					<div class="card">
 						<h1 class="card-header" style="font-size:bold ;">Shadow</h1>
-
 						<div class="row">
 							<div class="col-md-6">
 								<div class="pb-3">
@@ -25,8 +23,8 @@
 												<mat-icon style="padding-top: 3px;" class="icon">pin_drop</mat-icon>
 
 												<p>Your motorcycle</p>
-												<!-- <mat-icon class="menu-button" [ngClass]="{'rotated' : 
-												showSubmenu}" *ngIf="isExpanded || 
+												<!-- <mat-icon class="menu-button" [ngClass]="{'rotated' :
+												showSubmenu}" *ngIf="isExpanded ||
 												   isShowing" style="color: white; " class="float-right">expand_more</mat-icon> -->
 											</div>
 
@@ -64,8 +62,12 @@
 						</div>
 					</div>
 					<div class="card" style="height:367px">
-						<h2 class="card-header" style="font-size:bold ;">Battery usage</h2>
-						<app-chart-battery-usage></app-chart-battery-usage>
+            <div *ngIf="vehicle">
+              <app-chart-battery-usage></app-chart-battery-usage>
+            </div>
+            <div *ngIf="location">
+              <app-map-dashboard></app-map-dashboard>
+            </div>
 					</div>
 
 				</div>
@@ -130,11 +132,8 @@
 
 
 				</div>
-
-
 			</div>
-
-			<div class="buttons ">
+			<div class="buttons">
 				<button class="btn btn-primary"
 					style="width:50% ;border-radius: 15px; margin:60px ; margin-bottom: 15px;"
 					type="submit">S.O.S</button>
@@ -144,16 +143,5 @@
 					style="width:50% ;border-radius: 15px; margin:60px ; margin-bottom: 15px;" type="submit"></button>
 
 			</div>
-
-
 		</div>
-
-
-
-
-
-
-	</div>
-
-
 </app-navbar>

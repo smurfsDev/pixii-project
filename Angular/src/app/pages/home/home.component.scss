@@ -7,6 +7,8 @@
 	min-width: 0;
 	min-height: 0;
 	width: 100%;
+  background-color: $main-component-color;
+  border-top-left-radius: 9px;
 }
 
 .myInput{
@@ -25,8 +27,8 @@
 	flex-direction: column;
 	justify-content: left;
 	flex-grow: 1;
-	overflow-x: auto;
-	background-color: $main-component-color;
+	// overflow-x: auto;
+	// background-color: $main-component-color;
 	// border-radius: 9px;
 	width: 70%;
 }
@@ -36,22 +38,17 @@
 	flex-direction: row;
 	justify-content: center;
 	flex-grow: 0;
-	background-color: $main-component-color;
-	border-top-left-radius: 9px;
+	// background-color: $main-component-color;
 
 }
 
 .card {
 	text-align: left;
 	// width: 60%;
-	background-color: black;
 	color: white;
 	border: 0ch;
-	margin-left: 15px;
-	margin-right: 15px;
-	margin-top: 15px;
-	margin-bottom: 15px;
-	background: #29375B;
+	margin: 15px;
+
 
 	/* Chrome 10-25, Safari 5.1-6 */
 	background: -webkit-linear-gradient(to right, #1f273a, #191d22);
