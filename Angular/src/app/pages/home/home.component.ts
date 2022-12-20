@@ -71,7 +71,11 @@ export class HomeComponent implements OnInit {
 		authState["isScooterOwner"].scooterId
 	).subscribe((data:Bike) => {
 		this.BikeData = data;
-		console.log(this.BikeData);
+		if (this.BikeData.BatteryHistory.length >0){
+			this.percentage = data.BatteryHistory[data.BatteryHistory.length-1].value[1];
+		}else{
+			this.percentage = 0;
+		}
 	});
   }
 
