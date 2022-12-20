@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "^14.2.12",
     "@angular/router": "^14.2.12",
     "@asymmetrik/ngx-leaflet": "^14.0.0",
+    "@ionic-native/core": "^5.36.0",
+    "@ionic-native/geolocation": "^5.36.0",
     "@ng-bootstrap/ng-bootstrap": "^13.1.0",
     "@ngxs/devtools-plugin": "^3.7.5",
     "@ngxs/storage-plugin": "^3.7.5",

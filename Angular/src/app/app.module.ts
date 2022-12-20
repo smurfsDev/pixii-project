@@ -38,6 +38,8 @@ import { ResendVerificationComponent } from './pages/account/resend-verification
 import { UserComponent } from './pages/claims/user/user.component';
 import { MapDashboardComponent } from './pages/home/map-dashboard/map-dashboard.component';
 import { ControlPannelComponent } from './pages/home/control-pannel/control-pannel.component';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 @NgModule({
 	imports: [
     NgxsModule.forRoot([AuthState]),
@@ -60,7 +62,8 @@ import { ControlPannelComponent } from './pages/home/control-pannel/control-pann
 			provide: HTTP_INTERCEPTORS,
 			useClass: HttpInterceptorService,
 			multi: true
-		}
+		},
+    Geolocation
 	],
 	bootstrap: [AppComponent],
 })
