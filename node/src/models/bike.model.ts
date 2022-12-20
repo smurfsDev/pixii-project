@@ -30,6 +30,8 @@ let BikeDataSchema = new mongoose.Schema({
 	TheftState: { type: Boolean, required: true },
 	SystemSOS: { type: Boolean, required: true },
 	UserSOS: { type: Boolean, required: true },
+	LightState: { type: Boolean, required: true },
+	AlarmState: { type: Boolean, required: true },
 });
 
 BikeDataSchema.plugin(mongoosePaginate)

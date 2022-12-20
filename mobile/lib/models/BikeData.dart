@@ -39,6 +39,8 @@ class BikeData {
 	late bool TheftState;
 	late bool SystemSOS;
 	late bool UserSOS;
+  late bool AlarmState;
+  late bool LightState;
 
   BikeData({
     required this.id,
@@ -54,6 +56,8 @@ class BikeData {
     required this.TheftState,
     required this.SystemSOS,
     required this.UserSOS,
+    required this.AlarmState,
+    required this.LightState,
   });
 
     // factory User.fromJson(Map<String, dynamic> json) => User(
@@ -74,6 +78,8 @@ class BikeData {
         TheftState: json["TheftState"],
         SystemSOS: json["SystemSOS"],
         UserSOS: json["UserSOS"],
+        AlarmState: json["AlarmState"],
+        LightState: json["LightState"],
       );
 
     Map<String, dynamic> toJson() => {
@@ -90,6 +96,8 @@ class BikeData {
         "TheftState": TheftState,
         "SystemSOS": SystemSOS,
         "UserSOS": UserSOS,
+        "AlarmState": AlarmState,
+        "LightState": LightState,
       };
 
 }
