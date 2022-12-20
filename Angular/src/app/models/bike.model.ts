@@ -12,6 +12,15 @@ export class Bike {
 	};
 	BatteryStatus: boolean;
 	BatteryCap: number;
+	BatteryHistory: [
+		{
+			value:[
+				type: Date,
+				type: number,
+			],
+			name:{ type: Date},
+		}
+	];
 	Range: number;
 	BluetoothOp: boolean;
 	BluetoothCon: boolean;
@@ -32,6 +41,15 @@ export class Bike {
 		},
 		BatteryStatus: boolean,
 		BatteryCap: number,
+		BatteryHistory: [
+			{
+				value:[
+					type: Date,
+					type: number,
+				],
+				name:{ type: Date},
+			}
+		],
 		Range: number,
 		BluetoothOp: boolean,
 		BluetoothCon: boolean,
@@ -45,6 +63,7 @@ export class Bike {
 		this.location = location;
 		this.BatteryStatus = BatteryStatus;
 		this.BatteryCap = BatteryCap;
+		this.BatteryHistory = BatteryHistory;
 		this.Range = Range;
 		this.BluetoothOp = BluetoothOp;
 		this.BluetoothCon = BluetoothCon;

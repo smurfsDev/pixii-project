@@ -93,6 +93,25 @@ export const seed = async () => {
 		await user5.save();
 	}
 
+	let BatteryH = [];
+	let now= new Date(2020, 4, 30);
+	let oneDay = 24 * 60 * 60 * 1000;	
+	for (let i = 0; i < 100; i++) {
+		now = new Date(now.getTime() + oneDay);
+	
+		BatteryH.push({
+			// date increase by 1 day
+			// date format: Sun Aug 03 2022 00:00:00 GMT+0100 (heure normale d’Europe centrale)
+			name: now.toString(),
+			value: [
+				[now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+				Math.floor(Math.random() * 100),
+			],
+		});
+	}
+	
+
+	// console.log(BatteryH);
 	const bike1 = new BikeData({
 		id: "12345678",
 		SysPower: true,
@@ -107,6 +126,7 @@ export const seed = async () => {
 		},
 		BatteryStatus: true,
 		BatteryCap: 80,
+		BatteryHistory: BatteryH,
 		Range: 100,
 		BluetoothOp: true,
 		BluetoothCon: true,
@@ -114,7 +134,6 @@ export const seed = async () => {
 		SystemSOS: false,
 		UserSOS: false,
 	});
-
 	await bike1.save();
 
 	const bike2 = new BikeData({
@@ -131,6 +150,7 @@ export const seed = async () => {
 		},
 		BatteryStatus: true,
 		BatteryCap: 80,
+		BatteryHistory: BatteryH,
 		Range: 100,
 		BluetoothOp: true,
 		BluetoothCon: true,
@@ -155,6 +175,7 @@ export const seed = async () => {
 		},
 		BatteryStatus: true,
 		BatteryCap: 70,
+		BatteryHistory: BatteryH,
 		Range: 100,
 		BluetoothOp: true,
 		BluetoothCon: true,
