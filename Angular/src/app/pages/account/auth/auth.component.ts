@@ -26,7 +26,8 @@ export class AuthComponent implements OnInit, AfterViewInit {
 			nameRegister: this.nameRegister,
 			passwordRegister: this.passwordRegister,
 			role: this.roleInputRegister,
-			confirmPasswordRegister: this.ConfirmPasswordRegister
+			confirmPasswordRegister: this.ConfirmPasswordRegister,
+			bikeIdRegister: this.bikeIdRegister
 		});
 
 		this.loginForm = this.formBuilder.group({
@@ -67,6 +68,23 @@ export class AuthComponent implements OnInit, AfterViewInit {
 		, checkPassword('ConfirmPasswordRegister', true)]);
 	ConfirmPasswordRegister = new FormControl('', [Validators.required, checkPassword('passwordRegister')]);
 	roleInputRegister = new FormControl('', [Validators.required]);
+	bikeIdRegister = new FormControl('',
+		this.roleInputRegister.value == "Scooter Owner" ?
+			[Validators.required]
+			: [],
+		this.myValid.bikeValidator(this.roleInputRegister.value)
+	);
+	getBikeIdErrorMessageRegister() {
+		if (this.bikeIdRegister.touched) {
+			if (this.bikeIdRegister.hasError('required')) {
+				return 'You must enter a value';
+			} else if (this.bikeIdRegister.hasError('bikeDoesntExists')) {
+				return 'Bike Id doesn\'t exists';
+			}
+		}
+		return '';
+	}
+
 	getNameErrorMessageRegister() {
 		if (this.nameRegister.touched) {
 			if (this.nameRegister.hasError('required')) {
@@ -159,24 +177,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 			this.transistionFromSideToSide("");
 		}, 1);
 		if (this.registerForm.valid) {
-			this.registerLoading = true;
-			this.RegisterService.register(
-				{
-					name: this.registerForm.value.nameRegister,
-					email: this.registerForm.value.email,
-					username: this.registerForm.value.name,
-					password: this.registerForm.value.passwordRegister,
-					role: this.registerForm.value.role,
-					confirmPassword: this.registerForm.value.confirmPasswordRegister
-
-
-				}
-			).subscribe((data: any) => {
-				// this.showLogin();
-				this.router.navigate(['/verify']);
-				this.registerLoading = false;
-			});
-			this.ConfirmPasswordRegister.reset();
+			this.register();
 		}
 		else {
 			this.emailRegister.markAsTouched();
@@ -184,7 +185,46 @@ export class AuthComponent implements OnInit, AfterViewInit {
 			this.passwordRegister.markAsTouched();
 			this.ConfirmPasswordRegister.markAsTouched();
 			this.roleInputRegister.markAsTouched();
+			this.nameRegister.markAsTouched();
+			if (this.roleInputRegister.value == "Scooter Owner") {
+				this.bikeIdRegister.markAsTouched();
+			} else {
+				this.bikeIdRegister.reset();
+			}
+
+			// get invalid controls
+			const invalid = [];
+			const controls = this.registerForm.controls;
+			for (const name in controls) {
+				if (controls[name].invalid) {
+					invalid.push(name);
+				}
+			}
+			if (this.roleInputRegister.value != "Scooter Owner" && invalid.length == 0) {
+				this.register();
+			}
 		}
+	}
+
+	register(){
+		this.registerLoading = true;
+				this.RegisterService.register(
+					{
+						name: this.registerForm.value.nameRegister,
+						email: this.registerForm.value.email,
+						username: this.registerForm.value.name,
+						password: this.registerForm.value.passwordRegister,
+						role: this.registerForm.value.role,
+						confirmPassword: this.registerForm.value.confirmPasswordRegister,
+						scooterId: this.registerForm.value.bikeIdRegister
+
+					}
+				).subscribe((data: any) => {
+					// this.showLogin();
+					this.router.navigate(['/verify']);
+					this.registerLoading = false;
+				});
+				this.ConfirmPasswordRegister.reset();
 	}
 	fetchRoles() {
 		this.RegisterService.fetchRoles().subscribe((data: any) => {
@@ -198,7 +238,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 	hide = true;
 	loginForm: FormGroup;
 	unauthenticated = false;
-	user: User = new User('', '', '', '',null);
+	user: User = new User('', '', '', '', null);
 	username = new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,10}$')]);
 	password = new FormControl('', [Validators.required,
 	Validators.minLength(8),
@@ -242,16 +282,16 @@ export class AuthComponent implements OnInit, AfterViewInit {
 			this.loginLoading = true;
 			this.LoginService.login(this.loginForm.value).subscribe((data: any) => {
 				this.user = data;
-        console.log(data);
+				console.log(data);
 				this.store.dispatch([
 					new SetToken(data.token),
 					new SetUser(
-						new User(data.user.id, data.user.username, data.user.name, data.user.email,data.user.roles)
-						),
-						new SetIsAuthenticated(true)
-					]);
-					this.loginLoading = false;
-					this.router.navigate(['/']);
+						new User(data.user.id, data.user.username, data.user.name, data.user.email, data.user.roles)
+					),
+					new SetIsAuthenticated(true)
+				]);
+				this.loginLoading = false;
+				this.router.navigate(['/']);
 			}, (error: any) => {
 				this.loginLoading = false;
 				this.unauthenticated = true;
@@ -264,10 +304,10 @@ export class AuthComponent implements OnInit, AfterViewInit {
 				} else {
 					this.loginError = "Unknown error";
 				}
-				this._snackBar.open(this.loginError, this.loginError=="User is disabled"?"Navigate to verify":"Close", {
+				this._snackBar.open(this.loginError, this.loginError == "User is disabled" ? "Navigate to verify" : "Close", {
 					duration: 5000,
 				}).onAction().subscribe(() => {
-					if(this.loginError=="User is disabled") {
+					if (this.loginError == "User is disabled") {
 						this.router.navigate(['/verify']);
 					}
 				});

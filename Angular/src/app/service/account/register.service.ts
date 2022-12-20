@@ -32,6 +32,10 @@ export class RegisterService {
 	return this.http.post(`${environment.apiUrl}/resend`, email);
   }
 
+  checkBikeExists(bike: any) {
+	return this.http.get(`${environment.apiUrl}/node/bike/checkExist/${bike}`);
+  }
+
 
 
 }

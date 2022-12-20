@@ -20,7 +20,13 @@ export const AppRoutes: Routes = [
 	{
 		path: '',
 		component: HomeComponent,
-		// canActivate: [IsAuthenticatedGuard]
+		canActivate: [IsAuthenticatedGuard, HasRoleGuard],
+		data: {
+			role:
+				[
+					'Scooter Owner'
+				]
+		}
 	},
 	{
 		path: 'claims',

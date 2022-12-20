@@ -4,6 +4,8 @@ import { Store } from '@ngxs/store';
 import { ClaimsService } from 'src/app/service/claims/claims.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BikeDataService } from 'src/app/service/bike/bike-data.service';
+import { Bike } from 'src/app/models/bike.model';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +30,7 @@ export class HomeComponent implements OnInit {
   claimMessage = new FormControl('', [Validators.required, Validators.minLength(3)]);
 
   claimFormGroup: FormGroup;
-  constructor(private claimService: ClaimsService, private _snackBar: MatSnackBar) {
+  constructor(private claimService: ClaimsService, private _snackBar: MatSnackBar,private bikeService: BikeDataService,private store: Store) {
     this.claimFormGroup = new FormGroup({
       claimTitle: this.claimTitle,
       claimSubject: this.claimSubject,
@@ -60,9 +62,21 @@ export class HomeComponent implements OnInit {
       }
   }
 
+  BikeData: Bike | undefined;
+
   ngOnInit(): void {
+	var authState = this.store.selectSnapshot(state => state.AuthState);
 
-
+	this.bikeService.getMyBikeData(
+		authState["isScooterOwner"].scooterId
+	).subscribe((data:Bike) => {
+		this.BikeData = data;
+		if (this.BikeData.BatteryHistory.length >0){
+			this.percentage = data.BatteryHistory[data.BatteryHistory.length-1].value[1];
+		}else{
+			this.percentage = 0;
+		}
+	});
   }
 
 
