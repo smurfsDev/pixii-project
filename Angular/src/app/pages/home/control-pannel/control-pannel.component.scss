@@ -110,7 +110,7 @@
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        padding: 2px 20px;
+                        padding: 9px 30px;
                         border-radius: 9px;
                         background-color: #ffffff;
                         border: none;
@@ -129,6 +129,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
+        img{
+            width: 30%;
+            height: 30%;
+        }
     }
 }
