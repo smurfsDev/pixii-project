@@ -48,7 +48,7 @@ export class MapDashboardComponent implements AfterViewInit{
     );
   }
   BikePosition() {
-    var bikePosition = L.latLng(37.23412, 9);
+    var bikePosition = L.latLng(36.23412, 9);
     this.map?.setView(bikePosition, 16);
     const marker = L.marker(bikePosition, {icon: this.myIcon}).addTo(this.map);
     marker.bindPopup("Bike is here").openPopup();
@@ -57,7 +57,7 @@ export class MapDashboardComponent implements AfterViewInit{
     navigator.geolocation.getCurrentPosition((position) => {
        var myPosition = L.latLng(position.coords.latitude, position.coords.longitude);
        L.marker(myPosition, {icon: this.myPositionIcon}).addTo(this.map);
-       var bikePosition = L.latLng(37.23412, 9);
+       var bikePosition = L.latLng(36.23412, 9);
         L.marker(bikePosition, {icon: this.myIcon}).addTo(this.map);
        var bounds = L.latLngBounds(myPosition, bikePosition);
        this.map?.fitBounds(bounds,{maxZoom:16});
