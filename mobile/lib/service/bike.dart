@@ -65,5 +65,95 @@ class BikeService with ChangeNotifier {
     loadSettings();
   }
 
+  Future LockBike(bool state) async {
+    try {
+      final authService = AuthService();
+      await authService.loadSettings();
+      var bikeId = authService.user!.role
+          .where((element) => element['name'] == 'Scooter Owner')
+          .toList()[0]['bike_id'];
 
+      final response = await http.put(
+        Uri.parse('${Environment.apiUrl}/node/bike/lock/$bikeId'),
+        body: jsonEncode({'TheftState': state}),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'AuthorizationNode': authService.user!.email
+        },
+      );
+      if (response.statusCode == 200) {
+        this.bikeData = BikeData.fromJson(jsonDecode(response.body));
+        _saveToStorage('bikeData', response.body);
+        notifyListeners();
+      } else {
+        error = jsonDecode(response.body)['message'];
+        notifyListeners();
+      }
+    } catch (e) {
+      error = e.toString();
+      notifyListeners();
+    }
+  }
+
+Future ChangeLightState(bool state) async {
+    try {
+      final authService = AuthService();
+      await authService.loadSettings();
+      var bikeId = authService.user!.role
+          .where((element) => element['name'] == 'Scooter Owner')
+          .toList()[0]['bike_id'];
+
+      final response = await http.put(
+        Uri.parse('${Environment.apiUrl}/node/bike/light/$bikeId'),
+        body: jsonEncode({'LightState': state}),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'AuthorizationNode': authService.user!.email
+        },
+      );
+      if (response.statusCode == 200) {
+        this.bikeData = BikeData.fromJson(jsonDecode(response.body));
+        _saveToStorage('bikeData', response.body);
+        notifyListeners();
+      } else {
+        error = jsonDecode(response.body)['message'];
+        notifyListeners();
+      }
+    } catch (e) {
+      error = e.toString();
+      notifyListeners();
+    }
+  }
+  Future ChangeAlarmState(bool state) async {
+    try {
+      final authService = AuthService();
+      await authService.loadSettings();
+      var bikeId = authService.user!.role
+          .where((element) => element['name'] == 'Scooter Owner')
+          .toList()[0]['bike_id'];
+
+      final response = await http.put(
+        Uri.parse('${Environment.apiUrl}/node/bike/alarm/$bikeId'),
+        body: jsonEncode({'AlarmState': state}),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'AuthorizationNode': authService.user!.email
+        },
+      );
+      if (response.statusCode == 200) {
+        this.bikeData = BikeData.fromJson(jsonDecode(response.body));
+        _saveToStorage('bikeData', response.body);
+        notifyListeners();
+      } else {
+        error = jsonDecode(response.body)['message'];
+        notifyListeners();
+      }
+    } catch (e) {
+      error = e.toString();
+      notifyListeners();
+    }
+  }
 }
