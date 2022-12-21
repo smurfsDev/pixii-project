@@ -37,68 +37,94 @@ export const findAffectedToMe = async (req: Request, res: Response) => {
 // get mine
 export const findMine = async (req: Request, res: Response) => {
 	// const user =
-	Claim.find({ user: req.body.user }).populate("_status").populate('status').then((claims) => {
-		res.send(claims);
-	});
+	if (req.body.isScooterOwner) {
+		Claim.find({ user: req.body.user }).populate("_status").populate('status').then((claims) => {
+			res.send(claims);
+		});
+	}
+	else {
+		res.status(401).send("You must be a Scooter Owner!")
+
+	}
+
 };
 
 // create
 export const create = (req: Request, res: Response) => {
-	const claim = new Claim(req.body);
-	if (!req.body.status) {
-		status.findOne({ name: 'TODO' }, (err: any, status: any) => {
-			if (!status) {
-				status = new status({ name: 'TODO' }, (err: any, status: any) => {
-					if (err) return res.status(500).send("Something went wrong");
-					else {
-						claim.$set({ status: status._id });
-						claim.save((err: any) => {
-							if (err) return res.status(500).send("Something went wrong" + err.message);
-							else return res.status(200).send(claim);
-						})
+	if (req.body.isScooterOwner) {
+		const claim = new Claim(req.body);
+		if (!req.body.status) {
+			status.findOne({ name: 'TODO' }, (err: any, status: any) => {
+				if (!status) {
+					status = new status({ name: 'TODO' }, (err: any, status: any) => {
+						if (err) return res.status(500).send("Something went wrong");
+						else {
+							claim.$set({ status: status._id });
+							claim.save((err: any) => {
+								if (err) return res.status(500).send("Something went wrong" + err.message);
+								else return res.status(200).send(claim);
+							})
+						}
 					}
+					);
+				} else {
+					claim.$set({ status: status._id });
+					claim.save((err: any) => {
+						if (err) return res.status(500).send("Something went wrong" + err.message);
+						else return res.status(200).send(claim);
+					})
 				}
-				);
-			} else {
-				claim.$set({ status: status._id });
-				claim.save((err: any) => {
-					if (err) return res.status(500).send("Something went wrong" + err.message);
-					else return res.status(200).send(claim);
-				})
-			}
-		});
-	} else {
-		claim.save((err: any) => {
-			if (err) return res.status(500).send("Something went wrong" + err.message);
-			else return res.status(200).send(claim);
-		})
+			});
+		} else {
+			claim.save((err: any) => {
+				if (err) return res.status(500).send("Something went wrong" + err.message);
+				else return res.status(200).send(claim);
+			})
+		}
 	}
+	else {
+		res.status(401).send("You must be an Scooter Owner!")
+	}
+
 };
 //delete
 export const remove = (req: Request, res: Response) => {
 	// remove claim and all comments
-	Claim.findById(req.params.id, (err: any, claim: any) => {
-		if (err) return res.status(500).send(err);
-		else if (!claim) return res.status(404).send("Claim not found");
-		else {
-			claim.remove((err: any) => {
-				if (err) return res.status(500).send(err);
-				else return res.status(200).send(claim);
-			});
+	if (req.body.isScooterOwner) {
+		Claim.findById(req.params.id, (err: any, claim: any) => {
+			if (err) return res.status(500).send(err);
+			else if (!claim) return res.status(404).send("Claim not found");
+			else {
+				claim.remove((err: any) => {
+					if (err) return res.status(500).send(err);
+					else return res.status(200).send(claim);
+				});
+			}
 		}
+		)
 	}
-	)
+	else {
+		res.status(401).send("You must be an Sccoter Owner!")
+
+	}
+
 };
 
 // update
 export const update = (req: Request, res: Response) => {
-	Claim.findByIdAndUpdate(req.params.id, { ...req.body, author: req.body.user.email }, (err: any, claim: any) => {
-		if (err) return res.status(500).send(err);
-		else if (!claim) return res.status(404).send("Claim not found");
-		else Claim.findById(req.params.id, (err: any, claim: any) => {
-			return res.status(200).send(claim);
-		});
-	})
+	if (req.body.isScooterOwner) {
+		Claim.findByIdAndUpdate(req.params.id, { ...req.body, author: req.body.user.email }, (err: any, claim: any) => {
+			if (err) return res.status(500).send(err);
+			else if (!claim) return res.status(404).send("Claim not found");
+			else Claim.findById(req.params.id, (err: any, claim: any) => {
+				return res.status(200).send(claim);
+			});
+		})
+	}
+	else {
+		res.status(401).send("You must be a Scooter Owner!")
+
+	}
 };
 
 // find by id
@@ -154,28 +180,41 @@ export const findOne = (req: Request, res: Response) => {
 };
 
 export const setStatus = (req: Request, res: Response) => {
-	Claim.findByIdAndUpdate(req.params.id, { status: req.params.status, author: req.body.user.email }, (err: any, claim: any) => {
-		if (err) return res.status(500).send(err);
-		else if (!claim) return res.status(404).send("Claim not found");
-		else {
-			Claim.findById(req.params.id, (err: any, claim: any) => {
-				return res.status(200).send(claim);
-			});
-		}
-	})
+	if ((req.body.isSAVManager) || (req.body.isSAVTechnician)) {
+		Claim.findByIdAndUpdate(req.params.id, { status: req.params.status, author: req.body.user.email }, (err: any, claim: any) => {
+			if (err) return res.status(500).send(err);
+			else if (!claim) return res.status(404).send("Claim not found");
+			else {
+				Claim.findById(req.params.id, (err: any, claim: any) => {
+					return res.status(200).send(claim);
+				});
+			}
+		})
+	}
+	else {
+		res.status(401).send("You must be an SAV Technician or an SAV Manager!")
+
+	}
+
 }
 
 export const affectClaimToTechnician = async (req: Request, res: Response) => {
-	const technician = await User.findById(req.params.technician);
-	Claim.findByIdAndUpdate(req.params.id, { technician: technician, author: req.body.user.email }, (err: any, claim: any) => {
-		if (err) return res.status(
-			500).send(err);
-		else if (!claim) return res.status(404).send("Claim not found");
-		else {
-			Claim.findById(req.params.id, (err: any, claim: any) => {
-				return res.status(200).send(claim);
-			});
-		}
-	})
+	if (req.body.isSAVManager) {
+		const technician = await User.findById(req.params.technician);
+		Claim.findByIdAndUpdate(req.params.id, { technician: technician, author: req.body.user.email }, (err: any, claim: any) => {
+			if (err) return res.status(
+				500).send(err);
+			else if (!claim) return res.status(404).send("Claim not found");
+			else {
+				Claim.findById(req.params.id, (err: any, claim: any) => {
+					return res.status(200).send(claim);
+				});
+			}
+		})
+	}
+	else {
+		res.status(401).send("You must be an SAV Manager!")
+	}
+
 }
 
