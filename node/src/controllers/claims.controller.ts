@@ -2,6 +2,7 @@ import Claim from "../models/claim.model";
 import { Request, Response } from 'express';
 import status from "../models/status.model";
 import User from "../models/user.model";
+import { fetchUser } from "../configs/auth.config";
 
 export const findAll = async (req: Request, res: Response) => {
 	// const search = req.query.search || '';
@@ -21,16 +22,22 @@ export const findAll = async (req: Request, res: Response) => {
 
 // get mine
 export const findAffectedToMe = async (req: Request, res: Response) => {
-	// const user =
-	Claim.find({ technician: req.body.user }).populate("_status").populate('status', 'name').then((claims) => {
-		res.send(claims);
-	});
+	if (req.body.isSAVTechnician) {
+		Claim.find({ technician: req.body.user }).populate("_status").populate('status', 'name').then((claims) => {
+			res.send(claims);
+		});
+	}
+	else {
+		res.status(401).send("You must be an SAV Technician!")
+
+	}
+
 };
 
 // get mine
 export const findMine = async (req: Request, res: Response) => {
 	// const user =
-	Claim.find({user:req.body.user}).populate("_status").populate('status').then((claims) => {
+	Claim.find({ user: req.body.user }).populate("_status").populate('status').then((claims) => {
 		res.send(claims);
 	});
 };
@@ -85,7 +92,7 @@ export const remove = (req: Request, res: Response) => {
 
 // update
 export const update = (req: Request, res: Response) => {
-	Claim.findByIdAndUpdate(req.params.id, {...req.body,author:req.body.user.email}, (err: any, claim: any) => {
+	Claim.findByIdAndUpdate(req.params.id, { ...req.body, author: req.body.user.email }, (err: any, claim: any) => {
 		if (err) return res.status(500).send(err);
 		else if (!claim) return res.status(404).send("Claim not found");
 		else Claim.findById(req.params.id, (err: any, claim: any) => {
@@ -96,58 +103,58 @@ export const update = (req: Request, res: Response) => {
 
 // find by id
 export const findOne = (req: Request, res: Response) => {
-	
+
 	Claim.findById(req.params.id, (err: Error, claim: any) => {
 		if (err) return res.status(500).send(err);
 		else if (!claim) return res.status(404).send("Claim not found");
 		else return res.status(200).send(claim);
 	}).populate('status', 'name')
-	.populate({
-		path: 'comments',
-		populate: {
-			path: 'user',
-			model: 'User',
-		}
-	})
-	.populate({
-		path: "_status",
-		populate: [
-			{
-				path: "old_status",
-				model: "status"
-			},
-			{
-				path: "new_status",
-				model: "status"
-			},
-			{
-				path: "author",
-				select: "name",
-				model: "User"
+		.populate({
+			path: 'comments',
+			populate: {
+				path: 'user',
+				model: 'User',
 			}
-		]
-	}).populate({
-		path: "_technician",
-		populate: [
-			{
-				path: "old_technician",
-				model: "User"
-			},
-			{
-				path: "new_technician",
-				model: "User"
-			},
-			{
-				path: "author",
-				select: "name",
-				model: "User"
-			}
-		]
-	});
+		})
+		.populate({
+			path: "_status",
+			populate: [
+				{
+					path: "old_status",
+					model: "status"
+				},
+				{
+					path: "new_status",
+					model: "status"
+				},
+				{
+					path: "author",
+					select: "name",
+					model: "User"
+				}
+			]
+		}).populate({
+			path: "_technician",
+			populate: [
+				{
+					path: "old_technician",
+					model: "User"
+				},
+				{
+					path: "new_technician",
+					model: "User"
+				},
+				{
+					path: "author",
+					select: "name",
+					model: "User"
+				}
+			]
+		});
 };
 
 export const setStatus = (req: Request, res: Response) => {
-	Claim.findByIdAndUpdate(req.params.id, { status: req.params.status,author:req.body.user.email }, (err: any, claim: any) => {
+	Claim.findByIdAndUpdate(req.params.id, { status: req.params.status, author: req.body.user.email }, (err: any, claim: any) => {
 		if (err) return res.status(500).send(err);
 		else if (!claim) return res.status(404).send("Claim not found");
 		else {
@@ -158,9 +165,9 @@ export const setStatus = (req: Request, res: Response) => {
 	})
 }
 
-export const affectClaimToTechnician = async(req: Request, res: Response) => {
+export const affectClaimToTechnician = async (req: Request, res: Response) => {
 	const technician = await User.findById(req.params.technician);
-	Claim.findByIdAndUpdate(req.params.id, { technician: technician,author:req.body.user.email }, (err: any, claim: any) => {
+	Claim.findByIdAndUpdate(req.params.id, { technician: technician, author: req.body.user.email }, (err: any, claim: any) => {
 		if (err) return res.status(
 			500).send(err);
 		else if (!claim) return res.status(404).send("Claim not found");

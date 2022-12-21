@@ -66,7 +66,7 @@ export const seed = async () => {
 	let user =
 		await User.findOne({ email: 'superadmin@email.com' });
 	if (!user) {
-		const user1 = new User({ name: 'Super Admin', username: 'superadmin', email: "superadmin@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [role1, role2], status: 1 });
+		const user1 = new User({ name: 'Super Admin', username: 'superadmin', email: "superadmin@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [role4, role2, role3, role1], status: 1 });
 		await user1.save();
 	}
 	user = await User.findOne({ email: 'admin@email.com' });
@@ -91,7 +91,7 @@ export const seed = async () => {
 		await user5.save();
 	}
 
-	const user6 = new User({ name: 'Admin2', username: 'admin2', email: "admin2@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [role1,role3], status: 1 });
+	const user6 = new User({ name: 'Admin2', username: 'admin2', email: "admin2@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [role1, role3], status: 1 });
 	await user6.save();
 	console.log('Seeding done');
 
