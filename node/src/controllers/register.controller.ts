@@ -27,40 +27,54 @@ export const create = (req: Request, res: Response) => {
 };
 
 export const accept = (req: Request, res: Response) => {
-    let nomRole;
+    if ((req.body.isAdmin) || (req.body.isSuperAdmin)) {
+        let nomRole;
 
-    Role.findOne({ name: req.params.role }).then((role) => {
-        console.log(role)
-        nomRole = role
-        console.log(role?._id)
-        let idRole = role?._id
+        Role.findOne({ name: req.params.role }).then((role) => {
+            console.log(role)
+            nomRole = role
+            console.log(role?._id)
+            let idRole = role?._id
 
-        User.updateOne({ username: req.params.username }, { $set: { "roles.$[roles].status": 1 } },
-            { arrayFilters: [{ 'roles._id': role?._id }], upsert: true }, function (err, rowsAffected) {
-                if (err) return res.status(500).send(err);
-                else if (!rowsAffected) return res.status(404).send("User not found");
-                else {
-                    console.log(rowsAffected)
-                    return res.status(200).send(rowsAffected);
-                }
-            })
-    });
+            User.updateOne({ username: req.params.username }, { $set: { "roles.$[roles].status": 1 } },
+                { arrayFilters: [{ 'roles._id': role?._id }], upsert: true }, function (err, rowsAffected) {
+                    if (err) return res.status(500).send(err);
+                    else if (!rowsAffected) return res.status(404).send("User not found");
+                    else {
+                        console.log(rowsAffected)
+                        return res.status(200).send(rowsAffected);
+                    }
+                })
+        });
+    }
+    else {
+        res.status(401).send("You must be a Super Admin or an Admin!")
+    }
+
+
 }
 export const refuse = (req: Request, res: Response) => {
-    let nomRole;
+    if ((req.body.isAdmin) || (req.body.isSuperAdmin)) {
+        let nomRole;
 
-    Role.findOne({ name: req.params.role }).then((role) => {
-        console.log(role)
-        nomRole = role
-        console.log(role?._id)
-        User.updateOne({ username: req.params.username }, { $set: { "roles.$[roles].status": 2 } },
-            { arrayFilters: [{ 'roles._id': role?._id }], upsert: true }, function (err, rowsAffected) {
-                if (err) return res.status(500).send(err);
-                else if (!rowsAffected) return res.status(404).send("User not found");
-                else {
-                    // console.log(rowsAffected)
-                    return res.status(200).send(rowsAffected);
-                }
-            })
-    });
+        Role.findOne({ name: req.params.role }).then((role) => {
+            console.log(role)
+            nomRole = role
+            console.log(role?._id)
+            User.updateOne({ username: req.params.username }, { $set: { "roles.$[roles].status": 2 } },
+                { arrayFilters: [{ 'roles._id': role?._id }], upsert: true }, function (err, rowsAffected) {
+                    if (err) return res.status(500).send(err);
+                    else if (!rowsAffected) return res.status(404).send("User not found");
+                    else {
+                        // console.log(rowsAffected)
+                        return res.status(200).send(rowsAffected);
+                    }
+                })
+        });
+    }
+    else {
+        res.status(401).send("You must be a Super Admin or an Admin!")
+
+    }
+
 }
