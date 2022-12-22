@@ -1,5 +1,6 @@
 package com.javainuse.entities;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 // import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -28,15 +29,23 @@ public class UserRole {
     Role role;
 
     @NotNull
-
     @ColumnDefault("0")
     private Integer status;
 
+    @Column(nullable = true)
+    private String bike_id;
     public UserRole(UserRoleKey id, User user, Role role, @NotNull Integer status) {
         this.id = id;
         this.user = user;
         this.role = role;
         this.status = status;
+    }
+
+    public UserRole(User user, Role role, @NotNull Integer status, String bike_id) {
+        this.user = user;
+        this.role = role;
+        this.status = status;
+        this.bike_id = bike_id;
     }
 
     public UserRole() {
@@ -78,6 +87,14 @@ public class UserRole {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getBike_id() {
+        return bike_id;
+    }
+
+    public void setBike_id(String bike_id) {
+        this.bike_id = bike_id;
     }
 
 }

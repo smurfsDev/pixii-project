@@ -3,6 +3,10 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { User } from 'src/app/models/user';
 import { SetIsAuthenticated, SetToken, SetUser, LogoutAction } from "./actions";
 
+export interface IsScooterOwner {
+	isScooterOwner: boolean;
+	scooterId: string|null;
+}
 export class AuthStateModel {
 	isAuthenticated: boolean = false;
 	token: string | null | undefined;
@@ -11,7 +15,10 @@ export class AuthStateModel {
 	isSuperAdmin: boolean = false;
 	isSAVManager: boolean = false;
 	isSAVTechnician: boolean = false;
-	isScooterOwner: boolean = false;
+	isScooterOwner: IsScooterOwner = {
+		isScooterOwner: false,
+		scooterId: null
+	};
 }
 
 @State<AuthStateModel>({
@@ -24,7 +31,10 @@ export class AuthStateModel {
 		isSuperAdmin: false,
 		isSAVManager: false,
 		isSAVTechnician: false,
-		isScooterOwner: false,
+		isScooterOwner: {
+			isScooterOwner: false,
+			scooterId: null
+		},
 	}
 })
 @Injectable()
@@ -73,7 +83,7 @@ export class AuthState {
 			isSuperAdmin: payload?.role.find((r:any)=>r.name == "Super Admin" && r.status == 1)?true:false,
 			isSAVManager: payload?.role.find((r:any)=>r.name == "SAV Manager" && r.status == 1)?true:false,
 			isSAVTechnician: payload?.role.find((r:any)=>r.name == "SAV Technician" && r.status == 1)?true:false,
-			isScooterOwner: payload?.role.find((r:any)=>r.name == "Scooter Owner" )?true:false,
+			isScooterOwner: payload?.role.find((r:any)=>r.name == "Scooter Owner" )?{isScooterOwner: true, scooterId: payload?.role.find((r:any)=>r.name == "Scooter Owner" )?.bike_id}: {isScooterOwner: false, scooterId: null}
 		});
 	}
 

@@ -23,10 +23,10 @@ export class validator {
 	}
 
 	userValidator(): AsyncValidatorFn {
-		return (control: AbstractControl):any => {
+		return (control: AbstractControl): any => {
 			return this.searchUserByEmail(control.value)
 				.pipe(
-					map((res:any) => {
+					map((res: any) => {
 						if (!res) {
 							// return error
 							return { 'emailExist': true };
@@ -47,10 +47,10 @@ export class validator {
 	}
 
 	userNameValidator(): AsyncValidatorFn {
-		return (control: AbstractControl):any => {
+		return (control: AbstractControl): any => {
 			return this.searchUserByUserName(control.value)
 				.pipe(
-					map((res:any) => {
+					map((res: any) => {
 						console.log(res);
 						if (!res) {
 							// return error
@@ -61,5 +61,34 @@ export class validator {
 				);
 		};
 	}
+
+	searchBikeById(bike: string) {
+		return timer(1000)
+			.pipe(
+				switchMap(() => {
+					return this.registerService.checkBikeExists(bike);
+				})
+			);
+	}
+
+	bikeValidator(role: string|null): AsyncValidatorFn {
+		return (control: AbstractControl): any => {
+			if (role && role != 'Scooter Owner') {
+				return null;
+			}
+			return this.searchBikeById(control.value)
+				.pipe(
+					map((res: any) => {
+						console.log(res);
+						if (!res) {
+							// return error
+							return { 'bikeDoesntExists': true };
+						}
+						return null;
+					})
+				);
+		};
+	}
+
 
 }
