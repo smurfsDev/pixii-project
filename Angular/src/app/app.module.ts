@@ -36,10 +36,13 @@ import { MgUsersComponent } from './pages/users/superAdmin/mg-users/mg-users.com
 
 import { ResendVerificationComponent } from './pages/account/resend-verification/resend-verification.component';
 import { UserComponent } from './pages/claims/user/user.component';
+import { MapDashboardComponent } from './pages/home/map-dashboard/map-dashboard.component';
+import { ControlPannelComponent } from './pages/home/control-pannel/control-pannel.component';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @NgModule({
 	imports: [
-		NgxsModule.forRoot([AuthState]),
+    NgxsModule.forRoot([AuthState]),
 		NgxsStoragePluginModule.forRoot(),
 		BrowserModule,
 		RouterModule.forRoot(AppRoutes),
@@ -49,17 +52,18 @@ import { UserComponent } from './pages/claims/user/user.component';
 		MaterialModule,
 		ReactiveFormsModule,
 		NgxEchartsModule.forRoot({
-			echarts: () => import('echarts')
-		  })
+      echarts: () => import('echarts')
+    }),
 	],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent, MapDashboardComponent, ControlPannelComponent],
 	providers: [
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: HttpInterceptorService,
 			multi: true
-		}
+		},
+    Geolocation
 	],
 	bootstrap: [AppComponent],
 })
