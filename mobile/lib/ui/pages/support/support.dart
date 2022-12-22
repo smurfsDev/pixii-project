@@ -11,8 +11,12 @@ class Support extends StatefulWidget {
 }
 
 class _Support extends State<Support> {
-  String password = "";
   var index = 0;
+  final _formKey = GlobalKey<FormState>();
+
+  String title = "";
+  String subject = "";
+  String message = "";
 
   _Support();
 
@@ -29,9 +33,9 @@ class _Support extends State<Support> {
             backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           ),
           body: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
+            child: Form(
+              key: _formKey,
+              child: Column(children: [
                 const Padding(
                   padding: EdgeInsets.all(40),
                   child: Text(
@@ -42,43 +46,80 @@ class _Support extends State<Support> {
                         fontWeight: FontWeight.w500),
                   ),
                 ),
-                const Padding(
+                Padding(
                     padding: EdgeInsets.all(20),
-                    child: TextField(
-                      decoration: InputDecoration(
+                    child: TextFormField(
+                      onChanged: (value) => {
+                        setState(
+                          () {
+                            subject = value;
+                          },
+                        )
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return ("please enter a subject of your claim");
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
                         hintText: 'Subject',
                       ),
                     )),
-                const Padding(
+                Padding(
                     padding: EdgeInsets.all(20),
-                    child: TextField(
-                      decoration: InputDecoration(
+                    child: TextFormField(
+                      onChanged: (value) => {
+                        setState(
+                          () {
+                            title = value;
+                          },
+                        )
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return ("please enter a title of your claim");
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
                         hintText: 'Title',
                       ),
                     )),
-                const Padding(
-                  padding: EdgeInsets.all(20),
-                  child: SizedBox(
-                    width: 400.0,
-                    height: 200.0,
-                    child: TextField(
-                      maxLines: 10,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Type here...',
-                      ),
-                    ),
-                  ),
-                ),
+                Padding(
+                    padding: EdgeInsets.all(20),
+                    child: SizedBox(
+                        width: 400.0,
+                        height: 200.0,
+                        child: TextFormField(
+                          maxLines: 10,
+                          onChanged: (value) => {
+                            setState(
+                              () {
+                                message = value;
+                              },
+                            )
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return ("please enter a message ");
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Type here ...',
+                          ),
+                        ))),
                 ElevatedButton.icon(
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(224, 0, 119, 182)),
+                          const Color.fromARGB(224, 0, 119, 182)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
@@ -89,14 +130,20 @@ class _Support extends State<Support> {
                   ),
                   icon: const Icon(Icons.add,
                       color: Color.fromARGB(255, 255, 255, 255), size: 18),
-                  onPressed: () {},
+                  onPressed: addClaim,
                 ),
-              ],
+              ]),
             ),
           ),
           backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           drawer: NavDrawerDemo(widget.user),
         )));
+  }
+
+  addClaim() {
+    if (_formKey.currentState!.validate()) {
+      showAlert(context, ' Success', ' $title');
+    }
   }
 
   hello() {
