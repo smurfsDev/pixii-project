@@ -14,6 +14,18 @@ export class TopbarComponent implements OnInit {
   location = false;
   controlPanel = false;
   @Output() value = new EventEmitter<any>();
+  BtnVehicule = {
+    color: '#ffffffa4',
+    fontSize: '18px',
+  }
+  BtnLocation = {
+    color: '#ffffffa4',
+    fontSize: '18px',
+  }
+  BtnControlPanel = {
+    color: '#ffffffa4',
+    fontSize: '18px',
+  }
 
   constructor(private store: Store,private router:Router) { }
 
@@ -26,23 +38,54 @@ export class TopbarComponent implements OnInit {
 	this.router.navigate(['/auth']);
   }
   vehicule() {
+    this.initBtn();
     this.vehicle = true;
     this.location = false;
     this.controlPanel = false;
+    this.BtnVehicule = {
+      color: '#fff',
+      fontSize: '21px',
+    }
     this.values();
   }
   Location(){
+        this.initBtn();
+
     this.vehicle = false;
     this.location = true;
     this.controlPanel = false;
+    this.BtnLocation = {
+      color: '#fff',
+      fontSize: '21px',
+    }
     this.values();
   }
   ControlPanel(){
+        this.initBtn();
+
     this.vehicle = false;
     this.location = false;
     this.controlPanel = true;
+    this.BtnControlPanel = {
+      color: '#fff',
+      fontSize: '21px',
+    }
     this.values();
     // console.log(this.vehicle,this.location,this.controlPanel);
+  }
+  initBtn(){
+    this.BtnVehicule = {
+      color: '#ffffffa4',
+      fontSize: '18px',
+    }
+    this.BtnLocation = {
+      color: '#ffffffa4',
+      fontSize: '18px',
+    }
+    this.BtnControlPanel = {
+      color: '#ffffffa4',
+      fontSize: '18px',
+    }
   }
   values(){
     this.value.emit({
