@@ -2,6 +2,7 @@
 
 import 'package:mobile/imports.dart';
 import 'package:mobile/main.dart';
+import 'package:mobile/ui/pages/home/dashboard.dart';
 import 'package:mobile/ui/pages/support/support.dart';
 
 class NavDrawerDemo extends StatelessWidget {
@@ -40,7 +41,9 @@ class NavDrawerDemo extends StatelessWidget {
               color: white,
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Dashboard(user)));
+              // Navigator.pop(context);
             },
           ),
           ListTile(

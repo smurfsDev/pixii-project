@@ -51,9 +51,6 @@ class _Support extends State<Support> {
           // )),
           backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           drawer: NavDrawerDemo(widget.user),
-          bottomNavigationBar: bottomNav(
-            callback: (int i) => setState(() => index = i),
-          ),
         )));
   }
 }
