@@ -89,6 +89,21 @@ class NavDrawerDemo extends StatelessWidget {
           ),
           ListTile(
             title: const Text(
+              "Support",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            leading: const Icon(
+              Icons.support_agent,
+              color: white,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text(
               "Logout",
               style: TextStyle(
                 color: Colors.white,
