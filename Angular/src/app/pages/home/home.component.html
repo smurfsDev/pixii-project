@@ -1,4 +1,7 @@
 <app-navbar>
     <app-dash-super-admin *ngIf="isSuperAdmin" ></app-dash-super-admin>
     <app-dash-scooter-owner *ngIf="isScooterOwner" ></app-dash-scooter-owner>
+    <app-dash-sa-vmanager *ngIf="isSavManager" ></app-dash-sa-vmanager>
+    <app-dash-sa-vtechnicien *ngIf="isSavTechnician" ></app-dash-sa-vtechnicien>
+    <app-dash-admin *ngIf="isAdmin" ></app-dash-admin>
 </app-navbar>
