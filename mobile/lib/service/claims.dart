@@ -9,8 +9,14 @@ class ClaimsService with ChangeNotifier {
   late String error;
   late String createClaimError;
 
-  Future<bool> createClaim(String subject, String title, String message) async {
-    final request = {'subject': subject, 'title': title, 'message': message};
+  Future<bool> createClaim(
+      String subject, String title, String message, User user) async {
+    final request = {
+      'subject': subject,
+      'title': title,
+      'message': message,
+      'user': user
+    };
     print("request $request");
     try {
       print("object");
@@ -18,6 +24,7 @@ class ClaimsService with ChangeNotifier {
           Uri.parse('${Environment.apiUrl}/node/claims'),
           body: jsonEncode(request),
           headers: {'Content-Type': 'application/json'});
+      print(response.statusCode);
       if (response.statusCode == 200) {
         return true;
       } else {

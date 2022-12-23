@@ -8,18 +8,18 @@ class Support extends StatefulWidget {
 
   @override
   // ignore: no_logic_in_create_state
-  State<Support> createState() => _Support();
+  State<Support> createState() => _Support(this.user);
 }
 
 class _Support extends State<Support> {
   var index = 0;
   final _formKey = GlobalKey<FormState>();
-
   String title = "";
   String subject = "";
   String message = "";
+  User user;
 
-  _Support();
+  _Support(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +147,8 @@ class _Support extends State<Support> {
 
   addClaim(ClaimsService claim) async {
     if (_formKey.currentState!.validate()) {
-      final claimCreated = await claim.createClaim(subject, title, message);
+      final claimCreated =
+          await claim.createClaim(subject, title, message, this.user);
 
       if (claimCreated) {
         showAlert(context, 'Success', 'Claim created successfully');
