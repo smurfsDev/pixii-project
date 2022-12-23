@@ -20,6 +20,9 @@ export class HomeComponent implements OnInit {
   color = '#3DCC93';
   claimSendingLoading = false;
   percentage = 90;
+  vehicle = true;
+  location = false;
+  controlPanel = false;
   claim = {
     title: "",
     subject: "",
@@ -77,6 +80,11 @@ export class HomeComponent implements OnInit {
 			this.percentage = 0;
 		}
 	});
+  }
+  values(event: any){
+    this.vehicle = event.vehicle;
+    this.location = event.location;
+    this.controlPanel = event.controlPanel;
   }
 
 

@@ -1,0 +1,26 @@
+.map-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    .map-frame {
+      height: 70%;
+      margin-left: 30px;
+      margin-right: 30px;
+    }
+    #map {
+      height: 100%;
+    }
+    .buttons {
+      margin-bottom: 5px;
+      button {
+        margin: 5px;
+        border-radius: 5px;
+        color: #fff;
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+    }
+  }
+
