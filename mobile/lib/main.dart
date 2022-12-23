@@ -1,4 +1,5 @@
 import "package:mobile/imports.dart";
+import 'package:mobile/service/claims.dart';
 import 'package:mobile/ui/pages/home/dashboard.dart';
 
 void main() async {
@@ -20,12 +21,12 @@ class _MyAppState extends State<MyApp> {
   initState() {
     super.initState();
     authService.loadSettings().then((value) => setState(
-        () {
-          main = authService.loggedIn
+          () {
+            main = authService.loggedIn
                 ? Dashboard(authService.user!)
                 : const Login();
           },
-     ));
+        ));
   }
 
   @override
@@ -33,6 +34,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider(create: (_) => ClaimsService()),
       ],
       child: MaterialApp(
         routes: {
@@ -57,6 +59,4 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-  
-
 }

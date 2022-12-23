@@ -1,4 +1,5 @@
 import 'package:mobile/imports.dart';
+import 'package:mobile/service/claims.dart';
 
 // ignore: must_be_immutable
 class Support extends StatefulWidget {
@@ -22,6 +23,8 @@ class _Support extends State<Support> {
 
   @override
   Widget build(BuildContext context) {
+    final claimsService = Provider.of<ClaimsService>(context);
+
     return (MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -130,7 +133,9 @@ class _Support extends State<Support> {
                   ),
                   icon: const Icon(Icons.add,
                       color: Color.fromARGB(255, 255, 255, 255), size: 18),
-                  onPressed: addClaim,
+                  onPressed: () {
+                    addClaim(claimsService);
+                  },
                 ),
               ]),
             ),
@@ -140,9 +145,15 @@ class _Support extends State<Support> {
         )));
   }
 
-  addClaim() {
+  addClaim(ClaimsService claim) async {
     if (_formKey.currentState!.validate()) {
-      showAlert(context, ' Success', ' $title');
+      final claimCreated = await claim.createClaim(subject, title, message);
+
+      if (claimCreated) {
+        showAlert(context, 'Success', 'Claim created successfully');
+      } else {
+        showAlert(context, 'Error', claim.createClaimError);
+      }
     }
   }
 
