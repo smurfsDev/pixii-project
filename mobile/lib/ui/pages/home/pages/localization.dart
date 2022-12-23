@@ -43,35 +43,37 @@ class _LocalizationState extends State<Localization> {
             )),
       ),
     ];
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       var bikeService = Provider.of<BikeService>(context, listen: false);
       BikeData? bk = bikeService.bikeData;
-      if (bk != null) {
-        print(bk.location['latitude']);
-        bike = LatLng(bk.location['latitude'], bk.location['longitude']);
+      if (bk == null) 
+      await bikeService.getBikeData();
+      bk = bikeService.bikeData;
+
+        print(bk!.location['latitude']);
         // refresh the map
-          markers = <Marker>[
-            Marker(
-              width: 80,
-              height: 80,
-              point: bike,
-              builder: (ctx) => Container(
-                  key: const Key('purple'),
-                  // marker icon location Icon
-                  child: Column(
-                    children: const [
-                      Icon(
-                        Icons.electric_bike,
-                        color: Colors.purple,
-                        size: 40,
-                      ),
-                      Text("My bike")
-                    ],
-                  )),
-            ),
-          ];
+        setState(() {
+          bike = LatLng(bk!.location['latitude'], bk!.location['longitude']);
+          markers = [Marker(
+            width: 80,
+            height: 80,
+            point: bike,
+            builder: (ctx) => Container(
+                key: const Key('purple'),
+                // marker icon location Icon
+                child: Column(
+                  children: const [
+                    Icon(
+                      Icons.electric_bike,
+                      color: Colors.purple,
+                      size: 40,
+                    ),
+                    Text("My bike")
+                  ],
+                )),
+          )];
+        });
         _mapController.move(bike, 15);
-      }
     });
   }
 

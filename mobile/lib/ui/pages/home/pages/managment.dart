@@ -1,4 +1,5 @@
 import "package:mobile/imports.dart";
+import 'package:mobile/models/BikeData.dart';
 import 'package:mobile/service/bike.dart';
 
 class Managment extends StatefulWidget {
@@ -15,11 +16,34 @@ class _ManagmentState extends State<Managment> {
   IconData? iconPopUpElement = Icons.warning;
 
   showInSnackBar(demoMenuSelected) {}
+  late BikeService bikeService;
+  late BikeData? bike = null;
+  @override
+  initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      // setState(() {
+        bikeService = Provider.of<BikeService>(context, listen: false);
+        bike = bikeService.bikeData;
+        print("State" + bikeService.toString());
+        if (bike == null) {
+          await bikeService.getBikeData();
+          // .then((value) {
+            print("fetching");
+            setState(() {
+              bike = bikeService.bikeData;
+            });
+            print("State" + bike.toString());
+          // });
+        } else {
+          print("State" + bike!.TheftState.toString());
+        }
+      // });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    var bikeService = Provider.of<BikeService>(context, listen: false);
-    var bike = bikeService.bikeData;
     return Column(mainAxisSize: MainAxisSize.max, children: [
       DecoratedBox(
         decoration: BoxDecoration(
@@ -61,7 +85,7 @@ class _ManagmentState extends State<Managment> {
                   titleMenu = "Battery level";
                   image = "assets/images/battery_level.png";
                   messagePopUpMenu =
-                      (bike?.batteryHistory.last['value'][1].toString() ?? '0').toString()+"%";
+                      (bike?.batteryHistory.last['value'][1]).toString() + "%";
                   iconPopUpElement = Icons.battery_5_bar;
                 }),
               ),
@@ -121,7 +145,10 @@ class _ManagmentState extends State<Managment> {
           ),
         ]),
       ),
-      ScooterManagement()
+      ScooterManagement(
+        bike: bike,
+        bikeService: bikeService,
+      )
     ]);
   }
 }

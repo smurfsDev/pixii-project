@@ -5,33 +5,51 @@ import 'package:mobile/models/BikeData.dart';
 import 'package:mobile/service/bike.dart';
 
 class ScooterManagement extends StatefulWidget {
+  late BikeData? bike = null;
+  late BikeService bikeService;
+  ScooterManagement({required this.bike, required this.bikeService, Key? key})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() => _ScooterManagmentState();
 }
 
 class _ScooterManagmentState extends State<ScooterManagement> {
-  late BikeData? bike = null;
   late BikeService bikeService;
+  late BikeData? bike = null;
   @override
   initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      bikeService = Provider.of<BikeService>(context, listen: false);
-      bike = bikeService.bikeData;
-      print("State" + bikeService.bikeData.toString());
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      // setState(() {
+        bikeService = Provider.of<BikeService>(context, listen: false);
+        bike = bikeService.bikeData;
+        print("State" + bikeService.toString());
+        if (bike == null) {
+          await bikeService.getBikeData();
+          // .then((value) {
+            print("fetching");
+            setState(() {
+              bike = bikeService.bikeData;
+            });
+            print("State" + bike.toString());
+          // });
+        } else {
+          print("State" + bike!.TheftState.toString());
+        }
+      // });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      bikeService = Provider.of<BikeService>(context, listen: false);
-      bike = bikeService.bikeData;
-      print("State" + bikeService.bikeData.toString());
-    });
+    // setState(() {
+    //   bikeService = Provider.of<BikeService>(context, listen: false);
+    //   bike = bikeService.bikeData;
+    //   print("State" + bikeService.bikeData.toString());
+    // });
     // var bikeService = Provider.of<BikeService>(context, listen: false);
     // bike = bikeService.bikeData;
-    // print(bike!.TheftState);
+    // print((bike!).TheftState);
     if (bike == null) {
       return const Center(
         child: CircularProgressIndicator(),
@@ -69,7 +87,7 @@ class _ScooterManagmentState extends State<ScooterManagement> {
                           icon: Icon(
                             Icons.lock_outline,
                             color: bike != null
-                                ? !bike!.TheftState
+                                ? !(bike!).TheftState
                                     ? Color.fromARGB(255, 81, 66, 64)
                                     : Color.fromARGB(255, 224, 44, 32)
                                 : Color.fromARGB(255, 224, 44, 32),
@@ -101,9 +119,10 @@ class _ScooterManagmentState extends State<ScooterManagement> {
                               const Color.fromARGB(255, 254, 254, 254),
                         ),
                         onPressed: () {
-                          bikeService.LockBike(false).then((value) => setState(() {
-                                      bike = bikeService.bikeData!;
-                                    }));
+                          bikeService.LockBike(false)
+                              .then((value) => setState(() {
+                                    bike = bikeService.bikeData!;
+                                  }));
                         },
                         child: IconButton(
                           padding: const EdgeInsets.all(2),
@@ -111,13 +130,14 @@ class _ScooterManagmentState extends State<ScooterManagement> {
                           icon: Icon(
                             Icons.lock_open_outlined,
                             color: bike != null
-                                ? bike!.TheftState
+                                ? (bike!).TheftState
                                     ? Color.fromARGB(255, 81, 66, 64)
                                     : Color.fromARGB(255, 224, 44, 32)
                                 : Color.fromARGB(255, 224, 44, 32),
                           ),
                           onPressed: () {
-                            bikeService.LockBike(false).then((value) => setState(() {
+                            bikeService.LockBike(false)
+                                .then((value) => setState(() {
                                       bike = bikeService.bikeData!;
                                     }));
                           },
@@ -148,9 +168,10 @@ class _ScooterManagmentState extends State<ScooterManagement> {
                               const Color.fromARGB(255, 254, 254, 254),
                         ),
                         onPressed: () {
-                          bikeService.ChangeLightState(false).then((value) => setState(() {
-                                      bike = bikeService.bikeData!;
-                                    }));
+                          bikeService.ChangeLightState(false)
+                              .then((value) => setState(() {
+                                    bike = bikeService.bikeData!;
+                                  }));
                         },
                         child: IconButton(
                           padding: const EdgeInsets.all(2),
@@ -158,13 +179,14 @@ class _ScooterManagmentState extends State<ScooterManagement> {
                           icon: Icon(
                             Icons.light_mode_outlined,
                             color: bike != null
-                                ? bike!.LightState
+                                ? (bike!).LightState
                                     ? Color.fromARGB(255, 81, 66, 64)
                                     : Color.fromARGB(255, 224, 44, 32)
                                 : Color.fromARGB(255, 224, 44, 32),
                           ),
                           onPressed: () {
-                            bikeService.ChangeLightState(false).then((value) => setState(() {
+                            bikeService.ChangeLightState(false)
+                                .then((value) => setState(() {
                                       bike = bikeService.bikeData!;
                                     }));
                           },
@@ -189,9 +211,10 @@ class _ScooterManagmentState extends State<ScooterManagement> {
                               const Color.fromARGB(255, 254, 254, 254),
                         ),
                         onPressed: () {
-                          bikeService.ChangeLightState(true).then((value) => setState(() {
-                                      bike = bikeService.bikeData!;
-                                    }));
+                          bikeService.ChangeLightState(true)
+                              .then((value) => setState(() {
+                                    bike = bikeService.bikeData!;
+                                  }));
                         },
                         child: IconButton(
                           padding: const EdgeInsets.all(2),
@@ -199,13 +222,14 @@ class _ScooterManagmentState extends State<ScooterManagement> {
                           icon: Icon(
                             Icons.light_mode_rounded,
                             color: bike != null
-                                ? !bike!.LightState
+                                ? !(bike!).LightState
                                     ? Color.fromARGB(255, 81, 66, 64)
                                     : Color.fromARGB(255, 224, 44, 32)
                                 : Color.fromARGB(255, 224, 44, 32),
                           ),
                           onPressed: () {
-                            bikeService.ChangeLightState(true).then((value) => setState(() {
+                            bikeService.ChangeLightState(true)
+                                .then((value) => setState(() {
                                       bike = bikeService.bikeData!;
                                     }));
                           },
@@ -236,9 +260,10 @@ class _ScooterManagmentState extends State<ScooterManagement> {
                               const Color.fromARGB(255, 254, 254, 254),
                         ),
                         onPressed: () {
-                          bikeService.ChangeAlarmState(false).then((value) => setState(() {
-                                      bike = bikeService.bikeData!;
-                                    }));
+                          bikeService.ChangeAlarmState(false)
+                              .then((value) => setState(() {
+                                    bike = bikeService.bikeData!;
+                                  }));
                         },
                         child: IconButton(
                           padding: const EdgeInsets.all(2),
@@ -246,13 +271,14 @@ class _ScooterManagmentState extends State<ScooterManagement> {
                           icon: Icon(
                             Icons.notifications_off,
                             color: bike != null
-                                ? bike!.AlarmState
+                                ? (bike!).AlarmState
                                     ? Color.fromARGB(255, 81, 66, 64)
                                     : Color.fromARGB(255, 224, 44, 32)
                                 : Color.fromARGB(255, 224, 44, 32),
                           ),
                           onPressed: () {
-                            bikeService.ChangeAlarmState(false).then((value) => setState(() {
+                            bikeService.ChangeAlarmState(false)
+                                .then((value) => setState(() {
                                       bike = bikeService.bikeData!;
                                     }));
                           },
@@ -277,9 +303,10 @@ class _ScooterManagmentState extends State<ScooterManagement> {
                               const Color.fromARGB(255, 254, 254, 254),
                         ),
                         onPressed: () {
-                          bikeService.ChangeAlarmState(true).then((value) => setState(() {
-                                      bike = bikeService.bikeData!;
-                                    }));
+                          bikeService.ChangeAlarmState(true)
+                              .then((value) => setState(() {
+                                    bike = bikeService.bikeData!;
+                                  }));
                         },
                         child: IconButton(
                           padding: const EdgeInsets.all(2),
@@ -287,13 +314,14 @@ class _ScooterManagmentState extends State<ScooterManagement> {
                           icon: Icon(
                             Icons.notifications_on,
                             color: bike != null
-                                ? !bike!.AlarmState
+                                ? !(bike!).AlarmState
                                     ? Color.fromARGB(255, 81, 66, 64)
                                     : Color.fromARGB(255, 224, 44, 32)
                                 : Color.fromARGB(255, 224, 44, 32),
                           ),
                           onPressed: () {
-                            bikeService.ChangeAlarmState(true).then((value) => setState(() {
+                            bikeService.ChangeAlarmState(true)
+                                .then((value) => setState(() {
                                       bike = bikeService.bikeData!;
                                     }));
                           },
