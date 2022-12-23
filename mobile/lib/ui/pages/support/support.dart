@@ -1,5 +1,6 @@
 import 'package:mobile/imports.dart';
 import 'package:mobile/service/claims.dart';
+import 'package:mobile/ui/pages/support/myClaims.dart';
 
 // ignore: must_be_immutable
 class Support extends StatefulWidget {
@@ -150,14 +151,47 @@ class _Support extends State<Support> {
       final claimCreated = await claim.createClaim(subject, title, message);
 
       if (claimCreated) {
-        showAlert(context, 'Success', 'Claim created successfully');
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("message"),
+          backgroundColor: Colors.red,
+        ));
+        showDialog<void>(
+          context: context,
+          barrierDismissible: true, // user must tap button!
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Claim created'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: const <Widget>[
+                    Text('Do you like to consult your claims status?'),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Yes'),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyClaims(user)));
+                  },
+                ),
+                TextButton(
+                  child: const Text('No'),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Support(user)));
+                  },
+                ),
+              ],
+            );
+          },
+        );
       } else {
         showAlert(context, 'Error', claim.createClaimError);
       }
     }
-  }
-
-  hello() {
-    print("object");
   }
 }
