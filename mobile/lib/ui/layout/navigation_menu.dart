@@ -3,6 +3,7 @@
 import 'package:mobile/imports.dart';
 import 'package:mobile/main.dart';
 import 'package:mobile/ui/pages/home/dashboard.dart';
+import 'package:mobile/ui/pages/support/myClaims.dart';
 import 'package:mobile/ui/pages/support/support.dart';
 
 class NavDrawerDemo extends StatelessWidget {
@@ -108,6 +109,22 @@ class NavDrawerDemo extends StatelessWidget {
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Support(user)));
+            },
+          ),
+          ListTile(
+            title: const Text(
+              "My claims",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            leading: const Icon(
+              Icons.contact_support_rounded,
+              color: white,
+            ),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MyClaims(user)));
             },
           ),
           ListTile(
