@@ -27,6 +27,8 @@ export class Bike {
 	TheftState: boolean;
 	SystemSOS: boolean;
 	UserSOS: boolean;
+	AlarmState: boolean;
+	LightState: boolean;
 	constructor(
 		id: string,
 		SysPower: boolean,
@@ -56,6 +58,8 @@ export class Bike {
 		TheftState: boolean,
 		SystemSOS: boolean,
 		UserSOS: boolean,
+		ALarmState: boolean,
+		LightState: boolean,
 	) {
 		this.id = id;
 		this.SysPower = SysPower;
@@ -70,6 +74,8 @@ export class Bike {
 		this.TheftState = TheftState;
 		this.SystemSOS = SystemSOS;
 		this.UserSOS = UserSOS;
+		this.AlarmState = ALarmState;
+		this.LightState = LightState;
 	}
 
 }

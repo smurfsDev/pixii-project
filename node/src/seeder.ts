@@ -125,8 +125,8 @@ export const seed = async () => {
 		SysPower: true,
 		date: new Date("2022-01-01T00:00:00.000Z"),
 		location: {
-			latitude: 12.9716,
-			longitude: 77.5946,
+			latitude: 33.504214,
+			longitude: 11.111011,
 			altitude: 0,
 			heading: 0,
 			speed: 0,
@@ -141,6 +141,8 @@ export const seed = async () => {
 		TheftState: false,
 		SystemSOS: false,
 		UserSOS: false,
+		AlarmState: false,
+		LightState: false,
 	});
 	await bike1.save();
 
@@ -149,8 +151,8 @@ export const seed = async () => {
 		SysPower: true,
 		date: new Date("2022-03-01T00:00:00.000Z"),
 		location: {
-			latitude: 12.9716,
-			longitude: 77.5946,
+			latitude: 33.504214,
+			longitude: 11.111011,
 			altitude: 0,
 			heading: 0,
 			speed: 0,
@@ -165,6 +167,8 @@ export const seed = async () => {
 		TheftState: false,
 		SystemSOS: false,
 		UserSOS: false,
+		AlarmState: false,
+		LightState: false,
 	});
 
 	await bike2.save();
@@ -174,8 +178,8 @@ export const seed = async () => {
 		SysPower: true,
 		date: new Date("2022-05-01T00:00:00.000Z"),
 		location: {
-			latitude: 12.9716,
-			longitude: 77.5946,
+			latitude: 33.504214,
+			longitude: 11.111011,
 			altitude: 0,
 			heading: 0,
 			speed: 0,
@@ -190,6 +194,8 @@ export const seed = async () => {
 		TheftState: false,
 		SystemSOS: false,
 		UserSOS: false,
+		AlarmState: false,
+		LightState: false,
 	});
 
 	await bike3.save();
