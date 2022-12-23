@@ -9,8 +9,14 @@ class ClaimsService with ChangeNotifier {
   late String error;
   late String createClaimError;
 
-  Future<bool> createClaim(
-      String subject, String title, String message, User user) async {
+  Future<bool> createClaim(String subject, String title, String message) async {
+    AuthService authService = AuthService();
+    await authService.loadSettings();
+    final user = authService.user;
+    if (user == null) {
+      createClaimError = "unauthorized";
+      return false;
+    }
     final request = {
       'subject': subject,
       'title': title,
@@ -19,11 +25,13 @@ class ClaimsService with ChangeNotifier {
     };
     print("request $request");
     try {
-      print("object");
       final response = await http.post(
           Uri.parse('${Environment.apiUrl}/node/claims'),
           body: jsonEncode(request),
-          headers: {'Content-Type': 'application/json'});
+          headers: {
+            'Content-Type': 'application/json',
+            'AutorizationNode': user.email
+          });
       print(response.statusCode);
       if (response.statusCode == 200) {
         return true;
@@ -33,7 +41,7 @@ class ClaimsService with ChangeNotifier {
 
           return false;
         } else {
-          createClaimError = "error okhra";
+          createClaimError = "Unknown Error ! ";
           return false;
         }
       }

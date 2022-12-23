@@ -147,8 +147,7 @@ class _Support extends State<Support> {
 
   addClaim(ClaimsService claim) async {
     if (_formKey.currentState!.validate()) {
-      final claimCreated =
-          await claim.createClaim(subject, title, message, this.user);
+      final claimCreated = await claim.createClaim(subject, title, message);
 
       if (claimCreated) {
         showAlert(context, 'Success', 'Claim created successfully');
