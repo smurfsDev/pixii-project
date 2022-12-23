@@ -31,6 +31,7 @@ class _ScooterManagmentState extends State<ScooterManagement> {
             setState(() {
               bike = bikeService.bikeData;
             });
+            bike = bikeService.bikeData;
             print("State" + bike.toString());
           // });
         } else {

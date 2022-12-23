@@ -5,7 +5,7 @@ import 'package:mobile/service/bike.dart';
 import 'package:mobile/ui/components/current_location.dart';
 
 class Localization extends StatefulWidget {
-   late BikeService bikeService;
+  late BikeService bikeService;
   late BikeData? bike = null;
   Localization({required this.bikeService, required this.bike, Key? key})
       : super(key: key);
@@ -47,42 +47,47 @@ class _LocalizationState extends State<Localization> {
     ];
     late BikeService bikeService = widget.bikeService;
     late BikeData? bk = widget.bike;
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      bikeService = Provider.of<BikeService>(context, listen: false);
-      bk = bikeService.bikeData;
+      setState(() {
+        bk = bikeService.bikeData;
+      });
       if (bk == null) {
         await bikeService.getBikeData();
+        setState(() {
+          bk = bikeService.bikeData;
+        });
       }
-      if (bk!=null){
-
-      bk = bikeService.bikeData;
+      if (bk != null) {
+        bk = bikeService.bikeData;
 
         print(bk?.location['latitude']);
         // refresh the map
         setState(() {
           bike = LatLng(bk?.location['latitude'], bk?.location['longitude']);
-          markers = [Marker(
-            width: 80,
-            height: 80,
-            point: bike,
-            builder: (ctx) => Container(
-                key: const Key('purple'),
-                // marker icon location Icon
-                child: Column(
-                  children: const [
-                    Icon(
-                      Icons.electric_bike,
-                      color: Colors.purple,
-                      size: 40,
-                    ),
-                    Text("My bike")
-                  ],
-                )),
-          )];
+          markers = [
+            Marker(
+              width: 80,
+              height: 80,
+              point: bike,
+              builder: (ctx) => Container(
+                  key: const Key('purple'),
+                  // marker icon location Icon
+                  child: Column(
+                    children: const [
+                      Icon(
+                        Icons.electric_bike,
+                        color: Colors.purple,
+                        size: 40,
+                      ),
+                      Text("My bike")
+                    ],
+                  )),
+            )
+          ];
         });
         _mapController.move(bike, 15);
       }
-
     });
   }
 

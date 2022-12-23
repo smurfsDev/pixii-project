@@ -16,37 +16,57 @@ class _Dashboard extends State<Dashboard> {
   String password = "";
   var index = 0;
   List<Widget> pages = <Widget>[];
-  late BikeService bikeService;
+  late BikeService bikeService = BikeService();
   late BikeData? bike = null;
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      bikeService = Provider.of<BikeService>(context, listen: false);
-      bikeService.getBikeData();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await bikeService.getBikeData();
     });
-      bikeService = Provider.of<BikeService>(context, listen: false);
-      bikeService.getBikeData();
-    pages = [
-      Managment(
-        bike: bike,
-        bikeService: bikeService,
-      ),
-      Localization(
-        bike: bike,
-        bikeService: bikeService,
-      ),
-      const Settings(),
-      const Notifications()
-    ];
+    var fetch = bikeService
+        .getBikeData()
+        .then((value) => {
+            setState(() {
+              bike = bikeService.bikeData;
+            }),
+            print("bike"+bikeService.bikeData.toString()),
+            print("bike"+bikeService.error),
+              pages = [
+                Managment(
+                  bike: bikeService.bikeData,
+                  bikeService: bikeService,
+                ),
+                Localization(
+                  bike: bikeService.bikeData,
+                  bikeService: bikeService,
+                ),
+                const Settings(),
+                const Notifications()
+              ]
+            })
+        .catchError((err) => {
+           pages = [
+                Managment(
+                  bike: null,
+                  bikeService: bikeService,
+                ),
+                Localization(
+                  bike: null,
+                  bikeService: bikeService,
+                ),
+                const Settings(),
+                const Notifications()
+              ]
+        });
   }
 
   _Dashboard();
 
   @override
   Widget build(BuildContext context) {
-    bikeService = Provider.of<BikeService>(context, listen: false);
-    bike = bikeService.bikeData;
+    // bikeService = Provider.of<BikeService>(context, listen: false);
+    // bike = bikeService.bikeData;
     return (MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
