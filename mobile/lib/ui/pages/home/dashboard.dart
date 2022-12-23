@@ -1,4 +1,5 @@
 import 'package:mobile/imports.dart';
+import 'package:mobile/models/BikeData.dart';
 import 'package:mobile/service/bike.dart';
 
 // ignore: must_be_immutable
@@ -16,25 +17,36 @@ class _Dashboard extends State<Dashboard> {
   var index = 0;
   List<Widget> pages = <Widget>[];
   late BikeService bikeService;
+  late BikeData? bike = null;
   @override
   void initState() {
     super.initState();
-    pages = [
-      const Managment(),
-      const Localization(),
-      const Settings(),
-      const Notifications()
-    ];
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       bikeService = Provider.of<BikeService>(context, listen: false);
       bikeService.getBikeData();
     });
+      bikeService = Provider.of<BikeService>(context, listen: false);
+      bikeService.getBikeData();
+    pages = [
+      Managment(
+        bike: bike,
+        bikeService: bikeService,
+      ),
+      Localization(
+        bike: bike,
+        bikeService: bikeService,
+      ),
+      const Settings(),
+      const Notifications()
+    ];
   }
 
   _Dashboard();
 
   @override
   Widget build(BuildContext context) {
+    bikeService = Provider.of<BikeService>(context, listen: false);
+    bike = bikeService.bikeData;
     return (MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(

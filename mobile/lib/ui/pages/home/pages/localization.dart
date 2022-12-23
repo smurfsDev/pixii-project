@@ -5,8 +5,10 @@ import 'package:mobile/service/bike.dart';
 import 'package:mobile/ui/components/current_location.dart';
 
 class Localization extends StatefulWidget {
-  const Localization({Key? key}) : super(key: key);
-
+   late BikeService bikeService;
+  late BikeData? bike = null;
+  Localization({required this.bikeService, required this.bike, Key? key})
+      : super(key: key);
   @override
   _LocalizationState createState() => _LocalizationState();
 }
@@ -43,11 +45,14 @@ class _LocalizationState extends State<Localization> {
             )),
       ),
     ];
+    late BikeService bikeService = widget.bikeService;
+    late BikeData? bk = widget.bike;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      var bikeService = Provider.of<BikeService>(context, listen: false);
-      BikeData? bk = bikeService.bikeData;
-      if (bk == null) 
-      await bikeService.getBikeData();
+      bikeService = Provider.of<BikeService>(context, listen: false);
+      bk = bikeService.bikeData;
+      if (bk == null) {
+        await bikeService.getBikeData();
+      }
       bk = bikeService.bikeData;
 
         print(bk!.location['latitude']);
