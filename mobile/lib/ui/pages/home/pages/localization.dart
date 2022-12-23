@@ -53,12 +53,14 @@ class _LocalizationState extends State<Localization> {
       if (bk == null) {
         await bikeService.getBikeData();
       }
+      if (bk!=null){
+
       bk = bikeService.bikeData;
 
-        print(bk!.location['latitude']);
+        print(bk?.location['latitude']);
         // refresh the map
         setState(() {
-          bike = LatLng(bk!.location['latitude'], bk!.location['longitude']);
+          bike = LatLng(bk?.location['latitude'], bk?.location['longitude']);
           markers = [Marker(
             width: 80,
             height: 80,
@@ -79,6 +81,8 @@ class _LocalizationState extends State<Localization> {
           )];
         });
         _mapController.move(bike, 15);
+      }
+
     });
   }
 
