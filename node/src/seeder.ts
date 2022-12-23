@@ -73,7 +73,7 @@ export const seed = async () => {
 	}
 	user = await User.findOne({ email: 'admin@email.com' });
 	if (!user) {
-		const user2 = new User({ name: 'Admin', username: 'admin@email.com', email: "admin@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [role2], status: 1 });
+		const user2 = new User({ name: 'Admin', username: 'admin@email.com', email: "admin@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [role1], status: 1 });
 		await user2.save();
 	}
 	user = await User.findOne({ email: 'savmanager@email.com' });

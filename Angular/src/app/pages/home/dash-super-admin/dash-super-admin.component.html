@@ -61,20 +61,20 @@
                     Scooters number
                 </h5>
                 <div class="data Scooters">
-                    <span class="h2 font-weight-bold mb-0">20</span>
+                    <span class="h2 font-weight-bold mb-0">{{bikes}}</span>
                     <div class="stat">
                         <mat-icon>equalizer</mat-icon>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="claimsPourcentage card">
+        <div class="claimsPercentage card">
             <div class="col">
                 <h5 class="card-title text-uppercase text-muted mb-0">
                     Claims Done
                 </h5>
                 <div class="data SavTechnician">
-                    <span class="h2 font-weight-bold mb-0">20 %</span>
+                    <span class="h2 font-weight-bold mb-0">{{percentage | number:'1.2-2'}} %</span>
                     <div class="stat">
                         <mat-icon>equalizer</mat-icon>
                     </div>

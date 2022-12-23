@@ -1,1 +1,80 @@
-<p>dash-sa-vtechnicien works!</p>
+<app-topbar></app-topbar>
+<div class="board">
+    <div class="container">
+        <div class="nbSavTechnicians card">
+            <div class="col">
+                <h5 class="card-title text-uppercase text-muted mb-0">
+                    Sav Technicians number
+                </h5>
+                <div class="data SavTechnician">
+                    <span class="h2 font-weight-bold mb-0">20</span>
+                    <div class="stat">
+                        <mat-icon>equalizer</mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nbScooterOwners card">
+            <div class="col">
+                <h5 class="card-title text-uppercase text-muted mb-0">
+                    Scooter Owners number
+                </h5>
+                <div class="data ScooterOwners">
+                    <span class="h2 font-weight-bold mb-0">20</span>
+                    <div class="stat">
+                        <mat-icon>equalizer</mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nbScooters card">
+            <div class="col">
+                <h5 class="card-title text-uppercase text-muted mb-0">
+                    Scooters number
+                </h5>
+                <div class="data Scooters">
+                    <span class="h2 font-weight-bold mb-0">{{bikes}}</span>
+                    <div class="stat">
+                        <mat-icon>equalizer</mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nbAdmins card">
+            <div class="col">
+                <h5 class="card-title text-uppercase text-muted mb-0">
+                    My Claims
+                </h5>
+                <div class="data admins">
+                    <span class="h2 font-weight-bold mb-0">{{myClaims}}</span>
+                    <div class="stat">
+                        <mat-icon>equalizer</mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="claimsPercentage card">
+            <div class="col">
+                <h5 class="card-title text-uppercase text-muted mb-0">
+                    Claims Done
+                </h5>
+                <div class="data SavTechnician">
+                    <span class="h2 font-weight-bold mb-0">{{percentage | number:'1.2-2'}} %</span>
+                    <div class="stat">
+                        <mat-icon>equalizer</mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="claims">
+            <div class="col">
+                <h5 class="card-title text-uppercase text-muted mb-0">
+                    Claims Statistics
+                </h5>
+                <div class="claimsChart">
+                    <div echarts [options]="options"style="height:300px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
