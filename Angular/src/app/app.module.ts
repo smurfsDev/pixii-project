@@ -39,6 +39,11 @@ import { UserComponent } from './pages/claims/user/user.component';
 import { MapDashboardComponent } from './pages/home/map-dashboard/map-dashboard.component';
 import { ControlPannelComponent } from './pages/home/control-pannel/control-pannel.component';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { DashSuperAdminComponent } from './pages/home/dash-super-admin/dash-super-admin.component';
+import { DashAdminComponent } from './pages/home/dash-admin/dash-admin.component';
+import { DashSaVManagerComponent } from './pages/home/dash-sa-vmanager/dash-sa-vmanager.component';
+import { DashSaVTechnicienComponent } from './pages/home/dash-sa-vtechnicien/dash-sa-vtechnicien.component';
+import { DashScooterOwnerComponent } from './pages/home/dash-scooter-owner/dash-scooter-owner.component';
 
 @NgModule({
 	imports: [
@@ -56,7 +61,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     }),
 	],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent, MapDashboardComponent, ControlPannelComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent, MapDashboardComponent, ControlPannelComponent, DashSuperAdminComponent, DashAdminComponent, DashSaVManagerComponent, DashSaVTechnicienComponent, DashScooterOwnerComponent],
 	providers: [
 		{
 			provide: HTTP_INTERCEPTORS,
