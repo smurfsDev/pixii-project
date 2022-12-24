@@ -1,4 +1,5 @@
 import 'package:mobile/imports.dart';
+import 'package:mobile/models/Claim.dart';
 import 'package:mobile/service/claims.dart';
 
 // ignore: must_be_immutable
@@ -13,8 +14,17 @@ class MyClaims extends StatefulWidget {
 
 class _MyClaims extends State<MyClaims> {
   User user;
+  // late Future<List<Claim>> claims;
 
   _MyClaims(this.user);
+  @override
+  void initState() {
+    super.initState();
+    fetchClaims();
+    // claims = ClaimsService().getMyClaims();
+
+    // print(claims);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,5 +68,9 @@ class _MyClaims extends State<MyClaims> {
           backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           drawer: NavDrawerDemo(widget.user),
         )));
+  }
+
+  void fetchClaims() async {
+    Future<List<Claim>> myclaims = ClaimsService().getMyClaims();
   }
 }
