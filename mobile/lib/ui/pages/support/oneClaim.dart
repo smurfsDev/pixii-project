@@ -29,8 +29,8 @@ class getOneClaim extends StatelessWidget {
                     "${claim.title}",
                     style: TextStyle(color: Colors.white),
                   ),
-                  subtitle:
-                      Text('14-12-2022', style: TextStyle(color: Colors.white)),
+                  subtitle: Text('${claim.created}',
+                      style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),

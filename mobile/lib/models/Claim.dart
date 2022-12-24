@@ -9,19 +9,21 @@ class Claim {
   final String? title;
   final String? message;
   final Object? status;
-  const Claim({
-    required this.id,
-    required this.subject,
-    required this.title,
-    required this.message,
-    required this.status,
-  });
+  final String? created;
+  const Claim(
+      {required this.id,
+      required this.subject,
+      required this.title,
+      required this.message,
+      required this.status,
+      required this.created});
   factory Claim.fromJson(Map<String, dynamic> json) {
     return Claim(
         id: json['_id'] as String?,
         subject: json['subject'] as String,
         title: json['title'] as String,
         status: json['status'] as Object?,
+        created: json['created'] as String?,
         message: json['message'] as String);
   }
 
@@ -32,11 +34,12 @@ class Claim {
       'title': title,
       'message': message,
       'status': status,
+      'created': created,
     };
   }
 
   @override
   String toString() {
-    return 'Claim{id: $id, subject: $subject, message: $message, status: $status}';
+    return 'Claim{id: $id, subject: $subject, message: $message, status: $status, created: $created}';
   }
 }
