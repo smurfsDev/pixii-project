@@ -26,7 +26,7 @@ class ClaimsService with ChangeNotifier {
     print("request $request");
     try {
       final response = await http.post(
-          Uri.parse('${Environment.apiUrl}/node/claims'),
+          Uri.parse('http://192.168.137.1:8080/node/claims'),
           body: jsonEncode(request),
           headers: {
             'Content-Type': 'application/json',
@@ -49,6 +49,34 @@ class ClaimsService with ChangeNotifier {
       error = e.toString();
       createClaimError = error;
       return false;
+    }
+  }
+
+  Future<List<Claim>> getMyClaims() async {
+    AuthService authService = AuthService();
+    await authService.loadSettings();
+    final user = authService.user;
+    if (user == null) {
+      createClaimError = "unauthorized";
+      return [];
+    }
+    final response = await http
+        .get(Uri.parse('http://192.168.137.1:8080/node/claims'), headers: {
+      'Content-Type': 'application/json',
+      'AutorizationNode': user.email
+    });
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      print(data.length);
+      List<Claim> claims = [];
+      for (var item in data) {
+        // print(Claim.fromJson(item));
+        claims.add(Claim.fromJson(item));
+      }
+      return claims;
+    } else {
+      print("error");
+      return [];
     }
   }
 }
