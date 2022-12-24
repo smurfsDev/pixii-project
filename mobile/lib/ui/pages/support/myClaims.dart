@@ -41,25 +41,23 @@ class _MyClaims extends State<MyClaims> {
             ),
             backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           ),
-          body: SingleChildScrollView(
-            child: Center(
-                child: FutureBuilder(
-              future: ClaimsService().getMyClaims(),
-              builder: ((context, snapshot) {
-                print(snapshot.data);
-                if (snapshot.hasData) {
-                  // return Text(snapshot.data!.title);
-                  return getOneClaim(snapshot.data!);
-                } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
-                }
+          body: Center(
+              child: FutureBuilder(
+            future: ClaimsService().getMyClaims(),
+            builder: ((context, snapshot) {
+              print(snapshot.data);
+              if (snapshot.hasData) {
+                // return Text(snapshot.data!.title);
+                return getOneClaim(snapshot.data!);
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
 
-                // By default, show a loading spinner.
-                return const CircularProgressIndicator();
-              }),
-            )),
-            // ),
-          ),
+              return const CircularProgressIndicator();
+            }),
+          )),
+          // ),
+          // ),
           backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           drawer: NavDrawerDemo(widget.user),
         )));
