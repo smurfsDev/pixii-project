@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import Role from "../models/role.model";
 import User from "../models/user.model";
 
 export const getUsers = (req: Request, res: Response) => {
@@ -21,3 +22,29 @@ export const findUserByUsername = (req: Request, res: Response) => {
 
 
 };
+
+export const removeRoleUser = (req: Request, res: Response) => {
+	const user = User.findOne
+		({ username: req.params.username }, (err: Error, user: any) => {
+			console.log(user.roles);
+			for (let index = 0; index < user.roles.length; index++) {
+				const element = user.roles[index];
+				let fetchRole = Role.find({ _id: element._id }, async (err: Error, roleUser: any) => {
+					console.log(roleUser[0].name)
+					if (req.params.role === roleUser[0].name) {
+						console.log(roleUser)
+						User.updateOne({ username: req.params.username }, { $pull: { roles: [{ "roles.$[]": user.roles[index]._id }] } }, (err: Error, rowsAffected: any) => {
+							if (err) return res.status(500).send(err);
+							if (!rowsAffected) return res.status(404).send("not found");
+							else return res.status(200).send(rowsAffected);
+						})
+					}
+
+				})
+			}
+
+		});
+
+
+}
+
