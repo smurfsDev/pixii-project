@@ -42,28 +42,21 @@ class _MyClaims extends State<MyClaims> {
           ),
           body: SingleChildScrollView(
             child: Center(
-              child: Card(
-                color: Color.fromARGB(255, 29, 39, 70),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const <Widget>[
-                    ListTile(
-                      leading: Icon(
-                        Icons.circle,
-                        color: Colors.red,
-                        size: 50,
-                      ),
-                      title: Text(
-                        'Claim 1',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      subtitle: Text('14-12-2022',
-                          style: TextStyle(color: Colors.white)),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                child: FutureBuilder(
+              future: ClaimsService().getMyClaims(),
+              builder: ((context, snapshot) {
+                print(snapshot.data);
+                if (snapshot.hasData) {
+                  // return Text(snapshot.data!.title);
+                  return getOneClaim(snapshot.data!);
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
+
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              }),
+            )),
           ),
           backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           drawer: NavDrawerDemo(widget.user),
@@ -73,4 +66,78 @@ class _MyClaims extends State<MyClaims> {
   void fetchClaims() async {
     Future<List<Claim>> myclaims = ClaimsService().getMyClaims();
   }
+}
+
+class getOneClaim extends StatelessWidget {
+  final List<String> entries = <String>['A', 'B', 'C'];
+  final List<int> colorCodes = <int>[600, 500, 100];
+  // Product product;
+  // listView(this.product);
+  late List<Claim> claims;
+  getOneClaim(this.claims);
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      padding: const EdgeInsets.all(8),
+      itemCount: entries.length,
+      itemBuilder: (BuildContext context, int index) {
+        final claim = claims[index];
+        return Center(
+          child: Card(
+            color: Color.fromARGB(255, 29, 39, 70),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(
+                    Icons.circle,
+                    color: Colors.red,
+                    size: 50,
+                  ),
+                  title: Text(
+                    "${claim.title}",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  subtitle:
+                      Text('14-12-2022', style: TextStyle(color: Colors.white)),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) => const Divider(),
+    );
+  }
+
+  // @override
+  // Widget build(List<Product> claims) => ListView.builder(
+  //   itemCount: products.length,
+  //   itemBuilder: ((context, index) => {
+  //     final product = products[index];
+  //     return Card(
+  //       child: ListTile(
+  //         title: Text(product.title),
+  //         subtitle: Text(product.description),
+  //       )
+  //     )})
+  //     );
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return ListView.separated(
+  //     padding: const EdgeInsets.all(8),
+  //     itemCount: entries.length,
+  //     itemBuilder: (BuildContext context, int index) {
+  //       return Container(
+  //         height: 50,
+  //         color: Colors.amber[colorCodes[index]],
+  //         child: Center(child: Text('${product.description}')),
+  //       );
+  //     },
+  //     separatorBuilder: (BuildContext context, int index) => const Divider(),
+  //   );
+  // }
 }
