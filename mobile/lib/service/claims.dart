@@ -3,6 +3,7 @@ import 'dart:convert';
 import "package:mobile/imports.dart";
 import 'package:http/http.dart' as http;
 import 'package:mobile/models/Claim.dart';
+import 'package:mobile/models/Status.dart';
 
 class ClaimsService with ChangeNotifier {
   late Claim? claim = null;
@@ -23,16 +24,16 @@ class ClaimsService with ChangeNotifier {
       'message': message,
       'user': user
     };
-    print("request $request");
+    // print("request $request");
     try {
       final response = await http.post(
-          Uri.parse('${Environment.apiUrl}/node/claims'),
+          Uri.parse('http://192.168.137.1:8080/node/claims'),
           body: jsonEncode(request),
           headers: {
             'Content-Type': 'application/json',
             'AutorizationNode': user.email
           });
-      print(response.statusCode);
+      // print(response.statusCode);
       if (response.statusCode == 200) {
         return true;
       } else {
@@ -61,18 +62,20 @@ class ClaimsService with ChangeNotifier {
       return [];
     }
     final response = await http
-        .get(Uri.parse('${Environment.apiUrl}/node/claims'), headers: {
+        .get(Uri.parse('http://192.168.137.1:8080/node/claims/mine'), headers: {
       'Content-Type': 'application/json',
       'AutorizationNode': user.email
     });
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print(data.length);
+
+      // print(data);
       List<Claim> claims = [];
       for (var item in data) {
         // print(Claim.fromJson(item));
         claims.add(Claim.fromJson(item));
       }
+
       return claims;
     } else {
       print("error");

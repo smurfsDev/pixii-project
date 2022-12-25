@@ -57,7 +57,7 @@ class _getOneClaim extends State<getOneClaim> {
                     "${claim.title}  ",
                     style: TextStyle(color: Colors.white),
                   ),
-                  trailing: Text('${claim.created}',
+                  trailing: Text(claim.created!.substring(0, 10),
                       style: TextStyle(color: Colors.white)),
                 ),
               ],
