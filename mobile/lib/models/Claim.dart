@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:mobile/models/Status.dart';
 
@@ -12,6 +13,7 @@ class Claim {
   final String? message;
   final Map<String, dynamic> status;
   final String? created;
+  final List<dynamic> technicians;
 
   const Claim(
       {required this.id,
@@ -19,6 +21,7 @@ class Claim {
       required this.title,
       required this.message,
       required this.status,
+      required this.technicians,
       required this.created});
   factory Claim.fromJson(Map<String, dynamic> json) {
     return Claim(
@@ -27,6 +30,7 @@ class Claim {
         title: json['title'] as String,
         status: json['status'] as Map<String, dynamic>,
         created: json['created'] as String?,
+        technicians: json['_technician'] as List<dynamic>,
         message: json['message'] as String);
   }
 
@@ -40,6 +44,7 @@ class Claim {
       'message': message,
       'status': status,
       'created': created,
+      'technicians': technicians,
     };
   }
 
@@ -56,6 +61,6 @@ class Claim {
 
   @override
   String toString() {
-    return 'Claim{id: $id, subject: $subject, message: $message, status: $status, created: $created}';
+    return 'Claim{id: $id, subject: $subject, message: $message, status: $status, created: $created,technicians: $technicians}';
   }
 }
