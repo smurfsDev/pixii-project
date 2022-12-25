@@ -10,7 +10,7 @@ class Claim {
   final String? subject;
   final String? title;
   final String? message;
-  final Status? status;
+  final Map<String, dynamic> status;
   final String? created;
 
   const Claim(
@@ -25,13 +25,13 @@ class Claim {
         id: json['_id'] as String?,
         subject: json['subject'] as String,
         title: json['title'] as String,
-        status: json['status'] as Status?,
+        status: json['status'] as Map<String, dynamic>,
         created: json['created'] as String?,
         message: json['message'] as String);
   }
 
   Map toJson() {
-    Map? status = this.status != null ? this.status!.toJson() : null;
+    //Map? status = this.status != null ? this.status!.toJson() : null;
 
     return {
       'id': id,
