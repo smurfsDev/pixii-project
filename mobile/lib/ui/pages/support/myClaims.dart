@@ -41,21 +41,22 @@ class _MyClaims extends State<MyClaims> {
             ),
             backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           ),
-          body: Center(
-              child: FutureBuilder(
-            future: ClaimsService().getMyClaims(),
-            builder: ((context, snapshot) {
-              print(snapshot.data);
-              if (snapshot.hasData) {
-                // return Text(snapshot.data!.title);
-                return getOneClaim(snapshot.data!);
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
+          body: Padding(
+            padding: EdgeInsets.only(top: 10),
+            child: FutureBuilder(
+              future: ClaimsService().getMyClaims(),
+              builder: ((context, snapshot) {
+                print(snapshot.data);
+                if (snapshot.hasData) {
+                  return getOneClaim(snapshot.data!);
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
 
-              return const CircularProgressIndicator();
-            }),
-          )),
+                return const CircularProgressIndicator();
+              }),
+            ),
+          ),
           // ),
           // ),
           backgroundColor: const Color.fromARGB(255, 19, 27, 54),
