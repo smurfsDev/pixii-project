@@ -34,7 +34,7 @@ public interface RegisterNode {
     User refuse(@PathVariable("username") String username, @PathVariable("role") String role);
 
     @RequestMapping(method = RequestMethod.PUT, value = "/node/removeRoleUser/{role}/{username}", produces = "application/json")
-    User removeRole(@RequestHeader Map headers,
+    String removeRole(@RequestHeader Map headers,
             @PathVariable("role") String role,
             @PathVariable("username") String username);
 }
