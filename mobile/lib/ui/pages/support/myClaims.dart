@@ -48,7 +48,7 @@ class _MyClaims extends State<MyClaims> {
               builder: ((context, snapshot) {
                 print(snapshot.data);
                 if (snapshot.hasData) {
-                  return getOneClaim(snapshot.data!);
+                  return getOneClaim(snapshot.data!, user);
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 }
