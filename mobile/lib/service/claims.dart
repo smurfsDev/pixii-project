@@ -27,7 +27,7 @@ class ClaimsService with ChangeNotifier {
     // print("request $request");
     try {
       final response = await http.post(
-          Uri.parse('http://192.168.137.1:8080/node/claims'),
+          Uri.parse('${Environment.apiUrl}/node/claims'),
           body: jsonEncode(request),
           headers: {
             'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ class ClaimsService with ChangeNotifier {
       return [];
     }
     final response = await http
-        .get(Uri.parse('http://192.168.137.1:8080/node/claims/mine'), headers: {
+        .get(Uri.parse('${Environment.apiUrl}/node/claims/mine'), headers: {
       'Content-Type': 'application/json',
       'AutorizationNode': user.email
     });

@@ -41,7 +41,7 @@ class BikeService with ChangeNotifier {
       print(bikeId);
 
       final response = await http.get(
-        Uri.parse('http://192.168.137.1:8080/node/bike/$bikeId'),
+        Uri.parse('${Environment.apiUrl}/node/bike/$bikeId'),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -74,7 +74,7 @@ class BikeService with ChangeNotifier {
           .toList()[0]['bike_id'];
 
       final response = await http.put(
-        Uri.parse('http://192.168.137.1:8080/node/bike/lock/$bikeId'),
+        Uri.parse('${Environment.apiUrl}/node/bike/lock/$bikeId'),
         body: jsonEncode({'TheftState': state}),
         headers: {
           'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ class BikeService with ChangeNotifier {
           .toList()[0]['bike_id'];
 
       final response = await http.put(
-        Uri.parse('http://192.168.137.1:8080/node/bike/light/$bikeId'),
+        Uri.parse('${Environment.apiUrl}/node/bike/light/$bikeId'),
         body: jsonEncode({'LightState': state}),
         headers: {
           'Content-Type': 'application/json',
@@ -136,7 +136,7 @@ class BikeService with ChangeNotifier {
           .toList()[0]['bike_id'];
 
       final response = await http.put(
-        Uri.parse('http://192.168.137.1:8080/node/bike/alarm/$bikeId'),
+        Uri.parse('${Environment.apiUrl}/node/bike/alarm/$bikeId'),
         body: jsonEncode({'AlarmState': state}),
         headers: {
           'Content-Type': 'application/json',
