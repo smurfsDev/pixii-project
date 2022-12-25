@@ -1,5 +1,6 @@
 import 'package:mobile/imports.dart';
 import 'package:mobile/models/Claim.dart';
+import 'package:mobile/models/Status.dart';
 
 class getOneClaim extends StatefulWidget {
   List<Claim> claim;
@@ -26,6 +27,20 @@ class _getOneClaim extends State<getOneClaim> {
       itemBuilder: (BuildContext context, int index) {
         final claim = claims[index];
 
+        final statusClaim = Status.fromJson(claim.status);
+        if (statusClaim.name == "TODO") {
+          colorClaim = Colors.red.shade800;
+        }
+        if (statusClaim.name == "INPROGRESS") {
+          colorClaim = Colors.orange.shade600;
+        }
+        if (statusClaim.name == "DONE") {
+          colorClaim = Colors.green;
+        }
+        if (statusClaim.name == "STUCK") {
+          colorClaim = Colors.blue.shade800;
+        }
+
         return Center(
           child: Card(
             color: Color.fromARGB(255, 29, 39, 70),
@@ -39,7 +54,7 @@ class _getOneClaim extends State<getOneClaim> {
                     size: 50,
                   ),
                   title: Text(
-                    "${claim.title}  ${claim.status} ",
+                    "${claim.title}  ",
                     style: TextStyle(color: Colors.white),
                   ),
                   trailing: Text('${claim.created}',
