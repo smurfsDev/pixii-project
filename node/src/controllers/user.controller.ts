@@ -26,14 +26,27 @@ export const findUserByUsername = (req: Request, res: Response) => {
 export const removeRoleUser = (req: Request, res: Response) => {
 	const user = User.findOne
 		({ username: req.params.username }, (err: Error, user: any) => {
-			console.log(user.roles);
-			console.log(user.roles.length);
 			if (user.roles.length == 1) {
-				console.log(user)
-				user.remove((err: any) => {
-					if (err) return res.status(500).send(err);
-					else return res.status(200).send("Role removed successfully");
-				});
+				Role.find({ name: req.params.role }, (err: Error, role: any) => {
+					if (err) return res.status(500).send()
+					if (!role) return res.status(404).send("Role not found")
+					else {
+						console.log(role[0]._id)
+						console.log(user.roles[0]._id)
+						if (role[0]._id.equals(user.roles[0]._id)) {
+							console.log("Haaani wsoolt !")
+							user.remove((err: any) => {
+								if (err) return res.status(500).send(err);
+								else return res.status(200).send("Role removed successfully");
+							});
+						}
+						else {
+							return res.status(404).send("User haven't this role")
+
+						}
+					}
+				})
+
 			}
 			else {
 				for (let index = 0; index < user.roles.length; index++) {
