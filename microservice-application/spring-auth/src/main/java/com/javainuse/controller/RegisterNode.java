@@ -2,10 +2,15 @@ package com.javainuse.controller;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Map;
+
 import org.springframework.cloud.openfeign.FeignClient;
+
 import com.javainuse.entities.User;
 
 import feign.Param;
@@ -27,4 +32,9 @@ public interface RegisterNode {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/node/refuse/{username}/{role}", produces = "application/json")
     User refuse(@PathVariable("username") String username, @PathVariable("role") String role);
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/node/removeRoleUser/{role}/{username}", produces = "application/json")
+    User removeRole(@RequestHeader Map headers,
+            @PathVariable("role") String role,
+            @PathVariable("username") String username);
 }

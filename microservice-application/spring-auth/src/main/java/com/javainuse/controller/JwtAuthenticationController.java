@@ -3,7 +3,9 @@ package com.javainuse.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -347,17 +349,34 @@ public class JwtAuthenticationController {
 	public ResponseEntity<JSONObject> deleteUser(@PathVariable("idUser") int id, @PathVariable("idRole") Long idRole,
 			HttpServletRequest request) {
 		JSONObject item = new JSONObject();
+		Map<String, Object> headerMap = new HashMap<>();
+
 		if (getUser(request).getRoles().contains(roleRepository.findRoleWithName("Super Admin"))) {
 			Optional<UserRole> userRole = userRoleRepository.findByUserIdAndRoleId(id, idRole);
 			Long count = userRoleRepository.countByUserId(id);
 			if (userRole.isPresent() && count > 1) {
+				String role = roleRepository.findRoleById(idRole).get().getName();
+				String username = userRepository.findById(id).getUsername();
 				userRoleRepository.delete(userRole.get());
+				headerMap.put("AutorizationNode", "superadmin@email.com");
+
+				registerNode.removeRole(headerMap, role, username);
+
 				item.put("message", "UserRole deleted");
 				return ResponseEntity.status(HttpStatus.OK).body(item);
 			} else if (userRole.isPresent() && count == 1) {
+				String role = roleRepository.findRoleById(idRole).get().getName();
+				System.out.println("ahaawaaa username = " + userRepository.findUserById(id).get().getUsername());
+
+				String username = userRepository.findById(id).getUsername();
 				userRoleRepository.delete(userRole.get());
 				userRepository.deleteById(id);
 				item.put("message", "User deleted");
+
+				headerMap.put("AutorizationNode", "superadmin@email.com");
+
+				registerNode.removeRole(headerMap, role, username);
+
 				return ResponseEntity.status(HttpStatus.OK).body(item);
 			}
 		}
