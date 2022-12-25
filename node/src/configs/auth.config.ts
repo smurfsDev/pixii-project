@@ -5,7 +5,7 @@ import User from "../models/user.model";
 
 export const fetchUser = async (req: Request, res: Response, next: NextFunction) => {
 
-	if (req.path.includes("role") || req.path.includes("register") || req.path.includes("bike") ) {
+	if (req.path.includes("role") || req.path.includes("register") || req.path.includes("bike") || req.path.includes("accept") || req.path.includes("refuse")) {
 
 		next();
 	} else {
