@@ -68,7 +68,7 @@ export const seed = async () => {
 	let user =
 		await User.findOne({ email: 'superadmin@email.com' });
 	if (!user) {
-		const user1 = new User({ name: 'Super Admin', username: 'superadmin', email: "superadmin@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role1, status: 1 }, { role: role2, status: 1 }, { role: role3, status: 1 }, { role: role4, status: 1 }], status: 1 });
+		const user1 = new User({ name: 'Super Admin', username: 'superadmin', email: "superadmin@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role2, status: 1 }], status: 1 });
 
 		await user1.save();
 	}
@@ -94,7 +94,7 @@ export const seed = async () => {
 	if (!user) {
 
 
-		const user5 = new User({ name: 'Scooter Owner', username: 'scooterowner', email: "scooterowner@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role5, status: 0 }], status: 1 });
+		const user5 = new User({ name: 'Scooter Owner', username: 'scooterowner', email: "scooterowner@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role5, status: 1 }], status: 1 });
 		await user5.save();
 	}
 
