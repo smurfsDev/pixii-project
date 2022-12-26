@@ -1,3 +1,4 @@
+import console from 'console';
 import { Request, Response } from 'express';
 import Role from "../models/role.model";
 
@@ -17,24 +18,13 @@ export const findAll = (req: Request, res: Response) => {
 };
 // create
 export const create = (req: Request, res: Response) => {
-    console.log(req.body);
     const role = new Role(req.body);
     role.save((err, role) => {
         if (err) res.status(500).send(err)
 
         else res.send(role)
     })
-    // role.save(req.body);
-    // role.save((err: any) => {
-    //     if (err) return console.log(err);
-    //     else {
-    //         // const role = Role.findByIdAndUpdate(req.body.role, (err: any, role: any) => {
-    //         //     if (err) return res.status(500).send(err);
-    //         //     else return res.status(200).send(role);
-    //         // });
-    //         role.save(req.body)
-    //     };
-    // })
+
 
 };
 
@@ -72,14 +62,17 @@ export const findRoleIdByName = (req: Request, res: Response) => {
         else return res.status(200).send(role._id);
     })
 }
+//find role by name
+export const findRoleIdByNameBody = (req: Request, res: Response) => {
+    Role.findOne({ name: req.body.role }, (err: Error, role: any) => {
+        if (err) return res.status(500).send(err);
+        else if (!role) return res.status(404).send("Role not found");
+        else return role._id;
+    })
+}
 export default [
-    findRoleIdByName
+    findRoleIdByName,
+    findRoleIdByNameBody
 ]
-// export const getId = (req: Request, res: Response) => {
-
-//     let role = Role.findOne({ name: req.params.name });
-//     console.log(role);
-//     return res.status(200).send(role);
-// }
 
 

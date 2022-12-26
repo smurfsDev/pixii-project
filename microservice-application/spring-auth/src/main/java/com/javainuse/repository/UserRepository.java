@@ -32,4 +32,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	public User findById(int id);
 
+	Optional<User> findUserById(int id);
+
 }

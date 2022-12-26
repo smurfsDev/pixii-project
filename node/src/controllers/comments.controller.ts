@@ -18,17 +18,24 @@ export const findAll = (req: Request, res: Response) => {
 };
 // create
 export const create = (req: Request, res: Response) => {
-	const comment = new Comments(req.body);
+	if ((req.body.isSAVManager) || (req.body.isSAVTechnician) || (req.body.isScooterOwner)) {
+		const comment = new Comments(req.body);
 
-	comment.save((err: any) => {
-		if (err) return res.status(500).send(err);
-		else {
-			const claim = Claim.findByIdAndUpdate(req.body.claim, { $push: { comments: comment._id } }, (err: any, claim: any) => {
-				if (err) return res.status(500).send(err);
-				else return res.status(200).send(comment);
-			});
-		};
-	})
+		comment.save((err: any) => {
+			if (err) return res.status(500).send(err);
+			else {
+				const claim = Claim.findByIdAndUpdate(req.body.claim, { $push: { comments: comment._id } }, (err: any, claim: any) => {
+					if (err) return res.status(500).send(err);
+					else return res.status(200).send(comment);
+				});
+			};
+		})
+	}
+	else {
+		res.status(401).send("You must be an SAV Technician or an SAV Manager or a Scooter Owner!")
+
+	}
+
 
 };
 
