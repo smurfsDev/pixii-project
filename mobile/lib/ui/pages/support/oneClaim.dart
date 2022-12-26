@@ -1,7 +1,7 @@
 import 'package:mobile/imports.dart';
 import 'package:mobile/models/Claim.dart';
 import 'package:mobile/models/Status.dart';
-import 'package:mobile/ui/pages/support/claimDetails.dart';
+import 'package:mobile/ui/pages/support/claimsTabs.dart';
 
 class getOneClaim extends StatefulWidget {
   List<Claim> claim;
@@ -66,7 +66,7 @@ class _getOneClaim extends State<getOneClaim> {
                   onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ClaimDetails(claim, user))),
+                          builder: (context) => ClaimsTabs(claim, user))),
                 ),
               ],
             ),
