@@ -1,7 +1,36 @@
 <app-navbar>
-    <app-dash-super-admin *ngIf="isSuperAdmin" ></app-dash-super-admin>
-    <app-dash-scooter-owner *ngIf="isScooterOwner" ></app-dash-scooter-owner>
-    <app-dash-sa-vmanager *ngIf="isSavManager" ></app-dash-sa-vmanager>
-    <app-dash-sa-vtechnicien *ngIf="isSavTechnician" ></app-dash-sa-vtechnicien>
-    <app-dash-admin *ngIf="isAdmin" ></app-dash-admin>
+    <app-dash-super-admin *ngIf="isSuperAdmin"
+                            [options]="options"
+                            [admins]="admins"
+                            [scooterOwners]="scooterOwners"
+                            [savManagers]="savManagers"
+                            [savTechnicians]="savTechnicians"
+                            [bikes]="bikes"
+                            [percentage]="percentage"
+
+    ></app-dash-super-admin>
+    <app-dash-scooter-owner *ngIf="isScooterOwner" >
+    </app-dash-scooter-owner>
+    <app-dash-sa-vmanager *ngIf="isSavManager"
+                            [options]="options"
+                            [bikes]="bikes"
+                            [percentage]="percentage"
+                            [scooterOwners]="scooterOwners"
+                            [savTechnicians]="savTechnicians"
+     ></app-dash-sa-vmanager>
+    <app-dash-sa-vtechnicien *ngIf="isSavTechnician"
+                                [options]="options"
+                                [bikes]="bikes"
+                                [percentage]="percentage"
+                                [scooterOwners]="scooterOwners"
+    >
+    </app-dash-sa-vtechnicien>
+    <app-dash-admin *ngIf="isAdmin"
+                        [options]="options"
+                        [scooterOwners]="scooterOwners"
+                        [savManagers]="savManagers"
+                        [savTechnicians]="savTechnicians"
+                        [bikes]="bikes"
+                        [percentage]="percentage"
+    ></app-dash-admin>
 </app-navbar>
