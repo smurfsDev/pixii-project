@@ -24,13 +24,18 @@ export const CountUsersByRole = (req: Request, res: Response) => {
             $unwind: "$roles"
         },
         {
+            $match: { "roles.status": 1 }
+        },
+        {
             $group: {
-                _id: "$roles",
+                _id: "$roles.role",
                 count: { $sum: 1 }
             }
         }
     ]).then((users) => {
+        Role.populate(users, { path: "_id" }, function (err, users) {
             res.send(users);
+        });
     });
 }
 export const CountBikes = (req: Request, res: Response) => {
