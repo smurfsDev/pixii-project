@@ -1,0 +1,85 @@
+@startuml claims_class_diagram
+Class user {
+Int id
+String name
+String password
+String username
+String email
+Bool enabled 
+String verification_code
+JSON Login()
+Bool Register()
+}
+
+Class role{
+Int id
+String name
+}
+
+user .right.> role
+
+ 
+Class SuperAdmin{}
+Class Admin{}
+Class SavManager{}
+Class SavTechnicien{}
+Class ScooterOwner{}
+
+
+top to bottom direction
+user <|-- SuperAdmin
+user <|-- Admin
+user <|-- SavManager
+user <|-- SavTechnicien
+user <|-- ScooterOwner
+
+Class Claim {
+Int id
+String title
+String subject
+String message
+SavTechnicien[] technician_history
+Status [] status_history
+TimeStamp created
+TimeStamp updated
+
+GetAllClaims() : Claim[]
+GetMyClaims() : Claim[]
+GetClaimDetails(Int id) : Claim
+GetAllClaimsByStatus(Status status) : Claim[]
+CreateClaim(Claim claim) : Bool
+SetStatus(Status status) : Bool
+AffectTechnician(SavTechnician) : Bool
+Comment(Comment comment) : Bool
+
+}
+
+Class Comment{
+Int id
+String message
+TimeStamp created
+
+CreateComment(Comment comment) : Bool
+
+}
+
+Class Status{
+String name
+String color
+TimeStamp created
+
+GetAllStatus() : Status[]
+CreateStatus(Status status) : Bool
+UpdateStatus(Status status) : Bool
+DeleteStatus(Status status) : Bool
+
+}
+
+Claim "*"--"*" SavTechnicien : in charge of 
+Claim "*"--"1" ScooterOwner : authors
+Comment "*"--*"1" Claim
+Comment "*"--*"1" user : Authors
+Status "*"--"*" Claim
+
+
+@enduml

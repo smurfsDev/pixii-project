@@ -1,0 +1,33 @@
+
+@startuml claims_sav_manager_sequence_diagram
+actor SavManager as sm
+boundary Claims as cl
+control ClaimsService as cs
+entity Claim as c
+
+activate sm
+sm -> cl : AffectTechnician(Technicien)
+activate cl
+cl -> cs : AffectTechnician(Technicien)
+activate cs
+cs -> c : AffectTechnician(Technicien)
+activate c
+alt technicien is affected
+c --> cs : technicienAffected
+deactivate c
+cs --> cl : technicienAffected
+deactivate cs
+cl --> sm : technicienAffected
+deactivate cl
+else technicien is not affected
+c --> cs : technicienNotAffected
+deactivate c
+cs --> cl : technicienNotAffected
+deactivate cs
+cl --> sm : technicienNotAffected
+deactivate cl
+end
+deactivate cl
+deactivate sm
+
+@enduml

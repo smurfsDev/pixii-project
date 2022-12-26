@@ -1,0 +1,60 @@
+@startuml claims_sequence_diagram
+
+actor ScooterOwner as so
+boundary Claims as cl
+control ClaimsService as cs
+entity Claim as c
+
+so -> cl : createClaim()
+activate so
+activate cl
+cl -> cl : validateClaim()
+activate cl
+
+alt claim is valid
+cl -> cs : createClaim()
+activate cs
+
+cs -> cs : validateClaim()
+activate cl
+alt claim is valid
+cs -> c : createClaim()
+activate c
+alt claim is created
+c --> cs : claimCreated
+deactivate c
+cs --> cl : claimCreated
+deactivate cs
+cl --> so : claimCreated
+deactivate cl
+else claim is not created
+c --> cs : claimNotCreated
+deactivate c
+cs --> cl : claimNotCreated
+deactivate cs
+cl --> so : claimNotCreated
+deactivate cl
+end
+
+else claim is invalid
+cl -> cl : notifyClaimInvalid()
+activate cl
+cl --> so : claimInvalid
+deactivate cl
+deactivate cl
+deactivate so
+
+end
+else claim is invalid
+activate cs
+cs -> cl : notifyClaimInvalid()
+activate cl
+cl --> so : claimInvalid
+deactivate cs
+deactivate cl
+end
+deactivate cl
+deactivate so
+
+
+@enduml

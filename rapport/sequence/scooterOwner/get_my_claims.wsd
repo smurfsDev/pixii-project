@@ -1,0 +1,25 @@
+@startuml claims_sequence_diagram
+
+actor ScooterOwner as so
+boundary Claims as cl
+control ClaimsService as cs
+entity Claim as c
+
+
+
+activate so
+so -> cl : getClaims()
+activate cl
+cl -> cs : getMyClaims()
+activate cs
+cs -> c : getMyClaims()
+activate c
+c --> cs : myClaims
+deactivate c
+cs --> cl : myClaims
+deactivate cs
+cl --> so : myClaims
+deactivate cl
+deactivate so
+
+@enduml

@@ -1,0 +1,21 @@
+@startuml claims_my_claims_sequence_diagram
+actor SavTechnicien as st
+boundary Claims as cl
+control ClaimsService as cs
+entity Claim as c
+
+activate st
+st -> cl : getMyClaims()
+activate cl
+cl -> cs : getMyClaims()
+activate cs
+cs -> c : getMyClaims()
+activate c
+c --> cs : myClaims
+deactivate c
+cs --> cl : myClaims
+deactivate cs
+cl --> st : myClaims
+deactivate cl
+
+@enduml

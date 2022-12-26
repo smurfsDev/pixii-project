@@ -1,0 +1,22 @@
+
+@startuml claims_sav_manager_sequence_diagram
+actor SavManager as sm
+boundary Claims as cl
+control ClaimsService as cs
+entity Claim as c
+
+activate sm
+sm -> cl : getAllClaims()
+activate cl
+cl -> cs : getAllClaims()
+activate cs
+cs -> c : getAllClaims()
+activate c
+c --> cs : allClaims
+deactivate c
+cs --> cl : allClaims
+deactivate cs
+cl --> sm : allClaims
+deactivate cl
+
+@enduml
