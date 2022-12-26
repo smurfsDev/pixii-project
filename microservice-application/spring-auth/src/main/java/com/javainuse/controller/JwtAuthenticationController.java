@@ -381,7 +381,6 @@ public class JwtAuthenticationController {
 				return ResponseEntity.status(HttpStatus.OK).body(item);
 			} else if (userRole.isPresent() && count == 1) {
 				String role = roleRepository.findRoleById(idRole).get().getName();
-				System.out.println("ahaawaaa username = " + userRepository.findUserById(id).get().getUsername());
 
 				String username = userRepository.findById(id).getUsername();
 				userRoleRepository.delete(userRole.get());
