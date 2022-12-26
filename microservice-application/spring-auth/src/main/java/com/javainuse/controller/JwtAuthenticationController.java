@@ -262,7 +262,7 @@ public class JwtAuthenticationController {
 			acceptUser(userRole);
 			item.put("message", "admin accepted");
 			System.out.println("userAcceptedRole");
-			headerMap.put("AutorizationNode", userRole.getUser().getEmail());
+			headerMap.put("AutorizationNode", user.getEmail());
 
 			registerNode.accept(headerMap, userRole.getUser().getUsername(), userAcceptedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
@@ -270,7 +270,7 @@ public class JwtAuthenticationController {
 			acceptUser(userRole);
 			item.put("message", "SAV Manager accepted");
 			System.out.println("userAcceptedRole");
-			headerMap.put("AutorizationNode", userRole.getUser().getEmail());
+			headerMap.put("AutorizationNode", user.getEmail());
 
 			registerNode.accept(headerMap, userRole.getUser().getUsername(), userAcceptedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
@@ -279,7 +279,7 @@ public class JwtAuthenticationController {
 			acceptUser(userRole);
 			item.put("message", "SAV Technician accepted");
 			System.out.println("userAcceptedRole");
-			headerMap.put("AutorizationNode", userRole.getUser().getEmail());
+			headerMap.put("AutorizationNode", user.getEmail());
 
 			registerNode.accept(headerMap, userRole.getUser().getUsername(), userAcceptedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
@@ -317,7 +317,7 @@ public class JwtAuthenticationController {
 		if (isSuperAdmin == true && userDeclinedRole.equals("Admin") && isAdmin == false) {
 			rejectUser(userRole);
 			item.put("message", "admin rejected");
-			headerMap.put("AutorizationNode", "superadmin@email.com");
+			headerMap.put("AutorizationNode", user.getEmail());
 
 			registerNode.refuse(headerMap, userRole.getUser().getUsername(), userDeclinedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
@@ -325,7 +325,7 @@ public class JwtAuthenticationController {
 				&& (isSuperAdmin || isAdmin)) {
 			rejectUser(userRole);
 			item.put("message", "SAV Manager rejected");
-			headerMap.put("AutorizationNode", userRole.getUser().getEmail());
+			headerMap.put("AutorizationNode", user.getEmail());
 
 			registerNode.refuse(headerMap, userRole.getUser().getUsername(), userDeclinedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
@@ -333,7 +333,7 @@ public class JwtAuthenticationController {
 				&& (isSuperAdmin || isAdmin)) {
 			rejectUser(userRole);
 			item.put("message", "SAV Technician rejected");
-			headerMap.put("AutorizationNode", userRole.getUser().getEmail());
+			headerMap.put("AutorizationNode", user.getEmail());
 
 			registerNode.refuse(headerMap, userRole.getUser().getUsername(), userDeclinedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);

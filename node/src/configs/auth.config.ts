@@ -16,12 +16,13 @@ export const fetchUser = async (req: Request, res: Response, next: NextFunction)
 		if (user) {
 			console.log("aaaa")
 			req.body.user = user;
+			console.log("l user authenticated: " + user)
 			for (let index = 0; index < req.body.user.roles.length; index++) {
 				const element = req.body.user.roles[index];
-				console.log(element.role)
+				console.log("role l user " + element.role[0])
 
 				let fetchRole = await Role.find({ _id: element.role }, async (err: Error, roleUser: any) => {
-					console.log("Role user : " + roleUser[0].name)
+					console.log("esm l Role user : " + roleUser[0].name)
 					console.log("status : " + element.status)
 					if (element.status == 1) {
 						console.log(roleUser[0].name)
