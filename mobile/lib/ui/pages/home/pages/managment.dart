@@ -1,7 +1,12 @@
 import "package:mobile/imports.dart";
+import 'package:mobile/models/BikeData.dart';
+import 'package:mobile/service/bike.dart';
 
 class Managment extends StatefulWidget {
-  const Managment({Key? key}) : super(key: key);
+  late BikeService bikeService;
+  late BikeData? bike = null;
+  Managment({required this.bikeService, required this.bike, Key? key})
+      : super(key: key);
 
   @override
   _ManagmentState createState() => _ManagmentState();
@@ -14,9 +19,37 @@ class _ManagmentState extends State<Managment> {
   IconData? iconPopUpElement = Icons.warning;
 
   showInSnackBar(demoMenuSelected) {}
+  late BikeService bikeService = widget.bikeService;
+  late BikeData? bike = widget.bike;
+  @override
+  initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      if (bike == null) {
+        bike = bikeService.bikeData;
+        print("State" + bikeService.toString());
+        if (bike == null) {
+          await bikeService.getBikeData();
+          // .then((value) {
+          print("fetching");
+          setState(() {
+            bike = bikeService.bikeData;
+          });
+          print("State" + bike.toString());
+          // });
+        } else {
+          print("State" + bike!.TheftState.toString());
+        }
+      }
+      // });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    bikeService = Provider.of<BikeService>(context, listen: false);
+    bike = bikeService.bikeData;
+
     return Column(mainAxisSize: MainAxisSize.max, children: [
       DecoratedBox(
         decoration: BoxDecoration(
@@ -57,7 +90,8 @@ class _ManagmentState extends State<Managment> {
                 onTap: () => setState(() {
                   titleMenu = "Battery level";
                   image = "assets/images/battery_level.png";
-                  messagePopUpMenu = "90%";
+                  messagePopUpMenu =
+                      (bike?.batteryHistory.last['value'][1]).toString() + "%";
                   iconPopUpElement = Icons.battery_5_bar;
                 }),
               ),
@@ -117,8 +151,10 @@ class _ManagmentState extends State<Managment> {
           ),
         ]),
       ),
-      ScooterManagement()
+      ScooterManagement(
+        bike: bike,
+        bikeService: bikeService,
+      )
     ]);
   }
 }
-

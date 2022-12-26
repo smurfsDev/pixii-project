@@ -12,18 +12,26 @@ class User {
   User({
     required this.username,
     required this.name,
+    required this.email,
+    required this.role,
   });
 
   String username;
   String name;
+  String email;
+  List role;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         username: json["username"],
         name: json["name"],
+        email: json["email"],
+        role: List.from(json["roles"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
         "username": username,
         "name": name,
+        "email": email,
+        "roles": List.from(role.map((x) => x)),
       };
 }
