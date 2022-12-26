@@ -4,6 +4,7 @@ import "package:mobile/imports.dart";
 import 'package:http/http.dart' as http;
 import 'package:mobile/models/Claim.dart';
 import 'package:mobile/models/Status.dart';
+import 'package:mobile/models/StatusHistory.dart';
 
 class ClaimsService with ChangeNotifier {
   late Claim? claim = null;
@@ -98,6 +99,12 @@ class ClaimsService with ChangeNotifier {
           }
         }
       }
+      for (var element in claims) {
+        for (var item in element.statusHistory) {
+          item = StatusHistory.fromJson(item);
+        }
+      }
+      print(claims);
 
       return claims;
     } else {
