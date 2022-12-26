@@ -30,7 +30,6 @@ class _getOneClaim extends State<getOneClaim> {
       itemCount: claims.length,
       itemBuilder: (BuildContext context, int index) {
         final claim = claims[index];
-
         final statusClaim = Status.fromJson(claim.status);
         if (statusClaim.name == "TODO") {
           colorClaim = Colors.red.shade800;

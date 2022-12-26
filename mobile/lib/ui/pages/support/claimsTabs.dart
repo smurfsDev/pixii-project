@@ -5,6 +5,7 @@ import 'package:mobile/models/StatusHistory.dart';
 import 'package:mobile/service/claims.dart';
 import 'package:mobile/ui/pages/support/claimsDetails.dart';
 import 'package:mobile/ui/pages/support/myClaims.dart';
+import 'package:mobile/ui/pages/support/statusHistory.dart';
 import 'package:mobile/ui/pages/support/support.dart';
 
 // ignore: must_be_immutable
@@ -28,14 +29,15 @@ class _ClaimsTabs extends State<ClaimsTabs> {
   @override
   Widget build(BuildContext context) {
     final claimsService = Provider.of<ClaimsService>(context);
-    final statusClaim = Status.fromJson(claim.status);
-    var history = [];
-    for (var element in claim.statusHistory) {
-      print(element);
-      final statusHis = StatusHistory.fromJson(element);
+    print(claim);
+    // final statusClaim = Status.fromJson(claim.status);
+    // var history = [];
+    // for (var element in claim.statusHistory) {
+    //   print(element);
+    //   final statusHis = StatusHistory.fromJson(element);
 
-      // history.add(statusHis);
-    }
+    //   // history.add(statusHis);
+    // }
 
     return (MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -61,7 +63,7 @@ class _ClaimsTabs extends State<ClaimsTabs> {
             body: TabBarView(
               children: [
                 ClaimsDetails(claim, user),
-                Icon(Icons.directions_transit),
+                StatusHistoryWidget(claim, user),
                 Icon(Icons.directions_bike),
               ],
             ),

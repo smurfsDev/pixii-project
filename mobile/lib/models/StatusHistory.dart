@@ -9,8 +9,8 @@ String statusHistoryToJson(StatusHistory data) => json.encode(data.toJson());
 
 class StatusHistory {
   final String? id;
-  final String? old_status;
-  final String? new_status;
+  String old_status;
+  String new_status;
   final String? date;
   String? author;
 

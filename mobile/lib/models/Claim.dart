@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:mobile/models/Status.dart';
+import 'package:mobile/models/StatusHistory.dart';
 
 Claim claimFromJson(String str) => Claim.fromJson(json.decode(str));
 String claimToJson(Claim data) => json.encode(data.toJson());
