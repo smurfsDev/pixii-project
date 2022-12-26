@@ -28,10 +28,12 @@ public interface RegisterNode {
     User register(@RequestBody JSONObject user);
 
     @RequestMapping(method = RequestMethod.PUT, value = "/node/accept/{username}/{role}", produces = "application/json")
-    User accept(@PathVariable("username") String username, @PathVariable("role") String role);
+    User accept(@RequestHeader Map headers, @PathVariable("username") String username,
+            @PathVariable("role") String role);
 
     @RequestMapping(method = RequestMethod.PUT, value = "/node/refuse/{username}/{role}", produces = "application/json")
-    User refuse(@PathVariable("username") String username, @PathVariable("role") String role);
+    User refuse(@RequestHeader Map headers, @PathVariable("username") String username,
+            @PathVariable("role") String role);
 
     @RequestMapping(method = RequestMethod.PUT, value = "/node/removeRoleUser/{role}/{username}", produces = "application/json")
     String removeRole(@RequestHeader Map headers,

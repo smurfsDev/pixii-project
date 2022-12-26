@@ -5,7 +5,7 @@ import User from "../models/user.model";
 
 export const fetchUser = async (req: Request, res: Response, next: NextFunction) => {
 
-	if (req.path.includes("role") || req.path.includes("register") || req.path.includes("bike") || req.path.includes("accept") || req.path.includes("refuse")) {
+	if (req.path.includes("role") || req.path.includes("register") || req.path.includes("bike")) {
 
 		next();
 	} else {
@@ -18,9 +18,13 @@ export const fetchUser = async (req: Request, res: Response, next: NextFunction)
 			req.body.user = user;
 			for (let index = 0; index < req.body.user.roles.length; index++) {
 				const element = req.body.user.roles[index];
-				let fetchRole = await Role.find({ _id: element._id }, async (err: Error, roleUser: any) => {
+				console.log(element.role)
 
+				let fetchRole = await Role.find({ _id: element.role }, async (err: Error, roleUser: any) => {
+					console.log("Role user : " + roleUser[0].name)
+					console.log("status : " + element.status)
 					if (element.status == 1) {
+						console.log(roleUser[0].name)
 						if (roleUser[0].name == "Admin") {
 							req.body.isAdmin = true
 						}

@@ -9,10 +9,14 @@ let userSchema = new mongoose.Schema({
     // role: { type: String, required: true },
     roles: [
         {
-            role: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "roles",
-            },
+            role: [
+                {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "roles",
+                }
+            ],
+
+
             status: {
                 type: Number,
                 required: true,
