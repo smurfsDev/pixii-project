@@ -1,4 +1,4 @@
-@startuml claims_my_claims_sequence_diagram
+@startuml set_claim_status
 actor SavTechnicien as st
 boundary Claims as cl
 control ClaimsService as cs

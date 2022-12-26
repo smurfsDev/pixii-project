@@ -1,4 +1,4 @@
-@startuml claims_consult_details_sequence_diagram
+@startuml claim_comment
 
 actor "ScooterOwner\nSavManager\nSavTechnicien" as so
 boundary Claims as cl

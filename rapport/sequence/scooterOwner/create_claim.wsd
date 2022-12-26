@@ -1,4 +1,4 @@
-@startuml claims_sequence_diagram
+@startuml create_claim
 
 actor ScooterOwner as so
 boundary Claims as cl

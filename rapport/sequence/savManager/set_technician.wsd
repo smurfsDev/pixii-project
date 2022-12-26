@@ -1,5 +1,5 @@
 
-@startuml claims_sav_manager_sequence_diagram
+@startuml set_claim_technician
 actor SavManager as sm
 boundary Claims as cl
 control ClaimsService as cs
