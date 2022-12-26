@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import "package:mobile/imports.dart";
@@ -25,16 +26,15 @@ class ClaimsService with ChangeNotifier {
       'message': message,
       'user': user
     };
-    // print("request $request");
+    print("request $request");
     try {
       final response = await http.post(
-          Uri.parse('http://192.168.137.1:8080/node/claims'),
+          Uri.parse('${Environment.apiUrl}/node/claims'),
           body: jsonEncode(request),
           headers: {
             'Content-Type': 'application/json',
             'AutorizationNode': user.email
           });
-      // print(response.statusCode);
       if (response.statusCode == 200) {
         return true;
       } else {
@@ -63,22 +63,20 @@ class ClaimsService with ChangeNotifier {
       return [];
     }
     final response = await http
-        .get(Uri.parse('http://192.168.137.1:8080/node/claims/mine'), headers: {
+        .get(Uri.parse('${Environment.apiUrl}/node/claims/mine'), headers: {
       'Content-Type': 'application/json',
       'AutorizationNode': user.email
     });
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
 
-      // print(data);
       List<Claim> claims = [];
       List<User> AllTechnicians = [];
       for (var item in data) {
-        // print(Claim.fromJson(item));
         claims.add(Claim.fromJson(item));
       }
       final technicians = await http
-          .get(Uri.parse('http://192.168.137.1:8080/node/users'), headers: {
+          .get(Uri.parse('${Environment.apiUrl}/node/users'), headers: {
         'Content-Type': 'application/json',
         'AutorizationNode': user.email
       });
@@ -87,82 +85,58 @@ class ClaimsService with ChangeNotifier {
       for (var item in dataTech) {
         AllTechnicians.add(User.fromJson(item));
       }
-      for (var item in AllTechnicians) {
-        // print(item.id);
-      }
+      for (var item in AllTechnicians) {}
       for (var item in claims) {
         for (var tech in AllTechnicians) {
-          // print(tech.id);
-          // print(item.technician);
           if (tech.id == item.technician) {
             item.technician = tech.name;
           }
         }
       }
-      //     for (var element in claim.statusHistory) {
-      //   // print(element);
-      //   final statusHis = StatusHistory.fromJson(element);
-      //   print(statusHis);
-      //   Future<Status> s = ClaimsService().getStatus(statusHis.old_status);
-      // }
-      List<StatusHistory> status = [];
-      for (var element in claims) {
-        // final element = StatusHistory.fromJson(item);
 
+      List<Map<String, dynamic>> status = [];
+      for (var element in claims) {
         for (var item in element.statusHistory) {
           final hist = StatusHistory.fromJson(item);
           final response_old_status = await http.get(
-              Uri.parse(
-                  'http://192.168.137.1:8080/node/status/${hist.old_status}'),
+              Uri.parse('${Environment.apiUrl}/node/status/${hist.old_status}'),
               headers: {
                 'Content-Type': 'application/json',
                 'AutorizationNode': user!.email
               });
-          // print(response.body);
-          final dataStatus = jsonDecode(response_old_status.body);
-          print(dataStatus);
-          final fetchStatus = Status.fromJson(dataStatus);
-          print(fetchStatus);
-          hist.old_status = fetchStatus.name!;
-          // status.add(item);
-          print(hist);
+          final dataOldStatus = jsonDecode(response_old_status.body);
+          final fetchOldStatus = Status.fromJson(dataOldStatus);
+          hist.old_status = fetchOldStatus.name!;
           final response_new_status = await http.get(
-              Uri.parse(
-                  'http://192.168.137.1:8080/node/status/${hist.new_status}'),
+              Uri.parse('${Environment.apiUrl}/node/status/${hist.new_status}'),
               headers: {
                 'Content-Type': 'application/json',
                 'AutorizationNode': user!.email
               });
-          print(response_new_status.body);
-          final dataNew = jsonDecode(response_new_status.body);
-          print(dataStatus);
-          final fetchNewStatus = Status.fromJson(dataStatus);
-          print(fetchNewStatus);
-          hist.new_status = fetchStatus.name!;
-          StatusHistory res = StatusHistory(
-              id: hist.id,
-              new_status: hist.new_status,
-              old_status: hist.old_status,
-              author: hist.author,
-              date: hist.date);
-          status.add(res);
-          // status.add(item);
-          // print(hist);
-          // hist.old_status = dataStatus;
-          // final old = Status.fromJson(hist.old_status);
+          final dataNewStatus = jsonDecode(response_new_status.body);
+          final fetchNewStatus = Status.fromJson(dataNewStatus);
+          hist.new_status = fetchNewStatus.name!;
+          for (var element in AllTechnicians) {
+            if (element.id == hist.author) {
+              hist.author = element.name;
+            }
+          }
+          Map<String, dynamic> res = new HashMap<String, dynamic>();
+          res = {
+            "id": hist.id,
+            "new_status": hist.new_status,
+            "old_status": hist.old_status,
+            "author": hist.author,
+            "date": hist.date
+          };
 
-          // print(old);
-          // hist.old_status = old;
-          // hist.old_status = old as Map<String, dynamic>;
-          // hist.old_status = old.name;
+          status.add(res);
         }
         element.statusHistory = status;
       }
-      print(claims);
 
       return claims;
     } else {
-      print("error");
       return [];
     }
   }
@@ -172,15 +146,12 @@ class ClaimsService with ChangeNotifier {
     await authService.loadSettings();
     final user = authService.user;
 
-    final response = await http.get(
-        Uri.parse('http://192.168.137.1:8080/node/status/' + id),
-        headers: {
-          'Content-Type': 'application/json',
-          'AutorizationNode': user!.email
-        });
-    // if (response.statusCode == 200) {
+    final response = await http
+        .get(Uri.parse('${Environment.apiUrl}/node/status/' + id), headers: {
+      'Content-Type': 'application/json',
+      'AutorizationNode': user!.email
+    });
     final data = jsonDecode(response.body);
-    print(data);
     Status status = Status.fromJson(data);
     return status;
   }
@@ -194,18 +165,15 @@ class ClaimsService with ChangeNotifier {
       return [];
     }
     final response = await http
-        .get(Uri.parse('http://192.168.137.1:8080/node/status'), headers: {
+        .get(Uri.parse('${Environment.apiUrl}/node/status'), headers: {
       'Content-Type': 'application/json',
       'AutorizationNode': user.email
     });
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print(data);
       List<Claim> claims = [];
-
       return data;
     } else {
-      print("error");
       return [];
     }
   }

@@ -34,31 +34,30 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
   @override
   Widget build(BuildContext context) {
     final claimsService = Provider.of<ClaimsService>(context);
-    // final statusClaim = Status.fromJson(claim.status);
     final statusClaim = Status.fromJson(claim.status);
-    var history = [];
-    Status? ss;
-    print(claim);
 
     List<StatusHistory>? statusHistoryTable;
-    print(claim.statusHistory.length);
 
-    print(statusClaim);
-    var old_status;
+    List<StatusHistory> allStatusHistory = [];
+    for (var element in claim.statusHistory) {
+      StatusHistory statusHistory = StatusHistory(
+          id: '', author: '', new_status: '', old_status: '', date: '');
+      final statusClaim = StatusHistory.fromJson(element);
+      statusHistory.new_status = statusClaim.new_status;
+      statusHistory.old_status = statusClaim.old_status;
+      statusHistory.id = statusClaim.id;
+      statusHistory.author = statusClaim.author;
+      statusHistory.date = statusClaim.date;
 
+      allStatusHistory.add(statusHistory);
+    }
     return SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: ListView.separated(
-          itemCount: 10,
+          itemCount: allStatusHistory.length,
           shrinkWrap: true,
           padding: const EdgeInsets.all(8),
           itemBuilder: (BuildContext context, int index) {
-            // final tableHist = statusHistoryTable![index];
-            for (var element in claim.statusHistory) {
-              final statusClaim = StatusHistory.fromJson(element);
-              old_status = statusClaim.old_status;
-            }
-
             return Center(
               child: Card(
                 color: const Color.fromARGB(255, 29, 39, 70),
@@ -72,26 +71,50 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
                         size: 50,
                       ),
                       title: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(0),
                             child: Text(
-                              "Old status: ${old_status}    \t New status:  ",
+                              "Transaction: $index ",
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 18),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(0),
+                            child: Text(
+                              "Old status: ${allStatusHistory[index].old_status} ",
                               style: const TextStyle(color: Colors.white),
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(0),
                             child: Text(
-                              "New status:  ",
+                              "New status: ${allStatusHistory[index].new_status} ",
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(0),
+                            child: Text(
+                              "Author:  ${allStatusHistory[index].author}  ",
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(0),
+                            child: Text(
+                              "Created at ${allStatusHistory[index].date!.substring(0, 10)}  ",
                               style: const TextStyle(color: Colors.white),
                             ),
                           ),
                         ],
                       ),
-                      // trailing: Text(claim.created!.substring(0, 10),
-                      //       style: TextStyle(color: Colors.white)),
-                      //   onTap: () => {},
+                      trailing: Text(claim.created!.substring(0, 10),
+                          style: TextStyle(color: Colors.white)),
+                      onTap: () => {},
                     ),
                   ],
                 ),

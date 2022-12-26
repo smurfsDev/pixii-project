@@ -8,10 +8,10 @@ StatusHistory claimFromJson(String str) =>
 String statusHistoryToJson(StatusHistory data) => json.encode(data.toJson());
 
 class StatusHistory {
-  final String? id;
+  String? id;
   String old_status;
   String new_status;
-  final String? date;
+  String? date;
   String? author;
 
   StatusHistory(
