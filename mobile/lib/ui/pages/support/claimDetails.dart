@@ -67,7 +67,7 @@ class _ClaimDetails extends State<ClaimDetails> {
                           style: TextStyle(color: Colors.white),
                         ),
                         Text(
-                          'Employee in charge : \n',
+                          'Employee in charge :  ${claim.technician}\n',
                           style: TextStyle(color: Colors.white),
                         ),
                       ],

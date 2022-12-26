@@ -71,9 +71,32 @@ class ClaimsService with ChangeNotifier {
 
       // print(data);
       List<Claim> claims = [];
+      List<User> AllTechnicians = [];
       for (var item in data) {
         // print(Claim.fromJson(item));
         claims.add(Claim.fromJson(item));
+      }
+      final technicians = await http
+          .get(Uri.parse('${Environment.apiUrl}/node/users'), headers: {
+        'Content-Type': 'application/json',
+        'AutorizationNode': user.email
+      });
+      final dataTech = jsonDecode(technicians.body);
+
+      for (var item in dataTech) {
+        AllTechnicians.add(User.fromJson(item));
+      }
+      for (var item in AllTechnicians) {
+        print(item.id);
+      }
+      for (var item in claims) {
+        for (var tech in AllTechnicians) {
+          print(tech.id);
+          print(item.technician);
+          if (tech.id == item.technician) {
+            item.technician = tech.name;
+          }
+        }
       }
 
       return claims;

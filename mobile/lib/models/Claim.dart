@@ -13,9 +13,9 @@ class Claim {
   final String? message;
   final Map<String, dynamic> status;
   final String? created;
-  final String? technician;
+  String? technician;
 
-  const Claim(
+  Claim(
       {required this.id,
       required this.subject,
       required this.title,
