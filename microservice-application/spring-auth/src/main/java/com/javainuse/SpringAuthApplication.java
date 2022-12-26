@@ -99,17 +99,17 @@ public class SpringAuthApplication implements CommandLineRunner {
 		userRoleRepository.save(ur1);
 
 		UserRole ur2 = userRoleRepository.findFirstByUserId(admin.getId()).get();
-		ur2.setStatus(1);
+		ur2.setStatus(0);
 
 		userRoleRepository.save(ur2);
 
 		UserRole ur3 = userRoleRepository.findFirstByUserId(savManger.getId()).get();
-		ur3.setStatus(1);
+		ur3.setStatus(0);
 
 		userRoleRepository.save(ur3);
 
 		UserRole ur4 = userRoleRepository.findFirstByUserId(savTechnician.getId()).get();
-		ur1.setStatus(1);
+		ur1.setStatus(0);
 
 		userRoleRepository.save(ur4);
 

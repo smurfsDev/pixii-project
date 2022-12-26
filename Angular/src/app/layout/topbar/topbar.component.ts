@@ -13,6 +13,7 @@ export class TopbarComponent implements OnInit {
   vehicle = false;
   location = false;
   controlPanel = false;
+  isScooterOwner = false;
   @Output() value = new EventEmitter<any>();
   BtnVehicule = {
     color: '#ffffffa4',
@@ -31,6 +32,12 @@ export class TopbarComponent implements OnInit {
 
   authUser: User | undefined;
   ngOnInit(): void {
+    this.store.select(state => state.AuthState).subscribe(user => {
+      if (user) {
+        this.authUser = user.user;
+        this.isScooterOwner = user['isScooterOwner'].isScooterOwner;
+      }
+    });
   }
 
   logout() {
