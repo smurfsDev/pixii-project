@@ -4,6 +4,7 @@ import 'package:mobile/models/Status.dart';
 import 'package:mobile/models/StatusHistory.dart';
 import 'package:mobile/service/claims.dart';
 import 'package:mobile/ui/pages/support/claimsDetails.dart';
+import 'package:mobile/ui/pages/support/comments.dart';
 import 'package:mobile/ui/pages/support/myClaims.dart';
 import 'package:mobile/ui/pages/support/statusHistory.dart';
 import 'package:mobile/ui/pages/support/support.dart';
@@ -64,7 +65,7 @@ class _ClaimsTabs extends State<ClaimsTabs> {
               children: [
                 ClaimsDetails(claim, user),
                 StatusHistoryWidget(claim, user),
-                Icon(Icons.directions_bike),
+                Comments(user),
               ],
             ),
             backgroundColor: const Color.fromARGB(255, 19, 27, 54),
