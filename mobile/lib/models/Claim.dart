@@ -14,6 +14,7 @@ class Claim {
   final String? message;
   final Map<String, dynamic> status;
   List<dynamic> statusHistory;
+  List<dynamic> comments;
   final String? created;
   String? technician;
 
@@ -25,6 +26,7 @@ class Claim {
       required this.status,
       required this.technician,
       required this.statusHistory,
+      required this.comments,
       required this.created});
   factory Claim.fromJson(Map<String, dynamic> json) {
     return Claim(
@@ -33,6 +35,7 @@ class Claim {
         title: json['title'] as String,
         status: json['status'] as Map<String, dynamic>,
         statusHistory: json['_status'] as List<dynamic>,
+        comments: json['comments'] as List<dynamic>,
         created: json['created'] as String?,
         technician: json['technician'] as String?,
         message: json['message'] as String);
@@ -48,6 +51,7 @@ class Claim {
       'message': message,
       'status': status,
       'statusHistory': statusHistory,
+      'comments': comments,
       'created': created,
       'technician': technician,
     };
@@ -66,6 +70,6 @@ class Claim {
 
   @override
   String toString() {
-    return 'Claim{id: $id, subject: $subject, message: $message, status: $status, created: $created,technician: $technician,  statusHistoryHistory: $statusHistory}';
+    return 'Claim{id: $id, subject: $subject, message: $message, status: $status, created: $created,technician: $technician,  statusHistoryHistory: $statusHistory,  comments: $comments}';
   }
 }

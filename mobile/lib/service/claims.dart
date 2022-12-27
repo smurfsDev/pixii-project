@@ -4,6 +4,7 @@ import 'dart:convert';
 import "package:mobile/imports.dart";
 import 'package:http/http.dart' as http;
 import 'package:mobile/models/Claim.dart';
+import 'package:mobile/models/Comment.dart';
 import 'package:mobile/models/Status.dart';
 import 'package:mobile/models/StatusHistory.dart';
 
@@ -94,6 +95,57 @@ class ClaimsService with ChangeNotifier {
         }
       }
 
+      List<Map<String, dynamic>> comments = [];
+      print(claims.length);
+      for (var element in claims) {
+        print('claim : ');
+        print(element.id);
+        for (var item in element.comments) {
+          // print(item);
+          // final comment = Comment.fromJson(item);
+          final response_comment = await http.get(
+              Uri.parse('${Environment.apiUrl}/node/comments/${item}'),
+              headers: {
+                'Content-Type': 'application/json',
+                'AutorizationNode': user!.email
+              });
+          final dataComment = jsonDecode(response_comment.body);
+          final fetchComment = Comment.fromJson(dataComment);
+          item = fetchComment;
+          print("id claim mel comment : ");
+          print(fetchComment.claim);
+          print("hedhi test");
+          print(fetchComment.claim == element.id);
+
+          if (fetchComment.claim == element.id) {
+            for (var element in AllTechnicians) {
+              if (element.id == fetchComment.user) {
+                fetchComment.user = element.name;
+              }
+            }
+            Map<String, dynamic> resComment = new HashMap<String, dynamic>();
+            resComment = {
+              "id": fetchComment.id,
+              "message": fetchComment.message,
+              "user": fetchComment.user,
+              "claim": fetchComment.claim,
+              "created": fetchComment.created
+            };
+            print(resComment);
+            comments.add(resComment);
+            element.comments = comments;
+          }
+        }
+        print("commeentairett l claim ");
+        print(element.comments);
+      }
+      var i = 0;
+      for (var element in claims) {
+        print("claim $i");
+        print(element.comments.length);
+        i++;
+      }
+
       List<Map<String, dynamic>> status = [];
       for (var element in claims) {
         for (var item in element.statusHistory) {
@@ -134,7 +186,7 @@ class ClaimsService with ChangeNotifier {
         }
         element.statusHistory = status;
       }
-
+      print(claims);
       return claims;
     } else {
       return [];

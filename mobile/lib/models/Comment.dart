@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'dart:ffi';
-import 'dart:html';
 
 import 'package:mobile/models/Status.dart';
 
-Comment claimFromJson(String str) => Comment.fromJson(json.decode(str));
+Comment commentFromJson(String str) => Comment.fromJson(json.decode(str));
 String commentToJson(Comment data) => json.encode(data.toJson());
 
 class Comment {

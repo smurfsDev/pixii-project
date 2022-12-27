@@ -65,7 +65,7 @@ class _ClaimsTabs extends State<ClaimsTabs> {
               children: [
                 ClaimsDetails(claim, user),
                 StatusHistoryWidget(claim, user),
-                Comments(user),
+                Comments(claim, user),
               ],
             ),
             backgroundColor: const Color.fromARGB(255, 19, 27, 54),
