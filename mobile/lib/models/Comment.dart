@@ -11,7 +11,7 @@ class Comment {
   String message;
   String user;
   String? claim;
-  String? created;
+  String created;
 
   Comment(
       {required this.id,
@@ -25,7 +25,7 @@ class Comment {
       message: json['message'] as String,
       user: json['user'] as String,
       claim: json['claim'] as String,
-      created: json['created'] as String?,
+      created: json['created'] as String,
     );
   }
 

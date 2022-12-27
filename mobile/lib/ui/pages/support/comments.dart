@@ -4,6 +4,7 @@ import 'package:mobile/models/Comment.dart';
 import 'package:mobile/models/Status.dart';
 import 'package:mobile/service/claims.dart';
 import 'package:mobile/ui/pages/support/claimsTabs.dart';
+import 'package:mobile/ui/pages/support/oneComment.dart';
 import 'package:mobile/ui/pages/support/support.dart';
 
 class Comments extends StatefulWidget {
@@ -67,11 +68,9 @@ class _Comments extends State<Comments> {
               final comment = allComments[index];
               return GestureDetector(
                 onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => Support(user),
-                  ),
-                ),
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => OneComment(user, comment))),
                 child: Container(
                   margin: EdgeInsets.all(10),
                   padding:
