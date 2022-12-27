@@ -18,7 +18,8 @@ class ClaimsDetails extends StatefulWidget {
 class _ClaimsDetails extends State<ClaimsDetails> {
   User user;
   Claim claim;
-
+  final _formKey = GlobalKey<FormState>();
+  String message = "";
   // late Future<List<Claim>> claims;
 
   _ClaimsDetails(this.claim, this.user);
@@ -67,10 +68,88 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                     'Employee in charge :  ${claim.technician}\n',
                     style: TextStyle(color: Colors.white),
                   ),
+                  IconTheme(
+                    data: IconThemeData(color: Theme.of(context).accentColor),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Form(
+                            key: _formKey,
+                            child: Flexible(
+                              child: TextFormField(
+                                onChanged: (value) => {
+                                  setState(
+                                    () {
+                                      message = value;
+                                    },
+                                  )
+                                },
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return ("please enter a message of your claim");
+                                  }
+                                  return null;
+                                },
+                                // controller: _textController,
+                                // onSubmitted: _handleSubmitted,
+                                decoration: InputDecoration.collapsed(
+                                    fillColor: Colors.white,
+                                    hintText: "Send a comment"),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: IconButton(
+                                icon: const Icon(Icons.send),
+                                onPressed: () => {addComment(claimsService)}),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           )),
     );
   }
+
+  addComment(ClaimsService claimsService) async {
+    print(message);
+    if (_formKey.currentState!.validate()) {
+      final commentCreated =
+          await claimsService.createComment(this.claim.id, message);
+
+      if (commentCreated) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("message"),
+          backgroundColor: Colors.red,
+        ));
+        showDialog<void>(
+          context: context,
+          barrierDismissible: true, // user must tap button!
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Claim created'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: const <Widget>[
+                    Text('Comment created'),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      } else {
+        showAlert(context, 'Error', claimsService.createClaimError);
+      }
+    }
+  }
+  // addComment() {
+  //   print(message);
+  //   print(claim.id);
+  // }
 }

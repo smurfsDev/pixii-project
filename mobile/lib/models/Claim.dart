@@ -8,7 +8,7 @@ Claim claimFromJson(String str) => Claim.fromJson(json.decode(str));
 String claimToJson(Claim data) => json.encode(data.toJson());
 
 class Claim {
-  final String? id;
+  final String id;
   final String? subject;
   final String? title;
   final String? message;
@@ -30,7 +30,7 @@ class Claim {
       required this.created});
   factory Claim.fromJson(Map<String, dynamic> json) {
     return Claim(
-        id: json['_id'] as String?,
+        id: json['_id'] as String,
         subject: json['subject'] as String,
         title: json['title'] as String,
         status: json['status'] as Map<String, dynamic>,

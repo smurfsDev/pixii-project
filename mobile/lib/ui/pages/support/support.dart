@@ -151,7 +151,7 @@ class _Support extends State<Support> {
       final claimCreated = await claim.createClaim(subject, title, message);
 
       if (claimCreated) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("message"),
           backgroundColor: Colors.red,
         ));

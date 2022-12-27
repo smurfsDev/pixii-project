@@ -229,4 +229,41 @@ class ClaimsService with ChangeNotifier {
       return [];
     }
   }
+
+  Future<bool> createComment(String claim, String message) async {
+    AuthService authService = AuthService();
+    await authService.loadSettings();
+    final user = authService.user;
+    if (user == null) {
+      createClaimError = "unauthorized";
+      return false;
+    }
+    final request = {'message': message, 'claim': claim, 'user': user};
+    print("request $request");
+    try {
+      final response = await http.post(
+          Uri.parse('${Environment.apiUrl}/node/comments'),
+          body: jsonEncode(request),
+          headers: {
+            'Content-Type': 'application/json',
+            'AutorizationNode': user.email
+          });
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        if (response.statusCode == 401) {
+          createClaimError = "unauthorized";
+
+          return false;
+        } else {
+          createClaimError = "Unknown Error ! ";
+          return false;
+        }
+      }
+    } catch (e) {
+      error = e.toString();
+      createClaimError = error;
+      return false;
+    }
+  }
 }
