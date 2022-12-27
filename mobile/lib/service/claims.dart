@@ -173,19 +173,31 @@ class ClaimsService with ChangeNotifier {
               hist.author = element.name;
             }
           }
+          print("element id claim : ${element.id}");
           Map<String, dynamic> res = new HashMap<String, dynamic>();
           res = {
             "id": hist.id,
             "new_status": hist.new_status,
             "old_status": hist.old_status,
             "author": hist.author,
-            "date": hist.date
+            "date": hist.date,
+            "claim": element.id
           };
-
+          print(res);
+          StatusHistory statHis = StatusHistory.fromJson(res);
+          print("id jdiid mta3 stat hiiss");
+          print(statHis.claim);
+          print("id claimm l assliii ");
+          print(element.id);
           status.add(res);
         }
+        // print("hedhomm statusss ");
+        // print(status.length);
         element.statusHistory = status;
       }
+      // for (var element in claims) {
+      //   if (element) {}
+      // }
       print(claims);
       return claims;
     } else {

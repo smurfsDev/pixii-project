@@ -13,13 +13,15 @@ class StatusHistory {
   String new_status;
   String? date;
   String? author;
+  String? claim;
 
   StatusHistory(
       {required this.id,
       required this.old_status,
       required this.new_status,
       required this.date,
-      required this.author});
+      required this.author,
+      required this.claim});
   factory StatusHistory.fromJson(Map<String, dynamic> json) {
     return StatusHistory(
       id: json['_id'] as String?,
@@ -27,6 +29,7 @@ class StatusHistory {
       new_status: json['new_status'] as String,
       date: json['date'] as String,
       author: json['author'] as String?,
+      claim: json['claim'] as String?,
     );
   }
 
