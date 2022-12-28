@@ -27,7 +27,7 @@ import com.javainuse.service.MailingService;
 import net.bytebuddy.utility.RandomString;
 import net.minidev.json.JSONObject;
 
-public class MyprofileController {
+public class MyProfileController {
     @Autowired
     private UserRepository userrepository;
     @Autowired
