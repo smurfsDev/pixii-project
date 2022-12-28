@@ -192,6 +192,7 @@ public class UserProfileController {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user1 = userrepository.findByUsername(auth.getName()).get();
             String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
+           //Update the path for your pc
             File uploadedFile = new File("C:/Users/MedNourBn/Desktop/9raya/pixii-project/Angular/src/assets/pdp/" + fileName);
             try {
                 file.transferTo(uploadedFile);
