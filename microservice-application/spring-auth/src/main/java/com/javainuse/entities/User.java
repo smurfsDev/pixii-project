@@ -19,7 +19,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.UniqueConstraint;
 
 @Entity
 public class User {
