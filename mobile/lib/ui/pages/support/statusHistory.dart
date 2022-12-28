@@ -31,6 +31,9 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
     super.initState();
   }
 
+  Color oldStatusHistoryColor = Colors.red;
+  Color newStatusHistoryColor = Colors.red;
+
   @override
   Widget build(BuildContext context) {
     final claimsService = Provider.of<ClaimsService>(context);
@@ -60,7 +63,9 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
         allStatusHistory.add(statusHistory);
       }
     }
+
     print(allStatusHistory.length);
+
     return SingleChildScrollView(
         // scrollDirection: Axis.vertical,
         child: ListView.separated(
@@ -69,6 +74,30 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
       physics: ClampingScrollPhysics(),
       padding: const EdgeInsets.all(8),
       itemBuilder: (BuildContext context, int index) {
+        if (allStatusHistory[index].old_status == "DONE") {
+          oldStatusHistoryColor = Colors.green;
+        }
+        if (allStatusHistory[index].old_status == "INPROGRESS") {
+          oldStatusHistoryColor = Colors.orange;
+        }
+        if (allStatusHistory[index].old_status == "TODO") {
+          oldStatusHistoryColor = Colors.red;
+        }
+        if (allStatusHistory[index].old_status == "STUCK") {
+          oldStatusHistoryColor = Colors.blue;
+        }
+        if (allStatusHistory[index].new_status == "DONE") {
+          newStatusHistoryColor = Colors.green;
+        }
+        if (allStatusHistory[index].new_status == "INPROGRESS") {
+          newStatusHistoryColor = Colors.orange;
+        }
+        if (allStatusHistory[index].new_status == "TODO") {
+          newStatusHistoryColor = Colors.red;
+        }
+        if (allStatusHistory[index].new_status == "STUCK") {
+          newStatusHistoryColor = Colors.blue;
+        }
         return Center(
           child: Card(
             color: const Color.fromARGB(255, 29, 39, 70),
@@ -86,46 +115,98 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(0),
+                        padding: const EdgeInsets.all(5),
                         child: Text(
-                          "Transaction: $index ",
+                          'Transaction $index \n',
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 18),
+                              color: Colors.white,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: Text(
-                          "Old status: ${allStatusHistory[index].old_status} ",
-                          style: const TextStyle(color: Colors.white),
-                        ),
+                      Wrap(
+                        children: [
+                          const Text(
+                            'Old status: \n',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          Text(
+                            ' ${allStatusHistory[index].old_status}\n',
+                            style: TextStyle(
+                                color: oldStatusHistoryColor,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: Text(
-                          "New status: ${allStatusHistory[index].new_status} ",
-                          style: const TextStyle(color: Colors.white),
-                        ),
+                      Wrap(
+                        children: [
+                          const Text(
+                            'New status: \n',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          Text(
+                            ' ${allStatusHistory[index].new_status}\n',
+                            style: TextStyle(
+                                color: newStatusHistoryColor,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: Text(
-                          "Author:  ${allStatusHistory[index].author}  ",
-                          style: const TextStyle(color: Colors.white),
-                        ),
+                      Wrap(
+                        children: [
+                          const Text(
+                            'Author: \n',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          Text(
+                            ' ${allStatusHistory[index].author}\n',
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: Text(
-                          "Created at ${allStatusHistory[index].date!.substring(0, 10)}  ",
-                          style: const TextStyle(color: Colors.white),
-                        ),
+                      Wrap(
+                        children: [
+                          const Text(
+                            'Created at : \n',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          Text(
+                            ' ${allStatusHistory[index].date!.substring(11, 16)} on ${allStatusHistory[index].date!.substring(0, 10)}\n',
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  trailing: Text(claim.created!.substring(0, 10),
-                      style: TextStyle(color: Colors.white)),
-                  onTap: () => {},
                 ),
               ],
             ),

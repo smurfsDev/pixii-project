@@ -95,7 +95,15 @@ class _Comments extends State<Comments> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "${comment.user} \t \t \t \t \t \t ${comment.created!.substring(0, 10)}",
+                                "${comment.user}  ",
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                "${comment.created!.substring(0, 10)}",
                                 style: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 15.0,

@@ -31,21 +31,21 @@ class _ClaimsTabs extends State<ClaimsTabs> {
   Widget build(BuildContext context) {
     final claimsService = Provider.of<ClaimsService>(context);
     print(claim);
-    // final statusClaim = Status.fromJson(claim.status);
-    // var history = [];
-    // for (var element in claim.statusHistory) {
-    //   print(element);
-    //   final statusHis = StatusHistory.fromJson(element);
-
-    //   // history.add(statusHis);
-    // }
 
     return (MaterialApp(
+        theme: ThemeData(
+          tabBarTheme: const TabBarTheme(
+            labelColor: Colors.white,
+            labelStyle: TextStyle(color: Colors.white),
+          ),
+          primaryColor: Color.fromARGB(255, 5, 1, 3),
+        ),
         debugShowCheckedModeBanner: false,
         home: DefaultTabController(
           length: 3,
           child: Scaffold(
             appBar: AppBar(
+              backgroundColor: const Color.fromARGB(255, 19, 27, 54),
               bottom: const TabBar(
                 tabs: [
                   Tab(

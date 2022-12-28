@@ -31,57 +31,42 @@ class _OneComment extends State<OneComment> {
           appBar: AppBar(
             title: Padding(
               padding: EdgeInsets.only(top: 5),
-              child: Text(comment.user),
+              child: Text("Comment"),
             ),
             backgroundColor: const Color.fromARGB(255, 19, 27, 54),
           ),
           body: SingleChildScrollView(
             child: Card(
               clipBehavior: Clip.antiAlias,
-              child: Column(
-                children: [
-                  Padding(
-                      padding: EdgeInsets.all(35),
-                      child: Center(
-                        child: ListTile(
-                          leading: Image.asset('assets/images/avatar.jpg'),
-                          title: Text(comment.user),
-                          subtitle: Text(
-                            "${comment.created.substring(11, 16)} on ${comment.created.substring(0, 10)} ",
-                            style:
-                                TextStyle(color: Colors.black.withOpacity(0.6)),
+              child: Container(
+                decoration: new BoxDecoration(
+                  border: new Border.all(color: Colors.black),
+                  color: Colors.white,
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.all(35),
+                        child: Center(
+                          child: ListTile(
+                            leading: Image.asset('assets/images/avatar.jpg'),
+                            title: Text(comment.user),
+                            subtitle: Text(
+                              "${comment.created.substring(11, 16)} on ${comment.created.substring(0, 10)} ",
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.6)),
+                            ),
                           ),
-                        ),
-                      )),
-
-                  Padding(
-                    padding: const EdgeInsets.all(35),
-                    child: Text(
-                      '${comment.message}',
-                      style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.all(35),
+                      child: Text(
+                        '${comment.message}',
+                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                      ),
                     ),
-                  ),
-                  // ButtonBar(
-                  //   alignment: MainAxisAlignment.start,
-                  //   children: [
-                  //     ElevatedButton(
-                  //       onPressed: () {
-                  //         // Perform some action
-                  //       },
-                  //       child: const Text('ACTION 1'),
-                  //     ),
-                  //     ElevatedButton(
-                  //       // textColor: const Color(0xFF6200EE),
-                  //       onPressed: () {
-                  //         // Perform some action
-                  //       },
-                  //       child: const Text('ACTION 2'),
-                  //     ),
-                  //   ],
-                  // ),
-                  // Image.asset('assets/images/avatar.jpg'),
-                  // Image.asset('assets/images/avatar.jpg'),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

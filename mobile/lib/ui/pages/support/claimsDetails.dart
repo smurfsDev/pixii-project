@@ -2,7 +2,9 @@ import 'package:mobile/imports.dart';
 import 'package:mobile/models/Claim.dart';
 import 'package:mobile/models/Status.dart';
 import 'package:mobile/service/claims.dart';
+import 'package:mobile/ui/pages/support/myClaims.dart';
 import 'package:mobile/ui/pages/support/oneClaim.dart';
+import 'package:mobile/ui/pages/support/support.dart';
 
 // ignore: must_be_immutable
 class ClaimsDetails extends StatefulWidget {
@@ -20,6 +22,7 @@ class _ClaimsDetails extends State<ClaimsDetails> {
   Claim claim;
   final _formKey = GlobalKey<FormState>();
   String message = "";
+
   // late Future<List<Claim>> claims;
 
   _ClaimsDetails(this.claim, this.user);
@@ -32,13 +35,27 @@ class _ClaimsDetails extends State<ClaimsDetails> {
     // print(claims);
   }
 
+  Color claimStatusColor = Colors.red;
+
   @override
   Widget build(BuildContext context) {
     final claimsService = Provider.of<ClaimsService>(context);
     final statusClaim = Status.fromJson(claim.status);
+    if (statusClaim.name == "DONE") {
+      claimStatusColor = Colors.green;
+    }
+    if (statusClaim.name == "INPROGRESS") {
+      claimStatusColor = Colors.orange;
+    }
+    if (statusClaim.name == "TODO") {
+      claimStatusColor = Colors.red;
+    }
+    if (statusClaim.name == "STUCK") {
+      claimStatusColor = Colors.blue;
+    }
     return SingleChildScrollView(
       child: Card(
-          color: Color.fromARGB(255, 45, 56, 90),
+          color: Color.fromARGB(255, 29, 39, 70),
           child: Padding(
             padding: EdgeInsets.all(50),
             child: SizedBox(
@@ -48,25 +65,93 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Claim\n ',
-                    style: TextStyle(color: Colors.white, fontSize: 36),
+                  const Text(
+                    'Claim details: \n',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40),
                   ),
-                  Text(
-                    'Status: ${statusClaim.name}\n  ',
-                    style: TextStyle(color: Colors.white),
+                  Wrap(
+                    children: [
+                      const Text(
+                        'Status: \n',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                      Text(
+                        ' ${statusClaim.name}\n',
+                        style: TextStyle(
+                            color: claimStatusColor,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Subject: ${claim.subject}\n  ',
-                    style: TextStyle(color: Colors.white),
+                  Wrap(
+                    children: [
+                      Text(
+                        'Subject \n',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                      Text(
+                        ' ${claim.subject}\n',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Message :${claim.message} \n',
-                    style: TextStyle(color: Colors.white),
+                  Wrap(
+                    children: [
+                      Text(
+                        'Description :\n',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                      Text(
+                        ' ${claim.message}\n',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Employee in charge :  ${claim.technician}\n',
-                    style: TextStyle(color: Colors.white),
+                  Wrap(
+                    children: [
+                      Text(
+                        'Employee in charge: \n',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                      Text(
+                        ' ${claim.technician}\n',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16),
+                      ),
+                    ],
                   ),
                   IconTheme(
                     data: IconThemeData(color: Theme.of(context).accentColor),
@@ -78,6 +163,7 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                             key: _formKey,
                             child: Flexible(
                               child: TextFormField(
+                                style: TextStyle(color: Colors.white),
                                 onChanged: (value) => {
                                   setState(
                                     () {
@@ -87,7 +173,7 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                                 },
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return ("please enter a message of your claim");
+                                    return ("please enter a comment");
                                   }
                                   return null;
                                 },
@@ -95,6 +181,9 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                                 // onSubmitted: _handleSubmitted,
                                 decoration: InputDecoration.collapsed(
                                     fillColor: Colors.white,
+                                    hintStyle: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 147, 143, 143)),
                                     hintText: "Send a comment"),
                               ),
                             ),
@@ -124,22 +213,33 @@ class _ClaimsDetails extends State<ClaimsDetails> {
 
       if (commentCreated) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("message"),
-          backgroundColor: Colors.red,
+          content: Text("Comment sended successfully"),
+          backgroundColor: Color.fromARGB(255, 37, 151, 27),
         ));
         showDialog<void>(
           context: context,
           barrierDismissible: true, // user must tap button!
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('Claim created'),
+              title: const Text('Comment created'),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: const <Widget>[
-                    Text('Comment created'),
+                    Text('Comment sended successfully :)'),
                   ],
                 ),
               ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Ok'),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyClaims(user)));
+                  },
+                ),
+              ],
             );
           },
         );
