@@ -9,7 +9,7 @@ export class ProfileService {
   constructor(private http: HttpClient) {}
 
   getProfile() {
-    return this.http.get(`${environment.apiUrl}/profile`);
+    return this.http.get(`${environment.apiUrl}/getprofile`);
   }
 
   getScooterName() {
