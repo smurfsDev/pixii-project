@@ -164,6 +164,8 @@ export class ProfileComponent implements OnInit {
             duration: 2000,
           });
           console.log(this.profile);
+          this.getProfilePicture();
+          this.GetProfile();
         },
         (error) => {
           this.loading = false;
@@ -212,6 +214,8 @@ export class ProfileComponent implements OnInit {
           duration: 2000,
         });
         console.log(this.profile);
+        this.getProfilePicture();
+        this.GetProfile();
       },
       (error) => {
         this.loading = false;
