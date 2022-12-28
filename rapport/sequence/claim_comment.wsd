@@ -1,0 +1,33 @@
+@startuml claim_comment
+
+actor "ScooterOwner\nSavManager\nSavTechnicien" as so
+boundary Claims as cl
+control ClaimsService as cs
+entity Claim as c
+
+activate so
+so -> cl : Comment(Comment)
+activate cl
+cl -> cs : Comment(Comment)
+activate cs
+cs -> c : Comment(Comment)
+activate c
+alt comment is added
+c --> cs : commentAdded
+deactivate c
+cs --> cl : commentAdded
+deactivate cs
+cl --> so : commentAdded
+deactivate cl
+else comment is not added
+c --> cs : commentNotAdded
+deactivate c
+cs --> cl : commentNotAdded
+deactivate cs
+cl --> so : commentNotAdded
+deactivate cl
+end
+deactivate cl
+deactivate so
+
+@enduml

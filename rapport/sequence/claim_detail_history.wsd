@@ -1,0 +1,50 @@
+@startuml claim_detail_history
+
+actor "ScooterOwner\nSavManager\nSavTechnicien" as so
+boundary Claims as cl
+control ClaimsService as cs
+entity Claim as c
+
+activate so
+so -> cl : getClaimDetail(Id)
+activate cl
+cl -> cs : getClaimDetail(Id)
+activate cs
+cs -> c : getClaimDetail(Id)
+activate c
+alt claim is found
+c --> cs : claimDetail
+deactivate c
+cs --> cl : claimDetail
+deactivate cs
+cl --> so : claimDetail
+deactivate cl
+else claim is not found
+c --> cs : claimNotFound
+deactivate c
+cs --> cl : claimNotFound
+deactivate cs
+cl --> so : claimNotFound
+deactivate cl
+end
+deactivate cl
+deactivate so
+
+activate so
+so -> cl : getClaimTechnicienHistory()
+activate cl
+cl -> cl : toggleTechnicienHistory()
+activate cl
+cl --> so : technicienHistory
+deactivate cl
+
+activate so
+so -> cl : getClaimStatusHistory()
+activate cl
+cl -> cl : toggleStatusHistory()
+activate cl
+cl --> so : statusHistory
+deactivate cl
+
+
+@enduml

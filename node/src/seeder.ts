@@ -68,37 +68,45 @@ export const seed = async () => {
 	let user =
 		await User.findOne({ email: 'superadmin@email.com' });
 	if (!user) {
-		const user1 = new User({ name: 'Super Admin', username: 'superadmin@email.com', email: "superadmin@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [role1, role2], status: 1 });
+		const user1 = new User({ name: 'Super Admin', username: 'superadmin', email: "superadmin@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role2, status: 1 }], status: 1 });
+
 		await user1.save();
 	}
 	user = await User.findOne({ email: 'admin@email.com' });
 	if (!user) {
-		const user2 = new User({ name: 'Admin', username: 'admin@email.com', email: "admin@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [role2], status: 1 });
+		const user2 = new User({ name: 'Admin', username: 'admin', email: "admin@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role1, status: 0 }], status: 1 });
+
 		await user2.save();
 	}
 	user = await User.findOne({ email: 'savmanager@email.com' });
 	if (!user) {
-		const user3 = new User({ name: 'SAV Manager', username: 'savmanager@email.com', email: "savmanager@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [role3], status: 1 });
+		const user3 = new User({ name: 'SAV Manager', username: 'savmanager', email: "savmanager@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role3, status: 0 }], status: 1 });
+
 		await user3.save();
 	}
 	user = await User.findOne({ email: 'savtechnician@email.com' });
 	if (!user) {
-		const user4 = new User({ name: 'SAV Technician', username: 'savtechnician@email.com', email: "savtechnician@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [role4], status: 1 });
+		const user4 = new User({ name: 'SAV Technician', username: 'savtechnician', email: "savtechnician@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role4, status: 0 }], status: 1 });
+
 		await user4.save();
 	}
 	user = await User.findOne({ email: 'scooterowner@email.com' });
 	if (!user) {
 
-		const user5 = new User({ name: 'Scooter Owner', username: 'scooterowner@email.com', email: "scooterowner@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [role5], status: 1 });
+
+		const user5 = new User({ name: 'Scooter Owner', username: 'scooterowner', email: "scooterowner@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role5, status: 1 }], status: 1 });
 		await user5.save();
 	}
 
+	const user6 = new User({ name: 'Admin2', username: 'admin2', email: "admin2@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role1, status: 0 }, { role: role3, status: 0 }], status: 1 });
+	await user6.save();
+
 	let BatteryH = [];
-	let now= new Date(2020, 4, 30);
-	let oneDay = 24 * 60 * 60 * 1000;	
+	let now = new Date(2020, 4, 30);
+	let oneDay = 24 * 60 * 60 * 1000;
 	for (let i = 0; i < 100; i++) {
 		now = new Date(now.getTime() + oneDay);
-	
+
 		BatteryH.push({
 			// date increase by 1 day
 			// date format: Sun Aug 03 2022 00:00:00 GMT+0100 (heure normale d’Europe centrale)
@@ -109,7 +117,7 @@ export const seed = async () => {
 			],
 		});
 	}
-	
+
 
 	// console.log(BatteryH);
 	const bike1 = new BikeData({
@@ -194,7 +202,8 @@ export const seed = async () => {
 	// console.log(bike1._id);
 	// console.log(bike2._id);
 	// console.log(bike3._id);
-	
+
+
 
 	console.log('Seeding done');
 

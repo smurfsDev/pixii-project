@@ -1,0 +1,30 @@
+@startuml set_claim_status
+actor SavTechnicien as st
+boundary Claims as cl
+control ClaimsService as cs
+entity Claim as c
+activate st
+st -> cl : SetStatus(Status)
+activate cl
+cl -> cs : SetStatus(Status)
+activate cs
+cs -> c : SetStatus(Status)
+activate c
+alt status is set
+c --> cs : statusSet
+deactivate c
+cs --> cl : statusSet
+deactivate cs
+cl --> st : statusSet
+deactivate cl
+else status is not set
+c --> cs : statusNotSet
+deactivate c
+cs --> cl : statusNotSet
+deactivate cs
+cl --> st : statusNotSet
+deactivate cl
+end
+deactivate cl
+deactivate st
+@enduml

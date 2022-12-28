@@ -19,7 +19,7 @@
 				</div>
 
 			</a>
-			
+
 			<a mat-list-item class="my-3" (click)="toggleActive('/profile')">
 				<div matLine class="item" [ngClass]="{'active': current === '/profile','open':isExpanded}">
 					<mat-icon class="icon">person</mat-icon>
@@ -40,7 +40,7 @@
 				</div>
 			</a>
 
-			<a mat-list-item class="my-3" [matTooltip]="isExpanded? '' :'My claims'" *ngIf="authState.isScooterOwner"  matTooltipPosition="right" (click)="toggleActive('/myclaims')">
+			<a mat-list-item class="my-3" [matTooltip]="isExpanded? '' :'My claims'" *ngIf="authState['isScooterOwner'].isScooterOwner"  matTooltipPosition="right" (click)="toggleActive('/myclaims')">
 				<div matLine class="item" [ngClass]="{'active': current === '/myclaims','open':isExpanded}">
 					<mat-icon class="icon">feed</mat-icon>
 					<p *ngIf="isExpanded">My claims</p>
@@ -53,7 +53,7 @@
 				</div>
 			</a>
 
-			
+
 			<a mat-list-item class="last-item" (click)="
 				isExpanded = !isExpanded;
 			">
@@ -67,7 +67,7 @@
 		</mat-nav-list>
 	</mat-drawer>
 
-	<div class="content" [ngStyle]="{'padding-left': isExpanded ? '100px' : ''}">
+	<div class="content" [ngStyle]="{'padding-left': isExpanded ? '50px' : ''}">
 		<ng-content></ng-content>
 	</div>
 

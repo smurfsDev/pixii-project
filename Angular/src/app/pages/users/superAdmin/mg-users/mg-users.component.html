@@ -71,8 +71,8 @@
 							<th class="header" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription>
 								Status </th>
 							<td class="cell" mat-cell *matCellDef="let element">
-								<div class="status-{{element[0].status == 1 ? 'active' : 'inactive'}}">
-									{{element[0].status == 1 ? 'Active' : 'Inactive'}}
+								<div class="status-{{element[0].status == 0 ? 'pending' : element[0].status == 1 ?  'active' : 'inactive'}}">
+									{{element[0].status == 0 ? 'Pending': element[0].status == 1 ?'Active' : 'Inactive'}}
 								</div>
 							</td>
 						</ng-container>

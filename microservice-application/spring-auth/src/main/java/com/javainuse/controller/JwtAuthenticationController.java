@@ -3,7 +3,9 @@ package com.javainuse.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -190,9 +192,11 @@ public class JwtAuthenticationController {
 		newUserNode.put("name", user.get("name").toString());
 		newUserNode.put("email", user.get("email").toString());
 		newUserNode.put("username", user.get("username").toString());
-		newUserNode.put("roles", user.get("role").toString());
+		newUserNode.put("role", user.get("role").toString());
+		// newUserNode.put("roles", user.get("role").toString());
 		newUserNode.put("password", user.get("password").toString());
 		newUserNode.put("status", userRole.get().getStatus());
+		System.out.println(newUserNode);
 		User userNode = registerNode.register(newUserNode);
 
 		try {
@@ -232,6 +236,7 @@ public class JwtAuthenticationController {
 		JSONObject item = new JSONObject();
 		boolean isSuperAdmin = false;
 		boolean isAdmin = false;
+		Map<String, Object> headerMap = new HashMap<>();
 
 		Optional<UserRole> userRoleOptional = userRoleRepository.findByUserIdAndRoleId(id, idRole);
 		if (!userRoleOptional.isPresent()) {
@@ -239,6 +244,7 @@ public class JwtAuthenticationController {
 			item.put("status", HttpStatus.BAD_REQUEST.value());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
 		}
+
 		UserRole userRole = userRoleOptional.get();
 		String userAcceptedRole = userRole.getRole().getName();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -255,18 +261,31 @@ public class JwtAuthenticationController {
 		if (isSuperAdmin == true && userAcceptedRole.equals("Admin") && isAdmin == false) {
 			acceptUser(userRole);
 			item.put("message", "admin accepted");
+			System.out.println("userAcceptedRole");
+			headerMap.put("AutorizationNode", user.getEmail());
+
+			registerNode.accept(headerMap, userRole.getUser().getUsername(), userAcceptedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userAcceptedRole.equals("SAV Manager") && (isSuperAdmin || isAdmin)) {
 			acceptUser(userRole);
 			item.put("message", "SAV Manager accepted");
+			System.out.println("userAcceptedRole");
+			headerMap.put("AutorizationNode", user.getEmail());
+
+			registerNode.accept(headerMap, userRole.getUser().getUsername(), userAcceptedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userAcceptedRole.equals("SAV Technician")
 				&& (isSuperAdmin || isAdmin)) {
 			acceptUser(userRole);
 			item.put("message", "SAV Technician accepted");
+			System.out.println("userAcceptedRole");
+			headerMap.put("AutorizationNode", user.getEmail());
+
+			registerNode.accept(headerMap, userRole.getUser().getUsername(), userAcceptedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}
 		item.put("message", "You are not allowed to accept this role");
+
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(item);
 	}
 
@@ -275,6 +294,8 @@ public class JwtAuthenticationController {
 		JSONObject item = new JSONObject();
 		boolean isSuperAdmin = false;
 		boolean isAdmin = false;
+		Map<String, Object> headerMap = new HashMap<>();
+
 		Optional<UserRole> userRoleOptional = userRoleRepository.findByUserIdAndRoleId(id, idRole);
 		if (!userRoleOptional.isPresent()) {
 			item.put("message", "user role not found");
@@ -296,16 +317,25 @@ public class JwtAuthenticationController {
 		if (isSuperAdmin == true && userDeclinedRole.equals("Admin") && isAdmin == false) {
 			rejectUser(userRole);
 			item.put("message", "admin rejected");
+			headerMap.put("AutorizationNode", user.getEmail());
+
+			registerNode.refuse(headerMap, userRole.getUser().getUsername(), userDeclinedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userDeclinedRole.equals("SAV Manager")
 				&& (isSuperAdmin || isAdmin)) {
 			rejectUser(userRole);
 			item.put("message", "SAV Manager rejected");
+			headerMap.put("AutorizationNode", user.getEmail());
+
+			registerNode.refuse(headerMap, userRole.getUser().getUsername(), userDeclinedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userDeclinedRole.equals("SAV Technician")
 				&& (isSuperAdmin || isAdmin)) {
 			rejectUser(userRole);
 			item.put("message", "SAV Technician rejected");
+			headerMap.put("AutorizationNode", user.getEmail());
+
+			registerNode.refuse(headerMap, userRole.getUser().getUsername(), userDeclinedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}
 		item.put("message", "You are not allowed to accept this role");
@@ -334,17 +364,33 @@ public class JwtAuthenticationController {
 	public ResponseEntity<JSONObject> deleteUser(@PathVariable("idUser") int id, @PathVariable("idRole") Long idRole,
 			HttpServletRequest request) {
 		JSONObject item = new JSONObject();
+		Map<String, Object> headerMap = new HashMap<>();
+
 		if (getUser(request).getRoles().contains(roleRepository.findRoleWithName("Super Admin"))) {
 			Optional<UserRole> userRole = userRoleRepository.findByUserIdAndRoleId(id, idRole);
 			Long count = userRoleRepository.countByUserId(id);
 			if (userRole.isPresent() && count > 1) {
+				String role = roleRepository.findRoleById(idRole).get().getName();
+				String username = userRepository.findById(id).getUsername();
 				userRoleRepository.delete(userRole.get());
+				headerMap.put("AutorizationNode", "superadmin@email.com");
+
+				registerNode.removeRole(headerMap, role, username);
+
 				item.put("message", "UserRole deleted");
 				return ResponseEntity.status(HttpStatus.OK).body(item);
 			} else if (userRole.isPresent() && count == 1) {
+				String role = roleRepository.findRoleById(idRole).get().getName();
+
+				String username = userRepository.findById(id).getUsername();
 				userRoleRepository.delete(userRole.get());
 				userRepository.deleteById(id);
 				item.put("message", "User deleted");
+
+				headerMap.put("AutorizationNode", "superadmin@email.com");
+
+				registerNode.removeRole(headerMap, role, username);
+
 				return ResponseEntity.status(HttpStatus.OK).body(item);
 			}
 		}
