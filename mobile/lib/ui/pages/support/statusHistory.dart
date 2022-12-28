@@ -42,6 +42,7 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
     List<StatusHistory>? statusHistoryTable;
     print(claim.statusHistory.length);
     List<StatusHistory> allStatusHistory = [];
+
     for (var element in claim.statusHistory) {
       StatusHistory statusHistory = StatusHistory(
           id: '',
@@ -63,39 +64,41 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
         allStatusHistory.add(statusHistory);
       }
     }
+    List<StatusHistory> reversedStatusHistory =
+        allStatusHistory.reversed.toList();
 
     print(allStatusHistory.length);
 
     return SingleChildScrollView(
         // scrollDirection: Axis.vertical,
         child: ListView.separated(
-      itemCount: allStatusHistory.length,
+      itemCount: reversedStatusHistory.length,
       shrinkWrap: true,
       physics: ClampingScrollPhysics(),
       padding: const EdgeInsets.all(8),
       itemBuilder: (BuildContext context, int index) {
-        if (allStatusHistory[index].old_status == "DONE") {
+        if (reversedStatusHistory[index].old_status == "DONE") {
           oldStatusHistoryColor = Colors.green;
         }
-        if (allStatusHistory[index].old_status == "INPROGRESS") {
+        if (reversedStatusHistory[index].old_status == "INPROGRESS") {
           oldStatusHistoryColor = Colors.orange;
         }
-        if (allStatusHistory[index].old_status == "TODO") {
+        if (reversedStatusHistory[index].old_status == "TODO") {
           oldStatusHistoryColor = Colors.red;
         }
-        if (allStatusHistory[index].old_status == "STUCK") {
+        if (reversedStatusHistory[index].old_status == "STUCK") {
           oldStatusHistoryColor = Colors.blue;
         }
-        if (allStatusHistory[index].new_status == "DONE") {
+        if (reversedStatusHistory[index].new_status == "DONE") {
           newStatusHistoryColor = Colors.green;
         }
-        if (allStatusHistory[index].new_status == "INPROGRESS") {
+        if (reversedStatusHistory[index].new_status == "INPROGRESS") {
           newStatusHistoryColor = Colors.orange;
         }
-        if (allStatusHistory[index].new_status == "TODO") {
+        if (reversedStatusHistory[index].new_status == "TODO") {
           newStatusHistoryColor = Colors.red;
         }
-        if (allStatusHistory[index].new_status == "STUCK") {
+        if (reversedStatusHistory[index].new_status == "STUCK") {
           newStatusHistoryColor = Colors.blue;
         }
         return Center(
@@ -117,7 +120,7 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
                       Padding(
                         padding: const EdgeInsets.all(5),
                         child: Text(
-                          'Transaction $index \n',
+                          'Transaction ${reversedStatusHistory.length - index} \n',
                           style: const TextStyle(
                               color: Colors.white,
                               fontStyle: FontStyle.italic,
@@ -136,7 +139,7 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
                                 fontSize: 16),
                           ),
                           Text(
-                            ' ${allStatusHistory[index].old_status}\n',
+                            ' ${reversedStatusHistory[index].old_status}\n',
                             style: TextStyle(
                                 color: oldStatusHistoryColor,
                                 fontStyle: FontStyle.normal,
@@ -156,7 +159,7 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
                                 fontSize: 16),
                           ),
                           Text(
-                            ' ${allStatusHistory[index].new_status}\n',
+                            ' ${reversedStatusHistory[index].new_status}\n',
                             style: TextStyle(
                                 color: newStatusHistoryColor,
                                 fontStyle: FontStyle.normal,
@@ -176,7 +179,7 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
                                 fontSize: 16),
                           ),
                           Text(
-                            ' ${allStatusHistory[index].author}\n',
+                            ' ${reversedStatusHistory[index].author}\n',
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontStyle: FontStyle.normal,
@@ -196,7 +199,7 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
                                 fontSize: 16),
                           ),
                           Text(
-                            ' ${allStatusHistory[index].date!.substring(11, 16)} on ${allStatusHistory[index].date!.substring(0, 10)}\n',
+                            ' ${reversedStatusHistory[index].date!.substring(11, 16)} on ${reversedStatusHistory[index].date!.substring(0, 10)}\n',
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontStyle: FontStyle.normal,
