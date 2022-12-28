@@ -192,7 +192,7 @@ public class UserProfileController {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user1 = userrepository.findByUsername(auth.getName()).get();
             String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
-            File uploadedFile = new File("C:/Users/MedNourBn/Desktop/pixii-project/Angular/src/assets/pdp/" + fileName);
+            File uploadedFile = new File("C:/Users/MedNourBn/Desktop/9raya/pixii-project/Angular/src/assets/pdp/" + fileName);
             try {
                 file.transferTo(uploadedFile);
             } catch (IllegalStateException | IOException e) {
