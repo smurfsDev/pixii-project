@@ -36,6 +36,7 @@ class _ClaimsDetails extends State<ClaimsDetails> {
   }
 
   Color claimStatusColor = Colors.red;
+  String employee = "";
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +54,11 @@ class _ClaimsDetails extends State<ClaimsDetails> {
     if (statusClaim.name == "STUCK") {
       claimStatusColor = Colors.blue;
     }
+    if (claim.technician == null) {
+      employee = "Not yet affected";
+    } else {
+      employee = claim.technician!;
+    }
     return SingleChildScrollView(
       child: Card(
           color: Color.fromARGB(255, 29, 39, 70),
@@ -69,7 +75,7 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                     'Claim details: \n',
                     style: TextStyle(
                         color: Colors.white,
-                        fontStyle: FontStyle.italic,
+                        // fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
                         fontSize: 40),
                   ),
@@ -79,15 +85,15 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                         'Status: \n',
                         style: TextStyle(
                             color: Colors.white,
-                            fontStyle: FontStyle.italic,
+                            // // fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                            fontSize: 16),
                       ),
                       Text(
                         ' ${statusClaim.name}\n',
                         style: TextStyle(
                             color: claimStatusColor,
-                            fontStyle: FontStyle.italic,
+                            // // fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.normal,
                             fontSize: 16),
                       ),
@@ -95,19 +101,19 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                   ),
                   Wrap(
                     children: [
-                      Text(
+                      const Text(
                         'Subject \n',
                         style: TextStyle(
                             color: Colors.white,
-                            fontStyle: FontStyle.italic,
+                            // // fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                            fontSize: 16),
                       ),
                       Text(
                         ' ${claim.subject}\n',
                         style: TextStyle(
                             color: Colors.white,
-                            fontStyle: FontStyle.italic,
+                            // // fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.normal,
                             fontSize: 16),
                       ),
@@ -119,15 +125,15 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                         'Description :\n',
                         style: TextStyle(
                             color: Colors.white,
-                            fontStyle: FontStyle.italic,
+                            // // fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                            fontSize: 16),
                       ),
                       Text(
                         ' ${claim.message}\n',
                         style: TextStyle(
                             color: Colors.white,
-                            fontStyle: FontStyle.italic,
+                            // // fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.normal,
                             fontSize: 16),
                       ),
@@ -139,15 +145,14 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                         'Employee in charge: \n',
                         style: TextStyle(
                             color: Colors.white,
-                            fontStyle: FontStyle.italic,
+                            // // fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                            fontSize: 16),
                       ),
                       Text(
-                        ' ${claim.technician}\n',
-                        style: TextStyle(
+                        ' ${employee}\n',
+                        style: const TextStyle(
                             color: Colors.white,
-                            fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.normal,
                             fontSize: 16),
                       ),
@@ -212,10 +217,6 @@ class _ClaimsDetails extends State<ClaimsDetails> {
           await claimsService.createComment(this.claim.id, message);
 
       if (commentCreated) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("Comment sended successfully"),
-          backgroundColor: Color.fromARGB(255, 37, 151, 27),
-        ));
         showDialog<void>(
           context: context,
           barrierDismissible: true, // user must tap button!
