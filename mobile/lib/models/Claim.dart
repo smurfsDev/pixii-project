@@ -42,8 +42,6 @@ class Claim {
   }
 
   Map toJson() {
-    //Map? status = this.status != null ? this.status!.toJson() : null;
-
     return {
       'id': id,
       'subject': subject,
@@ -56,17 +54,6 @@ class Claim {
       'technician': technician,
     };
   }
-
-  // Object toJson() {
-  //   return {
-  //     'id': id,
-  //     'subject': subject,
-  //     'title': title,
-  //     'message': message,
-  //     'status': status,
-  //     'created': created,
-  //   };
-  // }
 
   @override
   String toString() {

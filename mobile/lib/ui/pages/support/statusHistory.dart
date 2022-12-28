@@ -40,7 +40,6 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
     final statusClaim = Status.fromJson(claim.status);
 
     List<StatusHistory>? statusHistoryTable;
-    print(claim.statusHistory.length);
     List<StatusHistory> allStatusHistory = [];
 
     for (var element in claim.statusHistory) {
@@ -52,25 +51,20 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
           date: '',
           claim: '');
       final statusClaim = StatusHistory.fromJson(element);
-      print(statusClaim);
-      // print(claim.id);
+
       if (statusClaim.claim == claim.id) {
         statusHistory.new_status = statusClaim.new_status;
         statusHistory.old_status = statusClaim.old_status;
         statusHistory.id = statusClaim.id;
         statusHistory.author = statusClaim.author;
         statusHistory.date = statusClaim.date;
-        print(statusHistory);
         allStatusHistory.add(statusHistory);
       }
     }
     List<StatusHistory> reversedStatusHistory =
         allStatusHistory.reversed.toList();
 
-    print(allStatusHistory.length);
-
     return SingleChildScrollView(
-        // scrollDirection: Axis.vertical,
         child: ListView.separated(
       itemCount: reversedStatusHistory.length,
       shrinkWrap: true,

@@ -27,7 +27,6 @@ class ClaimsService with ChangeNotifier {
       'message': message,
       'user': user
     };
-    print("request $request");
     try {
       final response = await http.post(
           Uri.parse('${Environment.apiUrl}/node/claims'),
@@ -96,13 +95,8 @@ class ClaimsService with ChangeNotifier {
       }
 
       List<Map<String, dynamic>> comments = [];
-      print(claims.length);
       for (var element in claims) {
-        print('claim : ');
-        print(element.id);
         for (var item in element.comments) {
-          // print(item);
-          // final comment = Comment.fromJson(item);
           final response_comment = await http.get(
               Uri.parse('${Environment.apiUrl}/node/comments/${item}'),
               headers: {
@@ -112,10 +106,6 @@ class ClaimsService with ChangeNotifier {
           final dataComment = jsonDecode(response_comment.body);
           final fetchComment = Comment.fromJson(dataComment);
           item = fetchComment;
-          print("id claim mel comment : ");
-          print(fetchComment.claim);
-          print("hedhi test");
-          print(fetchComment.claim == element.id);
 
           if (fetchComment.claim == element.id) {
             for (var element in AllTechnicians) {
@@ -131,19 +121,10 @@ class ClaimsService with ChangeNotifier {
               "claim": fetchComment.claim,
               "created": fetchComment.created
             };
-            print(resComment);
             comments.add(resComment);
             element.comments = comments;
           }
         }
-        print("commeentairett l claim ");
-        print(element.comments);
-      }
-      var i = 0;
-      for (var element in claims) {
-        print("claim $i");
-        print(element.comments.length);
-        i++;
       }
 
       List<Map<String, dynamic>> status = [];
@@ -173,7 +154,6 @@ class ClaimsService with ChangeNotifier {
               hist.author = element.name;
             }
           }
-          print("element id claim : ${element.id}");
           Map<String, dynamic> res = new HashMap<String, dynamic>();
           res = {
             "id": hist.id,
@@ -183,22 +163,14 @@ class ClaimsService with ChangeNotifier {
             "date": hist.date,
             "claim": element.id
           };
-          print(res);
           StatusHistory statHis = StatusHistory.fromJson(res);
-          print("id jdiid mta3 stat hiiss");
-          print(statHis.claim);
-          print("id claimm l assliii ");
-          print(element.id);
+
           status.add(res);
         }
-        // print("hedhomm statusss ");
-        // print(status.length);
+
         element.statusHistory = status;
       }
-      // for (var element in claims) {
-      //   if (element) {}
-      // }
-      print(claims);
+
       return claims;
     } else {
       return [];
@@ -251,7 +223,6 @@ class ClaimsService with ChangeNotifier {
       return false;
     }
     final request = {'message': message, 'claim': claim, 'user': user};
-    print("request $request");
     try {
       final response = await http.post(
           Uri.parse('${Environment.apiUrl}/node/comments'),

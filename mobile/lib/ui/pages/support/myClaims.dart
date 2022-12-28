@@ -15,16 +15,12 @@ class MyClaims extends StatefulWidget {
 
 class _MyClaims extends State<MyClaims> {
   User user;
-  // late Future<List<Claim>> claims;
 
   _MyClaims(this.user);
   @override
   void initState() {
     super.initState();
     fetchClaims();
-    // claims = ClaimsService().getMyClaims();
-
-    // print(claims);
   }
 
   @override

@@ -8,7 +8,6 @@ class Status {
   final String? name;
   final String? color;
 
-  // final String? color;
   const Status({required this.id, required this.name, required this.color});
   factory Status.fromJson(Map<String, dynamic> json) {
     return Status(

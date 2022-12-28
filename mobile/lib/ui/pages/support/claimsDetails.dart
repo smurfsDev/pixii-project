@@ -23,16 +23,10 @@ class _ClaimsDetails extends State<ClaimsDetails> {
   final _formKey = GlobalKey<FormState>();
   String message = "";
 
-  // late Future<List<Claim>> claims;
-
   _ClaimsDetails(this.claim, this.user);
   @override
   void initState() {
     super.initState();
-    // fetchClaims();
-    // claims = ClaimsService().getClaimsDetails();
-
-    // print(claims);
   }
 
   Color claimStatusColor = Colors.red;
@@ -75,7 +69,6 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                     'Claim details: \n',
                     style: TextStyle(
                         color: Colors.white,
-                        // fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
                         fontSize: 40),
                   ),
@@ -85,7 +78,6 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                         'Status: \n',
                         style: TextStyle(
                             color: Colors.white,
-                            // // fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.bold,
                             fontSize: 16),
                       ),
@@ -93,7 +85,6 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                         ' ${statusClaim.name}\n',
                         style: TextStyle(
                             color: claimStatusColor,
-                            // // fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.normal,
                             fontSize: 16),
                       ),
@@ -105,7 +96,6 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                         'Subject \n',
                         style: TextStyle(
                             color: Colors.white,
-                            // // fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.bold,
                             fontSize: 16),
                       ),
@@ -113,7 +103,6 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                         ' ${claim.subject}\n',
                         style: TextStyle(
                             color: Colors.white,
-                            // // fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.normal,
                             fontSize: 16),
                       ),
@@ -125,7 +114,6 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                         'Description :\n',
                         style: TextStyle(
                             color: Colors.white,
-                            // // fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.bold,
                             fontSize: 16),
                       ),
@@ -133,7 +121,6 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                         ' ${claim.message}\n',
                         style: TextStyle(
                             color: Colors.white,
-                            // // fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.normal,
                             fontSize: 16),
                       ),
@@ -145,7 +132,6 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                         'Employee in charge: \n',
                         style: TextStyle(
                             color: Colors.white,
-                            // // fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.bold,
                             fontSize: 16),
                       ),
@@ -182,8 +168,6 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                                   }
                                   return null;
                                 },
-                                // controller: _textController,
-                                // onSubmitted: _handleSubmitted,
                                 decoration: InputDecoration.collapsed(
                                     fillColor: Colors.white,
                                     hintStyle: TextStyle(
@@ -211,7 +195,6 @@ class _ClaimsDetails extends State<ClaimsDetails> {
   }
 
   addComment(ClaimsService claimsService) async {
-    print(message);
     if (_formKey.currentState!.validate()) {
       final commentCreated =
           await claimsService.createComment(this.claim.id, message);
@@ -249,8 +232,4 @@ class _ClaimsDetails extends State<ClaimsDetails> {
       }
     }
   }
-  // addComment() {
-  //   print(message);
-  //   print(claim.id);
-  // }
 }

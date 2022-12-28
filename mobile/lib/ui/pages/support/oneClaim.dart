@@ -24,7 +24,6 @@ class _getOneClaim extends State<getOneClaim> {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      // scrollDirection: Axis.vertical,
       shrinkWrap: true,
       padding: const EdgeInsets.all(8),
       itemCount: claims.length,

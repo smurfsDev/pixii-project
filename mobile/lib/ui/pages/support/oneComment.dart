@@ -23,8 +23,6 @@ class _OneComment extends State<OneComment> {
 
   @override
   Widget build(BuildContext context) {
-    // final claimsService = Provider.of<ClaimsService>(context);
-
     return (MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(

@@ -30,7 +30,6 @@ class _ClaimsTabs extends State<ClaimsTabs> {
   @override
   Widget build(BuildContext context) {
     final claimsService = Provider.of<ClaimsService>(context);
-    print(claim);
 
     return (MaterialApp(
         theme: ThemeData(

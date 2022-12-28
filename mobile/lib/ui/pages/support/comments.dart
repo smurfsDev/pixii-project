@@ -8,7 +8,6 @@ import 'package:mobile/ui/pages/support/oneComment.dart';
 import 'package:mobile/ui/pages/support/support.dart';
 
 class Comments extends StatefulWidget {
-  // List<Claim> claim;
   User user;
   Claim claim;
 
@@ -31,28 +30,21 @@ class _Comments extends State<Comments> {
   @override
   Widget build(BuildContext context) {
     final claimsService = Provider.of<ClaimsService>(context);
-    // final statusClaim = Comment.fromJson(claim.comments);
-    print(claim.comments);
+
     List<Comment>? commentsTable;
-    print(claim.comments);
     List<Comment> allComments = [];
     for (var element in claim.comments) {
-      print("l commentairett eli t3adew : ");
-      print(element);
       Comment comment =
           Comment(id: '', message: '', user: '', claim: '', created: '');
 
       final commentClaim = Comment.fromJson(element);
-      print(claim.id);
-      print(commentClaim.claim);
-      print(commentClaim.claim == claim.id);
+
       if (commentClaim.claim == claim.id) {
         comment.id = commentClaim.id;
         comment.message = commentClaim.message;
         comment.user = commentClaim.user;
         comment.created = commentClaim.created;
         comment.claim = commentClaim.claim;
-        print(comment);
         allComments.add(comment);
       }
     }
@@ -87,8 +79,6 @@ class _Comments extends State<Comments> {
                           const CircleAvatar(
                             radius: 35.0,
                             backgroundColor: Colors.amber,
-                            // backgroundImage: NetworkImage(
-                            //     "https://pickaface.net/gallery/avatar/sebastien.larcher5270905bcf67b.png"),
                           ),
                           const SizedBox(width: 10.0),
                           Column(
