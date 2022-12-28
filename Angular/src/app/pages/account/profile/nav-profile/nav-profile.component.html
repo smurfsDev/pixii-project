@@ -1,13 +1,18 @@
 <div class="header">
   <div class="cont">
     <h1>Welcome To PIXII Profile</h1>
+    <p>Here you can see your profile and edit it</p>
   </div>
-
   <div class="actions">
     <img class="avatar" src="./assets/pdp/{{ profile?.image }}" />
     <div class="hello">
       Hello, <span class="name">{{ name?.name }}</span>
     </div>
-    <mat-icon class="more-icon">arrow_drop_down</mat-icon>
+    <button [matMenuTriggerFor]="menu" mat-icon-button>
+      <mat-icon class="more-icon">arrow_drop_down</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
   </div>
 </div>
