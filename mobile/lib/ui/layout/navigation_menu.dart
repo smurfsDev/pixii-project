@@ -1,7 +1,8 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, prefer_const_constructors
 
 import 'package:mobile/imports.dart';
 import 'package:mobile/main.dart';
+import 'package:mobile/ui/pages/user/profile.dart';
 
 class NavDrawerDemo extends StatelessWidget {
   User user;
@@ -54,7 +55,8 @@ class NavDrawerDemo extends StatelessWidget {
               color: white,
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => ProfilePage()));
             },
           ),
           ListTile(
