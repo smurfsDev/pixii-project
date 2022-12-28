@@ -114,10 +114,9 @@ export class ProfileComponent implements OnInit {
       this._snackBar.open('Profile Picture Updated', 'close', {
         duration: 2000,
       });
+       this.getProfilePicture();
+       this.GetProfile();
     });
-
-    this.GetProfile();
-    this.getProfilePicture();
   }
 
   GetProfile() {
@@ -166,6 +165,7 @@ export class ProfileComponent implements OnInit {
           console.log(this.profile);
           this.getProfilePicture();
           this.GetProfile();
+          this.getProfilePicture();
         },
         (error) => {
           this.loading = false;
@@ -240,6 +240,8 @@ export class ProfileComponent implements OnInit {
           duration: 2000,
         });
         console.log(this.profile);
+        this.getProfilePicture();
+        this.GetProfile();
       },
       (error) => {
         this._snackBar.open(error.error.message ?? 'Error', 'close', {
