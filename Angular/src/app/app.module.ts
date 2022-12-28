@@ -45,32 +45,64 @@ import { DashSaVManagerComponent } from './pages/home/dash-sa-vmanager/dash-sa-v
 import { DashSaVTechnicienComponent } from './pages/home/dash-sa-vtechnicien/dash-sa-vtechnicien.component';
 import { DashScooterOwnerComponent } from './pages/home/dash-scooter-owner/dash-scooter-owner.component';
 import { ProfileComponent } from './pages/account/profile/profile.component';
+import { NavProfileComponent } from './pages/account/profile/nav-profile/nav-profile.component';
 
 @NgModule({
-	imports: [
+  imports: [
     NgxsModule.forRoot([AuthState]),
-		NgxsStoragePluginModule.forRoot(),
-		BrowserModule,
-		RouterModule.forRoot(AppRoutes),
-		NgxsReduxDevtoolsPluginModule.forRoot(),
-		FormsModule, DragDropModule, HttpClientModule,
-		BrowserAnimationsModule,
-		MaterialModule,
-		ReactiveFormsModule,
-		NgxEchartsModule.forRoot({
-      echarts: () => import('echarts')
+    NgxsStoragePluginModule.forRoot(),
+    BrowserModule,
+    RouterModule.forRoot(AppRoutes),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    FormsModule,
+    DragDropModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
     }),
-	],
+  ],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent, MapDashboardComponent, ControlPannelComponent, DashSuperAdminComponent, DashAdminComponent, DashSaVManagerComponent, DashSaVTechnicienComponent, DashScooterOwnerComponent, ProfileComponent],
-	providers: [
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: HttpInterceptorService,
-			multi: true
-		},
-    Geolocation
-	],
-	bootstrap: [AppComponent],
+  declarations: [
+    AppComponent,
+    ClaimsComponent,
+    NavbarComponent,
+    HomeComponent,
+    DetailsComponent,
+    RegisterComponent,
+    LoginComponent,
+    AuthComponent,
+    VerifyEmailComponent,
+    ChefComponent,
+    ResendVerificationComponent,
+    TopbarComponent,
+    BatteryPercentageComponent,
+    ChartBatteryUsageComponent,
+    BatteryComponent,
+    ResetPasswordComponent,
+    CheckemailComponent,
+    UserComponent,
+    MgUsersComponent,
+    MapDashboardComponent,
+    ControlPannelComponent,
+    DashSuperAdminComponent,
+    DashAdminComponent,
+    DashSaVManagerComponent,
+    DashSaVTechnicienComponent,
+    DashScooterOwnerComponent,
+    ProfileComponent,
+    NavProfileComponent,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true,
+    },
+    Geolocation,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
