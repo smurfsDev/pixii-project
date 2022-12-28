@@ -15,87 +15,72 @@ import { HasRoleGuard } from './guards/has-role.guard';
 
 import { ResendVerificationComponent } from './pages/account/resend-verification/resend-verification.component';
 import { UserComponent } from './pages/claims/user/user.component';
+import { ProfileComponent } from './pages/account/profile/profile.component';
 
 export const AppRoutes: Routes = [
-	{
-		path: '',
-		component: HomeComponent,
-		canActivate: [IsAuthenticatedGuard],
-	},
-	{
-		path: 'claims',
-		component: ClaimsComponent,
-		canActivate: [IsAuthenticatedGuard, HasRoleGuard],
-		data: {
-			role:
-				[
-					'SAV Manager', 'SAV Technician'
-				]
-		}
-
-	},
-	{
-		path: 'chef',
-		component: ChefComponent,
-		canActivate: [IsAuthenticatedGuard, HasRoleGuard],
-		data: {
-			role:
-				[
-					'SAV Manager'
-				]
-		}
-	},
-	{
-		path: 'login',
-		component: LoginComponent,
-
-
-	},
-	{
-		path: 'register',
-		component: RegisterComponent,
-
-
-	},
-	{
-		path: 'auth',
-		component: AuthComponent,
-
-
-	},
-	{
-		path: 'verify',
-		component: VerifyEmailComponent,
-		// canActivate: [IsAuthenticatedGuard]
-
-	},
-	{
-		path: 'manageUsers',
-		component: MgUsersComponent,
-		canActivate: [IsAuthenticatedGuard, HasRoleGuard],
-		data: {
-			role:
-				[
-					'Super Admin', 'Admin'
-				]
-		}
-	},
-	{
-		path: 'resend-verification',
-		component: ResendVerificationComponent,
-	},
-	{ path: 'reset-password', component: ResetPasswordComponent },
-	{ path: 'checkemail', component: CheckemailComponent },
-	{
-		path: 'myclaims', component: UserComponent,
-		canActivate: [IsAuthenticatedGuard, HasRoleGuard],
-		data: {
-			role:
-				[
-					'Scooter Owner'
-				]
-		}
-	},
-
-
+  {
+    path: '',
+    component: HomeComponent,
+    canActivate: [IsAuthenticatedGuard],
+  },
+  {
+    path: 'claims',
+    component: ClaimsComponent,
+    canActivate: [IsAuthenticatedGuard, HasRoleGuard],
+    data: {
+      role: ['SAV Manager', 'SAV Technician'],
+    },
+  },
+  {
+    path: 'chef',
+    component: ChefComponent,
+    canActivate: [IsAuthenticatedGuard, HasRoleGuard],
+    data: {
+      role: ['SAV Manager'],
+    },
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+  },
+  {
+    path: 'auth',
+    component: AuthComponent,
+  },
+  {
+    path: 'verify',
+    component: VerifyEmailComponent,
+    // canActivate: [IsAuthenticatedGuard]
+  },
+  {
+    path: 'manageUsers',
+    component: MgUsersComponent,
+    canActivate: [IsAuthenticatedGuard, HasRoleGuard],
+    data: {
+      role: ['Super Admin', 'Admin'],
+    },
+  },
+  {
+    path: 'resend-verification',
+    component: ResendVerificationComponent,
+  },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'checkemail', component: CheckemailComponent },
+  {
+    path: 'myclaims',
+    component: UserComponent,
+    canActivate: [IsAuthenticatedGuard, HasRoleGuard],
+    data: {
+      role: ['Scooter Owner'],
+    },
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [IsAuthenticatedGuard]
+  },
 ];
