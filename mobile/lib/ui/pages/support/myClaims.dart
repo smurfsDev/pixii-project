@@ -53,7 +53,9 @@ class _MyClaims extends State<MyClaims> {
                   return Text('${snapshot.error}');
                 }
 
-                return const CircularProgressIndicator();
+                return Center(
+                  child: const CircularProgressIndicator(),
+                );
               }),
             ),
           ),
