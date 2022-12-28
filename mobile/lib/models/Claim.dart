@@ -10,7 +10,7 @@ String claimToJson(Claim data) => json.encode(data.toJson());
 class Claim {
   final String id;
   final String? subject;
-  final String? title;
+  final String title;
   final String? message;
   final Map<String, dynamic> status;
   List<dynamic> statusHistory;

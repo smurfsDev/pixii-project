@@ -59,7 +59,7 @@ class _ClaimsTabs extends State<ClaimsTabs> {
                   ),
                 ],
               ),
-              title: const Text('Tabs Demo'),
+              title: Text(claim.title),
             ),
             body: TabBarView(
               children: [
