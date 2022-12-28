@@ -4,23 +4,26 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile/imports.dart';
 import 'package:mobile/service/user_profile.dart';
-import 'package:mobile/ui/pages/user/widget/appbar_widget.dart'; 
+import 'package:mobile/ui/pages/user/widget/appbar_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({super.key});
+  User user;
+  EditProfile(this.user, {super.key});
 
   @override
-  State<EditProfile> createState() => _EditProfileState();
+  State<EditProfile> createState() => _EditProfile(this.user);
 }
 
-class _EditProfileState extends State<EditProfile> {
+class _EditProfile extends State<EditProfile> {
+  User user;
   final _formKey = GlobalKey<FormState>();
-  String email = "admin@email.com";
+  String email = "";
   String name = "admin";
   String confirmemail = "admin@email.com";
   bool loading = false;
+  _EditProfile(this.user);
   File? pickedImage;
   void imagePickerOption() {
     Get.bottomSheet(
@@ -69,7 +72,7 @@ class _EditProfileState extends State<EditProfile> {
       if (photo == null) return;
 
       final permImage = await saveImagePermantly(photo.path);
-       final tempImage = File(photo.path);
+      final tempImage = File(photo.path);
       setState(() {
         pickedImage = permImage;
       });
@@ -89,6 +92,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final profileService = Provider.of<UserPorfileService>(context);
     return Scaffold(
       appBar: buildAppBar(context),
       body: ListView(
@@ -189,43 +193,85 @@ class _EditProfileState extends State<EditProfile> {
               key: _formKey,
               child: Column(
                 children: [
-                  MyInput(
-                    validation: validateName,
-                    onChanged: (value) {
-                      setState(() {
-                        name = value;
-                      });
+                  TextFormField(
+                    initialValue: user.name,
+                    onChanged: (value) => {
+                      setState(
+                        () {
+                          user.name = value;
+                        },
+                      )
                     },
-                    hintText: 'Enter your full name',
-                    icon: Icons.person,
-                    keyboardType: TextInputType.emailAddress,
-                    labelText: 'Full name',
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.white),
+                      fillColor: Colors.white,
+                      labelText: 'Full Name',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: 20.0),
-                  MyInput(
-                    validation: validateEmail,
-                    onChanged: (value) {
-                      setState(() {
-                        email = value;
-                      });
+                  TextFormField(
+                    initialValue: user.email,
+                    onChanged: (value) => {
+                      setState(
+                        () {
+                          user.email = value;
+                        },
+                      )
                     },
-                    hintText: 'Enter your e-mail',
-                    icon: Icons.mail,
-                    keyboardType: TextInputType.emailAddress,
-                    labelText: 'Email',
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.white),
+                      fillColor: Colors.white,
+                      labelText: 'Email',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter valid email';
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: 20.0),
-                  MyInput(
-                    validation: validateEmail,
-                    onChanged: (value) {
-                      setState(() {
-                        confirmemail = value;
-                      });
+                  TextFormField(
+                    initialValue: user.email,
+                    onChanged: (value) => {
+                      setState(
+                        () {
+                          confirmemail = value;
+                        },
+                      )
                     },
-                    hintText: 'Enter your e-mail again',
-                    icon: Icons.mail,
-                    keyboardType: TextInputType.emailAddress,
-                    labelText: 'Confirm Email',
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: Colors.white),
+                      fillColor: Colors.white,
+                      labelText: 'Confirm Email',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please re-enter email';
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: 20.0),
                   Row(
@@ -245,7 +291,7 @@ class _EditProfileState extends State<EditProfile> {
                               ),
                             ),
                             onPressed: () {
-                              sendProfile();
+                              sendProfile(context, profileService);
                             },
                             child: loading
                                 ? CircularProgressIndicator(
@@ -262,21 +308,27 @@ class _EditProfileState extends State<EditProfile> {
                     ],
                   ),
                 ],
-              )
-              ),
+              )),
           const SizedBox(height: 24),
         ],
       ),
       backgroundColor: const Color.fromARGB(255, 19, 27, 54),
-
     );
   }
 
-  //send form
-  void sendProfile() async {
-    print(name);
-    print(email);
-    print(confirmemail);
+  void sendProfile(BuildContext context, UserPorfileService porfile) async {
+    // print(user.name);
+    // print(user.email);
+    // print(confirmemail);
+    if (user.email == confirmemail) {
+      final profileupdated = await porfile.updateProfile(user.name, user.email);
+
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Email must match"),
+        backgroundColor: Colors.red,
+      ));
+    }
     // if (_formKey.currentState!.validate()) {
     //   setState(() {
     //     loading = true;

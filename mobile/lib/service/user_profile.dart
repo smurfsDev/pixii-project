@@ -4,7 +4,6 @@ import 'dart:io';
 import "package:mobile/imports.dart";
 import 'package:http/http.dart' as http;
 
-
 class UserPorfileService with ChangeNotifier {
   late User? user = null;
   late String error;
@@ -37,14 +36,22 @@ class UserPorfileService with ChangeNotifier {
     }
   }
 
-  Future<bool> updateProfile(String username, String name, String email) async {
-    final request = {'username': username, 'name': name, 'email': email};
+  Future<bool> updateProfile(String name, String email) async {
+    AuthService authService = AuthService();
+    await authService.loadSettings();
+    final user = authService.user;
+    final request = {'name': name, 'email': email};
     print(request);
     try {
       final response = await http.put(
           Uri.parse('${Environment.apiUrl}/profilemodify'),
           body: jsonEncode(request),
-          headers: {'Content-Type': 'application/json'});
+          headers: {
+            'Content-Type': 'application/json',
+            'AutorizationNode': user!.email
+          });
+      print(response.statusCode);
+      print(response.body);
       if (response.statusCode == 200) {
         return true;
       } else {

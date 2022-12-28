@@ -4,22 +4,23 @@ import 'package:mobile/ui/pages/user/Resetpasword.dart';
 import 'package:mobile/ui/pages/user/scooter.dart';
 import 'package:mobile/ui/pages/user/update_profile.dart';
 import 'package:mobile/ui/pages/user/widget/appbar_widget.dart';
-import 'package:mobile/ui/pages/user/widget/profile_widget.dart'; 
+import 'package:mobile/ui/pages/user/widget/profile_widget.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  User user;
+  ProfilePage(this.user, {super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ProfilePage> createState() => _ProfilePage(this.user);
 }
 
-class _ProfilePageState extends State<ProfilePage> {
-
+class _ProfilePage extends State<ProfilePage> {
+  User user;
   late UserPorfileService profileService;
-  String email = "aazezafez";
-  String imagePath = "faezdfa";
-  String name = "ezafza";
-
+  String email = '';
+  String imagePath = "";
+  String name = "";
+  _ProfilePage(this.user);
   @override
   void initState() {
     super.initState();
@@ -27,7 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget build(BuildContext context) {
-  profileService = Provider.of<UserPorfileService>(context);
+    profileService = Provider.of<UserPorfileService>(context);
 
     return Scaffold(
       appBar: buildAppBar(context),
@@ -39,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
             onClicked: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => EditProfile(),
+                  builder: (context) => EditProfile(user),
                 ),
               );
             },
@@ -93,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget buildName() => Column(
         children: [
           Text(
-            name,
+            user.name,
             // ignore: prefer_const_constructors
             style: TextStyle(
               color: Colors.white,
@@ -103,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           const SizedBox(height: 4),
           Text(
-            email,
+            user.email,
             // ignore: prefer_const_constructors
             style: TextStyle(
               fontSize: 16,
