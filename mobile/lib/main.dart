@@ -1,5 +1,7 @@
+import 'package:get/get.dart';
 import "package:mobile/imports.dart";
 import 'package:mobile/service/bike.dart';
+import 'package:mobile/service/user_profile.dart';
 import 'package:mobile/ui/pages/home/dashboard.dart';
 
 void main() async {
@@ -26,7 +28,7 @@ class _MyAppState extends State<MyApp> {
                 ? Dashboard(authService.user!)
                 : const Login();
           },
-     ));
+     ));   
   }
 
   @override
@@ -35,6 +37,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: (_) => BikeService()),
+        ChangeNotifierProvider(create: (_) => UserPorfileService())
       ],
       child: MaterialApp(
         routes: {
