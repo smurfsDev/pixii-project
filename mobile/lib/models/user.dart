@@ -9,14 +9,13 @@ User userFromJson(String str) => User.fromJson(json.decode(str));
 String userToJson(User data) => json.encode(data.toJson());
 
 class User {
-  User({
-    required this.username,
-    required this.name,
-    required this.email,
-    required this.role,
-    // required this.imagePath,
-    // required this.scootername
-  });
+  User(
+      {required this.username,
+      required this.name,
+      required this.email,
+      required this.role,
+      required this.imagePath,
+      required this.scootername});
 
   String username;
   String name;
@@ -30,8 +29,8 @@ class User {
         name: json["name"],
         email: json["email"],
         role: List.from(json["roles"].map((x) => x)),
-        // imagePath: json["imagePath"],
-        // scootername: json["scootername"],
+        imagePath: json["imagePath"] as String?,
+        scootername: json["scootername"] as String?,
       );
 
   Map<String, dynamic> toJson() => {
@@ -39,7 +38,7 @@ class User {
         "name": name,
         "email": email,
         "roles": List.from(role.map((x) => x)),
-        // "imagePath": imagePath,
-        // "scootername": scootername,
+        "imagePath": imagePath,
+        "scootername": scootername,
       };
 }
