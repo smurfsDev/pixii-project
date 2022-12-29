@@ -20,50 +20,17 @@ class _EditProfile extends State<EditProfile> {
   User user;
   final _formKey = GlobalKey<FormState>();
   String email = "";
-  String name = "admin";
-  String confirmemail = "admin@email.com";
+  String name = "";
+  // String confirmemail = "";
   bool loading = false;
   _EditProfile(this.user);
   File? pickedImage;
-  void imagePickerOption() {
-    Get.bottomSheet(
-      SingleChildScrollView(
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(10.0),
-            topRight: Radius.circular(10.0),
-          ),
-          child: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      pickImage(ImageSource.camera);
-                    },
-                    icon: const Icon(Icons.camera),
-                    label: const Text("CAMERA"),
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      pickImage(ImageSource.gallery);
-                    },
-                    icon: const Icon(Icons.image),
-                    label: const Text("GALLERY"),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+
+  Future<File> saveImagePermantly(String path) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final name = basename(path);
+    final permImage = File('${directory.path}/$name');
+    return File(path).copy(permImage.path);
   }
 
   pickImage(ImageSource imageType) async {
@@ -81,13 +48,6 @@ class _EditProfile extends State<EditProfile> {
     } catch (error) {
       debugPrint(error.toString());
     }
-  }
-
-  Future<File> saveImagePermantly(String path) async {
-    final directory = await getApplicationDocumentsDirectory();
-    final name = basename(path);
-    final permImage = File('${directory.path}/$name');
-    return File(path).copy(permImage.path);
   }
 
   @override
@@ -130,7 +90,52 @@ class _EditProfile extends State<EditProfile> {
                   bottom: -6,
                   right: 2,
                   child: IconButton(
-                    onPressed: imagePickerOption,
+                    onPressed: () {
+                      {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return SingleChildScrollView(
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10.0),
+                                  topRight: Radius.circular(10.0),
+                                ),
+                                child: Container(
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        ElevatedButton.icon(
+                                          onPressed: () {
+                                            pickImage(ImageSource.camera);
+                                          },
+                                          icon: const Icon(Icons.camera),
+                                          label: const Text("CAMERA"),
+                                        ),
+                                        ElevatedButton.icon(
+                                          onPressed: () {
+                                            pickImage(ImageSource.gallery);
+                                          },
+                                          icon: const Icon(Icons.image),
+                                          label: const Text("GALLERY"),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    },
                     icon: const Icon(
                       Icons.add_a_photo_outlined,
                       color: Color.fromARGB(255, 255, 255, 255),
@@ -142,53 +147,28 @@ class _EditProfile extends State<EditProfile> {
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 8,
           ),
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: ElevatedButton.icon(
-          //       onPressed: () {},
-          //       icon: const Icon(Icons.add_a_photo_sharp),
-          //       label: const Text('UPLOAD IMAGE')),
-          // ),
-
-          // fimage != null
-          //     ? image_widget(fimage: fimage)
-          //     : Icon(
-          //         Icons.person,
-          //         size: 160,
-          //       ),
-
-          // SizedBox(height: 1),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     IconButton(
-          //       icon: Icon(Icons.camera),
-          //       color: Color.fromARGB(255, 94, 166, 225),
-          //       iconSize: 30,
-          //       onPressed: () => pickImage(ImageSource.camera),
-          //     ),
-          //     IconButton(
-          //       icon: Icon(Icons.image),
-          //       color: Color.fromARGB(255, 94, 166, 225),
-          //       iconSize: 30,
-          //       onPressed: () => pickImage(ImageSource.gallery),
-          //     ),
-          //   ],
-          // ),
-
-          // ProfileWidget(
-          //   image: user.imagePath,
-          //   isEdit: true,
-          //   onClicked: () => pickImage(),
-          // ),
-          // TextFieldWidget(
-          //   label: 'Full Name',
-          //   text: user.name,
-          //   onChanged: (name) {},
-          // ),
-          const SizedBox(height: 8),
+          Text("@ ${user.username}",
+              style: const TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w600,
+                color: Color.fromARGB(255, 140, 140, 140),
+              ),
+              textAlign: TextAlign.center),
+          const SizedBox(
+            height: 2,
+          ),
+          Text(user.name,
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Color.fromARGB(255, 140, 140, 140),
+              ),
+              textAlign: TextAlign.center),
+          const SizedBox(
+            height: 30,
+          ),
           Form(
               key: _formKey,
               child: Column(
@@ -205,6 +185,10 @@ class _EditProfile extends State<EditProfile> {
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelStyle: TextStyle(color: Colors.white),
+                        prefixIcon: const Icon(
+                        Icons.person,
+                        color: Colors.white,
+                      ),
                       hintStyle: TextStyle(color: Colors.white),
                       fillColor: Colors.white,
                       labelText: 'Full Name',
@@ -232,6 +216,10 @@ class _EditProfile extends State<EditProfile> {
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelStyle: TextStyle(color: Colors.white),
+                        prefixIcon: const Icon(
+                        Icons.email,
+                        color: Colors.white,
+                      ),
                       hintStyle: TextStyle(color: Colors.white),
                       fillColor: Colors.white,
                       labelText: 'Email',
@@ -247,32 +235,32 @@ class _EditProfile extends State<EditProfile> {
                     },
                   ),
                   SizedBox(height: 20.0),
-                  TextFormField(
-                    initialValue: user.email,
-                    onChanged: (value) => {
-                      setState(
-                        () {
-                          confirmemail = value;
-                        },
-                      )
-                    },
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.white),
-                      hintStyle: TextStyle(color: Colors.white),
-                      fillColor: Colors.white,
-                      labelText: 'Confirm Email',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please re-enter email';
-                      }
-                      return null;
-                    },
-                  ),
+                  // TextFormField(
+                  //   initialValue: user.email,
+                  //   onChanged: (value) => {
+                  //     setState(
+                  //       () {
+                  //         confirmemail = value;
+                  //       },
+                  //     )
+                  //   },
+                  //   style: TextStyle(color: Colors.white),
+                  //   decoration: InputDecoration(
+                  //     labelStyle: TextStyle(color: Colors.white),
+                  //     hintStyle: TextStyle(color: Colors.white),
+                  //     fillColor: Colors.white,
+                  //     labelText: 'Confirm Email',
+                  //     border: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(10.0),
+                  //     ),
+                  //   ),
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please re-enter email';
+                  //     }
+                  //     return null;
+                  //   },
+                  // ),
                   SizedBox(height: 20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -317,24 +305,39 @@ class _EditProfile extends State<EditProfile> {
   }
 
   void sendProfile(BuildContext context, UserPorfileService porfile) async {
-    // print(user.name);
-    // print(user.email);
-    // print(confirmemail);
-    if (user.email == confirmemail) {
-      final profileupdated = await porfile.updateProfile(user.name, user.email);
-
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Email must match"),
-        backgroundColor: Colors.red,
-      ));
-    }
-    // if (_formKey.currentState!.validate()) {
-    //   setState(() {
-    //     loading = true;
-    //   });
+    final profileupdated = await porfile.updateProfile(user.name, user.email);
+    // setState(() {
+    //   loading = false;
+    // });
+    //  if (profileupdated) {
+    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //   content: Text("Profile updated"),
+    //     backgroundColor: Color.fromARGB(255, 177, 177, 177),
+    // ));
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //     content: Text("Profile not updated"),
+    //     backgroundColor: Color.fromARGB(255, 177, 177, 177),
+    //   ));
     // }
   }
+  // print(user.name);
+  // print(user.email);
+  // print(confirmemail);
+  // if (user.email) {
+  // final profileupdated = await porfile.updateProfile(name, usemail);
+
+  // } else {
+  // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //   content: Text("Email must match"),
+  //   backgroundColor: Colors.red,
+  // ));
+  // }
+  // if (_formKey.currentState!.validate()) {
+  //   setState(() {
+  //     loading = true;
+  //   });
+  // }
 }
 
 class image_widget extends StatelessWidget {
