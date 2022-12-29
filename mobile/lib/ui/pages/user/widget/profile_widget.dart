@@ -71,6 +71,6 @@ class ProfileWidget extends StatelessWidget {
           padding: EdgeInsets.all(all),
           color: color,
           child: child,
-        ),
-      );
+    ),
+  );
 }
