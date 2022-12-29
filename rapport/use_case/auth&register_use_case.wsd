@@ -1,0 +1,34 @@
+@startuml auth_register_use_case
+left to right direction
+skinparam packageStyle rect
+skinparam shadowing false
+
+actor User as u 
+actor SuperAdmin as sa
+actor Admin as a
+actor SavManager as sm
+actor SavTechnician as st
+actor ScooterOwner as so
+
+
+' sa <|-- u
+u <|-- a
+u <|-- sm
+u <|-- st
+u <|-- so
+package Authentification_register  {
+( Login ) as lgn
+( Create account ) as ca
+( Verify email  ) as ve
+( Reset password ) as rp
+}
+
+left to right direction
+
+sa --> lgn
+u --> ca
+u --> lgn
+u --> ve
+u --> rp
+
+@enduml
