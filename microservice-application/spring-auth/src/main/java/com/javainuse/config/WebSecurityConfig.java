@@ -65,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/users").hasAnyAuthority("Admin", "Super Admin")
 				.antMatchers("/checkUsername/{username}").permitAll().antMatchers("/resend").permitAll()
 				.antMatchers("/profilemodify").permitAll()
+				.antMatchers("/scootername").permitAll()
 				// all other requests need to be authenticated
 				.anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to
