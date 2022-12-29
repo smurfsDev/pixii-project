@@ -1,0 +1,32 @@
+@startuml verify_email_sequence_diagram
+
+actor "Admin\nSAV Manager\nSAV Technician\nScooter Owner" as u
+boundary verifyEmail as v
+control VerificationController as c
+entity User as m
+activate u
+u -> v : FillVerifyEmailForm(email,token)
+deactivate v
+v --> u : FormFilled
+activate v
+v -> v :VerifyVerifyEmailForm(email,token)
+deactivate v
+v --> v : FormVerified
+
+alt FormVerified is true
+activate v
+v -> c : verifyUser(email,code)
+activate c
+c -> m : verifyUser(email,code)
+deactivate m
+m --> c: user enabled
+deactivate c
+c --> v: user enabled
+deactivate v
+v --> u: user enabled
+
+else FormVerified is false
+v --> u : showErrorMessage
+deactivate c
+end
+@enduml

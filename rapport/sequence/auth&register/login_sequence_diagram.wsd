@@ -1,0 +1,36 @@
+@startuml login_sequence_diagram
+
+actor "User" as u
+boundary login as v
+control JWTAuthController as c
+entity User as m
+activate u
+u -> v : FillLoginForm(email, password)
+deactivate v
+v --> u : FormFilled
+activate v
+v -> v :VerifyLoginForm(email, password)
+deactivate v
+v --> v : FormVerified
+
+alt FormVerified is true
+activate v
+v -> c : authenticate(email, password)
+
+activate c
+c -> m : getUser(email, password)
+deactivate m
+m --> c: user authenticated
+deactivate c
+c --> v: user authenticated
+deactivate v
+v --> u: user authenticated
+else FormVerified is false
+v --> u : showErrorMessage
+deactivate c
+
+
+end
+
+
+@enduml

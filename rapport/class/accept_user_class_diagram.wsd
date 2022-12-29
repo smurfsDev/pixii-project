@@ -1,0 +1,44 @@
+@startuml accept_user_class_diagram
+Class user {
+Int id
+String name
+String password
+String username
+String email
+Bool enabled 
+String verification_code
+JSON Login()
+Bool Register()
+}
+
+Class role{
+Int id
+String name
+}
+
+user .right.> role
+
+ 
+Class SuperAdmin{}
+Class Admin{}
+Class SavManager{}
+Class SavTechnician{}
+
+
+top to bottom direction
+user <|-- SuperAdmin
+user <|-- Admin
+user <|-- SavManager
+user <|-- SavTechnician
+
+
+SuperAdmin "1"--"*" Admin : accept
+Admin "1"--"*" SavManager : accept
+Admin "1"--"*" SavTechnician : accept
+
+
+
+
+
+
+@enduml

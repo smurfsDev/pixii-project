@@ -1,0 +1,38 @@
+@startuml register_sequence_diagram
+
+actor "Admin\nSAV Manager\nSAV Technician\nScooter Owner" as u
+boundary register as v
+control JWTAuthController as c
+entity User as m
+activate u
+u -> v : FillRegisterForm(user)
+deactivate v
+v --> u : FormFilled
+activate v
+v -> v :VerifyRegisterForm(user)
+deactivate v
+v --> v : FormVerified
+
+alt FormVerified is true
+activate v
+v -> c : register(user)
+
+activate c
+c -> m : createUser(user)
+deactivate m
+m --> c: user created
+deactivate c
+c --> v: user created
+deactivate v
+v --> u: user created
+
+else FormVerified is false
+v --> u : showErrorMessage
+deactivate c
+
+
+
+end
+
+
+@enduml
