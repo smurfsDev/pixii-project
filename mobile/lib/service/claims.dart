@@ -76,7 +76,7 @@ class ClaimsService with ChangeNotifier {
         claims.add(Claim.fromJson(item));
       }
       final technicians = await http
-          .get(Uri.parse('${Environment.apiUrl}/node/users'), headers: {
+          .get(Uri.parse('${Environment.apiUrl}/node/allUsers'), headers: {
         'Content-Type': 'application/json',
         'AutorizationNode': user.email
       });
