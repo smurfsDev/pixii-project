@@ -287,9 +287,6 @@ class _ResetPasswordPageState extends State<ResetPassword> {
         loading = true;
       });
       final reset_password = await auth.ResetPassword(email, Code, password);
-      print(email);
-      print(Code);
-      print(password);
       if (reset_password) {
         Navigator.pushNamed(context, Login.id);
       } else {
