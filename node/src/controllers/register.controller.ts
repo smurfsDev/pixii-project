@@ -23,7 +23,7 @@ export const create = (req: Request, res: Response) => {
             let user
             if (roleRes.name === "Scooter Owner") {
 
-                user = new User({ name: req.body.name, username: req.body.username, email: req.body.email, password: req.body.password, roles: [{ role: roleRes, status: 1 }], status: 0 });
+                user = new User({ name: req.body.name, username: req.body.username, email: req.body.email, password: req.body.password, roles: [{ role: roleRes, status: 1,scooterId: req.body.scooterId }], status: 0 });
             }
             // if (roleRes.name === "Scooter Owner") {
             //     roleUser = {

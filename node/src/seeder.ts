@@ -94,7 +94,7 @@ export const seed = async () => {
 	if (!user) {
 
 
-		const user5 = new User({ name: 'Scooter Owner', username: 'scooterowner', email: "scooterowner@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role5, status: 1 }], status: 1 });
+		const user5 = new User({ name: 'Scooter Owner', username: 'scooterowner', email: "scooterowner@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role5, status: 1, scooterId:12345678 }], status: 1 });
 		await user5.save();
 	}
 

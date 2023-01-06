@@ -83,8 +83,8 @@ class AuthService with ChangeNotifier {
       return false;
     }
   }
-  Future<bool> register( String username, String password, String email, String name,String role , String confirmPassword) async {
-    final request = {'username': username, 'password': password, 'email': email, 'name': name , 'role': role , 'confirmPassword': confirmPassword};
+  Future<bool> register( String username, String password, String email, String name,String scooterId , String confirmPassword) async {
+    final request = {'username': username, 'password': password, 'email': email, 'name': name , 'role': "Scooter Owner" , 'confirmPassword': confirmPassword, "scooterId": scooterId};
     print(request);
     try {
       final response = await http.post(
