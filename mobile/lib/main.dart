@@ -34,7 +34,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return WillPopScope(
+        onWillPop: () async => false,
+        child: MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: (_) => BikeService()),
@@ -60,6 +62,7 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: white,
         ),
         home: MainLayout(child: main),
+      ),
       ),
     );
   }
