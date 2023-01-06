@@ -1,5 +1,5 @@
 <app-navbar>
-    <app-dash-super-admin *ngIf="isSuperAdmin"
+    <app-dash-super-admin *ngIf="isSuperAdmin;else admin"
                             [options]="options"
                             [admins]="admins"
                             [scooterOwners]="scooterOwners"
@@ -9,23 +9,8 @@
                             [percentage]="percentage"
 
     ></app-dash-super-admin>
-    <app-dash-scooter-owner *ngIf="isScooterOwner" >
-    </app-dash-scooter-owner>
-    <app-dash-sa-vmanager *ngIf="isSavManager"
-                            [options]="options"
-                            [bikes]="bikes"
-                            [percentage]="percentage"
-                            [scooterOwners]="scooterOwners"
-                            [savTechnicians]="savTechnicians"
-     ></app-dash-sa-vmanager>
-    <app-dash-sa-vtechnicien *ngIf="isSavTechnician"
-                                [options]="options"
-                                [bikes]="bikes"
-                                [percentage]="percentage"
-                                [scooterOwners]="scooterOwners"
-    >
-    </app-dash-sa-vtechnicien>
-    <app-dash-admin *ngIf="isAdmin"
+	<ng-template #admin>
+	<app-dash-admin *ngIf="isAdmin; else savManager"
                         [options]="options"
                         [scooterOwners]="scooterOwners"
                         [savManagers]="savManagers"
@@ -33,4 +18,40 @@
                         [bikes]="bikes"
                         [percentage]="percentage"
     ></app-dash-admin>
+	</ng-template>
+	<ng-template #savManager>
+    <app-dash-sa-vmanager *ngIf="isSavManager;else savTech"
+                            [options]="options"
+                            [bikes]="bikes"
+                            [percentage]="percentage"
+                            [scooterOwners]="scooterOwners"
+                            [savTechnicians]="savTechnicians"
+     ></app-dash-sa-vmanager>
+	 </ng-template>
+	<ng-template #savTech>
+    <app-dash-sa-vtechnicien *ngIf="isSavTechnician; else scooterOwner"
+                                [options]="options"
+                                [bikes]="bikes"
+                                [percentage]="percentage"
+                                [scooterOwners]="scooterOwners"
+    >
+    </app-dash-sa-vtechnicien>
+	</ng-template>
+	<ng-template #scooterOwner>
+		<app-dash-scooter-owner *ngIf="isScooterOwner; else noRole" >
+		</app-dash-scooter-owner>
+	</ng-template>
+	<ng-template #noRole >
+		<div class="" *ngIf="!isScooterOwner&&!isAdmin&&!isSavManager&&!isSavTechnician&&!isSuperAdmin">
+			<app-topbar ></app-topbar>
+			<div class="card-norole">
+				<div class="card-body">
+					<h5 class="card-title">You have no accepted role</h5>
+					<p class="card-text">Please contact an administrator to fix the issue</p>
+					<mat-icon class="icon">warning</mat-icon>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+    
 </app-navbar>
