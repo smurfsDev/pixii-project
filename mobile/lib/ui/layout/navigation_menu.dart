@@ -42,9 +42,9 @@ class NavDrawerDemo extends StatelessWidget {
               color: white,
             ),
             onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Dashboard(user)));
-              // Navigator.pop(context);
             },
           ),
           ListTile(
@@ -59,7 +59,7 @@ class NavDrawerDemo extends StatelessWidget {
               color: white,
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.of(context).popUntil((route) => route.isFirst);
             },
           ),
           ListTile(
@@ -74,7 +74,7 @@ class NavDrawerDemo extends StatelessWidget {
               color: white,
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.of(context).popUntil((route) => route.isFirst);
             },
           ),
           ListTile(
@@ -107,6 +107,7 @@ class NavDrawerDemo extends StatelessWidget {
               color: white,
             ),
             onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Support(user)));
             },
@@ -123,6 +124,7 @@ class NavDrawerDemo extends StatelessWidget {
               color: white,
             ),
             onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => MyClaims(user)));
             },
@@ -140,8 +142,9 @@ class NavDrawerDemo extends StatelessWidget {
             ),
             onTap: () {
               AuthService().logout().then((value) => {
+                    Navigator.of(context).popUntil((route) => route.isFirst),
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MyApp()))
+                        MaterialPageRoute(builder: (context) => Login()))
                   });
             },
           ),
