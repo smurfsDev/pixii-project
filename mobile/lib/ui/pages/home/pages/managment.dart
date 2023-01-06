@@ -27,18 +27,13 @@ class _ManagmentState extends State<Managment> {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       if (bike == null) {
         bike = bikeService.bikeData;
-        print("State" + bikeService.toString());
         if (bike == null) {
           await bikeService.getBikeData();
-          // .then((value) {
-          print("fetching");
           setState(() {
             bike = bikeService.bikeData;
           });
-          print("State" + bike.toString());
           // });
         } else {
-          print("State" + bike!.TheftState.toString());
         }
       }
       // });

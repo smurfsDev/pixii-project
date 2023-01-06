@@ -2,6 +2,9 @@
 
 import 'package:mobile/imports.dart';
 import 'package:mobile/main.dart';
+import 'package:mobile/ui/pages/home/dashboard.dart';
+import 'package:mobile/ui/pages/support/myClaims.dart';
+import 'package:mobile/ui/pages/support/support.dart';
 
 class NavDrawerDemo extends StatelessWidget {
   User user;
@@ -39,7 +42,9 @@ class NavDrawerDemo extends StatelessWidget {
               color: white,
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Dashboard(user)));
             },
           ),
           ListTile(
@@ -54,7 +59,7 @@ class NavDrawerDemo extends StatelessWidget {
               color: white,
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.of(context).popUntil((route) => route.isFirst);
             },
           ),
           ListTile(
@@ -69,7 +74,7 @@ class NavDrawerDemo extends StatelessWidget {
               color: white,
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.of(context).popUntil((route) => route.isFirst);
             },
           ),
           ListTile(
@@ -84,7 +89,44 @@ class NavDrawerDemo extends StatelessWidget {
               color: white,
             ),
             onTap: () {
-              Navigator.pop(context);
+              // Navigator.push(
+              //     context, MaterialPageRoute(builder: (context) => Support()));
+
+              // Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text(
+              "Support",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            leading: const Icon(
+              Icons.support_agent,
+              color: white,
+            ),
+            onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Support(user)));
+            },
+          ),
+          ListTile(
+            title: const Text(
+              "My claims",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            leading: const Icon(
+              Icons.contact_support_rounded,
+              color: white,
+            ),
+            onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MyClaims(user)));
             },
           ),
           ListTile(
@@ -100,8 +142,9 @@ class NavDrawerDemo extends StatelessWidget {
             ),
             onTap: () {
               AuthService().logout().then((value) => {
+                    Navigator.of(context).popUntil((route) => route.isFirst),
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MyApp()))
+                        MaterialPageRoute(builder: (context) => Login()))
                   });
             },
           ),

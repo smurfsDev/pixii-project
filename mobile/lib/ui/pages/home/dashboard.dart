@@ -18,20 +18,14 @@ class _Dashboard extends State<Dashboard> {
   List<Widget> pages = <Widget>[];
   late BikeService bikeService = BikeService();
   late BikeData? bike = null;
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await bikeService.getBikeData();
-    });
-    var fetch = bikeService
+
+  void init() {
+     var fetch = bikeService
         .getBikeData()
         .then((value) => {
             setState(() {
               bike = bikeService.bikeData;
             }),
-            print("bike"+bikeService.bikeData.toString()),
-            print("bike"+bikeService.error),
               pages = [
                 Managment(
                   bike: bikeService.bikeData,
@@ -59,6 +53,53 @@ class _Dashboard extends State<Dashboard> {
                 const Notifications()
               ]
         });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    bikeService = Provider.of<BikeService>(context, listen: false);
+    bike = bikeService.bikeData;
+    init();
+  }
+
+  @override
+  void didUpdateWidget(covariant Dashboard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    bikeService = Provider.of<BikeService>(context, listen: false);
+    bike = bikeService.bikeData;
+    init();
+
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+  }
+
+  @override
+  void reassemble() {
+    super.reassemble();
+    init();
+
+  }
+
+  
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await bikeService.getBikeData();
+      init();
+
+    });
+   
   }
 
   _Dashboard();

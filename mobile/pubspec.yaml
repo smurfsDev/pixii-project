@@ -48,6 +48,7 @@ dependencies:
   latlong2: ^0.8.1
   proj4dart: ^2.1.0
   positioned_tap_detector_2: ^1.0.4
+  fluttertoast: ^8.1.1
 
 dev_dependencies:
   flutter_test:
