@@ -249,4 +249,24 @@ class ClaimsService with ChangeNotifier {
       return false;
     }
   }
+
+  Future<Claim?> getClaim(String id) async {
+    AuthService authService = AuthService();
+    await authService.loadSettings();
+    final user = authService.user;
+    if (user == null) {
+      createClaimError = "unauthorized";
+    }
+    final response = await http
+        .get(Uri.parse('${Environment.apiUrl}/node/claims/' + id), headers: {
+      'Content-Type': 'application/json',
+      'AutorizationNode': user!.email
+    });
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      Claim claim = Claim.fromJson(data);
+      return claim;
+    }
+
+  }
 }
