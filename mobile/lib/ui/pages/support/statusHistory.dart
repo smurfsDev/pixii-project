@@ -63,7 +63,46 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
     }
     List<StatusHistory> reversedStatusHistory =
         allStatusHistory.reversed.toList();
-
+    if (reversedStatusHistory.isEmpty) {
+      return Container(
+                    padding: EdgeInsets.only(top: 20),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.error,
+                            color: Colors.lightBlue,
+                            size: 50,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Status history is empty",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 20, right: 20),
+                            child: Text(
+                              "You'll see the status history of this claim here when it's updated",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w200,),
+                                  textAlign: TextAlign.center,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+    }
     return SingleChildScrollView(
         child: ListView.separated(
       itemCount: reversedStatusHistory.length,
