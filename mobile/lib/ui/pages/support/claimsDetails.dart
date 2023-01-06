@@ -20,8 +20,6 @@ class ClaimsDetails extends StatefulWidget {
 class _ClaimsDetails extends State<ClaimsDetails> {
   User user;
   Claim claim;
-  final _formKey = GlobalKey<FormState>();
-  String message = "";
 
   _ClaimsDetails(this.claim, this.user);
   @override
@@ -144,49 +142,6 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                       ),
                     ],
                   ),
-                  IconTheme(
-                    data: IconThemeData(color: Theme.of(context).accentColor),
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(
-                        children: <Widget>[
-                          Form(
-                            key: _formKey,
-                            child: Flexible(
-                              child: TextFormField(
-                                style: TextStyle(color: Colors.white),
-                                onChanged: (value) => {
-                                  setState(
-                                    () {
-                                      message = value;
-                                    },
-                                  )
-                                },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return ("please enter a comment");
-                                  }
-                                  return null;
-                                },
-                                decoration: InputDecoration.collapsed(
-                                    fillColor: Colors.white,
-                                    hintStyle: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 147, 143, 143)),
-                                    hintText: "Send a comment"),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: IconButton(
-                                icon: const Icon(Icons.send),
-                                onPressed: () => {addComment(claimsService)}),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -194,42 +149,4 @@ class _ClaimsDetails extends State<ClaimsDetails> {
     );
   }
 
-  addComment(ClaimsService claimsService) async {
-    if (_formKey.currentState!.validate()) {
-      final commentCreated =
-          await claimsService.createComment(this.claim.id, message);
-
-      if (commentCreated) {
-        showDialog<void>(
-          context: context,
-          barrierDismissible: true, // user must tap button!
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Comment created'),
-              content: SingleChildScrollView(
-                child: ListBody(
-                  children: const <Widget>[
-                    Text('Comment sended successfully :)'),
-                  ],
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('Ok'),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MyClaims(user)));
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      } else {
-        showAlert(context, 'Error', claimsService.createClaimError);
-      }
-    }
-  }
 }
