@@ -27,6 +27,10 @@ class _OneComment extends State<OneComment> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.red),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
             title: Padding(
               padding: EdgeInsets.only(top: 5),
               child: Text("Comment"),
