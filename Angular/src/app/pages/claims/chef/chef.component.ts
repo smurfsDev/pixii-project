@@ -122,7 +122,6 @@ export class ChefComponent implements OnInit {
 			}
 			);
 			data._technician.forEach((element: any) => {
-				console.log(element.old_technician.name);
 				_technician.push({
 					old_technician: element.old_technician.name,
 					new_technician: element.new_technician.name,
@@ -145,7 +144,6 @@ export class ChefComponent implements OnInit {
 	
 	opened = false;
 	openDetails(id: any) {
-		console.log(id);
 		this.opened = false;
 		setTimeout(() => {
 			this.opened = true;

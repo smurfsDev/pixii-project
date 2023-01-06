@@ -47,15 +47,12 @@ export class MapDashboardComponent implements AfterViewInit{
     //   navigator.geolocation.getCurrentPosition((position) => {
     //     const marker = L.marker([position.coords.latitude, position.coords.longitude], {icon: this.myPositionIcon}).addTo(this.map);
     //     marker.bindPopup("You are here").openPopup();
-    //     console.log(position.coords.latitude, position.coords.longitude);
     //   }
     // );
     this.geolocation.getCurrentPosition().then((resp) => {
       const marker = L.marker([resp.coords.latitude, resp.coords.longitude], {icon: this.myPositionIcon}).addTo(this.map);
       marker.bindPopup("You are here").openPopup();
-      console.log(resp.coords.latitude, resp.coords.longitude);
     }).catch((error) => {
-      console.log('Error getting location', error);
     });
 
   }
@@ -83,7 +80,6 @@ export class MapDashboardComponent implements AfterViewInit{
       this.map?.fitBounds(bounds,{maxZoom:16});
     }
     ).catch((error) => {
-      console.log('Error getting location', error);
     });
   }
 

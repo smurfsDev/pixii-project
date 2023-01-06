@@ -51,7 +51,6 @@ export class validator {
 			return this.searchUserByUserName(control.value)
 				.pipe(
 					map((res: any) => {
-						console.log(res);
 						if (!res) {
 							// return error
 							return { 'userNameExists': true };
@@ -79,7 +78,6 @@ export class validator {
 			return this.searchBikeById(control.value)
 				.pipe(
 					map((res: any) => {
-						console.log(res);
 						if (!res) {
 							// return error
 							return { 'bikeDoesntExists': true };

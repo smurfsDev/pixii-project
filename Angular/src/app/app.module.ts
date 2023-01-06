@@ -13,8 +13,6 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
 import { AppRoutes } from './app.routes';
 import { HomeComponent } from './pages/home/home.component';
 import { DetailsComponent } from './pages/claims/details/details.component';
-import { RegisterComponent } from './pages/account/register/register.component';
-import { LoginComponent } from './pages/account/login/login.component';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
@@ -61,7 +59,7 @@ import { DashScooterOwnerComponent } from './pages/home/dash-scooter-owner/dash-
     }),
 	],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, RegisterComponent, LoginComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent, MapDashboardComponent, ControlPannelComponent, DashSuperAdminComponent, DashAdminComponent, DashSaVManagerComponent, DashSaVTechnicienComponent, DashScooterOwnerComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent, MapDashboardComponent, ControlPannelComponent, DashSuperAdminComponent, DashAdminComponent, DashSaVManagerComponent, DashSaVTechnicienComponent, DashScooterOwnerComponent],
 	providers: [
 		{
 			provide: HTTP_INTERCEPTORS,

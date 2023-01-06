@@ -282,7 +282,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
 			this.loginLoading = true;
 			this.LoginService.login(this.loginForm.value).subscribe((data: any) => {
 				this.user = data;
-				console.log(data);
 				this.store.dispatch([
 					new SetToken(data.token),
 					new SetUser(

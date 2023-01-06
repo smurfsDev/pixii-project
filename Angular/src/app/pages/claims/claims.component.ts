@@ -72,7 +72,6 @@ export class ClaimsComponent implements OnInit {
 	};
 	opened = false;
 	openDetails(id: any) {
-		console.log(id);
 		this.opened = false;
 		setTimeout(() => {
 			this.opened = true;
@@ -107,7 +106,6 @@ export class ClaimsComponent implements OnInit {
 			}
 			);
 			data._technician.forEach((element: any) => {
-				console.log(element.old_technician.name);
 				_technician.push({
 					old_technician: element.old_technician.name,
 					new_technician: element.new_technician.name,
@@ -137,13 +135,11 @@ export class ClaimsComponent implements OnInit {
 	ids: string[] = [];
 
 	toggleActive(event: any) {
-		console.log(event);
 	}
 
 	ngOnInit(): void {
 		this.fetchClaims();
 		this.authUser = this.store.selectSnapshot(state => state.AuthState.user);
-		console.log(this.authUser);
 	}
 
 	async fetchClaims(): Promise<void> {
@@ -157,7 +153,6 @@ export class ClaimsComponent implements OnInit {
 
 		this.claimsService.getClaimsAffectedToMe().forEach((claim: any) => {
 			claim.forEach((element: any) => {
-				console.log(element);
 				this.board.columns.forEach((column: any) => {
 					if (column.id === element.status._id) {
 						column.claims.push(new Claim(
@@ -207,7 +202,6 @@ export class ClaimsComponent implements OnInit {
 			var claim = event.container.data[event.currentIndex];
 			claim.status = event.container.id;
 			this.claimsService.putClaims(claim).subscribe(data => {
-				console.log(data);
 				// this.fetchOnlyClaims();
 			});
 		}

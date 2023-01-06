@@ -40,7 +40,6 @@ export class MgUsersComponent implements AfterViewInit, OnInit {
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       this.dataSource.data = this.dataSource.data.sort((a, b) => {
-        console.log("aaaa",a);
         const isAsc = sortState.direction === 'asc';
         switch (sortState.active) {
           case 'role': return compare(a[0].role.name, b[0].role.name, isAsc);
@@ -100,22 +99,16 @@ export class MgUsersComponent implements AfterViewInit, OnInit {
   }
   acceptUser(idUser : number,idRole : number) {
     this.ManageUsersService.acceptUser(idUser,idRole).subscribe((data) => {
-      console.log(data);
-      console.log("accept");
       this.fetchUsers();
     });
   }
   rejectUser(idUser : number,idRole : number) {
     this.ManageUsersService.rejectUser(idUser,idRole).subscribe((data) => {
-      console.log(data);
-      console.log("reject");
       this.fetchUsers();
     });
   }
   deleteUser(idUser : number,idRole : number) {
     this.ManageUsersService.deleteUser(idUser,idRole).subscribe((data) => {
-      console.log(data);
-      console.log("delete");
       this.fetchUsers();
     });
   }
