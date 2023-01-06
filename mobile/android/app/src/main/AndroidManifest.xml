@@ -1,9 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mobile">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WIFI" />
    <application
         android:label="Pixii Scooter App"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
