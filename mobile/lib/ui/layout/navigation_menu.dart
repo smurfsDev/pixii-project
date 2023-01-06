@@ -144,7 +144,7 @@ class NavDrawerDemo extends StatelessWidget {
               AuthService().logout().then((value) => {
                     Navigator.of(context).popUntil((route) => route.isFirst),
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Login()))
+                        MaterialPageRoute(builder: (context) => MyApp()))
                   });
             },
           ),
