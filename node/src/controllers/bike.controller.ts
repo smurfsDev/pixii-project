@@ -1,11 +1,20 @@
 import { Request, Response } from "express";
 import BikeData from "../models/bike.model";
+import User from "../models/user.model";
 
 // find by id
 export const CheckExist = (req: Request, res: Response) => {
 	BikeData.findOne({id:req.params.id}, (err: Error, bike: any) => {
 		if (!bike||err) return res.status(200).send(false);
-		else return res.status(200).send(true);
+		else {
+			// User.find({'roles.scooterId':req.params.id})
+			// get the count of users with the given id
+			User.countDocuments({'roles.scooterId':req.params.id}, function (err:any, count:number) {
+				if (err) return res.status(200).send(false);
+				else if (count>0) return res.status(200).send(false);
+				else return res.status(200).send(true);
+			});
+		}
 	});
 };
 
