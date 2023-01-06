@@ -172,6 +172,7 @@ class _Support extends State<Support> {
                 TextButton(
                   child: const Text('Yes'),
                   onPressed: () {
+                    Navigator.of(context).popUntil((route) => route.isFirst);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -181,8 +182,8 @@ class _Support extends State<Support> {
                 TextButton(
                   child: const Text('No'),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Support(user)));
+                    _formKey.currentState?.reset();
+                    Navigator.of(context).pop();
                   },
                 ),
               ],
