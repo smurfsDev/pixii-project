@@ -27,11 +27,13 @@ export class TopbarComponent implements OnInit {
     color: '#ffffffa4',
     fontSize: '18px',
   }
+  showOptions = false;
 
   constructor(private store: Store,private router:Router) { }
 
   authUser: User | undefined;
   ngOnInit(): void {
+	this.showOptions = this.router.url == "/";
     this.store.select(state => state.AuthState).subscribe(user => {
       if (user) {
         this.authUser = user.user;

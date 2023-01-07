@@ -1,7 +1,7 @@
 <div class="header">
-	<mat-icon class="search-icon">search</mat-icon>
+	<!-- <mat-icon class="search-icon">search</mat-icon> -->
 	<div class="cont">
-        <div *ngIf="isScooterOwner">
+        <div *ngIf="isScooterOwner && showOptions">
           <button class="butn" [ngStyle]="BtnVehicule" (click)="vehicule()">Your vehicule</button>
           <button class="butn" [ngStyle]="BtnLocation" (click)="Location()">Location</button>
           <button class="butn" [ngStyle]="BtnControlPanel" (click)="ControlPanel()">Control Panel</button>

@@ -22,13 +22,13 @@ export const findAll = async (req: Request, res: Response) => {
 
 // get mine
 export const findAffectedToMe = async (req: Request, res: Response) => {
-	if (req.body.isSAVTechnician) {
+	if (req.body.isSAVTechnician || req.body.isSAVManager || req.body.isSuperAdmin) {
 		Claim.find({ technician: req.body.user }).populate("_status").populate('status', 'name').then((claims) => {
 			res.send(claims);
 		});
 	}
 	else {
-		res.status(401).send("You must be an SAV Technician!")
+		res.status(403).send("You must be a isSAVManager || isSAVTechnician || isSuperAdmin !")
 
 	}
 
@@ -43,7 +43,7 @@ export const findMine = async (req: Request, res: Response) => {
 		});
 	}
 	else {
-		res.status(401).send("You must be a Scooter Owner!")
+		res.status(403).send("You must be a Scooter Owner!")
 
 	}
 
@@ -83,7 +83,7 @@ export const create = (req: Request, res: Response) => {
 		}
 	}
 	else {
-		res.status(401).send("You must be an Scooter Owner!")
+		res.status(403).send("You must be an Scooter Owner!")
 	}
 
 };
@@ -104,7 +104,7 @@ export const remove = (req: Request, res: Response) => {
 		)
 	}
 	else {
-		res.status(401).send("You must be an Sccoter Owner!")
+		res.status(403).send("You must be an Sccoter Owner!")
 
 	}
 
@@ -112,7 +112,7 @@ export const remove = (req: Request, res: Response) => {
 
 // update
 export const update = (req: Request, res: Response) => {
-	if (req.body.isScooterOwner) {
+	if (req.body.isSAVTechnician || req.body.isSAVManager || req.body.isSuperAdmin) {
 		Claim.findByIdAndUpdate(req.params.id, { ...req.body, author: req.body.user.email }, (err: any, claim: any) => {
 			if (err) return res.status(500).send(err);
 			else if (!claim) return res.status(404).send("Claim not found");
@@ -122,7 +122,7 @@ export const update = (req: Request, res: Response) => {
 		})
 	}
 	else {
-		res.status(401).send("You must be a Scooter Owner!")
+		res.status(403).send("You must be a isSAVManager || isSAVTechnician || isSuperAdmin!")
 
 	}
 };
@@ -135,6 +135,7 @@ export const findOne = (req: Request, res: Response) => {
 		else if (!claim) return res.status(404).send("Claim not found");
 		else return res.status(200).send(claim);
 	}).populate('status', 'name')
+		.populate('technician', 'name')
 		.populate({
 			path: 'comments',
 			populate: {
@@ -180,7 +181,7 @@ export const findOne = (req: Request, res: Response) => {
 };
 
 export const setStatus = (req: Request, res: Response) => {
-	if ((req.body.isSAVManager) || (req.body.isSAVTechnician)) {
+	if ((req.body.isSAVManager) || (req.body.isSAVTechnician || req.body.isSuperAdmin)) {
 		Claim.findByIdAndUpdate(req.params.id, { status: req.params.status, author: req.body.user.email }, (err: any, claim: any) => {
 			if (err) return res.status(500).send(err);
 			else if (!claim) return res.status(404).send("Claim not found");
@@ -192,14 +193,14 @@ export const setStatus = (req: Request, res: Response) => {
 		})
 	}
 	else {
-		res.status(401).send("You must be an SAV Technician or an SAV Manager!")
+		res.status(403).send("You must be an SAV Technician or an SAV Manager or isSuperAdmin!")
 
 	}
 
 }
 
 export const affectClaimToTechnician = async (req: Request, res: Response) => {
-	if (req.body.isSAVManager) {
+	if (req.body.isSAVManager || req.body.isSuperAdmin) {
 		const technician = await User.findById(req.params.technician);
 		Claim.findByIdAndUpdate(req.params.id, { technician: technician, author: req.body.user.email }, (err: any, claim: any) => {
 			if (err) return res.status(
@@ -213,7 +214,7 @@ export const affectClaimToTechnician = async (req: Request, res: Response) => {
 		})
 	}
 	else {
-		res.status(401).send("You must be an SAV Manager!")
+		res.status(403).send("You must be an SAV Manager or isSuperAdmin!")
 	}
 
 }

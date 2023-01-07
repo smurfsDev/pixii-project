@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { ClaimsComponent } from './pages/claims/claims.component';
-import { LoginComponent } from './pages/account/login/login.component';
-import { RegisterComponent } from './pages/account/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
@@ -29,7 +27,7 @@ export const AppRoutes: Routes = [
 		data: {
 			role:
 				[
-					'SAV Manager', 'SAV Technician'
+					'SAV Manager', 'SAV Technician', 'Super Admin'
 				]
 		}
 
@@ -41,21 +39,9 @@ export const AppRoutes: Routes = [
 		data: {
 			role:
 				[
-					'SAV Manager'
+					'SAV Manager', 'Super Admin'
 				]
 		}
-	},
-	{
-		path: 'login',
-		component: LoginComponent,
-
-
-	},
-	{
-		path: 'register',
-		component: RegisterComponent,
-
-
 	},
 	{
 		path: 'auth',

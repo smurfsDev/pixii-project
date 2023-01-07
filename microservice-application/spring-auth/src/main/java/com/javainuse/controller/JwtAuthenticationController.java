@@ -175,10 +175,12 @@ public class JwtAuthenticationController {
 		if (user.get("role").toString().equals("Admin")) {
 			userRole.get().setStatus(0);
 		}
+		JSONObject newUserNode = new JSONObject();
 		if (user.get("role").toString().equals("Scooter Owner")) {
 			UserRole ur = userRole.get();
 			ur.setStatus(1);
 			ur.setBike_id(user.get("scooterId").toString());
+			newUserNode.put("scooterId", user.get("scooterId").toString());
 
 		}
 		if (user.get("role").toString().equals("SAV Manager")) {
@@ -188,7 +190,6 @@ public class JwtAuthenticationController {
 			userRole.get().setStatus(0);
 		}
 		userRoleRepository.save(userRole.get());
-		JSONObject newUserNode = new JSONObject();
 		newUserNode.put("name", user.get("name").toString());
 		newUserNode.put("email", user.get("email").toString());
 		newUserNode.put("username", user.get("username").toString());

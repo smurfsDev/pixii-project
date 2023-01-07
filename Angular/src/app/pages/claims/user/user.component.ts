@@ -63,10 +63,11 @@ export class UserComponent implements OnInit {
 					"date": "2022-11-16T19:10:56.107Z",
 					"author": "John Doe"
 				}	
-		]
+		],
+		technician: null,
+
 	};
 	openDetails(id: any) {
-		console.log(id);
 		this.opened = false;
 		setTimeout(() => {
 			this.opened = true;
@@ -100,7 +101,6 @@ export class UserComponent implements OnInit {
 			}
 			);
 			data._technician.forEach((element: any) => {
-				console.log(element.old_technician.name);
 				_technician.push({
 					old_technician: element.old_technician.name,
 					new_technician: element.new_technician.name,
@@ -136,7 +136,6 @@ export class UserComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.claimsService.getClaimsMine().subscribe((data: any) => {
-			console.log(data);
 			this.claims = data;
 		});
 	}

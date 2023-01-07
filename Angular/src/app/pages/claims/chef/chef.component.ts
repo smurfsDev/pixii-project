@@ -70,7 +70,8 @@ export class ChefComponent implements OnInit {
 					"date": "2022-11-16T19:10:56.107Z",
 					"author": "John Doe"
 				}	
-		]
+		],
+		technician: null,
 	};
 	ngOnInit(): void {
 		// this.authUser = this.store.selectSnapshot(state => state.AuthState.user);
@@ -122,7 +123,6 @@ export class ChefComponent implements OnInit {
 			}
 			);
 			data._technician.forEach((element: any) => {
-				console.log(element.old_technician.name);
 				_technician.push({
 					old_technician: element.old_technician.name,
 					new_technician: element.new_technician.name,
@@ -145,7 +145,6 @@ export class ChefComponent implements OnInit {
 	
 	opened = false;
 	openDetails(id: any) {
-		console.log(id);
 		this.opened = false;
 		setTimeout(() => {
 			this.opened = true;

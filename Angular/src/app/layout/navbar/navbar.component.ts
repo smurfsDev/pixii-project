@@ -30,9 +30,7 @@ export class NavbarComponent {
 
 	async toggleActive(event: string) {
 		const navigated = await this.router.navigate([event])
-		console.log(this.router.url);
 		this.current = event;
-		console.log(this.current);
 	}
 
 

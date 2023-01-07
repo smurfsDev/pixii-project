@@ -6,6 +6,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BikeDataService } from 'src/app/service/bike/bike-data.service';
 import { Bike } from 'src/app/models/bike.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dash-scooter-owner',
@@ -22,6 +24,7 @@ export class DashScooterOwnerComponent implements OnInit {
   vehicle = true;
   location = false;
   controlPanel = false;
+  locationName = "Location";
   claim = {
     title: "",
     subject: "",
@@ -32,7 +35,7 @@ export class DashScooterOwnerComponent implements OnInit {
   claimMessage = new FormControl('', [Validators.required, Validators.minLength(3)]);
 
   claimFormGroup: FormGroup;
-  constructor(private claimService: ClaimsService, private _snackBar: MatSnackBar,private bikeService: BikeDataService,private store: Store) {
+  constructor(private _http:HttpClient,private claimService: ClaimsService, private _snackBar: MatSnackBar,private bikeService: BikeDataService,private store: Store) {
     this.claimFormGroup = new FormGroup({
       claimTitle: this.claimTitle,
       claimSubject: this.claimSubject,
@@ -73,6 +76,12 @@ export class DashScooterOwnerComponent implements OnInit {
 		authState["isScooterOwner"].scooterId
 	).subscribe((data:Bike) => {
 		this.BikeData = data;
+		this._http.get(
+			`${environment.apiUrl}/node/bike/location/${data.location.latitude}/${data.location.longitude}`,
+			{headers: {'X-Requested-With': 'XMLHttpRequest'}}
+		).subscribe((data:any) => {
+			this.locationName = data[0].local_names.fr?data[0].local_names.fr:data[0].local_names.en?data[0].local_names.en:data[0].name;
+		});			
 		if (this.BikeData.BatteryHistory.length >0){
 			this.percentage = data.BatteryHistory[data.BatteryHistory.length-1].value[1];
 		}else{

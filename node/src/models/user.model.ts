@@ -21,7 +21,12 @@ let userSchema = new mongoose.Schema({
                 type: Number,
                 required: true,
                 default: 0
-            }
+            },
+
+			scooterId: {
+				type: String,
+				required: false,
+			}
         },
 
     ],
