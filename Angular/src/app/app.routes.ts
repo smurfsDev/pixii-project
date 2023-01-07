@@ -27,7 +27,7 @@ export const AppRoutes: Routes = [
 		data: {
 			role:
 				[
-					'SAV Manager', 'SAV Technician'
+					'SAV Manager', 'SAV Technician', 'Super Admin'
 				]
 		}
 
@@ -39,7 +39,7 @@ export const AppRoutes: Routes = [
 		data: {
 			role:
 				[
-					'SAV Manager'
+					'SAV Manager', 'Super Admin'
 				]
 		}
 	},
