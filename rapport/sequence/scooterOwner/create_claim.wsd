@@ -1,5 +1,5 @@
 @startuml create_claim
-
+hide footbox
 actor ScooterOwner as so
 boundary Claims as cl
 control ClaimsService as cs
