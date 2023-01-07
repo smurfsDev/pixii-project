@@ -133,6 +133,23 @@
 								</div>
 							</div>
 						</mat-tab>
+						<mat-tab label="My answered callbacks"> 
+							<div class="no-callbacks text-center mt-4 bg-light p-4" *ngIf="myAnsweredCallbacks.length == 0">
+								<span >You have not answered any callbacks</span>
+							</div>
+							<div class="callbacks-list" *ngIf="myAnsweredCallbacks.length > 0">
+								<div class="callbacks-list-item" *ngFor="let callback of myAnsweredCallbacks">
+									<mat-divider></mat-divider>
+									<div class="callbacks-list-item-action">
+										User: {{callback.user.name}}
+									</div>
+									<div class="callbacks-list-item-content">
+										<span class="callback-date">{{callback.created | date:"short"}}</span>
+									</div>
+
+								</div>
+							</div>
+						</mat-tab>
 					  </mat-tab-group>
 					
                 </h5>
