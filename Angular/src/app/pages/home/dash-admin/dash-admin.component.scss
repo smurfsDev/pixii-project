@@ -178,8 +178,9 @@
 	border-radius: 9px;
 	margin: 20px;
 	width: 30%;
-
 	.card-title {
+		position: sticky;
+		top: 0;
 		font-size: 14px;
 		font-weight: 600;
 		color: $main-component-color;
@@ -188,6 +189,8 @@
 
 	&-list {
 		font-weight: 400;
+		overflow-y: scroll;
+		max-height: 300px;
 
 		&-item {
 			display: flex;
