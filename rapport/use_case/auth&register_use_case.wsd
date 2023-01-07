@@ -11,7 +11,6 @@ actor SavTechnician as st
 actor ScooterOwner as so
 
 
-' sa <|-- u
 u <|-- a
 u <|-- sm
 u <|-- st
