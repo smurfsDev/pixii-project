@@ -30,7 +30,7 @@ import { BatteryComponent } from './pages/home/battery/battery.component';
 import { HttpInterceptorService } from './http-interceptor.service';
 import { ChefComponent } from './pages/claims/chef/chef.component';
 
-import { MgUsersComponent } from './pages/users/superAdmin/mg-users/mg-users.component';
+import { DeleteDialogComponent, MgUsersComponent } from './pages/users/superAdmin/mg-users/mg-users.component';
 
 import { ResendVerificationComponent } from './pages/account/resend-verification/resend-verification.component';
 import { UserComponent } from './pages/claims/user/user.component';
@@ -59,7 +59,7 @@ import { DashScooterOwnerComponent } from './pages/home/dash-scooter-owner/dash-
     }),
 	],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent, MapDashboardComponent, ControlPannelComponent, DashSuperAdminComponent, DashAdminComponent, DashSaVManagerComponent, DashSaVTechnicienComponent, DashScooterOwnerComponent,CalledDialogComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent, MapDashboardComponent, ControlPannelComponent, DashSuperAdminComponent, DashAdminComponent, DashSaVManagerComponent, DashSaVTechnicienComponent, DashScooterOwnerComponent,CalledDialogComponent,DeleteDialogComponent],
 	providers: [
 		{
 			provide: HTTP_INTERCEPTORS,
