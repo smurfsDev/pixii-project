@@ -1,0 +1,56 @@
+@startuml general_diagram
+skinparam packageStyle rect
+skinparam shadowing false
+
+actor User as u 
+actor SuperAdmin as sa
+actor Admin as a
+actor SavManager as sm
+actor SavTechnician as st
+actor ScooterOwner as so
+
+u <|-- a
+u <|-- sm
+u <|-- st
+u <|-- so
+    package general_diagram {
+        
+        ( create account ) as ca
+        ( validate account ) as va
+        ( reset password ) as rp 
+        ( manage profile ) as mp
+        ( must have a scooter) as haveScooter
+        ( manage scooter ) as ms
+        ( manage claims SAV ) as mc 
+        ( manage claims scooterOwner ) as mcso
+        ( manage users ) as mu
+        note "if the user is a scooter owner" as n2
+    }
+    ' package auths {
+        ( authenticate ) as auth
+    ' }
+    general_diagram .. auth
+    left to right direction
+        u --> ca
+        u --> va
+        u --> rp
+        u --> mp
+        sm --> mc
+        st --> mc
+        so --> mcso
+        sm --> mu
+        a --> mu
+        a <|-- sa
+        so --> ms
+        sm <|-- sa
+        
+' ----------------------------- includes
+        ca . n2 
+        n2 .> haveScooter: include 
+        mp .> auth: include 
+        mc .> auth: include
+        mcso .> auth: include
+        mu .> auth: include
+        ms .> auth: include
+
+@enduml
