@@ -1,1 +1,232 @@
-@import '../home.component.scss';
+@import '../../../app.component.scss';
+
+.board {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	height: 100%;
+	background-color: $main-component-color;
+	border-top-left-radius: 9px;
+
+	.container {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		align-items: center;
+		margin-top: 20px;
+
+		.card {
+			width: 20%;
+			height: 120px;
+			margin-left: 20px;
+
+			// margin-bottom: 20px;
+			.card-title {
+				font-size: 14px;
+				font-weight: 600;
+				color: $main-component-color;
+				margin: 15px;
+			}
+
+			.data {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+				margin: 30px 15px 0;
+
+				span {
+					font-size: 14px;
+					font-weight: 600;
+					color: $main-component-color;
+					margin: 5px;
+					padding: 5px 10px;
+					border-radius: 10em;
+					align-items: center;
+				}
+
+				.stat {
+					font-size: 14px;
+					font-weight: 600;
+					margin: 5px;
+				}
+			}
+
+			.admins {
+				span {
+					background-color: #e8f5e9;
+					color: #4caf50;
+				}
+
+				.stat {
+					color: #4caf50;
+				}
+			}
+
+			.SavManger {
+				span {
+					background-color: #ffebee;
+					color: #f44336;
+				}
+
+				.stat {
+					color: #9c27b0;
+				}
+			}
+
+			.SavTechnician {
+				span {
+					background-color: #f3e5f5;
+					color: #9c27b0;
+				}
+
+				.stat {
+					color: #2196f3;
+				}
+			}
+
+			.Scooters {
+				span {
+					background-color: #e3f2fd;
+					color: #2196f3;
+				}
+
+				.stat {
+					color: #f44336;
+				}
+			}
+
+			.ScooterOwners {
+				span {
+					background-color: #e1f5fe;
+					color: #00bcd4;
+				}
+
+				.stat {
+					color: #ff9800;
+				}
+			}
+		}
+
+		.claims {
+			width: 100%;
+			border-radius: 9px;
+			margin: 40px;
+			display: flex;
+			justify-content: space-around;
+		}
+	}
+}
+
+.card-norole {
+	width: 50%;
+	height: 50%;
+	margin-left: 20px;
+	background-color: white;
+	border-radius: 9px;
+	color: $secondary-component-color;
+	// center
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	transform: translate(-50%, -50%);
+
+	.card-title {
+		font-size: 32px;
+		font-weight: 600;
+		color: #dc3545;
+		margin: 15px;
+	}
+
+	.card-text {
+		margin: 20px;
+		font-size: 28px;
+		line-height: 1.5;
+		color: $main-component-color;
+	}
+
+	.icon {
+		margin-top: 15%;
+		text-align: center;
+		transform: scale(5);
+		color: #dc3545;
+	}
+}
+
+.chart {
+	background-color: white;
+	border-radius: 9px;
+	margin: 20px;
+	width: 70%;
+
+	.card-title {
+		font-size: 14px;
+		font-weight: 600;
+		color: $main-component-color;
+		margin: 15px;
+	}
+}
+
+.callbacks {
+	background-color: white;
+	border-radius: 9px;
+	margin: 20px;
+	width: 30%;
+
+	.card-title {
+		font-size: 14px;
+		font-weight: 600;
+		color: $main-component-color;
+		margin: 15px;
+	}
+
+	&-list {
+		font-weight: 400;
+
+		&-item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin: 20px 5px 0;
+
+			&-action {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+
+				&-btn {
+					margin: 0 5px;
+				}
+			}
+
+			&-content {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+
+				&-text {
+					margin: 0 5px;
+				}
+			}
+		}
+	}
+}
+
+.callback-btn {
+	border: none;
+	color: white;
+	font-size: 1em;
+	font-weight: 500;
+	color: #7CC57F;
+	border-radius: 5px;
+	margin-right: 5px;
+
+}
