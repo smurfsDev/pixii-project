@@ -130,4 +130,20 @@ Bike "1"--"1" Location
 Bike "1"--"*" BatteryHistory
 ScooterOwner "1"--"*" Bike
 
+Class Callback{
+	Int id
+	Date created
+	Bool called
+	GetAllCallbacks() : Callback[]
+	CreateCallback(Callback callback) : Bool
+	SetCalled(Bool called) : Bool
+}
+
+ScooterOwner "1"--"*" Callback :authors
+
+SuperAdmin "1"--"*" Callback :answers
+Admin "1"--"*" Callback :answers
+
+
+
 @enduml
