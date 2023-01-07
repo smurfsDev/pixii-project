@@ -1,5 +1,5 @@
 @startuml accept_user_role_sequence_diagram
-
+hide footbox
 actor "Super Admin\nAdmin\n Sav Manager" as u
 boundary manageUsers as v
 control userController as c

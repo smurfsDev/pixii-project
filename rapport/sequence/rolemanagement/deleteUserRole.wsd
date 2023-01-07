@@ -1,5 +1,5 @@
 @startuml delete_user_role_sequence_diagram
-
+hide footbox
 actor "Super Admin" as u
 boundary manageUsers as v
 control userController as c
