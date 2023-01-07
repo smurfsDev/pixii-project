@@ -96,6 +96,7 @@ public class JwtAuthenticationController {
 				public String email = user.getEmail();
 				public String name = user.getName();
 				public String password = user.getPassword();
+				public String image = user.getImage();
 				public Object roles = user.getRoles().stream().map(role -> new Object() {
 					public Long id = role.getId();
 					public String name = role.getName();
