@@ -3,12 +3,12 @@ import { Request, Response } from 'express';
 
 export const findAll = async (req: Request, res: Response) => {
 	Callback.find(
-		{},
+		{'called':false},
 		(err: any, statuses: any) => {
 			if (err) return res.status(500).send(err);
 			else return res.status(200).send(statuses);
 		}
-	);
+	).populate("user", "name");
 };
 // create
 export const create = (req: Request, res: Response) => {
@@ -48,7 +48,7 @@ export const findOne = (req: Request, res: Response) => {
 };
 
 export const setCalled = (req: Request, res: Response) => {
-	Callback.findByIdAndUpdate(req.params.id, { called: req.params.called }, (err: any, status: any) => {
+	Callback.findByIdAndUpdate(req.params.id, { called: req.body.called }, (err: any, status: any) => {
 		if (err) return res.status(500).send(err);
 		else if(!status) return res.status(404).send("Callback not found");
 		else {
