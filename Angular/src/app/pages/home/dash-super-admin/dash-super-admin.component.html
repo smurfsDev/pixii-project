@@ -81,14 +81,59 @@
                 </div>
             </div>
         </div>
-        <div class="claims">
-            <div class="col">
+		<div class="claims">
+			
+            <div class="col-7 chart">
                 <h5 class="card-title text-uppercase text-muted mb-0">
                     Claims Statistics
                 </h5>
                 <div class="claimsChart">
                     <div echarts [options]="options"style="height:300px"></div>
                 </div>
+            </div>
+
+            <div class="col-5 callbacks">
+				<h5 class="card-title text-uppercase text-muted mb-0">
+                    Callbacks
+					<mat-tab-group>
+						<mat-tab label="Pending"> 
+							<div class="no-callbacks text-center mt-4 bg-light p-4" *ngIf="pendingCallbacks.length == 0">
+								<span >No pending callbacks</span>
+							</div>
+							<div class="callbacks-list" *ngIf="pendingCallbacks.length > 0">
+								<div class="callbacks-list-item" *ngFor="let callback of pendingCallbacks">
+									<mat-divider></mat-divider>
+									<div class="callbacks-list-item-action">
+										<button class="callback-btn"(click)="changeCallbackCalledStatus(callback._id,true)">
+											<mat-icon>done</mat-icon>
+										</button>
+										{{callback.user.name}}
+									</div>
+									<div class="callbacks-list-item-content">
+										<span class="callback-date">{{callback.created | date:"short"}}</span>
+									</div>
+								</div>
+							</div>
+						</mat-tab>
+						<mat-tab label="Called"> 
+							<div class="no-callbacks text-center mt-4 bg-light p-4" *ngIf="doneCallbacks.length == 0">
+								<span >No answered callbacks</span>
+							</div>
+							<div class="callbacks-list" *ngIf="doneCallbacks.length > 0">
+								<div class="callbacks-list-item" *ngFor="let callback of doneCallbacks">
+									<mat-divider></mat-divider>
+									<div class="callbacks-list-item-action">
+										{{callback.user.name}}
+									</div>
+									<div class="callbacks-list-item-content">
+										<span class="callback-date">{{callback.created | date:"short"}}</span>
+									</div>
+								</div>
+							</div>
+						</mat-tab>
+					  </mat-tab-group>
+					
+                </h5>
             </div>
         </div>
     </div>

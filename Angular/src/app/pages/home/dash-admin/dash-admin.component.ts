@@ -29,8 +29,13 @@ export class DashAdminComponent implements OnInit {
 	}
 
 	fetchCallbacks() {
+		this.callbacks = [];
 		this.callback.getCallbacks().subscribe((data: any) => {
-			this.callbacks = data;
+			data.forEach((callback: any) => {
+				if(callback.called == false){
+					this.callbacks.push(callback);
+				}
+			});
 		});
 	}
 
