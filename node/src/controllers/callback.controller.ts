@@ -48,7 +48,7 @@ export const findOne = (req: Request, res: Response) => {
 };
 
 export const setCalled = (req: Request, res: Response) => {
-	Callback.findByIdAndUpdate(req.params.id, { called: req.body.called }, (err: any, status: any) => {
+	Callback.findByIdAndUpdate(req.params.id, { called: req.body.called, caller:req.body.user}, (err: any, status: any) => {
 		if (err) return res.status(500).send(err);
 		else if(!status) return res.status(404).send("Callback not found");
 		else {
