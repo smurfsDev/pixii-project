@@ -82,22 +82,44 @@
             <div class="col-5 callbacks">
 				<h5 class="card-title text-uppercase text-muted mb-0">
                     Callbacks
-					<div class="no-callbacks text-center mt-4 bg-light p-4" *ngIf="callbacks.length == 0">
-						<span >No callbacks</span>
-					</div>
-					<div class="callbacks-list" *ngIf="callbacks.length > 0">
-						<div class="callbacks-list-item" *ngFor="let callback of callbacks">
-							<div class="callbacks-list-item-action">
-								<button class="callback-btn"(click)="changeCallbackCalledStatus(callback._id,true)">
-									<mat-icon>done</mat-icon>
-								</button>
-								{{callback.user.name}}
+					<mat-tab-group>
+						<mat-tab label="Pending"> 
+							<div class="no-callbacks text-center mt-4 bg-light p-4" *ngIf="callbacks.length == 0">
+								<span >No pending callbacks</span>
 							</div>
-							<div class="callbacks-list-item-content">
-								<span class="callback-date">{{callback.created | date:"short"}}</span>
+							<div class="callbacks-list" *ngIf="callbacks.length > 0">
+								<div class="callbacks-list-item" *ngFor="let callback of callbacks">
+									<mat-divider></mat-divider>
+									<div class="callbacks-list-item-action">
+										<button class="callback-btn"(click)="changeCallbackCalledStatus(callback._id,true)">
+											<mat-icon>done</mat-icon>
+										</button>
+										{{callback.user.name}}
+									</div>
+									<div class="callbacks-list-item-content">
+										<span class="callback-date">{{callback.created | date:"short"}}</span>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
+						</mat-tab>
+						<mat-tab label="My answered callbacks"> 
+							<div class="no-callbacks text-center mt-4 bg-light p-4" *ngIf="myAnsweredCallbacks.length == 0">
+								<span >You have not answered any callbacks</span>
+							</div>
+							<div class="callbacks-list" *ngIf="myAnsweredCallbacks.length > 0">
+								<div class="callbacks-list-item" *ngFor="let callback of myAnsweredCallbacks">
+									<mat-divider></mat-divider>
+									<div class="callbacks-list-item-action">
+										User: {{callback.user.name}}
+									</div>
+									<div class="callbacks-list-item-content">
+										<span class="callback-date">{{callback.created | date:"short"}}</span>
+									</div>
+
+								</div>
+							</div>
+						</mat-tab>
+					  </mat-tab-group>
                 </h5>
             </div>
         </div>
