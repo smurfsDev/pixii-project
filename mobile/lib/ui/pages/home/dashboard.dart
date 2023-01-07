@@ -1,5 +1,6 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile/imports.dart';
+import 'package:mobile/main.dart';
 import 'package:mobile/models/BikeData.dart';
 import 'package:mobile/service/bike.dart';
 import 'package:mobile/service/claims.dart';
@@ -20,16 +21,16 @@ class _Dashboard extends State<Dashboard> {
   List<Widget> pages = <Widget>[];
   late BikeService bikeService = BikeService();
   late BikeData? bike = null;
-  
+
   late ClaimsService claimsService = ClaimsService();
 
   void init() {
-     var fetch = bikeService
+    var fetch = bikeService
         .getBikeData()
         .then((value) => {
-            setState(() {
-              bike = bikeService.bikeData;
-            }),
+              setState(() {
+                bike = bikeService.bikeData;
+              }),
               pages = [
                 Managment(
                   bike: bikeService.bikeData,
@@ -44,7 +45,7 @@ class _Dashboard extends State<Dashboard> {
               ]
             })
         .catchError((err) => {
-           pages = [
+              pages = [
                 Managment(
                   bike: null,
                   bikeService: bikeService,
@@ -56,7 +57,7 @@ class _Dashboard extends State<Dashboard> {
                 const Settings(),
                 const Notifications()
               ]
-        });
+            });
   }
 
   @override
@@ -73,7 +74,6 @@ class _Dashboard extends State<Dashboard> {
     bikeService = Provider.of<BikeService>(context, listen: false);
     bike = bikeService.bikeData;
     init();
-
   }
 
   @override
@@ -90,10 +90,7 @@ class _Dashboard extends State<Dashboard> {
   void reassemble() {
     super.reassemble();
     init();
-
   }
-
-  
 
   @override
   void initState() {
@@ -101,9 +98,7 @@ class _Dashboard extends State<Dashboard> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await bikeService.getBikeData();
       init();
-
     });
-   
   }
 
   _Dashboard();
@@ -148,12 +143,25 @@ class _Dashboard extends State<Dashboard> {
                       TextButton(
                         child: Text("No", style: TextStyle(color: Colors.red)),
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          Fluttertoast.showToast(
+                              msg: "Callback request cancelled",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                          // hide dialog
+                          Navigator.of(context)
+                              .popUntil((route) => route.isFirst);
                         },
                       ),
                       TextButton(
-                        child: Text("Yes", style: TextStyle(color: Colors.green)),
+                        child:
+                            Text("Yes", style: TextStyle(color: Colors.green)),
                         onPressed: () {
+                          Navigator.of(context)
+                              .popUntil((route) => route.isFirst);
                           requestCallback();
                         },
                       ),
@@ -162,36 +170,33 @@ class _Dashboard extends State<Dashboard> {
                 },
               );
             },
-            child: const Icon(Icons.phone,
-                color: Color.fromARGB(255, 19, 27, 54)),
+            child:
+                const Icon(Icons.phone, color: Color.fromARGB(255, 19, 27, 54)),
             backgroundColor: Color.fromARGB(255, 255, 255, 255),
           ),
         )));
   }
+
   Future<void> requestCallback() async {
     final requestOK = await claimsService.requestCallback();
-    Navigator.of(context).pop();
-    if(requestOK){
+    if (requestOK) {
       Fluttertoast.showToast(
-        msg: "Callback requested",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0
-      );
-    }
-    else{
+          msg: "Callback requested",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
       Fluttertoast.showToast(
-        msg: "Callback request failed",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0
-      );
+          msg: "Callback request failed",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
   }
 }
