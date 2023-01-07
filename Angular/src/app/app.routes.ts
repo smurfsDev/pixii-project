@@ -62,7 +62,7 @@ export const AppRoutes: Routes = [
 		data: {
 			role:
 				[
-					'Super Admin', 'Admin'
+					'Super Admin', 'Admin', 'SAV Manager'
 				]
 		}
 	},
