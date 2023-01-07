@@ -1,4 +1,4 @@
-@startuml claims_class_diagram
+@startuml general_class_diagram
 Class user {
 Int id
 String name
