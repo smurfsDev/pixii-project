@@ -10,13 +10,15 @@ activate so
 activate cl
 cl -> cl : validateClaim()
 activate cl
+deactivate cl
 
 alt claim is valid
 cl -> cs : createClaim()
 activate cs
 
 cs -> cs : validateClaim()
-activate cl
+activate cs
+deactivate cs
 alt claim is valid
 cs -> c : createClaim()
 activate c
@@ -28,10 +30,13 @@ deactivate cs
 cl --> so : claimCreated
 deactivate cl
 else claim is not created
+activate c
 c --> cs : claimNotCreated
 deactivate c
+activate cs
 cs --> cl : claimNotCreated
 deactivate cs
+activate cl
 cl --> so : claimNotCreated
 deactivate cl
 end
@@ -42,7 +47,6 @@ activate cl
 cl --> so : claimInvalid
 deactivate cl
 deactivate cl
-deactivate so
 
 end
 else claim is invalid
@@ -50,11 +54,9 @@ activate cs
 cs -> cl : notifyClaimInvalid()
 activate cl
 cl --> so : claimInvalid
+deactivate cl
 deactivate cs
-deactivate cl
 end
-deactivate cl
-deactivate so
 
 
 @enduml
