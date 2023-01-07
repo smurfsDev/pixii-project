@@ -10,7 +10,7 @@ export const findAll = async (req: Request, res: Response) => {
 			if (err) return res.status(500).send(err);
 			else return res.status(200).send(statuses);
 		}
-	).populate("user", "name").populate("caller", "name");
+	).populate("user", "name").populate("caller", "name").sort({created:-1});
 };
 // create
 export const create = (req: Request, res: Response) => {
