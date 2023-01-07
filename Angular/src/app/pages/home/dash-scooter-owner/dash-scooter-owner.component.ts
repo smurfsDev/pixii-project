@@ -47,7 +47,15 @@ export class DashScooterOwnerComponent implements OnInit {
   sendCallback(){
 	this.callback.sendCallback().subscribe(
 		(data:any) => {
-			console.log(data);
+			if (data){
+				this._snackBar.open("We recieved your callback request, One of our technicians will get to you soon", "OK", {
+					duration: 5000,
+				});
+			}else{
+				this._snackBar.open("Callback not created", "OK", {
+					duration: 2000,
+				});
+			}
 		}
 	);
 	}
