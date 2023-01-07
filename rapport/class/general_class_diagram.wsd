@@ -1,0 +1,133 @@
+@startuml claims_class_diagram
+Class user {
+Int id
+String name
+String password
+String username
+String email
+Bool enabled 
+String verification_code
+Bool Register()
+JSON Login()
+JSON accept()
+JSON reject()
+JSON deleteUser()
+JSON processResetPassword()
+JSON verifyUser()
+JSON resendCode()
+}
+
+Class role{
+Int id
+String name
+}
+
+Class role_user{
+Int user_id
+Int role_id
+Int bike_id
+Int status
+}
+(user,role) "1..*" - "0..*" role_user
+
+ 
+Class SuperAdmin{}
+Class Admin{}
+Class SavManager{}
+Class SavTechnicien{}
+Class ScooterOwner{}
+Class Location{
+    Int latitude
+    Int longitude
+    Int altitude
+    Int speed
+    Int heading
+    Int accuracy
+}
+Class BatteryHistory{
+    Int id
+    Double value
+    Date date
+}
+Class Bike{
+    Int id
+    Bool SysPower
+    Date date
+    ' Location location
+    Bool BatteryStatus
+    ' BatteryHistory[] batteryHistory
+    Int Range
+    Bool BluetoothOp
+    Bool BluetoothCon
+    Bool TheftState
+    Bool SystemSOS
+    Bool UserSOS
+    Bool LightState
+    Bool AlarmState
+    Bool checkExist()
+    Bike FindById()
+    Bool ChangeLockState()
+    Bool ChangeLightState()
+    Bool ChangeAlarmState()
+
+}
+
+left to right direction
+user <|-- SuperAdmin
+user <|-- Admin
+user <|-- SavManager
+user <|-- SavTechnicien
+user <|-- ScooterOwner
+
+Class Claim {
+Int id
+String title
+String subject
+String message
+SavTechnicien[] technician_history
+Status [] status_history
+TimeStamp created
+TimeStamp updated
+
+GetAllClaims() : Claim[]
+GetMyClaims() : Claim[]
+GetClaimDetails(Int id) : Claim
+GetAllClaimsByStatus(Status status) : Claim[]
+CreateClaim(Claim claim) : Bool
+SetStatus(Status status) : Bool
+AffectTechnician(SavTechnician) : Bool
+Comment(Comment comment) : Bool
+
+}
+
+Class Comment{
+Int id
+String message
+TimeStamp created
+
+CreateComment(Comment comment) : Bool
+
+}
+
+Class Status{
+String name
+String color
+TimeStamp created
+
+GetAllStatus() : Status[]
+CreateStatus(Status status) : Bool
+UpdateStatus(Status status) : Bool
+DeleteStatus(Status status) : Bool
+
+}
+
+Claim "*"--"*" SavTechnicien : in charge of 
+Claim "*"--"1" ScooterOwner : authors
+Comment "*"--*"1" Claim
+Comment "*"--*"1" user : Authors
+Status "*"--"*" Claim
+Bike "1"--"1" Location
+Bike "1"--"*" BatteryHistory
+ScooterOwner "1"--"*" Bike
+
+@enduml
