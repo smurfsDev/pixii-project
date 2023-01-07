@@ -1,0 +1,21 @@
+@startuml delete_user_role_sequence_diagram
+
+actor "Super Admin" as u
+boundary manageUsers as v
+control userController as c
+entity User as m
+activate u
+u -> v : clickDeleteButton(user)
+
+activate v
+v -> c :deleteUser(user)
+activate c
+c -> m :deleteUser(user)
+deactivate m
+m --> c: userDeleted
+deactivate c
+c --> v: userDeleted
+deactivate v
+v --> u: userDeleted
+
+@enduml

@@ -1,0 +1,21 @@
+@startuml accept_user_role_sequence_diagram
+
+actor "Super Admin\nAdmin" as u
+boundary manageUsers as v
+control userController as c
+entity User as m
+activate u
+u -> v : clickAcceptButton(user)
+
+activate v
+v -> c :acceptUser(user)
+activate c
+c -> m :acceptUser(user)
+deactivate m
+m --> c: userAccepted
+deactivate c
+c --> v: userAccepted
+deactivate v
+v --> u: userAccepted
+
+@enduml

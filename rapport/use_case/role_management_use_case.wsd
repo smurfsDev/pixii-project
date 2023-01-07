@@ -1,0 +1,27 @@
+@startuml role_management_use_case
+left to right direction
+skinparam packageStyle rect
+skinparam shadowing false
+
+actor User as u 
+actor SuperAdmin as sa
+actor Admin as a
+u <|-- a
+a <|-- sa
+
+
+package role_management  {
+( Delete role user ) as dru
+( Accept user ) as au
+( Reject user  ) as ru
+
+}
+
+left to right direction
+
+sa --> dru
+a --> au
+a --> ru
+
+
+@enduml
