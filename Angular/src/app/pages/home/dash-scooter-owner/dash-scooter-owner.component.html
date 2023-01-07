@@ -133,14 +133,11 @@
 
             </div>
           </div>
-          <div class="buttons">
+          <div class="buttons" style="display:flex;justify-content:center;align-items:center;">
             <button class="btn btn-primary"
               style="width:50% ;border-radius: 15px; margin:60px ; margin-bottom: 15px;"
-              type="submit">S.O.S</button>
-            <button class="btn btn-primary"
-              style="width:50% ;border-radius: 15px; margin:60px ; margin-bottom: 15px;" type="submit"></button>
-            <button class="btn btn-primary"
-              style="width:50% ;border-radius: 15px; margin:60px ; margin-bottom: 15px;" type="submit"></button>
+			  (click)="sendCallback()"
+              type="submit">Request a callback</button>
           </div>
         </div>
         <div *ngIf="controlPanel">
