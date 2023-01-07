@@ -12,6 +12,7 @@ class ClaimsService with ChangeNotifier {
   late Claim? claim = null;
   late String error;
   late String createClaimError;
+  late String requestCallbackError;
 
   Future<bool> createClaim(String subject, String title, String message) async {
     AuthService authService = AuthService();
@@ -268,5 +269,38 @@ class ClaimsService with ChangeNotifier {
       return claim;
     }
 
+  }
+  Future<bool> requestCallback() async {
+    AuthService authService = AuthService();
+    await authService.loadSettings();
+    final user = authService.user;
+    if (user == null) {
+      requestCallbackError = "unauthorized";
+      return false;
+    }
+    try {
+      final response = await http.post(
+          Uri.parse('${Environment.apiUrl}/node/callback'),
+          headers: {
+            'Content-Type': 'application/json',
+            'AutorizationNode': user.email
+          });
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        if (response.statusCode == 401) {
+          requestCallbackError = "unauthorized";
+
+          return false;
+        } else {
+          requestCallbackError = "Unknown Error ! ";
+          return false;
+        }
+      }
+    } catch (e) {
+      error = e.toString();
+      requestCallbackError = error;
+      return false;
+    }
   }
 }
