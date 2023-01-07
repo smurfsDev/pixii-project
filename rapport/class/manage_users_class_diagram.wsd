@@ -1,0 +1,45 @@
+@startuml manage_users_class_diagram
+Class user {
+Int id
+String name
+String password
+String username
+String email
+Bool enabled 
+String verification_code
+JSON Login()
+Bool Register()
+JSON accept()
+JSON reject()
+JSON deleteUser()
+}
+
+Class role{
+Int id
+String name
+}
+
+Class role_user{
+Int user_id
+Int role_id
+Int bike_id
+Int status
+}
+user "1..*" - "0..*" role
+(user,role) "1..*" - "0..*" role_user
+
+ 
+Class SuperAdmin{
+}
+Class Admin{}
+Class SavManager{}
+Class SavTechnician{}
+
+
+top to bottom direction
+user <|-- SuperAdmin
+user <|-- Admin
+user <|-- SavManager
+user <|-- SavTechnician
+
+@enduml
