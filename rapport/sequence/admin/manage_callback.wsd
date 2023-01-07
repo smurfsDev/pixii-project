@@ -1,0 +1,61 @@
+@startuml manage_callback
+hide footbox
+actor Admin as sm
+boundary Callbacks as cl
+control CallbacksService as cs
+entity Callback as c
+
+activate sm
+sm -> cl : viewCallbacks()
+activate cl
+cl -> cs : getCallbacks()
+activate cs
+cs -> c : getCallbacks()
+activate c
+c --> cs : callbacks
+deactivate c
+cs --> cl : callbacks
+deactivate cs
+cl --> sm : pendingCallbacks
+deactivate cl
+deactivate sm
+
+sm -> cl : toggleCallbacksAnsweredByMe()
+activate sm
+activate cl
+cl -> cs : getCallbacksAnsweredByMe()
+activate cs
+cs -> c : getCallbacks()
+activate c
+c --> cs : callbacks
+deactivate c
+cs --> cl : callbacks
+deactivate cs
+cl --> sm : callbacksAnsweredByMe
+deactivate cl
+deactivate sm
+
+sm -> cl : SetCallbackAnsweredByMe(bool)
+activate sm
+activate cl
+cl -> sm : ToggleConfirmDialog()
+sm -> cl : selectConfirmDialogOption()
+alt yes option selected
+cl -> cs : setCallbackAnsweredByMe(bool)
+activate cs
+cs -> c : setCallbackAnsweredByMe(bool)
+activate c
+c --> cs : callback
+deactivate c
+cs --> cl : callback
+deactivate cs
+cl --> sm : closeConfirmDialog() & ShowMessageDone()
+deactivate cs
+deactivate cl
+else "no" option selected
+cl -> sm : closeConfirmDialog() & ShowMessageCancel()
+activate cl
+deactivate cl
+end
+
+@enduml

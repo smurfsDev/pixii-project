@@ -1,5 +1,7 @@
 
 @startuml get_all_claims
+hide footbox
+
 actor SavManager as sm
 boundary Claims as cl
 control ClaimsService as cs

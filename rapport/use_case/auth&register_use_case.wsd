@@ -23,7 +23,7 @@ package Authentification_register  {
 }
 
 left to right direction
-
+sa --> rp
 sa --> lgn
 u --> ca
 u --> lgn

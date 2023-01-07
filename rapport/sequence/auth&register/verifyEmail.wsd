@@ -1,5 +1,5 @@
 @startuml verify_email_sequence_diagram
-
+hide footbox
 actor "Admin\nSAV Manager\nSAV Technician\nScooter Owner" as u
 boundary verifyEmail as v
 control VerificationController as c

@@ -1,4 +1,5 @@
 @startuml get_my_claims
+hide footbox
 actor SavTechnicien as st
 boundary Claims as cl
 control ClaimsService as cs

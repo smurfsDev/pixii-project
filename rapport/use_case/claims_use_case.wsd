@@ -26,7 +26,6 @@ package claims {
 ( Consult all claims details ) as mgccda
 ( Change claim status ) as mgccs
 ( Consult my claims ) as cmc
-
 ( Create claim ) as cc
 }
 
@@ -50,4 +49,5 @@ mgc <.. mgccs : extends
 cmc <.. mgcc :extends
 cmc <.. mgccds : extends
 cmc <.. mgccdt : extends
+
 @enduml

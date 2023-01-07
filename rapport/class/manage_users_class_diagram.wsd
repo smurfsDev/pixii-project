@@ -1,4 +1,4 @@
-@startuml reject_user_class_diagram
+@startuml manage_users_class_diagram
 Class user {
 Int id
 String name
@@ -9,6 +9,9 @@ Bool enabled
 String verification_code
 JSON Login()
 Bool Register()
+JSON accept()
+JSON reject()
+JSON deleteUser()
 }
 
 Class role{
@@ -16,10 +19,18 @@ Int id
 String name
 }
 
-user .right.> role
+Class role_user{
+Int user_id
+Int role_id
+Int bike_id
+Int status
+}
+user "1..*" - "0..*" role
+(user,role) "1..*" - "0..*" role_user
 
  
-Class SuperAdmin{}
+Class SuperAdmin{
+}
 Class Admin{}
 Class SavManager{}
 Class SavTechnician{}
@@ -30,15 +41,5 @@ user <|-- SuperAdmin
 user <|-- Admin
 user <|-- SavManager
 user <|-- SavTechnician
-
-
-SuperAdmin "1"--"*" Admin : reject
-Admin "1"--"*" SavManager : reject
-Admin "1"--"*" SavTechnician : reject
-
-
-
-
-
 
 @enduml
