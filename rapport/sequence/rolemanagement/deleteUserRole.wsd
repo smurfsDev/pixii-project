@@ -4,18 +4,27 @@ actor "Super Admin" as u
 boundary manageUsers as v
 control userController as c
 entity User as m
+entity RoleUser as ru
 activate u
 u -> v : clickDeleteButton(user)
-
 activate v
 v -> c :deleteUser(user)
 activate c
-c -> m :deleteUser(user)
-deactivate m
-m --> c: userDeleted
+alt user has one role
+    c -> m :deleteUser(user)
+    activate m
+    m --> c: userDeleted
+    deactivate m
+else user has more than one role
+    c -> ru :deleteRoleUser(user)
+    activate ru
+    ru --> c: RoleUserDeleted
+    deactivate ru
+end
+c --> v: UserDeleted
 deactivate c
-c --> v: userDeleted
+v --> u: UserDeleted
 deactivate v
-v --> u: userDeleted
+
 
 @enduml
