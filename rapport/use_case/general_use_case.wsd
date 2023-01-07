@@ -24,6 +24,8 @@ u <|-- so
         ( manage claims SAV ) as mc 
         ( manage claims scooterOwner ) as mcso
         ( manage users ) as mu
+		( create callback ) as cc
+		( manage callback ) as mcb
         note "if the user is a scooter owner" as n2
     }
     ' package auths {
@@ -43,6 +45,8 @@ u <|-- so
         a <|-- sa
         so --> ms
         sm <|-- sa
+		so --> cc
+		a --> mcb
         
 ' ----------------------------- includes
         ca . n2 
@@ -52,5 +56,7 @@ u <|-- so
         mcso .> auth: include
         mu .> auth: include
         ms .> auth: include
+		cc .> auth: include
+		mcb .> auth: include
 
 @enduml

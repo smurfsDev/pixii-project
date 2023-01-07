@@ -1,0 +1,31 @@
+@startuml callbacks_use_case
+left to right direction
+skinparam packageStyle rect
+skinparam shadowing false
+
+actor SuperAdmin as sa
+actor Admin as a
+actor ScooterOwner as so
+
+
+
+package Callback  {
+	( Create callback ) as cc
+	( Manage callback ) as mc
+	( View callbacks ) as vc
+	( Set callback as called ) as scc
+	 mc ..> vc : extends
+	 mc ..> scc : extends
+}
+
+( Authenticate ) as auth
+
+sa --> cc
+a --> mc
+so --> mc
+
+cc ..> auth : includes
+mc ..> auth : includes
+
+
+@enduml
