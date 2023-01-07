@@ -68,7 +68,8 @@ export class ClaimsComponent implements OnInit {
 					"date": "2022-11-16T19:10:56.107Z",
 					"author": "John Doe"
 				}	
-		]
+		],
+		technician: null,
 	};
 	opened = false;
 	openDetails(id: any) {

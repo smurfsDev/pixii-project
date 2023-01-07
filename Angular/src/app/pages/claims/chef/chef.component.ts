@@ -70,7 +70,8 @@ export class ChefComponent implements OnInit {
 					"date": "2022-11-16T19:10:56.107Z",
 					"author": "John Doe"
 				}	
-		]
+		],
+		technician: null,
 	};
 	ngOnInit(): void {
 		// this.authUser = this.store.selectSnapshot(state => state.AuthState.user);
