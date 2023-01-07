@@ -1,4 +1,5 @@
 import BikeData from "./models/bike.model";
+import callback from "./models/callback.model";
 import claim from "./models/claim.model";
 import comment from "./models/comments.model";
 import Role from "./models/role.model";
@@ -13,6 +14,7 @@ export const seed = async () => {
 	await status.deleteMany({});
 	await User.deleteMany({});
 	await BikeData.deleteMany({});
+	await callback.deleteMany({});
 	// seed db
 	console.log('Seeding...');
 	let todo = await status.findOne({ name: 'TODO' });
@@ -65,40 +67,24 @@ export const seed = async () => {
 	await role5.save();
 
 	// check if user exists
-	let user =
-		await User.findOne({ email: 'superadmin@email.com' });
-	if (!user) {
 		const user1 = new User({ name: 'Super Admin', username: 'superadmin', email: "superadmin@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role2, status: 1 }], status: 1 });
 
 		await user1.save();
-	}
-	user = await User.findOne({ email: 'admin@email.com' });
-	if (!user) {
 		const user2 = new User({ name: 'Admin', username: 'admin', email: "admin@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role1, status: 0 }], status: 1 });
 
 		await user2.save();
-	}
-	user = await User.findOne({ email: 'savmanager@email.com' });
-	if (!user) {
 		const user3 = new User({ name: 'SAV Manager', username: 'savmanager', email: "savmanager@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role3, status: 0 }], status: 1 });
 
 		await user3.save();
-	}
-	user = await User.findOne({ email: 'savtechnician@email.com' });
-	if (!user) {
 		const user4 = new User({ name: 'SAV Technician', username: 'savtechnician', email: "savtechnician@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role4, status: 0 }], status: 1 });
 
 		await user4.save();
-	}
-	user = await User.findOne({ email: 'scooterowner@email.com' });
-	if (!user) {
 
 
 		const user5 = new User({ name: 'Scooter Owner', username: 'scooterowner', email: "scooterowner@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role5, status: 1, scooterId:12345678 }], status: 1 });
 		await user5.save();
-	}
 
-	const user6 = new User({ name: 'Admin2', username: 'admin2', email: "admin2@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role1, status: 0 }, { role: role3, status: 0 }], status: 1 });
+	const user6 = new User({ name: 'Admin2', username: 'admin2', email: "admin2@email.com", password: '$2y$10$P7nCf1/YICmeK9EyY3h3YuwVdRnAf1jTw6Uujsh2ub3.vdLux.OzS', roles: [{ role: role1, status: 1 }, { role: role3, status: 1 }], status: 1 });
 	await user6.save();
 
 	let BatteryH = [];
@@ -203,6 +189,73 @@ export const seed = async () => {
 	// console.log(bike2._id);
 	// console.log(bike3._id);
 
+	const callback1 = new callback({
+		created : new Date(),
+		user: user5,
+	});
+
+	await callback1.save();
+
+	let callback2 = new callback({
+		created : new Date(),
+		user: user5,
+	});
+
+	await callback2.save();
+	callback2 = new callback({
+		created : new Date(),
+		user: user5,
+	});
+
+	await callback2.save();
+	callback2 = new callback({
+		created : new Date(),
+		user: user5,
+	});
+
+	await callback2.save();
+	callback2 = new callback({
+		created : new Date(),
+		user: user5,
+	});
+
+	await callback2.save();
+	callback2 = new callback({
+		created : new Date(),
+		user: user5,
+	});
+
+	await callback2.save();
+	callback2 = new callback({
+		created : new Date(),
+		user: user5,
+	});
+
+	await callback2.save();
+	callback2 = new callback({
+		created : new Date(),
+		user: user5,
+	});
+
+	await callback2.save();
+	callback2 = new callback({
+		created : new Date(),
+		user: user5,
+	});
+
+	await callback2.save();
+	callback2 = new callback({
+		created : new Date(),
+		user: user5,
+	});
+
+	await callback2.save();
+	callback2 = new callback({
+		created : new Date(),
+		user: user5,
+	});
+
+	await callback2.save();
 
 
 	console.log('Seeding done');

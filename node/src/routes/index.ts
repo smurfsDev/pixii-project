@@ -13,6 +13,7 @@ require('./role.routes')(router);
 require('./users.routes')(router);
 require('./bike.routes')(router);
 require('./dashboard.routes')(router);
+require('./callback.routes')(router);
 
 export default router;
 

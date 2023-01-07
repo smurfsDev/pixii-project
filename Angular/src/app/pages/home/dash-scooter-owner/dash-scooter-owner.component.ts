@@ -8,6 +8,7 @@ import { BikeDataService } from 'src/app/service/bike/bike-data.service';
 import { Bike } from 'src/app/models/bike.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { CallbackService } from 'src/app/service/callback/callback.service';
 
 @Component({
   selector: 'app-dash-scooter-owner',
@@ -35,13 +36,29 @@ export class DashScooterOwnerComponent implements OnInit {
   claimMessage = new FormControl('', [Validators.required, Validators.minLength(3)]);
 
   claimFormGroup: FormGroup;
-  constructor(private _http:HttpClient,private claimService: ClaimsService, private _snackBar: MatSnackBar,private bikeService: BikeDataService,private store: Store) {
+  constructor(private callback: CallbackService,private _http:HttpClient,private claimService: ClaimsService, private _snackBar: MatSnackBar,private bikeService: BikeDataService,private store: Store) {
     this.claimFormGroup = new FormGroup({
       claimTitle: this.claimTitle,
       claimSubject: this.claimSubject,
       claimMessage: this.claimMessage
     });
   }
+
+  sendCallback(){
+	this.callback.sendCallback().subscribe(
+		(data:any) => {
+			if (data){
+				this._snackBar.open("We recieved your callback request, One of our technicians will get to you soon", "OK", {
+					duration: 5000,
+				});
+			}else{
+				this._snackBar.open("Callback not created", "OK", {
+					duration: 2000,
+				});
+			}
+		}
+	);
+	}
 
   async createClaim() {
     this.claimTitle.markAsTouched();

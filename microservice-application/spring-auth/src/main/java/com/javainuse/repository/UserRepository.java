@@ -30,6 +30,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("SELECT ru FROM User u JOIN UserRole ru ON u.id = ru.user.id Join Role r ON ru.role.id = r.id WHERE u.username <> ?1 AND u.username <> 'superadmin' AND r.name <> 'admin'")
 	List<Object[]> findUserAndRoleWithoutAdmin(String username);
 
+	@Query("SELECT ru FROM User u JOIN UserRole ru ON u.id = ru.user.id Join Role r ON ru.role.id = r.id WHERE u.username <> ?1 AND u.username <> 'superadmin' AND r.name <> 'admin' AND r.name <> 'SAV Manager'")
+	List<Object[]> findUserAndRoleWithoutAdminAndSavManagers(String username);
+
 	public User findById(int id);
 
 	Optional<User> findUserById(int id);

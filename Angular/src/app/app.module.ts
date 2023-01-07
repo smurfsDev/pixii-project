@@ -30,7 +30,7 @@ import { BatteryComponent } from './pages/home/battery/battery.component';
 import { HttpInterceptorService } from './http-interceptor.service';
 import { ChefComponent } from './pages/claims/chef/chef.component';
 
-import { MgUsersComponent } from './pages/users/superAdmin/mg-users/mg-users.component';
+import { DeleteDialogComponent, MgUsersComponent } from './pages/users/superAdmin/mg-users/mg-users.component';
 
 import { ResendVerificationComponent } from './pages/account/resend-verification/resend-verification.component';
 import { UserComponent } from './pages/claims/user/user.component';
@@ -38,7 +38,7 @@ import { MapDashboardComponent } from './pages/home/map-dashboard/map-dashboard.
 import { ControlPannelComponent } from './pages/home/control-pannel/control-pannel.component';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { DashSuperAdminComponent } from './pages/home/dash-super-admin/dash-super-admin.component';
-import { DashAdminComponent } from './pages/home/dash-admin/dash-admin.component';
+import { CalledDialogComponent, DashAdminComponent } from './pages/home/dash-admin/dash-admin.component';
 import { DashSaVManagerComponent } from './pages/home/dash-sa-vmanager/dash-sa-vmanager.component';
 import { DashSaVTechnicienComponent } from './pages/home/dash-sa-vtechnicien/dash-sa-vtechnicien.component';
 import { DashScooterOwnerComponent } from './pages/home/dash-scooter-owner/dash-scooter-owner.component';
@@ -59,7 +59,7 @@ import { DashScooterOwnerComponent } from './pages/home/dash-scooter-owner/dash-
     }),
 	],
 
-	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent, MapDashboardComponent, ControlPannelComponent, DashSuperAdminComponent, DashAdminComponent, DashSaVManagerComponent, DashSaVTechnicienComponent, DashScooterOwnerComponent],
+	declarations: [AppComponent, ClaimsComponent, NavbarComponent, HomeComponent, DetailsComponent, AuthComponent, VerifyEmailComponent, ChefComponent, ResendVerificationComponent, TopbarComponent, BatteryPercentageComponent, ChartBatteryUsageComponent, BatteryComponent,ResetPasswordComponent, CheckemailComponent, UserComponent, MgUsersComponent, MapDashboardComponent, ControlPannelComponent, DashSuperAdminComponent, DashAdminComponent, DashSaVManagerComponent, DashSaVTechnicienComponent, DashScooterOwnerComponent,CalledDialogComponent,DeleteDialogComponent],
 	providers: [
 		{
 			provide: HTTP_INTERCEPTORS,
