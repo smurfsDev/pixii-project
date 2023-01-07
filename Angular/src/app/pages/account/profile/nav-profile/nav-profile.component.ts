@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User } from '../../../../models/user';
 import { LogoutAction } from 'src/app/store/auth/actions';
 import { Store } from '@ngxs/store';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-nav-profile',
@@ -13,6 +14,7 @@ import { Store } from '@ngxs/store';
 export class NavProfileComponent implements OnInit {
   profile: any;
   name: any;
+  env = environment.apiUrl;
 
   constructor(
     private ProfileService: ProfileService,

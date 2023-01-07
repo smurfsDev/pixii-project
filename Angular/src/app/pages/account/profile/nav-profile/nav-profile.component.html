@@ -4,7 +4,8 @@
     <p>Here you can see your profile and edit it</p>
   </div>
   <div class="actions">
-    <img class="avatar" src="./assets/pdp/{{ profile?.image }}" />
+    <img class="avatar" [src]="env+'/user-photos/'+profile?.image" />
+    <!-- Environment.apiUrl + "/user-photos/" + imagePath! -->
     <div class="hello">
       Hello, <span class="name">{{ name?.name }}</span>
     </div>
