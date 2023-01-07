@@ -3,12 +3,14 @@ import { Request, Response } from 'express';
 
 export const findAll = async (req: Request, res: Response) => {
 	Callback.find(
-		{'called':false},
+		{
+			// 'called':false
+		},
 		(err: any, statuses: any) => {
 			if (err) return res.status(500).send(err);
 			else return res.status(200).send(statuses);
 		}
-	).populate("user", "name");
+	).populate("user", "name").populate("caller", "name");
 };
 // create
 export const create = (req: Request, res: Response) => {

@@ -6,5 +6,6 @@ export class Callback {
 		public created:Date,
 		public user:User,
 		public called:boolean,
+		public caller:User
 	){}
 }
