@@ -13,16 +13,22 @@ package Callback  {
 	( Create callback ) as cc
 	( Manage callback ) as mc
 	( View callbacks ) as vc
+	( View pending callbacks ) as vpc
+	( View answered callbacks ) as vcc
+	( View callbacks answered by me ) as vcam
 	( Set callback as called ) as scc
 	 mc ..> vc : extends
 	 mc ..> scc : extends
+	 vc ..> vpc : extends
+	 vc ..> vcc : extends
+	 vc ..> vcam : extends
 }
 
 ( Authenticate ) as auth
 
-sa --> cc
+so --> cc
 a --> mc
-so --> mc
+sa --> mc
 
 cc ..> auth : includes
 mc ..> auth : includes
