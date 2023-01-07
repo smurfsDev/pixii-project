@@ -18,7 +18,7 @@ export const findAll = (req: Request, res: Response) => {
 };
 // create
 export const create = (req: Request, res: Response) => {
-	if ((req.body.isSAVManager) || (req.body.isSAVTechnician) || (req.body.isScooterOwner)) {
+		if ((req.body.isSAVManager) || (req.body.isSAVTechnician) || (req.body.isScooterOwner) || (req.body.isSuperAdmin)  ) {
 		const comment = new Comments(req.body);
 
 		comment.save((err: any) => {

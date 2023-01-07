@@ -4,7 +4,7 @@ import User from "../models/user.model";
 
 export const getUsers = (req: Request, res: Response) => {
 	Role.find({
-		name: { $nin: ["Super Admin", "Admin", "Scooter Owner"] }
+		name: { $nin: ["Admin", "Scooter Owner"] }
 	}, (err: any, roles: any) => {
 		if (err) return res.status(500).send("There was a problem finding the roles.");
 		else {
