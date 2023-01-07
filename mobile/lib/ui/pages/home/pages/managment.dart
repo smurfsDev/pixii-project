@@ -55,9 +55,7 @@ class _ManagmentState extends State<Managment> {
           shape: RoundedRectangleBorder(
               side: BorderSide(width: 2),
               borderRadius: BorderRadius.circular(50)),
-          title: Text(
-            "Tires pressure",
-          ),
+          title: Text(titleMenu),
           trailing: PopupMenuButton<String>(
             icon: const Icon(Icons.arrow_drop_down_outlined),
             padding: EdgeInsets.zero,
