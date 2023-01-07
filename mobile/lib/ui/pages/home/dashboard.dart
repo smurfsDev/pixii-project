@@ -1,6 +1,8 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile/imports.dart';
 import 'package:mobile/models/BikeData.dart';
 import 'package:mobile/service/bike.dart';
+import 'package:mobile/service/claims.dart';
 
 // ignore: must_be_immutable
 class Dashboard extends StatefulWidget {
@@ -18,6 +20,8 @@ class _Dashboard extends State<Dashboard> {
   List<Widget> pages = <Widget>[];
   late BikeService bikeService = BikeService();
   late BikeData? bike = null;
+  
+  late ClaimsService claimsService = ClaimsService();
 
   void init() {
      var fetch = bikeService
@@ -132,6 +136,62 @@ class _Dashboard extends State<Dashboard> {
           bottomNavigationBar: bottomNav(
             callback: (int i) => setState(() => index = i),
           ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Request a Callback"),
+                    content: Text("Do you want to request a callback?"),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text("No", style: TextStyle(color: Colors.red)),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      TextButton(
+                        child: Text("Yes", style: TextStyle(color: Colors.green)),
+                        onPressed: () {
+                          requestCallback();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: const Icon(Icons.phone,
+                color: Color.fromARGB(255, 19, 27, 54)),
+            backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          ),
         )));
+  }
+  Future<void> requestCallback() async {
+    final requestOK = await claimsService.requestCallback();
+    Navigator.of(context).pop();
+    if(requestOK){
+      Fluttertoast.showToast(
+        msg: "Callback requested",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0
+      );
+    }
+    else{
+      Fluttertoast.showToast(
+        msg: "Callback request failed",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+      );
+    }
   }
 }
