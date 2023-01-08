@@ -1,0 +1,33 @@
+@startuml dash_light
+hide footbox
+actor ScooterOwner as so
+boundary Dashboard as d
+control BikeService as bc
+entity bike as b
+so -> d : activatelight
+activate so
+activate d
+d -> bc : activatelight(bike)
+activate bc
+bc -> b : activatelight(bike)
+activate b
+b --> bc : bike
+deactivate b
+bc --> d : bike
+deactivate bc
+d --> so : bike
+deactivate d
+so -> d : deactivateLight
+activate d
+d -> bc : deactivateLight(bike)
+activate bc
+bc -> b : deactivateLight(bike)
+activate b
+b --> bc : bike
+deactivate b
+bc --> d : bike
+deactivate bc
+d --> so : bike
+deactivate d
+deactivate so
+@enduml

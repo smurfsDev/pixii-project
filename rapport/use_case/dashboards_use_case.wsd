@@ -1,4 +1,4 @@
-@startuml general_diagram
+@startuml dashboards_use_case_diagram
 skinparam packageStyle rect
 skinparam shadowing false
 
@@ -28,6 +28,7 @@ package dashboard_diagram{
     ( request a call back ) as rcb
     ( consult Shadow's details ) as csd
     ( controle Shadow ) as cs
+    ( create Claims ) as ccl
 ( Authenticate ) as auth
 }
 left to right direction
@@ -43,6 +44,8 @@ sa --> an
 so --> rcb
 so --> csd
 so --> cs
+so --> ccl
+ccl ..> auth : includes
 scn ..> auth : includes
 sn ..> auth : includes
 c ..> auth : includes
