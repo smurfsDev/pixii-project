@@ -22,9 +22,9 @@ package Callback  {
 	 vc ..> vpc : extends
 	 vc ..> vcc : extends
 	 vc ..> vcam : extends
+( Authenticate ) as auth
 }
 
-( Authenticate ) as auth
 
 so --> cc
 a --> mc
