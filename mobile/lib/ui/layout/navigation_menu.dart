@@ -4,23 +4,41 @@ import 'dart:io';
 
 import 'package:mobile/imports.dart';
 import 'package:mobile/main.dart';
+import 'package:mobile/service/user_profile.dart';
 import 'package:mobile/ui/pages/user/profile.dart';
 
-class NavDrawerDemo extends StatelessWidget {
+class NavDrawerDemo extends StatefulWidget {
   User user;
   NavDrawerDemo(this.user, {super.key});
-
   @override
+  State<NavDrawerDemo> createState() => _NavDrawerDemoState();
+}
+
+class _NavDrawerDemoState extends State<NavDrawerDemo> {
+  late User user = User(
+      username: '', name: '', email: '', role: [], image: '', scootername: '');
+  late UserPorfileService profileService;
+  String? image;
+  String email = '';
+  String name = "";
+  String scootername = "";
+  String username = "";
+  String? imagePath;
+  File? pickedImage;
+  @override
+  void initState() {
+    super.initState();
+    fetchUser();
+  }
+
   Widget build(BuildContext context) {
-    File? pickedImage;
-    String? imagePath;
     final drawerHeader = UserAccountsDrawerHeader(
       decoration: const BoxDecoration(color: Color.fromRGBO(44, 55, 91, 1)),
-      accountName: Text(user.name),
-      accountEmail: Text(
-        user.username,
-      ),
+      accountName: Text(name),
+      accountEmail: Text(username),
       currentAccountPicture: SizedBox(
+        width: 72,
+        height: 100,
         child: CircleAvatar(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(36.0),
@@ -53,7 +71,6 @@ class NavDrawerDemo extends StatelessWidget {
         children: [
           drawerHeader,
           menu(
-           
               bcolor: Color.fromARGB(186, 70, 132, 255),
               title: 'Dashboard',
               icon: Icons.dashboard_outlined,
@@ -69,11 +86,11 @@ class NavDrawerDemo extends StatelessWidget {
               textcolor: Color.fromARGB(255, 255, 255, 255),
               onClick: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ProfilePage(user)));
+                    MaterialPageRoute(builder: (context) => ProfilePage(user:user)));
               }),
           Divider(),
           menu(
-             bcolor: Color.fromARGB(186, 70, 132, 255),
+              bcolor: Color.fromARGB(186, 70, 132, 255),
               title: 'Inovices',
               icon: Icons.receipt_long_outlined,
               textcolor: Color.fromARGB(255, 255, 255, 255),
@@ -82,102 +99,34 @@ class NavDrawerDemo extends StatelessWidget {
               }),
           Divider(),
           menu(
-             bcolor: Color.fromARGB(186, 70, 132, 255),
+              bcolor: Color.fromARGB(186, 70, 132, 255),
               title: 'Wallet',
               icon: Icons.account_balance_wallet_outlined,
               textcolor: Color.fromARGB(255, 255, 255, 255),
               onClick: () {
                 // Navigator.pop(context);
               }),
-          Divider( height: 500),
+          Divider(height: 490),
           menu(
-               bcolor: Color.fromARGB(185, 252, 18, 18),
+              bcolor: Color.fromARGB(185, 252, 18, 18),
               title: 'Logout',
               icon: Icons.logout,
               textcolor: Color.fromARGB(255, 255, 255, 255),
               onClick: () {
                 AuthService().logout().then((value) => {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MyApp()))
-                  });
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => MyApp()))
+                    });
               }),
-          // ListTile(
-          //   title: const Text(
-          //     "Dashboard",
-          //     style: TextStyle(color: Colors.white),
-          //   ),
-          //   leading: const Icon(
-          //     Icons.dashboard_outlined,
-          //     color: white,
-          //   ),
-          //   onTap: () {
-          //     Navigator.pop(context);
-          //   },
-          // ),
-          // ListTile(
-          //   title: const Text(
-          //     "Profile",
-          //     style: TextStyle(
-          //       color: Colors.white,
-          //     ),
-          //   ),
-          //   leading: const Icon(
-          //     Icons.person_outline,
-          //     color: white,
-          //   ),
-          //   onTap: () {
-          //     Navigator.push(context,
-          //         MaterialPageRoute(builder: (context) => ProfilePage(user)));
-          //   },
-          // ),
-          // ListTile(
-          //   title: const Text(
-          //     "Invoices",
-          //     style: TextStyle(
-          //       color: Colors.white,
-          //     ),
-          //   ),
-          //   leading: const Icon(
-          //     Icons.feed_outlined,
-          //     color: white,
-          //   ),
-          //   onTap: () {
-          //     Navigator.pop(context);
-          //   },
-          // ),
-          // ListTile(
-          //   title: const Text(
-          //     "Wallet",
-          //     style: TextStyle(
-          //       color: Colors.white,
-          //     ),
-          //   ),
-          //   leading: const Icon(
-          //     Icons.wallet_outlined,
-          //     color: white,
-          //   ),
-          //   onTap: () {
-          //     Navigator.pop(context);
-          //   },
-          // ),
-          // ListTile(
-          //   title: const Text(
-          //     "Logout",
-          //     style: TextStyle(
-          //       color: Colors.white,
-          //     ),
-          //   ),
-          //   leading: const Icon(
-          //     Icons.logout,
-          //     color: white,
-          //   ),
-          //   onTap: () {
-          //     AuthService().logout().then((value) => {
-          //           Navigator.push(context,
-          //               MaterialPageRoute(builder: (context) => MyApp()))
-          //         });
-          //   },
-          // ),
+          Divider(),
+          Center(
+            child: Text(
+              "Version 1.0.0",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -198,5 +147,15 @@ class NavDrawerDemo extends StatelessWidget {
         backgroundColor: Color.fromRGBO(44, 55, 91, 1),
       ),
     );
+  }
+
+  void fetchUser() async {
+    var porfile = UserPorfileService();
+    final profile = await porfile.getProfile();
+    setState(() {
+      name = profile['name'];
+      username = profile['username'];
+      imagePath = profile['image'] ?? null;
+    });
   }
 }
