@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import "package:mobile/imports.dart";
 import 'package:mobile/service/bike.dart';
 import 'package:mobile/service/user_profile.dart';
@@ -23,12 +22,12 @@ class _MyAppState extends State<MyApp> {
   initState() {
     super.initState();
     authService.loadSettings().then((value) => setState(
-        () {
-          main = authService.loggedIn
+          () {
+            main = authService.loggedIn
                 ? Dashboard(authService.user!)
                 : const Login();
           },
-     ));   
+          ));
   }
 
   @override
