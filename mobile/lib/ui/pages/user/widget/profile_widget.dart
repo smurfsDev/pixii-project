@@ -47,7 +47,8 @@ class ProfileWidget extends StatelessWidget {
     );
   }
 
-  Widget buildEditIcon(Color color) => buildCircle(
+  Widget buildEditIcon(Color color) => 
+  InkWell(child:buildCircle(
         color: Color.fromARGB(255, 255, 255, 255),
         all: 2,
         child: buildCircle(
@@ -59,6 +60,8 @@ class ProfileWidget extends StatelessWidget {
             size: 14,
           ),
         ),
+      ),
+      onTap: onClicked,
       );
 
   Widget buildCircle({
