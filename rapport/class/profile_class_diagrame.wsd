@@ -1,0 +1,37 @@
+@startuml profile_class_diagram
+
+Class user {
+    Int id
+    String name
+    String password
+    String username
+    String email
+    String image
+    String scootername
+    Bool enabled
+    String verification_code
+
+    
+    JSON Login()
+    Bool Register()
+    Update Profile()
+    Create Profile()
+    
+}
+
+Class role{
+    Int id
+    String name
+}
+
+user .right.> role
+Class ScooterOwner{
+
+}
+top to bottom direction
+user <|-- SuperAdmin
+user <|-- Admin
+user <|-- SavTechnicien
+user <|-- ScooterOwner
+
+@enduml

@@ -1,0 +1,17 @@
+
+@startuml set_profile
+actor User as u
+boundary profileUI as up
+control profileController as pc
+entity profile as p
+
+activate u
+
+activate up
+activate pc
+activate p
+deactivate p
+deactivate pc
+deactivate up
+deactivate u
+@enduml
