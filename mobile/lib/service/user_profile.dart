@@ -3,59 +3,93 @@ import 'dart:io';
 
 import "package:mobile/imports.dart";
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
+import 'package:async/async.dart';
+import 'dart:convert';
 
 class UserPorfileService with ChangeNotifier {
-  late User? user = null;
+  late User user = User(
+      username: '', name: '', email: '', role: [], image: '', scootername: '');
   late String error;
 
   final _storage = const FlutterSecureStorage();
 
-  Future<User?> getProfile() async {
-    final token = await _storage.read(key: 'token');
-    print(token);
+  Future getProfile() async {
+    var userService = AuthService();
+    userService.loadSettings();
+    var token = await _storage.read(key: "token");
     try {
-      final response = await http.get(
-          Uri.parse('${Environment.apiUrl}/profile'),
-          headers: {'Content-Type': 'application/json '});
+      final response = await http
+          .get(Uri.parse('${Environment.apiUrl}/getprofile'), headers: {
+        'Content-Type': 'application/json ',
+        'Authorization': "Bearer ${token!}"
+      });
+      getImage();
       if (response.statusCode == 200) {
-        final data = userFromJson(response.body);
-        print(data);
-        user = data;
-        return user;
+        final data = json.decode(response.body);
+        await _storage.write(key: 'userprofile', value: (response.body));
+        notifyListeners();
+        return data;
       } else {
-        error = JsonDecoder().convert(response.body)['error'];
+        error = const JsonDecoder().convert(response.body)['error'];
         error = error;
-        print(error);
+
         return user;
       }
     } catch (e) {
       error = e.toString();
       error = error;
-      print(error);
       return user;
     }
   }
 
+  Future getscootername() async {
+    var userService = AuthService();
+    userService.loadSettings();
+    var token = await _storage.read(key: "token");
+
+    try {
+      final response = await http
+          .get(Uri.parse('${Environment.apiUrl}/gscootername'), headers: {
+        'Content-Type': 'application/json',
+        'Authorization': "Bearer ${token!}"
+      });
+      if (response.statusCode == 200) {
+        final data = userFromJson(response.body);
+        user = data;
+        notifyListeners();
+        return user.scootername;
+      } else {
+        error = const JsonDecoder().convert(response.body)['error'];
+        error = error;
+        return '';
+      }
+    } catch (e) {
+      error = e.toString();
+      error = error;
+      return '';
+    }
+  }
+
   Future<bool> updateProfile(String name, String email) async {
-    AuthService authService = AuthService();
-    await authService.loadSettings();
-    final user = authService.user;
     final request = {'name': name, 'email': email};
-    print(request);
+    var userService = AuthService();
+    userService.loadSettings();
+    var token = await _storage.read(key: "token");
+
     try {
       final response = await http.put(
           Uri.parse('${Environment.apiUrl}/profilemodify'),
           body: jsonEncode(request),
           headers: {
             'Content-Type': 'application/json',
-            'AutorizationNode': user!.email
+            'Authorization': "Bearer ${token!}"
           });
-      print(response.statusCode);
-      print(response.body);
+      getProfile();
       if (response.statusCode == 200) {
         return true;
       } else {
-        error = JsonDecoder().convert(response.body)['error'];
+        error = const JsonDecoder().convert(response.body)['error'];
         error = error;
         return false;
       }
@@ -66,23 +100,50 @@ class UserPorfileService with ChangeNotifier {
     }
   }
 
-  Future<bool> changePassword(
-      String oldPassword, String newPassword, String confirmPassword) async {
+  Future changePassword(
+      String oldPassword, String Password, String confirmPassword) async {
+    var userService = AuthService();
+    userService.loadSettings();
+    var token = await _storage.read(key: "token");
+
     final request = {
-      'oldPassword': oldPassword,
-      'newPassword': newPassword,
-      'confirmPassword': confirmPassword
+      'oldpassword': oldPassword,
+      'password': Password,
+      'confirmpassword': confirmPassword
     };
-    print(request);
+    final response = await http.put(
+        Uri.parse('${Environment.apiUrl}/changepassword'),
+        body: jsonEncode(request),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer ${token!}"
+        });
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception(json.decode(response.body)['message']);
+    }
+  }
+
+  Future updatescootername(String scootername) async {
+    final request = <String, String>{'scootername': scootername};
+    var userService = AuthService();
+    userService.loadSettings();
+    var token = await _storage.read(key: "token");
+
     try {
       final response = await http.put(
-          Uri.parse('${Environment.apiUrl}/changepassword'),
-          body: jsonEncode(request),
-          headers: {'Content-Type': 'application/json'});
+        Uri.parse('${Environment.apiUrl}/scootername'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': "Bearer ${token!}"
+        },
+        body: jsonEncode(request),
+      );
       if (response.statusCode == 200) {
         return true;
       } else {
-        error = JsonDecoder().convert(response.body)['error'];
+        error = const JsonDecoder().convert(response.body)['error'];
         error = error;
         return false;
       }
@@ -93,38 +154,19 @@ class UserPorfileService with ChangeNotifier {
     }
   }
 
-  Future<bool> addScooterName(String scooterName) async {
-    final request = {'scooterName': scooterName};
-    print(request);
+  Future getImage() async {
+    final token = await _storage.read(key: 'token');
     try {
-      final response = await http.post(
-          Uri.parse('${Environment.apiUrl}/scootername'),
-          body: jsonEncode(request),
-          headers: {'Content-Type': 'application/json'});
-      if (response.statusCode == 201) {
-        return true;
-      } else {
-        error = JsonDecoder().convert(response.body)['error'];
-        error = error;
-        return false;
-      }
-    } catch (e) {
-      error = e.toString();
-      error = error;
-      return false;
-    }
-  }
-
-  Future<String> getScooterName() async {
-    try {
-      final response = await http.get(
-          Uri.parse('${Environment.apiUrl}/gscootername'),
-          headers: {'Content-Type': 'application/json'});
+      final response =
+          await http.get(Uri.parse('${Environment.apiUrl}/getimage'), headers: {
+        'Content-Type': 'application/json',
+        "authorization": "Bearer $token",
+      });
       if (response.statusCode == 200) {
-        final data = JsonDecoder().convert(response.body)['scooterName'];
+        final data = const JsonDecoder().convert(response.body)['image'];
         return data;
       } else {
-        error = JsonDecoder().convert(response.body)['error'];
+        error = const JsonDecoder().convert(response.body)['error'];
         error = error;
         return '';
       }
@@ -135,44 +177,34 @@ class UserPorfileService with ChangeNotifier {
     }
   }
 
-  Future<bool> uploadImage(File image) async {
-    final request = http.MultipartRequest(
-        'POST', Uri.parse('${Environment.apiUrl}/upload'));
-    final file = await http.MultipartFile.fromPath('image', image.path);
-    request.files.add(file);
+  Future updateProfileImage(File permImage) async {
     try {
-      final response = await request.send();
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        // error = JsonDecoder().convert(response.body)['error'];
-        error = error;
-        return false;
-      }
-    } catch (e) {
-      error = e.toString();
-      error = error;
-      return false;
-    }
-  }
+      var length = await permImage.length();
+      var stream =
+          http.ByteStream(DelegatingStream.typed(permImage.openRead()));
+      var uri = Uri.parse("${Environment.apiUrl}/upload");
+      var request = http.MultipartRequest("POST", uri);
+      const storage = FlutterSecureStorage();
+      var userService = AuthService();
+      userService.loadSettings();
+      var token = await storage.read(key: "token");
 
-  Future<String> getImage() async {
-    try {
-      final response = await http.get(
-          Uri.parse('${Environment.apiUrl}/getimage'),
-          headers: {'Content-Type': 'application/json'});
-      if (response.statusCode == 200) {
-        final data = JsonDecoder().convert(response.body)['image'];
-        return data;
-      } else {
-        error = JsonDecoder().convert(response.body)['error'];
-        error = error;
-        return '';
-      }
+      request.headers.addAll({
+        "authorization": "Bearer $token",
+      });
+
+      var multipartFile = http.MultipartFile('file', stream, length,
+          filename: basename(permImage.path));
+      request.files.add(multipartFile);
+      var response = await request.send();
+      print(response.statusCode);
+      print(json.decode(response.stream.toString()));
+      response.stream.transform(utf8.decoder).listen((value) {
+        print(value);
+      });
+      getProfile();
     } catch (e) {
-      error = e.toString();
-      error = error;
-      return '';
+      print(e);
     }
   }
 }
