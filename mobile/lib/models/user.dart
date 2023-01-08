@@ -14,14 +14,14 @@ class User {
       required this.name,
       required this.email,
       required this.role,
-      required this.imagePath,
+      required this.image,
       required this.scootername});
 
   String username;
   String name;
   String email;
   List role;
-  String? imagePath;
+  String? image;
   String? scootername;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -29,7 +29,7 @@ class User {
         name: json["name"],
         email: json["email"],
         role: List.from(json["roles"].map((x) => x)),
-        imagePath: json["imagePath"] as String?,
+        image: json["image"] as String?,
         scootername: json["scootername"] as String?,
       );
 
@@ -38,7 +38,7 @@ class User {
         "name": name,
         "email": email,
         "roles": List.from(role.map((x) => x)),
-        "imagePath": imagePath,
+        "image": image,
         "scootername": scootername,
       };
 }
