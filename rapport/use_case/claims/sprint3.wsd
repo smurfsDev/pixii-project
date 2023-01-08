@@ -1,0 +1,27 @@
+@startuml claims_use_case_sprint_3
+left to right direction
+skinparam packageStyle rect
+skinparam shadowing false
+
+actor SAVTechnicien as st
+
+package claims {
+( Consult claims affected to me ) as mgc
+( Comment claim  ) as mgcc
+( Consult claim details ) as mgccd
+( Consult claim status history ) as mgccds
+( Consult claim technician history ) as mgccdt
+( Change claim status ) as mgccs
+}
+
+left to right direction
+
+
+st --> mgc
+mgccd <.. mgcc : extends
+mgc <.. mgccd : extends
+mgccd <.. mgccds : extends
+mgccd <.. mgccdt : extends
+mgc <.. mgccs : extends
+
+@enduml

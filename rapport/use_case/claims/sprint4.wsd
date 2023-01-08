@@ -1,4 +1,4 @@
-@startuml claims_use_case
+@startuml claims_use_case_sprint_4
 left to right direction
 skinparam packageStyle rect
 skinparam shadowing false
@@ -34,9 +34,9 @@ mgccd <.. mgccds : extends
 mgccd <.. mgccdt : extends
 cmc <.. mgccd : extends
 mgccd <.. mgcc :extends
+st <|--sm
 sm <|--sa
 sm --> cac
-st <|--sm
 cac <.. mgca :extends
 cac <.. mgccd : extends
 st --> mgc
