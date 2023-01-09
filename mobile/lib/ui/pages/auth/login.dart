@@ -230,6 +230,9 @@ class _LoginPageState extends State<Login> {
           message = "Your password is incorrect";
         } else if (auth.error == "USER_DISABLED") {
           message = "Please verify your email";
+          Future.delayed(Duration(seconds: 2), () {
+            Navigator.pushNamed(context, VerifyEmail.id);
+          });
         } else {
           message = "An error has occurred";
         }
