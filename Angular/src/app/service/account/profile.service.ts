@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -29,7 +29,14 @@ export class ProfileService {
   }
 
   uploadProfilePicture(data: any) {
-    return this.http.post(`${environment.apiUrl}/upload`, data);
+
+    return this.http.post(`${environment.apiUrl}/upload`, data, {
+
+      headers: new HttpHeaders({
+        Accept: 'text/html, application/xhtml+xml, */*',
+      }),
+      responseType: 'text',
+    });
   }
 
   getProfilePicture() {

@@ -1,5 +1,5 @@
 <app-navbar>
-<app-nav-profile></app-nav-profile>
+  <app-nav-profile></app-nav-profile>
   <div>
     <div class="board">
       <div class="container">
@@ -10,7 +10,17 @@
                 <div class="name">{{ profile?.name }}</div>
                 <div class="username">{{ profile?.username }}</div>
                 <div class="image">
-                  <img src="./assets/pdp/{{ profile?.image }}" />
+                  <!-- <img [src]="imageUrl || defaultImageUrl" /> -->
+
+                  <img
+                    *ngIf="imageUrl; else defaultImageTemplate"
+                    [src]="env + '/user-photos/' + profile?.image"
+                  />
+                  <ng-template #defaultImageTemplate>
+                    <img [src]="defaultImageUrl" />
+                  </ng-template>
+
+                  <!-- <img [src]="env + '/user-photos/' + profile?.image" /> -->
                 </div>
 
                 <form>
@@ -21,7 +31,7 @@
                       name="image"
                       id="upload-photo"
                       accept="image/png,  image/jpeg"
-                      (change)="uploadProfilePicture($event)"
+                      (change)="uploadProfilePicture($event) "
                     />
                     <br />
                   </button>
@@ -147,6 +157,7 @@
                             type="text"
                             [formControl]="scootername"
                           />
+                        <p> Enter your Scooter name </p>
                         </div>
                       </div>
                       <div

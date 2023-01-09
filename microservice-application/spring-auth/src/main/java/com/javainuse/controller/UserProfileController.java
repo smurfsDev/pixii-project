@@ -7,8 +7,10 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.javainuse.config.WebSecurityConfig;
 import com.javainuse.entities.User;
 import com.javainuse.repository.UserRepository;
+import com.javainuse.service.FileUploadUtil;
 import com.javainuse.service.MailingService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -66,9 +69,6 @@ public class UserProfileController {
             boolean emailChanged = false;
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user1 = userrepository.findByUsername(auth.getName()).get();
-            json.put("username", user1.getUsername());
-            json.put("name", user1.getName());
-            json.put("email", user1.getEmail());
 
             if (userrepository.findUserByEmail(user.get("email").toString()).isPresent()
                     && !user1.getEmail().equals(user.get("email").toString())) {
@@ -77,9 +77,13 @@ public class UserProfileController {
                 item.put("status", HttpStatus.BAD_REQUEST.value());
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(item);
             }
+            // json.put("username", user1.getUsername());
+            // json.put("name", user1.getName());
+            // json.put("email", user1.getEmail());
 
-            if (user.containsKey("name"))
+            if (user.containsKey("name") && !user1.getName().equals(user.get("name").toString()))
                 user1.setName(user.get("name").toString());
+
             if (user.containsKey("email") && !user1.getEmail().equals(user.get("email").toString())) {
                 user1.setEmail(user.get("email").toString());
                 emailChanged = true;
@@ -120,23 +124,29 @@ public class UserProfileController {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user1 = userrepository.findByUsername(auth.getName()).get();
 
-            if ((WebSecurityConfig.passwordEncoder().matches(user.getAsString("oldpassword"), user1.getPassword()))
-                    && user.containsKey("password")
-                    && !user.get("password").toString().equals(user.get("oldpassword").toString())) {
+            if (!user.containsKey("password") && !user.containsKey("oldpassword")
+                    && !user.containsKey("confirmpassword")) {
+                json.put("message", "Please provide all the fields");
+                response = new ResponseEntity<JSONObject>(json, HttpStatus.BAD_REQUEST);
+                return response;
+            } else if (!WebSecurityConfig.passwordEncoder().matches(user.getAsString("oldpassword"),
+                    user1.getPassword())) {
+                json.put("message", "Old password is incorrect");
+                response = new ResponseEntity<JSONObject>(json, HttpStatus.BAD_REQUEST);
+                return response;
+            } else if (user.get("password").toString().equals(user.get("oldpassword").toString())) {
+                json.put("message", "New password cannot be same as old password");
+                response = new ResponseEntity<JSONObject>(json, HttpStatus.BAD_REQUEST);
+                return response;
+            } else if (!user.get("password").toString().equals(user.get("confirmpassword").toString())) {
+                json.put("message", "New password and confirm password do not match");
+                response = new ResponseEntity<JSONObject>(json, HttpStatus.BAD_REQUEST);
+                return response;
+            } else {
                 user1.setPassword(WebSecurityConfig.passwordEncoder().encode(user.get("password").toString()));
                 userrepository.save(user1);
                 json.put("message", "Password changed successfully");
                 response = new ResponseEntity<JSONObject>(json, HttpStatus.OK);
-                return response;
-
-            } else if (user.containsKey("password") == (WebSecurityConfig.passwordEncoder()
-                    .matches(user.getAsString("oldpassword"), user1.getPassword()))) {
-                json.put("message", "New password cannot be same as old password");
-                response = new ResponseEntity<JSONObject>(json, HttpStatus.BAD_REQUEST);
-                return response;
-            } else {
-                json.put("message", "Old password is incorrect");
-                response = new ResponseEntity<JSONObject>(json, HttpStatus.BAD_REQUEST);
                 return response;
             }
 
@@ -185,30 +195,28 @@ public class UserProfileController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<JSONObject> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         JSONObject json = new JSONObject();
         ResponseEntity<JSONObject> response = null;
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user1 = userrepository.findByUsername(auth.getName()).get();
-            String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
-           //Update the path for your pc
-            File uploadedFile = new File("C:/Users/MedNourBn/Desktop/9raya/pixii-project/Angular/src/assets/pdp/" + fileName);
+            String fileName = StringUtils.cleanPath(UUID.randomUUID() + "-" + file.getOriginalFilename().replace(" ", ""));
+            String uploadDir = "user-photos/";
             try {
-                file.transferTo(uploadedFile);
+                FileUploadUtil.saveFile(uploadDir, fileName, file);
             } catch (IllegalStateException | IOException e) {
-
                 e.printStackTrace();
             }
             user1.setImage(fileName);
             userrepository.save(user1);
-            json.put("message", "File uploaded successfully");
-            response = new ResponseEntity<JSONObject>(json, HttpStatus.OK);
-            return response;
+            json.put("filename", fileName);
+            return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body(fileName);
+
         } catch (UsernameNotFoundException ex) {
             json.put("message", ex.getMessage());
-            response = new ResponseEntity<JSONObject>(json, HttpStatus.BAD_REQUEST);
-            return response;
+            return ResponseEntity.badRequest()
+                    .contentType(MediaType.TEXT_PLAIN).body(ex.getMessage());
         }
 
     }

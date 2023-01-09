@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 export class NavProfileComponent implements OnInit {
   profile: any;
   name: any;
+  iamge: any;
   env = environment.apiUrl;
 
   constructor(
@@ -30,14 +31,17 @@ export class NavProfileComponent implements OnInit {
     this.Store.dispatch(new LogoutAction());
     this.router.navigate(['/auth']);
   }
-  getProfilePicture() {
-    this.ProfileService.getProfilePicture().subscribe((data: any) => {
-      this.profile = data;
-    });
+   async getProfilePicture() {
+   const reponse = await this.ProfileService.getProfilePicture().subscribe(
+     (data: any) => {
+       this.profile = data;
+     }
+   );
   }
   getProfile() {
     this.ProfileService.getProfile().subscribe((data: any) => {
       this.name = data;
+    this.iamge=data.image;
     });
   }
 }

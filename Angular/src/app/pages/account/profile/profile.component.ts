@@ -11,6 +11,8 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { checkPassword, checkPasswordPattern } from '../form-validators';
 import { ProfileService } from '../../../service/account/profile.service';
+import { environment } from 'src/environments/environment';
+import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Component({
   selector: 'app-profile',
@@ -18,6 +20,12 @@ import { ProfileService } from '../../../service/account/profile.service';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
+  imageUrl = "env + '/user-photos/' + profile?.image";
+  defaultImageUrl: string =
+    'https://upload.wikimedia.org/wikipedia/commons/5/5f/Alberto_conversi_profile_pic.jpg';
+
+  env = environment.apiUrl;
+
   title = 'Profile';
   image!: string;
   imageform: FormGroup;
@@ -89,10 +97,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle(this.title);
-    this.GetProfile();
-
     this.GetScooterName();
-    this.getProfilePicture();
     this.GetProfile();
   }
 
@@ -105,26 +110,13 @@ export class ProfileComponent implements OnInit {
     };
   }
 
-  uploadProfilePicture(event: any) {
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append('file', file);
-    this.ProfileService.uploadProfilePicture(formData).subscribe((response) => {
-      console.log(response);
-      this._snackBar.open('Profile Picture Updated', 'close', {
-        duration: 2000,
-      });
-       this.getProfilePicture();
-       this.GetProfile();
-    });
-  }
-
   GetProfile() {
     this.ProfileService.getProfile().subscribe((data: any) => {
       this.profile = data;
       this.profilemod.patchValue({
         name: this.profile.name,
         email: this.profile.email,
+        confirmemail: this.profile.email,
         username: this.profile.username,
         image: this.profile.image,
         created_at: this.profile.created_at,
@@ -149,11 +141,21 @@ export class ProfileComponent implements OnInit {
   }
 
   updateProfile() {
-    if (this.email.value == this.profile.email) {
-      this.submitted = true;
-      if (this.profilemod.invalid) {
-        return;
-      }
+    this.submitted = true;
+    if (this.profilemod.invalid) {
+      return;
+    }
+    if (
+      this.email.value == this.profile.email &&
+      this.name.value == this.profile.name
+    ) {
+      this._snackBar.open(' Nothing Changed', 'close', {
+        duration: 2000,
+      });
+    } else if (
+      this.email.value == this.profile.email &&
+      this.name.value != this.profile.name
+    ) {
       this.loading = true;
       console.log(this.profilemod.value);
       this.ProfileService.updateProfile(this.profilemod.value).subscribe(
@@ -162,10 +164,7 @@ export class ProfileComponent implements OnInit {
           this._snackBar.open('Profile Updated', 'close', {
             duration: 2000,
           });
-          console.log(this.profile);
-          this.getProfilePicture();
           this.GetProfile();
-          this.getProfilePicture();
         },
         (error) => {
           this.loading = false;
@@ -174,7 +173,10 @@ export class ProfileComponent implements OnInit {
           });
         }
       );
-    } else {
+    } else if (
+      this.email.value != this.profile.email &&
+      this.confirmemail.value == this.email.value
+    ) {
       this.submitted = true;
       if (this.profilemod.invalid) {
         return;
@@ -197,7 +199,65 @@ export class ProfileComponent implements OnInit {
         }
       );
       this.router.navigate(['/verify']);
+    } else if (
+      this.email.value != this.profile.email &&
+      this.confirmemail.value != this.email.value
+    ) {
+      this._snackBar.open("Confirm email doesn't match", 'close', {
+        duration: 2000,
+      });
     }
+  }
+
+  async uploadProfilePicture(event: any) {
+    console.log('uploading');
+    const file:File = event.target.files[0];
+    console.log((file.size/ (1024*1024)).toFixed(2));
+    if (file.type == 'image/jpeg' || file.type == 'image/png') {
+      const formData = new FormData();
+      formData.append('file', file);
+      if((file.size/ (1024*1024))<2){
+        try {
+          console.log('sending');
+
+        const response = await this.ProfileService.uploadProfilePicture(
+          formData
+          ).toPromise();
+          console.log('sent');
+          this._snackBar.open('Profile Picture Updated', 'close', {
+            duration: 2000,
+          });
+          this.GetProfile();
+        } catch (error) {
+          this._snackBar.open(
+            'Error uploading file, Please try another file',
+            'close',
+          {
+            duration: 2000,
+          }
+          );
+          this.GetProfile();
+        }
+      }else{
+        this._snackBar.open(
+          'File size too large',
+          'close',
+          {
+            duration: 2000,
+          }
+        );
+      }
+    }
+    else{
+      this._snackBar.open(
+        'Only .jpg and .png files are allowed',
+        'close',
+        {
+          duration: 2000,
+        }
+      );
+    }
+
   }
 
   updateScooterName() {
@@ -206,24 +266,29 @@ export class ProfileComponent implements OnInit {
       return;
     }
     this.loading = true;
-    console.log(this.scooterform.value);
-    this.ProfileService.updateScooterName(this.scooterform.value).subscribe(
-      (data: any) => {
-        this.profile = data;
-        this._snackBar.open('Scooter name Chnaged', 'close', {
-          duration: 2000,
-        });
-        console.log(this.profile);
-        this.getProfilePicture();
-        this.GetProfile();
-      },
-      (error) => {
-        this.loading = false;
-        this._snackBar.open(error.error.message ?? 'Error', 'close', {
-          duration: 2000,
-        });
-      }
-    );
+    if (this.scootername.value != this.profile.scootername) {
+      this.ProfileService.updateScooterName(this.scooterform.value).subscribe(
+        (data: any) => {
+          this.profile = data;
+          this._snackBar.open('Scooter name Chnaged', 'close', {
+            duration: 2000,
+          });
+          console.log(this.profile);
+          this.getProfilePicture();
+          this.GetProfile();
+        },
+        (error) => {
+          this.loading = false;
+          this._snackBar.open(error.error.message ?? 'Error', 'close', {
+            duration: 2000,
+          });
+        }
+      );
+    } else {
+      this._snackBar.open('Nothing Changed', 'close', {
+        duration: 2000,
+      });
+    }
   }
 
   updatePassword() {
