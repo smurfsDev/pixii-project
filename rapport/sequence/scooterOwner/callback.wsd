@@ -1,0 +1,38 @@
+@startuml callback
+hide footbox
+actor ScooterOwner as so
+boundary Callbacks as cl
+control CallbacksService as cs
+entity Callback as c
+
+so -> cl : ClickOnCreateCallback()
+activate so
+activate cl
+cl -> cs : createCallback()
+activate cs
+cs -> c : createCallback()
+activate c
+alt Callback is created
+c --> cs : CallbackCreated
+deactivate c
+cs --> cl : CallbackCreated
+deactivate cs
+cl --> so : CallbackCreated
+deactivate cl
+else Callback is not created
+activate c
+c --> cs : CallbackNotCreated
+deactivate c
+activate cs
+cs --> cl : CallbackNotCreated
+deactivate cs
+activate cl
+cl --> so : CallbackNotCreated
+deactivate cl
+end
+
+deactivate cl
+deactivate so
+
+
+@enduml

@@ -176,10 +176,12 @@ public class JwtAuthenticationController {
 		if (user.get("role").toString().equals("Admin")) {
 			userRole.get().setStatus(0);
 		}
+		JSONObject newUserNode = new JSONObject();
 		if (user.get("role").toString().equals("Scooter Owner")) {
 			UserRole ur = userRole.get();
 			ur.setStatus(1);
 			ur.setBike_id(user.get("scooterId").toString());
+			newUserNode.put("scooterId", user.get("scooterId").toString());
 
 		}
 		if (user.get("role").toString().equals("SAV Manager")) {
@@ -189,7 +191,6 @@ public class JwtAuthenticationController {
 			userRole.get().setStatus(0);
 		}
 		userRoleRepository.save(userRole.get());
-		JSONObject newUserNode = new JSONObject();
 		newUserNode.put("name", user.get("name").toString());
 		newUserNode.put("email", user.get("email").toString());
 		newUserNode.put("username", user.get("username").toString());
@@ -237,6 +238,8 @@ public class JwtAuthenticationController {
 		JSONObject item = new JSONObject();
 		boolean isSuperAdmin = false;
 		boolean isAdmin = false;
+		boolean isSAVManager = false;
+
 		Map<String, Object> headerMap = new HashMap<>();
 
 		Optional<UserRole> userRoleOptional = userRoleRepository.findByUserIdAndRoleId(id, idRole);
@@ -256,6 +259,8 @@ public class JwtAuthenticationController {
 				isSuperAdmin = true;
 			} else if (role.getName().equals("Admin")) {
 				isAdmin = true;
+			} else if (role.getName().equals("SAV Manager")) {
+				isSAVManager = true;
 			}
 		}
 
@@ -276,7 +281,7 @@ public class JwtAuthenticationController {
 			registerNode.accept(headerMap, userRole.getUser().getUsername(), userAcceptedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userAcceptedRole.equals("SAV Technician")
-				&& (isSuperAdmin || isAdmin)) {
+				&& (isSuperAdmin || isAdmin || isSAVManager)) {
 			acceptUser(userRole);
 			item.put("message", "SAV Technician accepted");
 			System.out.println("userAcceptedRole");
@@ -295,6 +300,8 @@ public class JwtAuthenticationController {
 		JSONObject item = new JSONObject();
 		boolean isSuperAdmin = false;
 		boolean isAdmin = false;
+		boolean isSAVManager = false;
+
 		Map<String, Object> headerMap = new HashMap<>();
 
 		Optional<UserRole> userRoleOptional = userRoleRepository.findByUserIdAndRoleId(id, idRole);
@@ -313,6 +320,8 @@ public class JwtAuthenticationController {
 				isSuperAdmin = true;
 			} else if (role.getName().equals("Admin")) {
 				isAdmin = true;
+			} else if (role.getName().equals("SAV Manager")) {
+				isSAVManager = true;
 			}
 		}
 		if (isSuperAdmin == true && userDeclinedRole.equals("Admin") && isAdmin == false) {
@@ -331,7 +340,7 @@ public class JwtAuthenticationController {
 			registerNode.refuse(headerMap, userRole.getUser().getUsername(), userDeclinedRole);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (userDeclinedRole.equals("SAV Technician")
-				&& (isSuperAdmin || isAdmin)) {
+				&& (isSuperAdmin || isAdmin || isSAVManager)) {
 			rejectUser(userRole);
 			item.put("message", "SAV Technician rejected");
 			headerMap.put("AutorizationNode", user.getEmail());
@@ -353,6 +362,10 @@ public class JwtAuthenticationController {
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		} else if (user.getRoles().contains(roleRepository.findRoleWithName("Super Admin"))) {
 			List<Object[]> userRoles = userRepository.findUserAndRole(user.getUsername());
+			item.put("users", userRoles);
+			return ResponseEntity.status(HttpStatus.OK).body(item);
+		} else if (user.getRoles().contains(roleRepository.findRoleWithName("SAV Manager"))) {
+			List<Object[]> userRoles = userRepository.findUserAndRoleWithoutAdminAndSavManagers(user.getUsername());
 			item.put("users", userRoles);
 			return ResponseEntity.status(HttpStatus.OK).body(item);
 		}

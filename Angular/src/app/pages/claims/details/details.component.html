@@ -28,6 +28,10 @@
 							<div class="label">Updated</div>
 							<div class="value">{{ claim.updated | date:'short'}}</div>
 						</div>
+						<div class="detail">
+							<div class="label">Assignee</div>
+							<div class="value">{{claim?.technician?.name??'Not affected yet'}}</div>
+						</div>
 						<div class="detail mt-3">
 							<div class="label">Description</div>
 						</div>

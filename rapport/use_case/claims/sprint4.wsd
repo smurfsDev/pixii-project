@@ -1,0 +1,47 @@
+@startuml claims_use_case_sprint_4
+left to right direction
+skinparam packageStyle rect
+skinparam shadowing false
+
+actor ScooterOwner as so
+actor SuperAdmin as sa
+actor SavManager as sm
+actor SAVTechnicien as st
+
+
+
+package claims {
+( Comment claim  ) as mgcc
+( Consult claim details ) as mgccd
+( Consult claim status history ) as mgccds
+( Consult claim technician history ) as mgccdt
+( Consult my claims ) as cmc
+( Create claim ) as cc
+( Affect claim to SAVTechnicien ) as mgca
+( Consult all claims ) as cac
+
+( Consult claims affected to me ) as mgc
+( Change claim status ) as mgccs
+
+}
+
+left to right direction
+
+
+so --> cc
+so --> cmc
+mgccd <.. mgccds : extends
+mgccd <.. mgccdt : extends
+cmc <.. mgccd : extends
+mgccd <.. mgcc :extends
+st <|--sm
+sm <|--sa
+sm --> cac
+cac <.. mgca :extends
+cac <.. mgccd : extends
+st --> mgc
+mgc <.. mgccd : extends
+mgc <.. mgccs : extends
+
+
+@enduml

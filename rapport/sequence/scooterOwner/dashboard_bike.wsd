@@ -1,0 +1,35 @@
+@startuml dashboard_bike
+hide footbox
+actor ScooterOwner as so
+boundary Dashboard as d
+control BikeService as bc
+control ClaimsService as cs
+entity bike as b
+entity Claim as c
+so -> d : lockBike
+activate so
+activate d
+d -> bc : lockBike(bike)
+activate bc
+bc -> b : lockBike(bike)
+activate b
+b --> bc : bike
+deactivate b
+bc --> d : bike
+deactivate bc
+d --> so : bike
+deactivate d
+so -> d : unlockBike
+activate d
+d -> bc : unlockBike(bike)
+activate bc
+bc -> b : unlockBike(bike)
+activate b
+b --> bc : bike
+deactivate b
+bc --> d : bike
+deactivate bc
+d --> so : bike
+deactivate d
+deactivate so
+@enduml

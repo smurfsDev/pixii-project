@@ -14,10 +14,11 @@ class User {
       required this.name,
       required this.email,
       required this.role,
-      required this.image,
+      this.image,
       required this.scootername});
 
   String username;
+  String? id;
   String name;
   String email;
   List role;

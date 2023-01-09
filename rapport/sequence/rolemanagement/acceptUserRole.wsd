@@ -1,0 +1,33 @@
+@startuml accept_user_role_sequence_diagram
+hide footbox
+actor "Super Admin\nAdmin\n Sav Manager" as u
+boundary manageUsers as v
+control userController as c
+entity User as m
+activate u
+u -> v : clickAcceptButton(user)
+
+activate v
+v -> c :acceptUser(user)
+activate c
+c -> m :acceptUser(user)
+activate m
+m --> c: userAccepted
+deactivate m
+c --> v: userAccepted
+deactivate c
+v --> u: userAccepted
+deactivate v
+u -> v : clickRejectButton(user)
+activate v
+v -> c :rejectUser(user)
+activate c
+c -> m :rejectUser(user)
+activate m
+m --> c: userRejected
+deactivate m
+c --> v: userRejected
+deactivate c
+v --> u: userRejected
+deactivate v
+@enduml

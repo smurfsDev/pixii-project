@@ -33,6 +33,7 @@ export class TopbarComponent implements OnInit {
     color: '#ffffffa4',
     fontSize: '18px',
   };
+  showOptions = false;
 
   constructor(
     private ProfileService: ProfileService,
@@ -45,6 +46,7 @@ export class TopbarComponent implements OnInit {
     this.store
       .select((state) => state.AuthState)
       .subscribe((user) => {
+        this.showOptions = this.router.url == "/";
         if (user) {
           this.authUser = user.user;
           this.isScooterOwner = user['isScooterOwner'].isScooterOwner;
@@ -53,11 +55,13 @@ export class TopbarComponent implements OnInit {
     this.getProfilePicture();
     this.getProfile();
   }
+
   getProfilePicture() {
     this.ProfileService.getProfilePicture().subscribe((data: any) => {
       this.profile = data;
     });
   }
+
   getProfile() {
     this.ProfileService.getProfile().subscribe((data: any) => {
       this.name = data;

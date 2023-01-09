@@ -60,9 +60,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/forgot_password").permitAll()
 				.antMatchers("/reset_password").permitAll()
 				.antMatchers("/roles").permitAll().antMatchers("/checkEmail/{email}").permitAll()
-				.antMatchers("/accept/{idUser}/{idRole}").hasAnyAuthority("Admin", "Super Admin")
-				.antMatchers("/reject/{idUser}/{idRole}").hasAnyAuthority("Admin", "Super Admin")
-				.antMatchers("/users").hasAnyAuthority("Admin", "Super Admin")
+				.antMatchers("/accept/{idUser}/{idRole}").hasAnyAuthority("Admin", "Super Admin", "SAV Manager")
+				.antMatchers("/reject/{idUser}/{idRole}").hasAnyAuthority("Admin", "Super Admin", "SAV Manager")
+				.antMatchers("/users").hasAnyAuthority("Admin", "Super Admin", "SAV Manager")
 				.antMatchers("/checkUsername/{username}").permitAll().antMatchers("/resend").permitAll()
 				.antMatchers("/user-photos/**").permitAll()
 				// all other requests need to be authenticated

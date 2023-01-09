@@ -23,19 +23,15 @@ class _ScooterManagmentState extends State<ScooterManagement> {
       // setState(() {
         bikeService = Provider.of<BikeService>(context, listen: false);
         bike = bikeService.bikeData;
-        print("State" + bikeService.toString());
         if (bike == null) {
           await bikeService.getBikeData();
           // .then((value) {
-            print("fetching");
             setState(() {
               bike = bikeService.bikeData;
             });
             bike = bikeService.bikeData;
-            print("State" + bike.toString());
           // });
         } else {
-          print("State" + bike!.TheftState.toString());
         }
       // });
     });

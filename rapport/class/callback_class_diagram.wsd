@@ -1,0 +1,26 @@
+@startuml callback_class_diagram
+ 
+Class SuperAdmin{}
+Class Admin{}
+Class ScooterOwner{}
+
+
+top to bottom direction
+
+
+Class Callback{
+	Int id
+	Date created
+	Bool called
+	GetAllCallbacks() : Callback[]
+	CreateCallback(Callback callback) : Bool
+	SetCalled(Bool called) : Bool
+}
+
+ScooterOwner "1"--"*" Callback :authors
+
+SuperAdmin "1"--"*" Callback :answers
+Admin "1"--"*" Callback :answers
+
+
+@enduml

@@ -27,18 +27,13 @@ class _ManagmentState extends State<Managment> {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       if (bike == null) {
         bike = bikeService.bikeData;
-        print("State" + bikeService.toString());
         if (bike == null) {
           await bikeService.getBikeData();
-          // .then((value) {
-          print("fetching");
           setState(() {
             bike = bikeService.bikeData;
           });
-          print("State" + bike.toString());
           // });
         } else {
-          print("State" + bike!.TheftState.toString());
         }
       }
       // });
@@ -60,9 +55,7 @@ class _ManagmentState extends State<Managment> {
           shape: RoundedRectangleBorder(
               side: BorderSide(width: 2),
               borderRadius: BorderRadius.circular(50)),
-          title: Text(
-            "Tires pressure",
-          ),
+          title: Text(titleMenu),
           trailing: PopupMenuButton<String>(
             icon: const Icon(Icons.arrow_drop_down_outlined),
             padding: EdgeInsets.zero,

@@ -23,7 +23,7 @@ export const create = (req: Request, res: Response) => {
             let user
             if (roleRes.name === "Scooter Owner") {
 
-                user = new User({ name: req.body.name, username: req.body.username, email: req.body.email, password: req.body.password, roles: [{ role: roleRes, status: 1 }], status: 0 });
+                user = new User({ name: req.body.name, username: req.body.username, email: req.body.email, password: req.body.password, roles: [{ role: roleRes, status: 1,scooterId: req.body.scooterId }], status: 0 });
             }
             // if (roleRes.name === "Scooter Owner") {
             //     roleUser = {
@@ -50,7 +50,7 @@ export const create = (req: Request, res: Response) => {
 };
 
 export const accept = (req: Request, res: Response) => {
-    if ((req.body.isAdmin) || (req.body.isSuperAdmin)) {
+    if ((req.body.isAdmin) || (req.body.isSuperAdmin) || req.body.isSAVManager) {
         let nomRole;
 
         Role.findOne({ name: req.params.role }).then((role) => {
@@ -75,7 +75,7 @@ export const accept = (req: Request, res: Response) => {
 }
 export const refuse = (req: Request, res: Response) => {
 
-    if ((req.body.isAdmin) || (req.body.isSuperAdmin)) {
+    if ((req.body.isAdmin) || (req.body.isSuperAdmin) || req.body.isSAVManager) {
         let nomRole;
 
         Role.findOne({ name: req.params.role }).then((role) => {

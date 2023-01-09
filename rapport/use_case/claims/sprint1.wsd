@@ -1,0 +1,29 @@
+@startuml claims_use_case_sprint_1
+left to right direction
+skinparam packageStyle rect
+skinparam shadowing false
+
+actor ScooterOwner as so
+
+
+package claims {
+( Comment claim  ) as mgcc
+( Consult claim details ) as mgccd
+( Consult claim status history ) as mgccds
+( Consult claim technician history ) as mgccdt
+( Consult my claims ) as cmc
+( Create claim ) as cc
+
+}
+
+left to right direction
+
+
+so --> cc
+so --> cmc
+mgccd <.. mgccds : extends
+mgccd <.. mgccdt : extends
+cmc <.. mgccd : extends
+mgccd <.. mgcc :extends
+
+@enduml

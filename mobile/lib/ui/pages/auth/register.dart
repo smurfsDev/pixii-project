@@ -2,6 +2,7 @@
 
 import 'package:mobile/imports.dart';
 import 'package:mobile/models/Role.dart';
+import 'package:http/http.dart' as http;
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -18,13 +19,62 @@ class _RegisterPageState extends State<Register> {
   String confirmPassword = "Password123";
   String name = "Admin";
   String role = "Admin";
+  String scooterId = "1";
+  String? scooterIdMsg = null;
   bool rememberMe = false;
   bool loading = false;
-  List<DropdownMenuItem<String>> roles = [];
+  bool bikeAsync = false; // managed after response from server
   @override
   void initState() {
     super.initState();
-    fetchRoles();
+  }
+
+  String? validateScooterId(String scooterId) {
+    if (scooterId.isEmpty) {
+      return 'Please enter your scooter id';
+    }
+
+    if (bikeAsync) {
+      setState(() {
+        bikeAsync = false;
+      });
+      return 'Scooter id is not valid';
+    }
+
+    return null;
+  }
+
+  Future<dynamic> checkScooterId(scooterId) async {
+    setState(() {
+      scooterIdMsg = null;
+    });
+
+    if (username.isEmpty) {
+      setState(() {
+        scooterIdMsg = "ScooterId is required";
+      });
+      return;
+    }
+
+    setState(() {
+      bikeAsync = true;
+    });
+
+    //it's just faking delay, make your won async validation here
+    final response = await http.get(
+      Uri.parse('${Environment.apiUrl}/node/bike/checkExist/${scooterId}'),
+    );
+    bikeAsync = false;
+    if (response.body == "true") {
+      setState(() {
+        scooterIdMsg = null;
+      });
+    } else {
+      setState(() {
+        scooterIdMsg = "ScooterId is not valid";
+      });
+    }
+    setState(() {});
   }
 
   @override
@@ -116,53 +166,69 @@ class _RegisterPageState extends State<Register> {
                                       labelText: 'Username',
                                     ),
                                     SizedBox(height: 30.0),
-                                    // MyInput(
-                                    //   validation: validateRole,
-                                    //   onChanged: (value) {
-                                    //     setState(() {
-                                    //       role = value;
-                                    //     });
-                                    //   },
-                                    //   hintText: 'Role',
-                                    //   icon: Icons.person,
-                                    //   keyboardType: TextInputType.name,
-                                    //   labelText: 'Enter your role',
-
-                                    // ),
-                                    DropdownButtonFormField(
-                                      dropdownColor: Color.fromRGBO(44, 55, 91, 1),
-                                      decoration: InputDecoration(
-                                        labelText: 'Role',
-                                        hintText: 'Role',
-                                        labelStyle: TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255),
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 20.0,
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "ScooterId",
+                                          style: const TextStyle(
+                                              fontSize: 16.0,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500),
                                         ),
-                                        // hintStyle: const TextStyle(color: Colors.white),
-                                        enabledBorder:const UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 3, color: Colors.white),
+                                        Focus(
+                                            onFocusChange: (hasFocus) {
+                                              if (!hasFocus) checkScooterId(scooterId);
+                                            },
+                                          child: 
+                                        TextFormField(
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
+                                          keyboardType: TextInputType.name,
+                                          validator: (value) => scooterIdMsg,
+                                          onChanged: (v) {
+                                            setState(() {
+                                              scooterId = v;
+                                            });
+                                          },
+                                          style: const TextStyle(
+                                              color: Colors.white),
+                                          decoration: InputDecoration(
+                                            suffixIcon: bikeAsync ? Transform.scale(scale: 0.5, child: CircularProgressIndicator()) : null,
+                                            isDense: true,
+                                            enabledBorder:
+                                                const UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  width: 3,
+                                                  color: Colors.white),
+                                            ),
+                                            focusedBorder:
+                                                const UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  width: 3, color: Colors.blue),
+                                            ),
+                                            errorBorder:
+                                                const UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  width: 3, color: Colors.red),
+                                            ),
+                                            hintStyle: const TextStyle(
+                                                color: Colors.white),
+                                            prefixIcon: Icon(Icons.bike_scooter,
+                                                color: Colors.white),
+                                            prefixIconConstraints:
+                                                const BoxConstraints(
+                                                    minWidth: 40,
+                                                    minHeight: 40),
+                                            hintText: "Enter your scooter id",
+                                            // errorText: errorText,
+                                          ),
                                         ),
-                                        focusedBorder:const UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 3, color: Colors.blue),
-                                        ),
-                                        errorBorder: const UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 3, color: Colors.red),
-                                        ),
-                                      ),
-                                      value: role,
-                                      items: roles,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          role = value.toString();
-                                        });
-                                      },
+                                        )
+                                      ],
                                     ),
-                                    SizedBox(height: 30.0),
+                                    SizedBox(height: 20,),
                                     MyInput(
                                       validation: validatePassword,
                                       onChanged: (value) {
@@ -237,7 +303,8 @@ class _RegisterPageState extends State<Register> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.pushNamed(context, Login.id);
+                                      Navigator.pushNamed(context, Login.id);
+
                                   },
                                   child: Text(
                                     ' Login here',
@@ -267,12 +334,11 @@ class _RegisterPageState extends State<Register> {
         loading = true;
       });
       final registerOK = await auth.register(
-          username, password, email, name, role, confirmPassword);
+          username, password, email, name, scooterId, confirmPassword);
       setState(() {
         loading = false;
       });
       if (registerOK) {
-        showAlert(context, 'register Success', 'Welcome $username');
         Navigator.pushNamed(context, VerifyEmail.id);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -281,22 +347,5 @@ class _RegisterPageState extends State<Register> {
         ));
       }
     }
-  }
-
-  void fetchRoles() async {
-    Future<List<Role>> sss = AuthService().getRoles();
-    sss.then((value) {
-      setState(() {
-        roles = value
-            .map((e) => DropdownMenuItem(
-                  value: e.name,
-                  child: Text(
-                    e.name,
-                    style: TextStyle(color:Colors.white),
-                  ),
-                ))
-            .toList();
-      });
-    });
   }
 }

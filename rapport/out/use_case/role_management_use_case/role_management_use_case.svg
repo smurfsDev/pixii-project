@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="241px" preserveAspectRatio="none" style="width:509px;height:241px;background:#FFFFFF;" version="1.1" viewBox="0 0 509 241" width="509px" zoomAndPan="magnify"><defs/><g><!--MD5=[db4c1dcf0b3fb3eefc657705d14a7e3d]
+cluster role_management--><g id="cluster_role_management"><rect fill="none" height="222" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="188" x="315" y="13.5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="126" x="346" y="30.0332">role_management</text></g><g id="elem_dru"><ellipse cx="408.896" cy="67.4792" fill="#F1F1F1" rx="77.896" ry="17.9792" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="101" x="356.4355" y="71.7466">Delete role user</text></g><g id="elem_au"><ellipse cx="408.9277" cy="136.5855" fill="#F1F1F1" rx="68.4277" ry="16.0855" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="75" x="368.4277" y="141.1021">Accept user</text></g><g id="elem_ru"><ellipse cx="408.7688" cy="203.6538" fill="#F1F1F1" rx="68.7688" ry="16.1538" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="72" x="367.7688" y="208.1704">Reject user</text></g><!--MD5=[7d46d6cd919e02e6168a09ad91eae8b4]
+entity u--><g id="elem_u"><ellipse cx="20.5" cy="106" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M20.5,114 L20.5,141 M7.5,122 L33.5,122 M20.5,141 L7.5,156 M20.5,141 L33.5,156 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="29" x="6" y="172.0332">User</text></g><!--MD5=[e74ef3b3a003784962dd3667b8672065]
+entity sa--><g id="elem_sa"><ellipse cx="232.5" cy="14" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M232.5,22 L232.5,49 M219.5,30 L245.5,30 M232.5,49 L219.5,64 M232.5,49 L245.5,64 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="77" x="194" y="80.0332">SuperAdmin</text></g><!--MD5=[f83ae91a690dfc657e1c5fbbd818f13d]
+entity a--><g id="elem_a"><ellipse cx="114.5" cy="106" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M114.5,114 L114.5,141 M101.5,122 L127.5,122 M114.5,141 L101.5,156 M114.5,141 L127.5,156 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="39" x="95" y="172.0332">Admin</text></g><!--MD5=[06ed1f97a038065ba63baeec153d63f2]
+reverse link u to a--><g id="link_u_a"><path d="M55.25,136.5 C68.59,136.5 83.41,136.5 94.76,136.5 " fill="none" id="u-backto-a" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="none" points="55.07,143.5,35.07,136.5,55.07,129.5,55.07,143.5" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[47882022581d672e362ff613b075f8ca]
+reverse link a to sa--><g id="link_a_sa"><path d="M150.11,109.05 C163.83,98.17 179.66,85.62 193.69,74.49 " fill="none" id="a-backto-sa" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="none" points="154.16,114.78,134.14,121.72,145.46,103.81,154.16,114.78" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[db75d70695b9b4c9db96aa587a55a003]
+link sa to dru--><g id="link_sa_dru"><path d="M271.36,49.49 C290.28,51.98 313.82,55.09 336,58.01 " fill="none" id="sa-to-dru" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="341,58.67,332.6037,53.522,336.0434,58.0129,331.5524,61.4526,341,58.67" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[f100e7f88e6a43fd79ee4609b043532d]
+link a to au--><g id="link_a_au"><path d="M134.24,136.5 C173.93,136.5 268.31,136.5 335.11,136.5 " fill="none" id="a-to-au" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="340.28,136.5,331.28,132.5,335.28,136.5,331.28,140.5,340.28,136.5" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[8840e635eef32df4a039c911db8b9ff0]
+link a to ru--><g id="link_a_ru"><path d="M134.24,140.79 C177.87,150.79 287.54,175.91 354.08,191.15 " fill="none" id="a-to-ru" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="359.19,192.32,351.3085,186.4139,354.3159,191.2051,349.5247,194.2125,359.19,192.32" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[7a96a7273aa22006be6c336d7306134f]
+@startuml role_management_use_case
+left to right direction
+skinparam packageStyle rect
+skinparam shadowing false
+
+actor User as u 
+actor SuperAdmin as sa
+actor Admin as a
+u <|- - a
+a <|- - sa
+
+
+package role_management  {
+( Delete role user ) as dru
+( Accept user ) as au
+( Reject user  ) as ru
+
+}
+
+left to right direction
+
+sa - -> dru
+a - -> au
+a - -> ru
+
+
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 19:01:30 CEST 2022)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: Cp1252
+Language: fr
+Country: FR
+--></g></svg>

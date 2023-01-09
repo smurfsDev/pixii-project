@@ -6,6 +6,9 @@ import 'package:mobile/imports.dart';
 import 'package:mobile/main.dart';
 import 'package:mobile/service/user_profile.dart';
 import 'package:mobile/ui/pages/user/profile.dart';
+import 'package:mobile/ui/pages/home/dashboard.dart';
+import 'package:mobile/ui/pages/support/myClaims.dart';
+import 'package:mobile/ui/pages/support/support.dart';
 
 class NavDrawerDemo extends StatefulWidget {
   User user;
@@ -76,7 +79,9 @@ class _NavDrawerDemoState extends State<NavDrawerDemo> {
               icon: Icons.dashboard_outlined,
               textcolor: Color.fromARGB(255, 255, 255, 255),
               onClick: () {
-                Navigator.pop(context);
+                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Dashboard(user)));
               }),
           Divider(),
           menu(
@@ -85,47 +90,51 @@ class _NavDrawerDemoState extends State<NavDrawerDemo> {
               icon: Icons.person_outline,
               textcolor: Color.fromARGB(255, 255, 255, 255),
               onClick: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ProfilePage(user:user)));
               }),
+              
           Divider(),
-          menu(
+              menu(
               bcolor: Color.fromARGB(186, 70, 132, 255),
-              title: 'Inovices',
-              icon: Icons.receipt_long_outlined,
+              title: 'Support',
+              icon: Icons.support_agent,
               textcolor: Color.fromARGB(255, 255, 255, 255),
               onClick: () {
-                // Navigator.pop(context);
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Support(user)));
               }),
-          Divider(),
-          menu(
+              Divider(),
+              menu(
               bcolor: Color.fromARGB(186, 70, 132, 255),
-              title: 'Wallet',
-              icon: Icons.account_balance_wallet_outlined,
+              title: 'My claims',
+              icon: Icons.support_agent,
               textcolor: Color.fromARGB(255, 255, 255, 255),
               onClick: () {
-                // Navigator.pop(context);
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MyClaims(user)));
               }),
           Divider(height: 490),
           menu(
               bcolor: Color.fromARGB(185, 252, 18, 18),
               title: 'Logout',
-              icon: Icons.logout,
+              icon: Icons.contact_support_rounded,
               textcolor: Color.fromARGB(255, 255, 255, 255),
               onClick: () {
                 AuthService().logout().then((value) => {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => MyApp()))
-                    });
+                    Navigator.of(context).popUntil((route) => route.isFirst),
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MyApp()))
+                  });
               }),
           Divider(),
           Center(
             child: Text(
               "Version 1.0.0",
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
+            )>>>>>>> main
           ),
         ],
       ),

@@ -96,7 +96,7 @@ class BikeService with ChangeNotifier {
     }
   }
 
-Future ChangeLightState(bool state) async {
+  Future ChangeLightState(bool state) async {
     try {
       final authService = AuthService();
       await authService.loadSettings();
@@ -126,6 +126,7 @@ Future ChangeLightState(bool state) async {
       notifyListeners();
     }
   }
+
   Future ChangeAlarmState(bool state) async {
     try {
       final authService = AuthService();

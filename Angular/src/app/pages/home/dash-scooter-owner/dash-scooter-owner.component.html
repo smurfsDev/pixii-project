@@ -22,7 +22,7 @@
                           <div class="item">
                             <mat-icon style="padding-top: 3px;" class="icon">pin_drop</mat-icon>
 
-                            <p>Your motorcycle</p>
+                            <p>{{locationName}}</p>
                             <!-- <mat-icon class="menu-button" [ngClass]="{'rotated' :
                             showSubmenu}" *ngIf="isExpanded ||
                                isShowing" style="color: white; " class="float-right">expand_more</mat-icon> -->
@@ -36,8 +36,8 @@
 
                       <div class="col-md-6">
                         <div class="item">
-                          <mat-icon style="padding-top: 4px;" class="icon">settings</mat-icon>
-                          <p>Your motorcycle</p>
+                          <mat-icon style="padding-top: 4px;" class="icon">pin</mat-icon>
+                          <p>{{BikeData?.id}}</p>
                         </div>
 
                       </div>
@@ -133,14 +133,11 @@
 
             </div>
           </div>
-          <div class="buttons">
+          <div class="buttons" style="display:flex;justify-content:center;align-items:center;">
             <button class="btn btn-primary"
               style="width:50% ;border-radius: 15px; margin:60px ; margin-bottom: 15px;"
-              type="submit">S.O.S</button>
-            <button class="btn btn-primary"
-              style="width:50% ;border-radius: 15px; margin:60px ; margin-bottom: 15px;" type="submit"></button>
-            <button class="btn btn-primary"
-              style="width:50% ;border-radius: 15px; margin:60px ; margin-bottom: 15px;" type="submit"></button>
+			  (click)="sendCallback()"
+              type="submit">Request a callback</button>
           </div>
         </div>
         <div *ngIf="controlPanel">

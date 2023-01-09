@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { ClaimsComponent } from './pages/claims/claims.component';
-import { LoginComponent } from './pages/account/login/login.component';
-import { RegisterComponent } from './pages/account/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthComponent } from './pages/account/auth/auth.component';
 import { VerifyEmailComponent } from './pages/account/verify-email/verify-email.component';
@@ -18,69 +16,78 @@ import { UserComponent } from './pages/claims/user/user.component';
 import { ProfileComponent } from './pages/account/profile/profile.component';
 
 export const AppRoutes: Routes = [
-  {
-    path: '',
-    component: HomeComponent,
-    canActivate: [IsAuthenticatedGuard],
-  },
-  {
-    path: 'claims',
-    component: ClaimsComponent,
-    canActivate: [IsAuthenticatedGuard, HasRoleGuard],
-    data: {
-      role: ['SAV Manager', 'SAV Technician'],
-    },
-  },
-  {
-    path: 'chef',
-    component: ChefComponent,
-    canActivate: [IsAuthenticatedGuard, HasRoleGuard],
-    data: {
-      role: ['SAV Manager'],
-    },
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
-  },
-  {
-    path: 'auth',
-    component: AuthComponent,
-  },
-  {
-    path: 'verify',
-    component: VerifyEmailComponent,
-    // canActivate: [IsAuthenticatedGuard]
-  },
-  {
-    path: 'manageUsers',
-    component: MgUsersComponent,
-    canActivate: [IsAuthenticatedGuard, HasRoleGuard],
-    data: {
-      role: ['Super Admin', 'Admin'],
-    },
-  },
-  {
-    path: 'resend-verification',
-    component: ResendVerificationComponent,
-  },
-  { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'checkemail', component: CheckemailComponent },
-  {
-    path: 'myclaims',
-    component: UserComponent,
-    canActivate: [IsAuthenticatedGuard, HasRoleGuard],
-    data: {
-      role: ['Scooter Owner'],
-    },
-  },
-  {
+	{
+		path: '',
+		component: HomeComponent,
+		canActivate: [IsAuthenticatedGuard],
+	},
+	{
+		path: 'claims',
+		component: ClaimsComponent,
+		canActivate: [IsAuthenticatedGuard, HasRoleGuard],
+		data: {
+			role:
+				[
+					'SAV Manager', 'SAV Technician', 'Super Admin'
+				]
+		}
+
+	},
+	{
+		path: 'chef',
+		component: ChefComponent,
+		canActivate: [IsAuthenticatedGuard, HasRoleGuard],
+		data: {
+			role:
+				[
+					'SAV Manager', 'Super Admin'
+				]
+		}
+	},
+	{
+		path: 'auth',
+		component: AuthComponent,
+
+
+	},
+	{
+		path: 'verify',
+		component: VerifyEmailComponent,
+		// canActivate: [IsAuthenticatedGuard]
+
+	},
+	{
+		path: 'manageUsers',
+		component: MgUsersComponent,
+		canActivate: [IsAuthenticatedGuard, HasRoleGuard],
+		data: {
+			role:
+				[
+					'Super Admin', 'Admin', 'SAV Manager'
+				]
+		}
+	},
+	{
+		path: 'resend-verification',
+		component: ResendVerificationComponent,
+	},
+	{ path: 'reset-password', component: ResetPasswordComponent },
+	{ path: 'checkemail', component: CheckemailComponent },
+	{
+		path: 'myclaims', component: UserComponent,
+		canActivate: [IsAuthenticatedGuard, HasRoleGuard],
+		data: {
+			role:
+				[
+					'Scooter Owner'
+				]
+		}
+	},
+   {
     path: 'profile',
     component: ProfileComponent,
     canActivate: [IsAuthenticatedGuard]
   },
+
+
 ];

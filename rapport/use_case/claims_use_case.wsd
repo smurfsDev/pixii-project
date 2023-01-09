@@ -3,51 +3,45 @@ left to right direction
 skinparam packageStyle rect
 skinparam shadowing false
 
-actor User as u 
-actor SuperAdmin as sa
-actor Admin as a 
-actor SAVTechnicien as st
-actor SavManager as sm
 actor ScooterOwner as so
+actor SuperAdmin as sa
+actor SavManager as sm
+actor SAVTechnicien as st
 
 
-u <|-- sa
-u <|-- a
-u <|-- st
-u <|-- so
+
 package claims {
-( Manage claims 'Technicien' ) as mgc
-( Affect claim to SAVTechnicien ) as mgca
 ( Comment claim  ) as mgcc
-( Manage claim 'Manager' ) as mgccm
-( Consult my claim details ) as mgccd
+( Consult claim details ) as mgccd
 ( Consult claim status history ) as mgccds
 ( Consult claim technician history ) as mgccdt
-( Consult all claims details ) as mgccda
-( Change claim status ) as mgccs
 ( Consult my claims ) as cmc
-
 ( Create claim ) as cc
+( Affect claim to SAVTechnicien ) as mgca
+( Consult all claims ) as cac
+
+( Consult claims affected to me ) as mgc
+( Change claim status ) as mgccs
+
 }
 
 left to right direction
 
 
-st --> mgc
-st <|--sm
 so --> cc
 so --> cmc
-sm --> mgccm
-mgccm <.. mgca :extends
-mgccm <.. mgccda : extends
-mgc <.. mgcc : extends
-mgc <.. mgccd : extends
 mgccd <.. mgccds : extends
 mgccd <.. mgccdt : extends
-mgccda <.. mgccds : extends
-mgccda <.. mgccdt : extends
+cmc <.. mgccd : extends
+mgccd <.. mgcc :extends
+sm <|--sa
+sm --> cac
+st <|--sm
+cac <.. mgca :extends
+cac <.. mgccd : extends
+st --> mgc
+mgc <.. mgccd : extends
 mgc <.. mgccs : extends
-cmc <.. mgcc :extends
-cmc <.. mgccds : extends
-cmc <.. mgccdt : extends
+
+
 @enduml

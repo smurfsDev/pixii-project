@@ -1,6 +1,9 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile/imports.dart';
+import 'package:mobile/main.dart';
 import 'package:mobile/models/BikeData.dart';
 import 'package:mobile/service/bike.dart';
+import 'package:mobile/service/claims.dart';
 
 // ignore: must_be_immutable
 class Dashboard extends StatefulWidget {
@@ -18,20 +21,16 @@ class _Dashboard extends State<Dashboard> {
   List<Widget> pages = <Widget>[];
   late BikeService bikeService = BikeService();
   late BikeData? bike = null;
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await bikeService.getBikeData();
-    });
+
+  late ClaimsService claimsService = ClaimsService();
+
+  void init() {
     var fetch = bikeService
         .getBikeData()
         .then((value) => {
-            setState(() {
-              bike = bikeService.bikeData;
-            }),
-            print("bike"+bikeService.bikeData.toString()),
-            print("bike"+bikeService.error),
+              setState(() {
+                bike = bikeService.bikeData;
+              }),
               pages = [
                 Managment(
                   bike: bikeService.bikeData,
@@ -46,7 +45,7 @@ class _Dashboard extends State<Dashboard> {
               ]
             })
         .catchError((err) => {
-           pages = [
+              pages = [
                 Managment(
                   bike: null,
                   bikeService: bikeService,
@@ -58,7 +57,48 @@ class _Dashboard extends State<Dashboard> {
                 const Settings(),
                 const Notifications()
               ]
-        });
+            });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    bikeService = Provider.of<BikeService>(context, listen: false);
+    bike = bikeService.bikeData;
+    init();
+  }
+
+  @override
+  void didUpdateWidget(covariant Dashboard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    bikeService = Provider.of<BikeService>(context, listen: false);
+    bike = bikeService.bikeData;
+    init();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+  }
+
+  @override
+  void reassemble() {
+    super.reassemble();
+    init();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await bikeService.getBikeData();
+      init();
+    });
   }
 
   _Dashboard();
@@ -91,6 +131,72 @@ class _Dashboard extends State<Dashboard> {
           bottomNavigationBar: bottomNav(
             callback: (int i) => setState(() => index = i),
           ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Request a Callback"),
+                    content: Text("Do you want to request a callback?"),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text("No", style: TextStyle(color: Colors.red)),
+                        onPressed: () {
+                          Fluttertoast.showToast(
+                              msg: "Callback request cancelled",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                          // hide dialog
+                          Navigator.of(context)
+                              .popUntil((route) => route.isFirst);
+                        },
+                      ),
+                      TextButton(
+                        child:
+                            Text("Yes", style: TextStyle(color: Colors.green)),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .popUntil((route) => route.isFirst);
+                          requestCallback();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child:
+                const Icon(Icons.phone, color: Color.fromARGB(255, 19, 27, 54)),
+            backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          ),
         )));
+  }
+
+  Future<void> requestCallback() async {
+    final requestOK = await claimsService.requestCallback();
+    if (requestOK) {
+      Fluttertoast.showToast(
+          msg: "Callback requested",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      Fluttertoast.showToast(
+          msg: "Callback request failed",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 }

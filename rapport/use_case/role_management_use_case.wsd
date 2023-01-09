@@ -1,0 +1,30 @@
+@startuml role_management_use_case
+left to right direction
+skinparam packageStyle rect
+skinparam shadowing false
+
+actor SavManager as sm 
+actor SuperAdmin as sa
+actor Admin as a
+sm <|-- a
+a <|-- sa
+
+
+package role_management  {
+( Delete user ) as du
+( Accept user ) as au
+( Reject user  ) as ru
+
+}
+
+left to right direction
+sa --> du 
+sm --> au
+sm --> ru
+
+note right of du
+    if the user has only one role
+    then delete the user
+    else delete the role
+end note
+@enduml

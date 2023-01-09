@@ -61,7 +61,6 @@ class _LocalizationState extends State<Localization> {
       if (bk != null) {
         bk = bikeService.bikeData;
 
-        print(bk?.location['latitude']);
         // refresh the map
         setState(() {
           bike = LatLng(bk?.location['latitude'], bk?.location['longitude']);

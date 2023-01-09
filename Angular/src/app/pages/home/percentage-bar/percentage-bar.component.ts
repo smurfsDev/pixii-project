@@ -22,7 +22,6 @@ export class BatteryPercentageComponent {
 
   ngOnInit() {
     this.renderArrayColor();
-    console.log(this.arrayColor);
   }
 
   renderArrayColor() {
@@ -42,6 +41,5 @@ export class BatteryPercentageComponent {
         break;
       }
     }
-    console.log(this.arrayColor)
   }
 }

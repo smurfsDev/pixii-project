@@ -1,5 +1,6 @@
 @startuml claim_detail_history
 
+hide footbox
 actor "ScooterOwner\nSavManager\nSavTechnicien" as so
 boundary Claims as cl
 control ClaimsService as cs

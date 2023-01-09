@@ -1,0 +1,113 @@
+@startuml register_sequence_diagram
+hide footbox
+actor "Admin\nSAV Manager\nSAV Technician\nScooter Owner" as u
+boundary register as v
+control JWTAuthController as c
+control BikeController as bc
+entity User as m
+entity Bike as b
+activate u
+'------
+alt userName exist
+u --> v : fillUserNameInput
+activate v
+v --> c : checkExistByUserName(userName)
+activate c
+c -> m : checkExistByUserName(userName)
+activate m
+m --> c : user exist
+c --> v : user exist
+v --> u : userName already used
+
+else userName not exist
+m --> c : user not exist 
+deactivate m
+c --> v : user not exist
+deactivate c
+v --> u : userName can be used
+deactivate v
+end
+' ------
+alt Email exist
+u --> v : fillEmailInput
+activate v
+v --> c : checkExistByEmail(Email)
+activate c
+c -> m : checkExistByEmail(Email)
+activate m
+m --> c : user exist
+c --> v : user exist
+v --> u : Email already used
+
+else Email not exist
+m --> c : user not exist 
+deactivate m
+c --> v : user not exist
+deactivate c
+v --> u : Email can be used
+deactivate v
+end
+' ------
+
+' ------
+alt selected role is Scooter Owner
+    u -> v : fillScooterIdInput
+    activate v
+    v -> bc : CheckExist(id)
+    activate bc
+    bc -> b : CheckExist(id)
+    activate b
+        alt bike exist
+            b --> bc : bike exist
+        else bike not exist
+            b --> bc : bike not exist
+        end
+    deactivate b
+    bc --> v : bike exist or not
+    deactivate bc
+    v --> u : bike exist or not
+' ------
+    deactivate v
+end
+u -> v : FillRegisterForm(user)
+activate v
+v -> v :VerifyRegisterForm(user)
+activate v
+v --> v : FormVerified
+deactivate v
+alt FormVerified is true
+
+v -> c : register(user)
+activate c
+' c -> m : createUser(user)
+' activate m
+
+' m --> c: user created
+' deactivate m
+' c --> v: user created
+' deactivate c
+' v --> u: user created
+alt request body are valid
+c -> m : createUser(user)
+activate m
+m --> c: user created
+c --> v: user created
+v --> u: user created
+else request body are not valid
+m --> c: user not created
+deactivate m
+c --> v: request body are not valid
+deactivate c
+v --> u: request body are not valid
+deactivate v
+end
+
+else FormVerified is false
+v --> u : showErrorMessage
+deactivate c
+deactivate v
+end
+
+
+
+@enduml

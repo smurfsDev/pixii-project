@@ -1,0 +1,61 @@
+@startuml dashboards_use_case_diagram
+skinparam packageStyle rect
+skinparam shadowing false
+
+actor SuperAdmin as sa
+actor Admin as a
+actor SavManager as sm
+actor SavTechnician as st
+actor ScooterOwner as so
+
+st <|-- sm
+sm <|-- a
+a <|-- sa
+package dashboard_diagram{
+    ( consult ScooterOwners number ) as scn
+    ( consult Scooters number ) as sn
+    ( consult My claims ) as c
+    ( consult Claims Done ) as cd
+    ( consult Claims statistics ) as css
+    '------
+    ( consult SavTechnicians number ) as stn
+    '------
+    ( consult SavManagers number ) as smn
+    '------
+    ( consult Admins number ) as an
+    ( manage Callback ) as mc
+    '------
+    ( request a call back ) as rcb
+    ( consult Shadow's details ) as csd
+    ( controle Shadow ) as cs
+    ( create Claims ) as ccl
+( Authenticate ) as auth
+}
+left to right direction
+st --> scn
+st --> sn
+st --> c
+st --> cd
+st --> css
+sm --> stn
+a --> smn
+a --> mc
+sa --> an
+so --> rcb
+so --> csd
+so --> cs
+so --> ccl
+ccl ..> auth : includes
+scn ..> auth : includes
+sn ..> auth : includes
+c ..> auth : includes
+cd ..> auth : includes
+css ..> auth : includes
+stn ..> auth : includes
+smn ..> auth : includes
+an ..> auth : includes
+mc ..> auth : includes
+rcb ..> auth : includes
+csd ..> auth : includes
+cs ..> auth : includes
+@enduml
