@@ -1,0 +1,53 @@
+@startuml general_class_diagram
+Class user {
+Int id
+String name
+String password
+String username
+String email
+Bool enabled 
+String image
+String Scootername
+String verification_code
+Bool Register()
+JSON Login()
+JSON accept()
+JSON reject()
+JSON deleteUser()
+JSON processResetPassword()
+JSON verifyUser()
+JSON resendCode()
+JSON Ulpoad()
+JSON GetProfile()
+JSON Scootername() 
+
+}
+
+Class role{
+Int id
+String name
+}
+
+Class role_user{
+Int user_id
+Int role_id
+Int bike_id
+Int status
+}
+(user,role) "1..*" - "0..*" role_user
+
+ 
+Class SuperAdmin{}
+Class Admin{}
+Class SavManager{}
+Class SavTechnicien{}
+Class ScooterOwner{}
+
+left to right direction
+user <|-- SuperAdmin
+user <|-- Admin
+user <|-- SavManager
+user <|-- SavTechnicien
+user <|-- ScooterOwner
+
+@enduml

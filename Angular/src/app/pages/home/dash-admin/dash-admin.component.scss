@@ -110,7 +110,7 @@
 		}
 
 		.claims {
-			width: 100%;
+			width: 90%;
 			border-radius: 9px;
 			margin: 40px;
 			display: flex;
@@ -232,4 +232,8 @@
 	border-radius: 5px;
 	margin-right: 5px;
 
+}
+
+.claimsPercentage,.nbScooters {
+	margin-top: 20px;
 }

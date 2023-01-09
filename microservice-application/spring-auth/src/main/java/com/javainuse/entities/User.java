@@ -1,5 +1,7 @@
 package com.javainuse.entities;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.PrePersist;
 
 @Entity
 public class User {
@@ -33,6 +35,13 @@ public class User {
 	@Column(name = "verification_code", length = 64)
 	private String verificationCode;
 	private boolean enabled;
+	@Column(nullable = true)
+	// @DefaultValue("default.png")
+	private String image;
+	@Column(nullable = true)
+	private String scootername;
+	@Column(name = "created_timestamp", updatable = false)
+	private LocalDateTime createdTimestamp;
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -120,4 +129,30 @@ public class User {
 		this.roles = roles;
 	}
 
+	public String getImage() {
+		return image;
+	}
+	
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
+	public String getScootername() {
+		return scootername;
+	}
+	
+	public void setscootername(String scootername) {
+		this.scootername = scootername;
+	}
+	
+	@PrePersist
+	public void createdTimestamp() {
+		createdTimestamp = LocalDateTime.now();
+	}
+
+	public String getCreatedTimestamp() {
+		LocalDateTime currentDateTime = LocalDateTime.now();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		return currentDateTime.format(format);
+	}
 }

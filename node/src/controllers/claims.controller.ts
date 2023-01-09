@@ -135,6 +135,7 @@ export const findOne = (req: Request, res: Response) => {
 		else if (!claim) return res.status(404).send("Claim not found");
 		else return res.status(200).send(claim);
 	}).populate('status', 'name')
+		.populate('user', 'name')
 		.populate('technician', 'name')
 		.populate({
 			path: 'comments',
@@ -156,7 +157,7 @@ export const findOne = (req: Request, res: Response) => {
 				},
 				{
 					path: "author",
-					select: "name",
+					select: "name image",
 					model: "User"
 				}
 			]
@@ -173,7 +174,7 @@ export const findOne = (req: Request, res: Response) => {
 				},
 				{
 					path: "author",
-					select: "name",
+					select: "name image",
 					model: "User"
 				}
 			]

@@ -13,7 +13,7 @@ export class UserComponent implements OnInit {
 
 	claims: any = [];
 	opened = false;
-	claim: any = {
+	claim = {
 		_id: "",
 		subject: "Claim subject",
 		status: "Done",
@@ -43,17 +43,29 @@ export class UserComponent implements OnInit {
 			{
 				"old_status": "Done",
 				"new_status": "In Progress",
-				"date": "2022-11-16T19:10:56.107Z"
+				"date": "2022-11-16T19:10:56.107Z",
+				"author": {
+						name:"",
+						image:"",
+					}
 			},
 			{
 				"old_status": "In Progress",
 				"new_status": "Stuck",
-				"date": "2022-11-16T19:10:56.107Z"
+				"date": "2022-11-16T19:10:56.107Z",
+				"author": {
+						name:"",
+						image:"",
+					}
 			},
 			{
 				"old_status": "Stuck",
 				"new_status": "In Progress",
-				"date": "2022-11-16T19:10:56.107Z"
+				"date": "2022-11-16T19:10:56.107Z",
+				"author": {
+						name:"",
+						image:"",
+					}
 			},
 		],
 		_technician: [
@@ -61,11 +73,13 @@ export class UserComponent implements OnInit {
 					"old_technician": "John Doe",
 					"new_technician": "John Doe",
 					"date": "2022-11-16T19:10:56.107Z",
-					"author": "John Doe"
+					"author": {
+						name:"",
+						image:"",
+					}
 				}	
 		],
 		technician: null,
-
 	};
 	openDetails(id: any) {
 		this.opened = false;
@@ -81,21 +95,28 @@ export class UserComponent implements OnInit {
 			let _status: {
 				old_status: string,
 				new_status: string,
-				author: string,
+				author: {
+					name: string,
+					image:string,
+				},
 				date: string
 			}[] = [];
-			let _technician: {
+			let _technician : {
 				old_technician: string,
 				new_technician: string,
-				author: string,
+				author: {
+					name: string,
+					image:string,
+				},
 				date: string
 			}[] = [];
+
 
 			data._status.forEach((element: any) => {
 				_status.push({
 					old_status: element.old_status.name,
 					new_status: element.new_status.name,
-					author: element.author.name,
+					author: element.author,
 					date: element.date
 				});
 			}
@@ -104,7 +125,7 @@ export class UserComponent implements OnInit {
 				_technician.push({
 					old_technician: element.old_technician.name,
 					new_technician: element.new_technician.name,
-					author: element.author.name,
+					author: element.author,
 					date: element.date
 				});
 			}

@@ -48,6 +48,9 @@ dependencies:
   latlong2: ^0.8.1
   proj4dart: ^2.1.0
   positioned_tap_detector_2: ^1.0.4
+  image_picker: ^0.8.6
+  get: ^4.6.5
+  path_provider: ^2.0.11
   fluttertoast: ^8.1.1
 
 dev_dependencies:

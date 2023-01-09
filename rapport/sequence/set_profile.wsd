@@ -1,0 +1,79 @@
+
+@startuml set_profile
+actor User as u
+boundary profileUI as up
+control profileController as pc
+entity profile as p
+
+activate u
+
+activate up
+
+activate pc
+activate p
+deactivate p
+deactivate pc
+deactivate up
+deactivate u
+alt name is only changed
+    u -> up : set profile
+    up -> pc : set profile
+    p -> pc : set name
+    pc -> up : set name
+    up -> u : set name
+
+end
+
+alt email is changed
+    u -> up : set email
+    up -> pc : set email
+    pc -> p : set email
+    p -> pc : email changed
+    pc -> up : email changed
+    up -> u : redirect to verify
+else email is not valid
+    u -> up : set email
+    up -> pc : set email
+    pc -> p : set email
+    p -> pc : email not valid
+    pc -> up : email not valid
+    up -> u : email not valid
+else
+end
+u -> up : set password
+up -> pc : set password
+pc -> p : set password
+alt password is valid
+    p -> pc : password changed
+    pc -> up : password changed
+    up -> u : password changed
+else password is not valid
+    ' u -> up : set password
+    ' up -> pc : set password
+    ' pc -> p : set password
+    p -> pc : password not valid
+    pc -> up : password not valid
+    up -> u : password not valid
+else old password incorrect
+    ' u -> up : set password
+    ' up -> pc : set password
+    ' pc -> p : set password
+    p -> pc : old password incorrect
+    pc -> up : old password incorrect
+    up -> u : old password incorrect
+end
+
+p -> pc : password changed
+pc -> up : password changed
+up -> u :password changed
+
+    u -> up : set scooter name
+    up -> pc : set scooter name
+    pc -> p : set scooter name
+    p -> pc : scooter name changed
+    pc -> up : scooter name changed
+    up -> u : scooter name changed
+
+
+
+@enduml

@@ -37,7 +37,7 @@ class Claim {
         statusHistory: json['_status'] as List<dynamic>,
         comments: json['comments'] as List<dynamic>,
         created: json['created'] as String?,
-        technician: json['technician'] as String?,
+        technician: json['technician'][1] as String?,
         message: json['message'] as String);
   }
 

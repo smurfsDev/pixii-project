@@ -1,0 +1,295 @@
+<app-navbar>
+  <app-nav-profile [image]="profile?.image?env + '/user-photos/' + profile?.image:null"></app-nav-profile>
+  <div>
+    <div class="board">
+      <div class="container">
+        <div class="board-wrapper">
+          <div class="card">
+            <div class="profile-container">
+              <div class="image-form">
+                <div class="name">{{ profile?.name }}</div>
+                <div class="username">{{ profile?.username }}</div>
+                <div class="image">
+                  <!-- <img [src]="imageUrl || defaultImageUrl" /> -->
+
+                  <img
+                    alt="profile image"
+                    *ngIf="profile?.image&&profile?.image!='null  '; else defaultImageTemplate"
+                    [src]="env + '/user-photos/' + profile?.image"
+                  />
+                  <ng-template #defaultImageTemplate>
+                    <img [src]="defaultImageUrl"  alt="profile image"/>
+                  </ng-template>
+
+                  <!-- <img [src]="env + '/user-photos/' + profile?.image" /> -->
+                </div>
+
+                <form>
+                  <button type="submit" class="update btn">
+                    <label for="upload-photo">Update</label>
+                    <input
+                      type="file"
+                      name="image"
+                      id="upload-photo"
+                      accept="image/png,  image/jpeg"
+                      (change)="uploadProfilePicture($event) "
+                    />
+                    <br />
+                  </button>
+                </form>
+
+                <div class="image-details">
+                  <p>
+                    Upload a new avatar, Larger image will be resized
+                    automatically,
+                  </p>
+                  <span>Maximum upload sie is <b>2MB</b>.</span>
+                </div>
+                <div class="member-since">
+                  Member Since : <b>{{ profile?.created_at }}</b>
+                </div>
+              </div>
+              <div class="data-form">
+                <div class="title" *ngIf="!isAddMode">Your Information</div>
+                <div class="title" *ngIf="isAddMode">Edit your Information</div>
+                <br />
+
+                <mat-tab-group mat-align-tabs="start">
+                  <mat-tab label="User info" class="userinfo">
+                    <form
+                      class="form"
+                      [formGroup]="profilemod"
+                      *ngIf="!isAddMode"
+                      (ngSubmit)="updateProfile()"
+                    >
+                      <div class="formitem">
+                        <div class="group">
+                          <label for="fullname">Name</label>
+                          <input
+                            [formControl]="name"
+                            id="fullname"
+                            type="text"
+                          />
+                        </div>
+                        <div class="group">
+                          <label for="UserName">Username</label>
+                          <input
+                            [formControl]="username"
+                            id="UserName"
+                            type="text"
+                            readonly
+                          />
+                        </div>
+                      </div>
+
+                      <div class="formitem">
+                        <div class="group">
+                          <label for="EmailAdress">Email Address</label>
+                          <input
+                            [formControl]="email"
+                            id="EmailAdress"
+                            type="text"
+                          />
+                          <mat-error
+                            *ngIf="
+                              profilemod.get('email')?.hasError('required')
+                            "
+                          >
+                            Email is <strong>required</strong>
+                          </mat-error>
+                          <mat-error
+                            *ngIf="
+                              !profilemod.get('email')?.hasError('required') &&
+                              profilemod.get('email')?.errors
+                            "
+                          >
+                            Email is <strong>invalid</strong>
+                          </mat-error>
+                        </div>
+                        <div class="group">
+                          <label for="ConfirmEmailAddress"
+                            >Confirm Email Address</label
+                          >
+                          <input
+                            [formControl]="confirmemail"
+                            id="ConfirmEmailAddress"
+                            type="text"
+                          />
+                          <mat-error
+                            *ngIf="
+                              profilemod
+                                .get('confirmemail')
+                                ?.hasError('required')
+                            "
+                          >
+                            Email is <strong>required</strong>
+                          </mat-error>
+                          <mat-error
+                            *ngIf="
+                              !profilemod
+                                .get('confirmemail')
+                                ?.hasError('required') &&
+                              profilemod.get('confirmemail')?.errors
+                            "
+                          >
+                            Email must <strong>match</strong>
+                          </mat-error>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex"
+                        style="justify-content: center; gap: 25px"
+                      >
+                        <button type="submit" class="update btn">Update</button>
+                      </div>
+                    </form>
+                  </mat-tab>
+                  <mat-tab label="Scooter info" class="tab">
+                    <form
+                      class="form"
+                      [formGroup]="scooterform"
+                      (ngSubmit)="updateScooterName()"
+                    >
+                      <div class="formitem">
+                        <div class="group">
+                          <label for="scootername">Scooter name</label>
+                          <input
+                            id="scootername"
+                            type="text"
+                            [formControl]="scootername"
+                          />
+                        <p> Enter your Scooter name </p>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex"
+                        style="justify-content: center; gap: 25px"
+                      >
+                        <button type="submit" class="update btn">Update</button>
+                      </div>
+                    </form>
+                  </mat-tab>
+                  <mat-tab label="Reset password" class="userinfo">
+                    <form
+                      class="form"
+                      [formGroup]="resetpassword"
+                      (ngSubmit)="updatePassword()"
+                    >
+                      <div class="formitem">
+                        <div class="group">
+                          <label for="Oldpassword">Old password</label>
+                          <input
+                            formControlName="oldpassword"
+                            id="oldpassword"
+                            type="password"
+                            placeholder="Enter your old password"
+                          />
+                          <mat-error
+                            *ngIf="
+                              resetpassword
+                                .get('oldpassword')
+                                ?.hasError('required')
+                            "
+                          >
+                            Old password is <strong>required</strong> to change
+                            your password
+                          </mat-error>
+
+                          <mat-error
+                            *ngIf="
+                              !resetpassword
+                                .get('oldpassword')
+                                ?.hasError('required') &&
+                              resetpassword.get('oldpassword')?.errors
+                            "
+                          >
+                            Old password is <strong>invalid</strong>
+                          </mat-error>
+                        </div>
+                      </div>
+
+                      <div class="formitem">
+                        <div class="group">
+                          <label for="password">Password</label>
+                          <input
+                            formControlName="password"
+                            id="password"
+                            type="password"
+                            placeholder="Enter your password"
+                          />
+                          <mat-error
+                            *ngIf="
+                              resetpassword
+                                .get('password')
+                                ?.hasError('required')
+                            "
+                          >
+                            Password is <strong>required</strong>
+                          </mat-error>
+                          <mat-error
+                            *ngIf="
+                              !resetpassword
+                                .get('password')
+                                ?.hasError('required') &&
+                              resetpassword.get('password')?.errors
+                            "
+                          >
+                            Password must :
+                            <strong>Be at least 8 char long</strong>
+                            <strong>
+                              and have at least one maj char/min
+                              char/number</strong
+                            >
+                          </mat-error>
+                        </div>
+
+                        <div class="group">
+                          <label for="onfirmpassword">Confirm Password</label>
+                          <input
+                            formControlName="confirmpassword"
+                            id="confirmpassword"
+                            type="password"
+                            placeholder="Enter your password again to confirm"
+                          />
+
+                          <mat-error
+                            *ngIf="
+                              resetpassword
+                                .get('confirmpassword')
+                                ?.hasError('required')
+                            "
+                          >
+                            Confirm Password is <strong>required</strong>
+                          </mat-error>
+                          <mat-error
+                            *ngIf="
+                              !resetpassword
+                                .get('confirmpassword')
+                                ?.hasError('required') &&
+                              resetpassword.get('confirmpassword')?.errors
+                            "
+                          >
+                            Password must <strong>match</strong>
+                          </mat-error>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex"
+                        style="justify-content: center; gap: 25px"
+                      >
+                        <button type="submit" class="update btn">Update</button>
+                      </div>
+                    </form>
+                  </mat-tab>
+                </mat-tab-group>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <br />
+      </div>
+    </div>
+  </div>
+  <div class="form-width"></div>
+</app-navbar>

@@ -88,7 +88,10 @@ class _Comments extends State<Comments> {
             await claimsService.createComment(this.claim.id, message);
 
         if (commentCreated) {
-          Claim? commentClaim = await claimsService.getClaim(claim.id);
+          Claim? commentClaim;
+          try {
+            commentClaim = await claimsService.getClaim(claim.id);
+          } catch (e) {}
           setState(() {
             message = "";
             allComments.clear();

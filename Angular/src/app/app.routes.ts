@@ -13,6 +13,7 @@ import { HasRoleGuard } from './guards/has-role.guard';
 
 import { ResendVerificationComponent } from './pages/account/resend-verification/resend-verification.component';
 import { UserComponent } from './pages/claims/user/user.component';
+import { ProfileComponent } from './pages/account/profile/profile.component';
 
 export const AppRoutes: Routes = [
 	{
@@ -82,6 +83,11 @@ export const AppRoutes: Routes = [
 				]
 		}
 	},
+   {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [IsAuthenticatedGuard]
+  },
 
 
 ];

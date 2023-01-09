@@ -1,0 +1,22 @@
+
+@startuml get_profile
+actor User as u
+boundary profileUI as up
+control profileController as pc
+entity profile as p
+
+activate u
+u -> up : getProfile()
+activate up
+up ->pc  : getProfile()
+activate pc
+pc->  p: getProfile()
+activate p
+ p--> pc : Profileinfo
+deactivate p
+  pc--> up : Profileinfo
+deactivate pc
+ up-->u : Profileinfo
+deactivate up
+deactivate u
+@enduml
