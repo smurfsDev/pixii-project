@@ -13,7 +13,7 @@ export class UserComponent implements OnInit {
 
 	claims: any = [];
 	opened = false;
-	claim: any = {
+	claim = {
 		_id: "",
 		subject: "Claim subject",
 		status: "Done",
@@ -43,17 +43,29 @@ export class UserComponent implements OnInit {
 			{
 				"old_status": "Done",
 				"new_status": "In Progress",
-				"date": "2022-11-16T19:10:56.107Z"
+				"date": "2022-11-16T19:10:56.107Z",
+				"author": {
+						name:"",
+						image:"",
+					}
 			},
 			{
 				"old_status": "In Progress",
 				"new_status": "Stuck",
-				"date": "2022-11-16T19:10:56.107Z"
+				"date": "2022-11-16T19:10:56.107Z",
+				"author": {
+						name:"",
+						image:"",
+					}
 			},
 			{
 				"old_status": "Stuck",
 				"new_status": "In Progress",
-				"date": "2022-11-16T19:10:56.107Z"
+				"date": "2022-11-16T19:10:56.107Z",
+				"author": {
+						name:"",
+						image:"",
+					}
 			},
 		],
 		_technician: [
@@ -61,11 +73,13 @@ export class UserComponent implements OnInit {
 					"old_technician": "John Doe",
 					"new_technician": "John Doe",
 					"date": "2022-11-16T19:10:56.107Z",
-					"author": "John Doe"
+					"author": {
+						name:"",
+						image:"",
+					}
 				}	
 		],
 		technician: null,
-
 	};
 	openDetails(id: any) {
 		this.opened = false;

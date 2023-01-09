@@ -8,6 +8,7 @@ import { Sort } from '@angular/material/sort';
 import { ManageUsersService } from 'src/app/service/users/superAdmin/manage-users.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-mg-users',
@@ -18,6 +19,7 @@ export class MgUsersComponent implements AfterViewInit, OnInit {
 	Roles: any = [{ value: 'All', name: 'All' }];
 	Status: any = [{ value: 'All', name: 'All' }, { value: 1, name: 'Active' }, { value: 0, name: 'Inactive' }];
 	authUser: User | undefined;
+	env = environment;
 	displayedColumns: string[] = ['name', 'role', 'email', 'status', 'actions'];
 	ELEMENT_DATAFilled: any = [];
 	searchText = '';

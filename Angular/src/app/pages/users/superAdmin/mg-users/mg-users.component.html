@@ -51,7 +51,7 @@
 							<th class="header" mat-header-cell *matHeaderCellDef> Name </th>
 							<td class="cell" mat-cell *matCellDef="let element">
 								<img class="avatar"
-									src="https://resize.elle.fr/article/var/plain_site/storage/images/loisirs/cinema/news/avatar-2-une-premiere-bande-annonce-en-mai-4010741/96462268-1-fre-FR/Avatar-2-une-premiere-bande-annonce-en-mai.jpg" />
+									[src]="element[0].user.image? env.apiUrl + '/user-photos/'+element[0].user.image :'https://resize.elle.fr/article/var/plain_site/storage/images/loisirs/cinema/news/avatar-2-une-premiere-bande-annonce-en-mai-4010741/96462268-1-fre-FR/Avatar-2-une-premiere-bande-annonce-en-mai.jpg'" />
 								{{element[0].user.name}}
 							</td>
 						</ng-container>

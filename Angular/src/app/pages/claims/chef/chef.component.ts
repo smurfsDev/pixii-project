@@ -46,21 +46,33 @@ export class ChefComponent implements OnInit {
 				created: "2022-01-01"
 			},
 		],
-		_status : [
+		_status: [
 			{
 				"old_status": "Done",
 				"new_status": "In Progress",
-				"date": "2022-11-16T19:10:56.107Z"
+				"date": "2022-11-16T19:10:56.107Z",
+				"author": {
+						name:"",
+						image:"",
+					}
 			},
 			{
 				"old_status": "In Progress",
 				"new_status": "Stuck",
-				"date": "2022-11-16T19:10:56.107Z"
+				"date": "2022-11-16T19:10:56.107Z",
+				"author": {
+						name:"",
+						image:"",
+					}
 			},
 			{
 				"old_status": "Stuck",
 				"new_status": "In Progress",
-				"date": "2022-11-16T19:10:56.107Z"
+				"date": "2022-11-16T19:10:56.107Z",
+				"author": {
+						name:"",
+						image:"",
+					}
 			},
 		],
 		_technician: [
