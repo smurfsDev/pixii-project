@@ -134,7 +134,7 @@ class _NavDrawerDemoState extends State<NavDrawerDemo> {
           Center(
             child: Text(
               "Version 1.0.0",
-            )>>>>>>> main
+            )
           ),
         ],
       ),
