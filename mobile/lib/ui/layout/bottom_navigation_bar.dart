@@ -60,40 +60,7 @@ class _bottomNav extends State<bottomNav> {
             )
           ],
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.settings,
-                size: 30,
-                color: _selectedIndex == 2
-                    ? Colors.black
-                    : Color.fromARGB(255, 171, 160, 160)),
-            Text(
-              "Settings",
-              style: TextStyle(
-                fontSize: _selectedIndex == 2 ? 2 : 12,
-              ),
-            )
-          ],
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.notifications_on_sharp,
-                size: 30,
-                color: _selectedIndex == 3
-                    ? Colors.black
-                    : Color.fromARGB(255, 171, 160, 160)),
-            Text(
-              "Notifications",
-              style: TextStyle(
-                fontSize: _selectedIndex == 3 ? 3 : 12,
-              ),
-            )
-          ],
-        ),
+        
       ],
       onTap: (index) {
         _onItemTapped(index);
