@@ -117,7 +117,7 @@ class _NavDrawerDemoState extends State<NavDrawerDemo> {
                   Navigator.push(context,
                     MaterialPageRoute(builder: (context) => MyClaims(user)));
               }),
-          Divider(height: 490),
+          Divider(height: 180),
           menu(
               bcolor: Color.fromARGB(185, 252, 18, 18),
               title: 'Logout',

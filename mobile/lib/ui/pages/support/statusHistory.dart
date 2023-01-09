@@ -204,26 +204,6 @@ class _StatusHistoryWidget extends State<StatusHistoryWidget> {
                       Wrap(
                         children: [
                           const Text(
-                            'Author: \n',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
-                          ),
-                          Text(
-                            ' ${reversedStatusHistory[index].author}\n',
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 16),
-                          ),
-                        ],
-                      ),
-                      Wrap(
-                        children: [
-                          const Text(
                             'Created at : \n',
                             style: TextStyle(
                                 color: Colors.white,
