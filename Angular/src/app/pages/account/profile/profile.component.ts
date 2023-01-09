@@ -98,7 +98,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.titleService.setTitle(this.title);
     this.GetScooterName();
-    this.GetProfile();
+    this.GetProfile(true);
   }
 
   onFileChanged(event: any) {
@@ -110,9 +110,10 @@ export class ProfileComponent implements OnInit {
     };
   }
 
-  GetProfile() {
+  GetProfile(update:boolean) {
     this.ProfileService.getProfile().subscribe((data: any) => {
       this.profile = data;
+	  if(update == true){
       this.profilemod.patchValue({
         name: this.profile.name,
         email: this.profile.email,
@@ -121,6 +122,15 @@ export class ProfileComponent implements OnInit {
         image: this.profile.image,
         created_at: this.profile.created_at,
       });
+	  }else{
+		this.profilemod.patchValue({
+			name: this.profile.name,
+			email: this.profile.email,
+			confirmemail: this.profile.email,
+			username: this.profile.username,
+			created_at: this.profile.created_at,
+		  });
+	  }
       console.log(this.profile);
     });
   }
@@ -164,7 +174,7 @@ export class ProfileComponent implements OnInit {
           this._snackBar.open('Profile Updated', 'close', {
             duration: 2000,
           });
-          this.GetProfile();
+          this.GetProfile(false);
         },
         (error) => {
           this.loading = false;
@@ -227,7 +237,7 @@ export class ProfileComponent implements OnInit {
           this._snackBar.open('Profile Picture Updated', 'close', {
             duration: 2000,
           });
-          this.GetProfile();
+          this.GetProfile(true);
         } catch (error) {
           this._snackBar.open(
             'Error uploading file, Please try another file',
@@ -236,7 +246,7 @@ export class ProfileComponent implements OnInit {
             duration: 2000,
           }
           );
-          this.GetProfile();
+          this.GetProfile(false);
         }
       }else{
         this._snackBar.open(
@@ -275,7 +285,7 @@ export class ProfileComponent implements OnInit {
           });
           console.log(this.profile);
           this.getProfilePicture();
-          this.GetProfile();
+          this.GetProfile(false);
         },
         (error) => {
           this.loading = false;
@@ -306,7 +316,7 @@ export class ProfileComponent implements OnInit {
         });
         console.log(this.profile);
         this.getProfilePicture();
-        this.GetProfile();
+        this.GetProfile(false);
       },
       (error) => {
         this._snackBar.open(error.error.message ?? 'Error', 'close', {
