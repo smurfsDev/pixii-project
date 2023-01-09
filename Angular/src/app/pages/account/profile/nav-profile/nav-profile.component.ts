@@ -1,21 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { ProfileService } from '../../../../service/account/profile.service';
 import { Router } from '@angular/router';
 import { User } from '../../../../models/user';
 import { LogoutAction } from 'src/app/store/auth/actions';
 import { Store } from '@ngxs/store';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-nav-profile',
   templateUrl: './nav-profile.component.html',
   styleUrls: ['./nav-profile.component.scss'],
 })
-export class NavProfileComponent implements OnInit {
+export class NavProfileComponent implements OnInit, OnChanges {
   profile: any;
   name: any;
-  iamge: any;
-  env = environment.apiUrl;
+  authState: any | undefined;
+  @Input() image: string | null = null;
 
   constructor(
     private ProfileService: ProfileService,
@@ -24,24 +23,18 @@ export class NavProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getProfilePicture();
-    this.getProfile();
+    this.authState = this.Store.selectSnapshot((state) => state.AuthState);
+    this.name = this.authState.user.name;
+
+    console.log(this.image);
   }
+
+  ngOnChanges(): void {
+    console.log(this.image);
+  }
+
   logout() {
     this.Store.dispatch(new LogoutAction());
     this.router.navigate(['/auth']);
-  }
-   async getProfilePicture() {
-   const reponse = await this.ProfileService.getProfilePicture().subscribe(
-     (data: any) => {
-       this.profile = data;
-     }
-   );
-  }
-  getProfile() {
-    this.ProfileService.getProfile().subscribe((data: any) => {
-      this.name = data;
-    this.iamge=data.image;
-    });
   }
 }

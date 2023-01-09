@@ -1,5 +1,5 @@
 <app-navbar>
-  <app-nav-profile></app-nav-profile>
+  <app-nav-profile [image]="profile?.image?env + '/user-photos/' + profile?.image:null"></app-nav-profile>
   <div>
     <div class="board">
       <div class="container">
@@ -13,11 +13,12 @@
                   <!-- <img [src]="imageUrl || defaultImageUrl" /> -->
 
                   <img
-                    *ngIf="imageUrl; else defaultImageTemplate"
+                    alt="profile image"
+                    *ngIf="profile?.image&&profile?.image!='null  '; else defaultImageTemplate"
                     [src]="env + '/user-photos/' + profile?.image"
                   />
                   <ng-template #defaultImageTemplate>
-                    <img [src]="defaultImageUrl" />
+                    <img [src]="defaultImageUrl"  alt="profile image"/>
                   </ng-template>
 
                   <!-- <img [src]="env + '/user-photos/' + profile?.image" /> -->
@@ -151,7 +152,7 @@
                     >
                       <div class="formitem">
                         <div class="group">
-                          <label for="fullname">Scooter name</label>
+                          <label for="scootername">Scooter name</label>
                           <input
                             id="scootername"
                             type="text"
