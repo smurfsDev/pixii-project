@@ -79,7 +79,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 			if (this.bikeIdRegister.hasError('required')) {
 				return 'You must enter a value';
 			} else if (this.bikeIdRegister.hasError('bikeDoesntExists')) {
-				return 'Bike Id doesn\'t exists';
+				return 'Bike Id isn\'t valid';
 			}
 		}
 		return '';
