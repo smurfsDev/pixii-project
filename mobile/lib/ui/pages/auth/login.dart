@@ -224,6 +224,7 @@ class _LoginPageState extends State<Login> {
             MaterialPageRoute(builder: (context) => MyApp()), (route) => false);
       } else {
         var message = "";
+        print(auth.error);
         if (auth.error == "USER_NOT_FOUND") {
           message = "Your email is not registered";
         } else if (auth.error == "INVALID_CREDENTIALS") {
@@ -233,7 +234,10 @@ class _LoginPageState extends State<Login> {
           Future.delayed(Duration(seconds: 2), () {
             Navigator.pushNamed(context, VerifyEmail.id);
           });
-        } else {
+        } else if (auth.error == "You are not a scooter owner") {
+          message = "You are not a scooter owner";
+        }
+        else {
           message = "An error has occurred";
         }
 

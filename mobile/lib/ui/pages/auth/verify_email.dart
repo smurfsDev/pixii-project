@@ -175,7 +175,7 @@ class _VerifyEmailPageState extends State<VerifyEmail> {
           setState(() {
             _counter++;
           });
-          if (_counter > 3) {
+          if (_counter >= 3) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text('Did not receive the code?'),
               backgroundColor: Colors.red,

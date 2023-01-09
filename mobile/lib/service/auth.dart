@@ -66,6 +66,16 @@ class AuthService with ChangeNotifier {
       if (response.statusCode == 200) {
         final data = loginResponseFromJson(response.body);
         user = data.user;
+        var isScooterOwner = false;
+        data.user.role.forEach((element) {
+          if (element['name'] == "Scooter Owner") {
+            isScooterOwner = true;
+          }
+        });
+        if (!isScooterOwner) {
+          error = "You are not a scooter owner";
+          return false;
+        }
         _loggedIn = true;
         await _saveToStorage('token', data.token);
         await _saveToStorage('user', jsonEncode(user?.toJson()));
