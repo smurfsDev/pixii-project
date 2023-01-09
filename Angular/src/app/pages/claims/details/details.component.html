@@ -49,7 +49,7 @@
 								<div class="label">
 									<div class="name">
 										<div class="avatar">
-											<img [src]="comment.avatar??'https://randomuser.me/api/portraits/men/1.jpg'"
+											<img [src]="comment?.user?.image!=null?env.apiUrl+'/user-photos/'+comment.user.image:'https://randomuser.me/api/portraits/men/1.jpg'"
 												[alt]="comment?.user?.name">
 										</div>
 										{{comment?.user?.name??'John Doe'}}
@@ -64,7 +64,7 @@
 						<div class="comment-input">
 							<div class="form">
 								<div class="avatar">
-									<img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="">
+									<img [src]="image?env.apiUrl+'/user-photos/'+image:'https://randomuser.me/api/portraits/men/1.jpg'" alt="">
 								</div>
 								<input type="text" placeholder="Add a comment" class="form-control"
 									placeholder="Add a comment" (keyup.enter)="sendComment()" [(ngModel)]="comment">
@@ -95,7 +95,12 @@
 						">
 								<mat-card-header>
 									<div mat-card-avatar class="mat-card-header-image"
-										[style]="{'background-image': 'url(https://material.angular.io/assets/img/examples/shiba1.jpg)'}">
+											[ngStyle]="
+											{'background-image': item.author.image ? 'url(' + env.apiUrl+'/user-photos/'+item.author.image + ')' : 'url(https://material.angular.io/assets/img/examples/shiba1.jpg)' ,
+											'background-color':  item.author.image ? 'red' : 'green' + ')'}"
+											>
+											
+
 									</div>
 									<mat-card-title>Transaction {{claim._status.length - index}}</mat-card-title>
 									<mat-card-subtitle>Created: {{item.date | date:'short'}}</mat-card-subtitle>
@@ -112,7 +117,7 @@
 										</div>
 										<div class="col-4 status">
 											<p class="d-inline label fw-semibold">Author: </p>
-											<p class="d-inline value ml-2">{{item.author}}</p>
+											<p class="d-inline value ml-2">{{item?.author?.image}}</p>
 										</div>
 									</div>
 								</mat-card-content>
@@ -141,7 +146,10 @@
 						">
 								<mat-card-header>
 									<div mat-card-avatar class="mat-card-header-image"
-										[style]="{'background-image': 'url(https://material.angular.io/assets/img/examples/shiba1.jpg)'}">
+									[ngStyle]="
+									{'background-image': item.author.image ? 'url(' + env.apiUrl+'/user-photos/'+item.author.image + ')' : 'url(https://material.angular.io/assets/img/examples/shiba1.jpg)' ,
+									'background-color':  item.author.image ? 'red' : 'green' + ')'}"
+								>
 									</div>
 									<mat-card-title>Transaction {{claim._technician.length - index}}</mat-card-title>
 									<mat-card-subtitle>Created: {{item.date | date:'short'}}</mat-card-subtitle>
@@ -158,7 +166,7 @@
 										</div>
 										<div class="col-4 status">
 											<p class="d-inline label fw-semibold">Author: </p>
-											<p class="d-inline value ml-2">{{item.author}}</p>
+											<p class="d-inline value ml-2">{{item.author.name}}</p>
 										</div>
 									</div>
 								</mat-card-content>

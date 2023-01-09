@@ -5,5 +5,6 @@ export class User {
     public userName: String,
     public email: String,
     public role: any,
+	public image: String|null,
   ) {}
 }

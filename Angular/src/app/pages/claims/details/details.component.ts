@@ -1,4 +1,6 @@
 import { AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-details',
@@ -6,7 +8,12 @@ import { AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, I
 	styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements AfterViewInit,OnChanges {
-	constructor() { }
+	env = environment;
+	image =null;
+	constructor(private store:Store) {
+		this.image = this.store.selectSnapshot((state) => state.AuthState).user.image;
+	
+	}
 	ngOnChanges(changes: SimpleChanges): void {
 		this.selectedTab = 0;
 	}

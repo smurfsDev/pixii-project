@@ -238,7 +238,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 	hide = true;
 	loginForm: FormGroup;
 	unauthenticated = false;
-	user: User = new User('', '', '', '', null);
+	user: User = new User('', '', '', '', null,null);
 	username = new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,10}$')]);
 	password = new FormControl('', [Validators.required,
 	Validators.minLength(8),
@@ -285,7 +285,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 				this.store.dispatch([
 					new SetToken(data.token),
 					new SetUser(
-						new User(data.user.id, data.user.username, data.user.name, data.user.email, data.user.roles)
+						new User(data.user.id, data.user.username, data.user.name, data.user.email, data.user.roles,data.user.image)
 					),
 					new SetIsAuthenticated(true)
 				]);

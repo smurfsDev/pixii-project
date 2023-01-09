@@ -68,7 +68,10 @@ export class ChefComponent implements OnInit {
 					"old_technician": "John Doe",
 					"new_technician": "John Doe",
 					"date": "2022-11-16T19:10:56.107Z",
-					"author": "John Doe"
+					"author": {
+						name:"",
+						image:"",
+					}
 				}	
 		],
 		technician: null,
@@ -100,16 +103,22 @@ export class ChefComponent implements OnInit {
 		this.claimsService.getClaim(id).subscribe((data: any) => {
 			this.claim = data;
 			this.claim.status = data.status.name;
-			let _status : {
+			let _status: {
 				old_status: string,
 				new_status: string,
-				author: string,
+				author: {
+					name: string,
+					image:string,
+				},
 				date: string
 			}[] = [];
 			let _technician : {
 				old_technician: string,
 				new_technician: string,
-				author: string,
+				author: {
+					name: string,
+					image:string,
+				},
 				date: string
 			}[] = [];
 
@@ -117,7 +126,7 @@ export class ChefComponent implements OnInit {
 				_status.push({
 					old_status: element.old_status.name,
 					new_status: element.new_status.name,
-					author: element.author.name,
+					author: element.author,
 					date: element.date
 				});
 			}
@@ -126,7 +135,7 @@ export class ChefComponent implements OnInit {
 				_technician.push({
 					old_technician: element.old_technician.name,
 					new_technician: element.new_technician.name,
-					author: element.author.name,
+					author: element.author,
 					date: element.date
 				});
 			}

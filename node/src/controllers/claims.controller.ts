@@ -156,7 +156,7 @@ export const findOne = (req: Request, res: Response) => {
 				},
 				{
 					path: "author",
-					select: "name",
+					select: "name image",
 					model: "User"
 				}
 			]
@@ -173,7 +173,7 @@ export const findOne = (req: Request, res: Response) => {
 				},
 				{
 					path: "author",
-					select: "name",
+					select: "name image",
 					model: "User"
 				}
 			]
