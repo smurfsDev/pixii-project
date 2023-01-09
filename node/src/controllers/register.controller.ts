@@ -92,7 +92,16 @@ export const refuse = (req: Request, res: Response) => {
     }
     else {
         res.status(401).send("You must be a Super Admin or an Admin!")
-
     }
 
+}
+
+export const updateImage = (req: Request, res: Response) => {
+	User.updateOne({ username: req.params.username }, { $set: { image: req.body.image } }, function (err:any, rowsAffected:any) {
+		if (err) return res.status(500).send(err);
+		else if (!rowsAffected) return res.status(404).send("User not found");
+		else {
+			return res.status(200).send(rowsAffected);
+		}
+	});
 }

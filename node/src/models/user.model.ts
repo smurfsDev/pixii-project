@@ -34,12 +34,10 @@ let userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    // roles: [
-    //     {
-    //         type: mongoose.Schema.Types.ObjectId,
-    //         ref: "Roles"
-    //     }
-    // ]
+    image: {
+		type: String,
+		required: false,
+	},
 
 });
 

@@ -9,7 +9,10 @@
 	</div>
 
 	<div class="actions">
-		<img class="avatar" [src]="env + '/user-photos/' + profile?.image"/>
+		<img class="avatar" *ngIf="profile?.image&&profile?.image!='null'; else defaultImageTemplate" [src]="env + '/user-photos/' + profile?.image"   alt="profile image"/>
+		<ng-template #defaultImageTemplate>
+		  <img  class="avatar" src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Alberto_conversi_profile_pic.jpg"  alt="profile image"/>
+		</ng-template>
 		<div class="hello">Hello, <span class="name">{{ name?.name }}</span></div>
 		<button [matMenuTriggerFor]="menu" mat-icon-button>
 			<mat-icon class="more-icon">arrow_drop_down</mat-icon>
