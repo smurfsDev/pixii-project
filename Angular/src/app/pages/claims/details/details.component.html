@@ -32,6 +32,10 @@
 							<div class="label">Assignee</div>
 							<div class="value">{{claim?.technician?.name??'Not affected yet'}}</div>
 						</div>
+						<div class="detail">
+							<div class="label">Scooter owner</div>
+							<div class="value">{{claim?.user?.name??''}}</div>
+						</div>
 						<div class="detail mt-3">
 							<div class="label">Description</div>
 						</div>
@@ -117,7 +121,7 @@
 										</div>
 										<div class="col-4 status">
 											<p class="d-inline label fw-semibold">Author: </p>
-											<p class="d-inline value ml-2">{{item?.author?.image}}</p>
+											<p class="d-inline value ml-2">{{item?.author?.name}}</p>
 										</div>
 									</div>
 								</mat-card-content>
