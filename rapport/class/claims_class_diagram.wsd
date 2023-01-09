@@ -6,9 +6,15 @@ String password
 String username
 String email
 Bool enabled 
+String image
+String Scootername
 String verification_code
 JSON Login()
 Bool Register()
+Update Profile()
+Get Profile()
+Add Profile_picture()
+Add Scootername()
 }
 
 Class role{

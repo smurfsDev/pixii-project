@@ -11,12 +11,13 @@ Class user {
     Bool enabled
     String verification_code
 
-    
+
     JSON Login()
     Bool Register()
     Update Profile()
-    Create Profile()
-    
+    Get Profile()
+    Add Profile_picture()
+    Add Scootername()
 }
 
 Class role{
