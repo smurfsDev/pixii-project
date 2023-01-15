@@ -124,29 +124,28 @@ class _ClaimsDetails extends State<ClaimsDetails> {
                       ),
                     ],
                   ),
-                  Wrap(
-                    children: [
-                      Text(
-                        'Employee in charge: \n',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
-                      Text(
-                        ' ${employee}\n',
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 16),
-                      ),
-                    ],
-                  ),
+                  // Wrap(
+                  //   children: [
+                  //     Text(
+                  //       'Employee in charge: \n',
+                  //       style: TextStyle(
+                  //           color: Colors.white,
+                  //           fontWeight: FontWeight.bold,
+                  //           fontSize: 16),
+                  //     ),
+                  //     Text(
+                  //       ' ${employee}\n',
+                  //       style: const TextStyle(
+                  //           color: Colors.white,
+                  //           fontWeight: FontWeight.normal,
+                  //           fontSize: 16),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
           )),
     );
   }
-
 }

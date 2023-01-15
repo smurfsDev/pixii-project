@@ -150,17 +150,17 @@ class ClaimsService with ChangeNotifier {
           final dataNewStatus = jsonDecode(response_new_status.body);
           final fetchNewStatus = Status.fromJson(dataNewStatus);
           hist.new_status = fetchNewStatus.name!;
-          for (var element in AllTechnicians) {
-            if (element.id == hist.author) {
-              hist.author = element.name;
-            }
-          }
+          // for (var element in AllTechnicians) {
+          //   if (element.id == hist.author) {
+          //     hist.author = element.name;
+          //   }
+          // }
           Map<String, dynamic> res = new HashMap<String, dynamic>();
           res = {
             "id": hist.id,
             "new_status": hist.new_status,
             "old_status": hist.old_status,
-            "author": hist.author,
+            // "author": hist.author,
             "date": hist.date,
             "claim": element.id
           };
@@ -268,8 +268,8 @@ class ClaimsService with ChangeNotifier {
       Claim claim = Claim.fromJson(data);
       return claim;
     }
-
   }
+
   Future<bool> requestCallback() async {
     AuthService authService = AuthService();
     await authService.loadSettings();
@@ -279,12 +279,11 @@ class ClaimsService with ChangeNotifier {
       return false;
     }
     try {
-      final response = await http.post(
-          Uri.parse('${Environment.apiUrl}/node/callback'),
-          headers: {
-            'Content-Type': 'application/json',
-            'AutorizationNode': user.email
-          });
+      final response = await http
+          .post(Uri.parse('${Environment.apiUrl}/node/callback'), headers: {
+        'Content-Type': 'application/json',
+        'AutorizationNode': user.email
+      });
       if (response.statusCode == 200) {
         return true;
       } else {
